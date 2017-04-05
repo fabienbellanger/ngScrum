@@ -17,4 +17,17 @@
         // Authentification
         // ----------------
         Route::post('login', 'AuthenticateController@login');
+
+        // ----------------
+        // Routes protégées
+        // ----------------
+        Route::group(['middleware' => 'jwt.auth'], function()
+        {
+            // Page de test
+            // ------------
+            Route::get('test', function()
+            {
+                return Response::json(['data' => 'Test'], 200);
+            });
+        });
     });

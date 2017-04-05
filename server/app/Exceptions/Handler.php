@@ -64,12 +64,9 @@
             {
                 return Response::respondState('Token Expired', null, $exception->getStatusCode());
             }
-            else
+            elseif ($exception instanceof Tymon\JWTAuth\Exceptions\TokenInvalidException)
             {
-                if ($exception instanceof Tymon\JWTAuth\Exceptions\TokenInvalidException)
-                {
-                    return Response::respondState('Invalid Token', null, $exception->getStatusCode());
-                }
+                return Response::respondState('Invalid Token', null, $exception->getStatusCode());
             }
 
             return parent::render($request, $exception);
