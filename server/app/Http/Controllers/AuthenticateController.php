@@ -2,12 +2,13 @@
 
     namespace App\Http\Controllers;
 
-    use Illuminate\Http\Request;
+    use App\Helpers\ResponseHelper as Response;
     use App\Http\Requests;
-    use App\Http\Controllers\Controller;
+    use Auth;
+    use Illuminate\Http\Request;
     use JWTAuth;
     use Tymon\JWTAuthExceptions\JWTException;
-    use App\Helpers\ResponseHelper as Response;
+    use App\Repositories\UserRepository;
 
     class AuthenticateController extends Controller
     {
@@ -30,13 +31,25 @@
                 {
                     return Response::unautorized(null);
                 }
-            }
-            catch (JWTException $e)
+            } catch (JWTException $e)
             {
                 return Response::internalError('Could not create token');
             }
 
-            return Response::json(compact('token'));
+            // On récupère les informations de l'utilisateur
+            // ---------------------------------------------
+            $user = UserRepository::getInformationAfterAuthentication();
+
+            if (!$user)
+            {
+                return Response::internalError('User not found');
+            }
+
+            return Response::json(
+                [
+                    'token' => $token,
+                    'user'  => $user,
+                ]);
         }
 
         /**
