@@ -25,16 +25,30 @@
             try
             {
                 // Verify the credentials and create a token for the user
-                if (!$token = JWTAuth::attempt($credentials))
+                $token = JWTAuth::attempt($credentials);
+                if (!$token)
                 {
-                    return response()->json(['error' => 'invalid_credentials'], 401);
+                    return Response::unautorized(null);
                 }
             }
             catch (JWTException $e)
             {
-                return response()->json(['error' => 'could_not_create_token'], 500);
+                return Response::internalError('Could not create token');
             }
 
-            return response()->json(compact('token'));
+            return Response::json(compact('token'));
+        }
+
+        /**
+         * Logout
+         *
+         * @author Fabien Bellanger
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function logout()
+        {
+            JWTAuth::parseToken()->invalidate();
+
+            return Response::respondState('Success', 'Success logout', 200);
         }
     }

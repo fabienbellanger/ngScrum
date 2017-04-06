@@ -23,6 +23,10 @@
         // ----------------
         Route::group(['middleware' => 'jwt.auth'], function()
         {
+            // Logout
+            // ------
+            Route::get('logout', 'AuthenticateController@logout');
+
             // Page de test
             // ------------
             Route::get('test', function()
