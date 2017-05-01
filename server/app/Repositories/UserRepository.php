@@ -24,6 +24,7 @@
                 'lastname'  => $user->lastname,
                 'firstname' => $user->firstname,
                 'email'     => $user->email,
+                'groupId'   => $user->group_id
             ];
 
             return $data;

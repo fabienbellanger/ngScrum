@@ -31,7 +31,8 @@
                 {
                     return Response::unautorized(null);
                 }
-            } catch (JWTException $e)
+            }
+            catch (JWTException $e)
             {
                 return Response::internalError('Could not create token');
             }
