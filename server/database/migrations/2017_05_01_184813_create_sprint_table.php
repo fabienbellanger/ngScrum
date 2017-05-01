@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTeamTable extends Migration
+class CreateSprintTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateTeamTable extends Migration
      */
     public function up()
     {
-        Schema::create('team', function (Blueprint $table)
+        Schema::create('sprint', function (Blueprint $table)
         {
             $table->increments('id');
             $table->string('name', 50);
-            $table->string('picture_url', 191)->nullable();
-            $table->unsignedInteger('owner_id');
+            $table->unsignedInteger('team_id');
             $table->timestamps();
+            $table->dateTime('finish_at');
 
-            $table->foreign('owner_id')
-                ->references('id')->on('users')
-                ->onDelete('restrict');
+            $table->foreign('team_id')
+                ->references('id')->on('team')
+                ->onDelete('cascade');
         });
     }
 
@@ -34,6 +34,6 @@ class CreateTeamTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('team');
+        Schema::dropIfExists('sprint');
     }
 }
