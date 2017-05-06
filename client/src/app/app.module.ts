@@ -7,6 +7,7 @@ import { Routing } from './app.routing';
 import { AppComponent } from './app.component';
 
 import { SharedModule } from './shared';
+import { ApiModule } from './api';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import { SharedModule } from './shared';
         HttpModule,
         Routing,
         SharedModule,
+        ApiModule,
     ],
     providers: [],
     bootstrap: [AppComponent]
