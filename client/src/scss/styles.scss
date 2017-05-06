@@ -1,0 +1,330 @@
+@import 'variables.scss';
+
+html {
+    position:   relative;
+    min-height: 100%;
+}
+
+body {
+    font-family:   $fontFamilly;
+    font-weight:   300;
+    margin-bottom: 60px;
+}
+
+button {
+    @include noOutline();
+}
+
+table.table {
+    margin-top: 0px;
+}
+
+// ---------
+// Générique
+// ---------
+.pointer {
+    cursor: pointer;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.bold {
+    font-weight: 500;
+}
+
+// ---------
+// Bootstrap
+// ---------
+.btn {
+    border-radius: 1px;
+}
+
+input.form-control, textarea.form-control, select.form-control {
+    border-radius: 0px;
+    box-shadow:    none;
+}
+
+label {
+    font-weight: 500;
+}
+
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-nav > li > a {
+    color: #eee;
+}
+
+.navbar-inverse .navbar-nav > .active > a {
+    color: #eee;
+}
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:focus,
+.navbar-inverse .navbar-nav > .active > a:hover {
+    background-color: #444;
+}
+
+.input-group-sm > .form-control,
+.input-group-sm > .input-group-addon,
+.input-group-sm > .input-group-btn > .btn,
+.list-group-item:last-child,
+.list-group-item:first-child {
+    border-radius: 1px;
+}
+
+.panel {
+    border-radius: 1px;
+}
+
+.alert {
+    border-radius: 1px;
+}
+
+.table > thead > tr > th {
+    font-weight: 500;
+                 /*background-color: #777;
+                 color:            #eee;*/
+}
+
+.table > tbody > tr > td {
+    font-size: 13px;
+}
+
+// ----------------
+// Authentification
+// ----------------
+#auth, #forgotten-password {
+    position:         absolute;
+    top:              0px;
+    left:             0px;
+    height:           100%;
+    width:            100%;
+    background-color: #eee;
+
+    .panel {
+        margin-top:    60px;
+        border-radius: 0px;
+        border-top:    5px solid #1769b7;
+
+        h2 {
+            margin-bottom: 30px;
+            margin-top:    0px;
+            font-size:     24px;
+        }
+
+        .forgotten-password {
+            text-align: right;
+            font-size:  13px;
+        }
+
+        p.alert {
+            font-size: 13px;
+        }
+
+        button[type=submit] {
+            margin-top: 20px;
+        }
+
+        .back-to-login {
+            margin-top: 10px;
+        }
+
+        #send-email {
+            margin-top: 30px;
+        }
+    }
+
+    footer {
+        margin-top: 20px;
+        font-size:  11px;
+    }
+}
+
+// --------------
+// Administration
+// --------------
+#admin {
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    h4 {
+        font-size: 16px;
+    }
+
+    h5 {
+        font-size: 14px;
+    }
+
+    h6 {
+        font-size: 12px;
+    }
+
+    footer.admin-footer {
+        position: absolute;
+        bottom:   0px;
+        width:    100%;
+        height:   50px;
+
+        p {
+            margin-top: 20px;
+            font-size:  11px;
+        }
+    }
+
+    // -------------------
+    // Formulaires Angular
+    // -------------------
+    .ng-valid[required], .ng-valid.required {
+        border-left: 3px solid #42A948;
+    }
+
+    .ng-invalid:not(form) {
+        border-left: 3px solid #c94d3c;
+    }
+
+    .dcp-info-line {
+        margin: 10px 0px;
+
+        .dcp-label {
+            line-height: 18px;
+            font-size:   13px;
+            text-align:  right;
+        }
+
+        .dcp-info {
+            line-height: 18px;
+            font-size:   16px;
+            font-weight: 400;
+            @include textEllipsis();
+        }
+    }
+
+    .dcp-margin-top-extrasmall {
+        margin-top: 10px;
+    }
+
+    .dcp-margin-top-small {
+        margin-top: 20px;
+    }
+
+    .dcp-margin-top-normal {
+        margin-top: 30px;
+    }
+
+    .dcp-margin-top-big {
+        margin-top: 50px;
+    }
+
+    .dcp-spacer-small {
+        display: inline-block;
+        width:   20px;
+    }
+
+    .dcp-spacer-normal {
+        display: inline-block;
+        width:   40px;
+    }
+
+    .dcp-spacer-big {
+        display: inline-block;
+        width:   60px;
+    }
+
+    .dcp-color-display {
+        position: absolute;
+        border:   1px solid black;
+        width:    10px;
+        height:   10px;
+        top:      3px;
+    }
+
+    .dcp-color-value {
+        margin-left: 15px;
+    }
+
+    .dcp-account-logo {
+        max-height: 100px;
+    }
+
+    .dcp-product-delete {
+        position:        absolute;
+        top:             8px;
+        right:           8px;
+        cursor:          pointer;
+        text-decoration: none;
+    }
+
+    .dcp-product-delete:hover {
+        color: #444;
+    }
+
+    .dcp-offer-img {
+        width: 100px;
+    }
+
+    .dcp-offer-dates {
+        font-size:  13px;
+        font-style: italic;
+    }
+
+    .dcp-vertical-align-middle {
+        vertical-align: middle;
+    }
+
+    .dcp-label-lg {
+        font-size: 80%;
+    }
+
+    .dcp-filigrane {
+        position:            fixed;
+        top:                 0px;
+        bottom:              0px;
+        right:               0px;
+        left:                0px;
+        opacity:             0.1;
+        z-index:             -1;
+        background-repeat:   no-repeat;
+        background-position: center center;
+    }
+
+    a.dcp_model_add_to_text {
+        font-size: 13px;
+        cursor:    pointer;
+    }
+
+    a.dcp_model_add_to_text:hover {
+        text-decoration: none;
+    }
+}
+
+th, td {
+    border-bottom: 1px solid #ddd;
+    margin:        10px;
+}
+
+table {
+    margin-top: 10px;
+    width:      100%;
+}
+
+.margin2 {
+    margin:      2px 4px 4px 2px;
+    white-space: normal;
+}
+
+// ----------
+// ng2-toasty
+// -----------
+#toasty .toast.toasty-theme-material .toast-text .toast-title {
+    text-transform: none;
+}

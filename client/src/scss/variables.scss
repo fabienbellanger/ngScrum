@@ -1,0 +1,25 @@
+$fa-font-path: "../../node_modules/font-awesome/fonts";
+@import "../../node_modules/font-awesome/scss/font-awesome.scss";
+
+/*
+ |---------------------------------------------------------------------------
+ | Variables
+ |---------------------------------------------------------------------------
+ */
+$fontFamilly: Roboto;
+
+/*
+ |---------------------------------------------------------------------------
+ | Fonctions
+ |---------------------------------------------------------------------------
+ */
+@mixin textEllipsis() {
+    white-space:     nowrap;
+    overflow:        hidden;
+    text-overflow:   ellipsis;
+}
+
+@mixin noOutline() {
+    touch-action:  manipulation;
+    outline:       none;
+}
