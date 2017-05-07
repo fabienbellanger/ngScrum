@@ -22,7 +22,8 @@
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "../node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
         "scss/variables.scss",
-        "scss/styles.scss"
+        "scss/styles.scss",
+        "scss/auth.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",

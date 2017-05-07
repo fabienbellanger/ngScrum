@@ -11,8 +11,11 @@ import { HttpService } from './services/http.service';
 import { Rc4Service } from './services/rc4.service';
 import { StorageService } from './services/storage.service';
 import { ToolboxService } from './services/toolbox.service';
+
 import { MomentPipe } from './pipes/moment.pipe';
 import { NewLinePipe } from './pipes/new-line.pipe';
+
+import { InputDirective } from './directives/input.directive';
 
 /*export function createTranslateLoader(http: Http)
 {
@@ -36,6 +39,7 @@ import { NewLinePipe } from './pipes/new-line.pipe';
     declarations: [
         MomentPipe,
         NewLinePipe,
+        InputDirective,
     ],
     providers:    [
         DateService,
@@ -53,6 +57,7 @@ import { NewLinePipe } from './pipes/new-line.pipe';
         // SlimLoadingBarModule,
         MomentPipe,
         NewLinePipe,
+        InputDirective,
     ],
 })
 

@@ -6,7 +6,37 @@ $fa-font-path: "../../node_modules/font-awesome/fonts";
  | Variables
  |---------------------------------------------------------------------------
  */
-$fontFamilly: Roboto;
+$fontFamily:       Roboto, Helvetica, sans-serif;
+$fontWeightLight:  300;
+$fontWeightNormal: 400;
+$fontWeightMedium: 500;
+$fontWeightBold:   700;
+
+/*
+ |---------------------------------------------------------------------------
+ | Couleurs
+ |---------------------------------------------------------------------------
+ */
+$veryLightColor:     #ffffff;
+$lightColor:         #fcfcfc;
+$darkColor:          #222222;
+$mediumDarkColor:    #404040;
+$mediumColor:        $darkColor + #888;
+$mediumLightColor:   #d6d6d6;
+$borderColor:        #dddddd;
+$blueColor:          #1769b7;
+$infoColor:          #4BB3F8;
+$greenColor:         #5cb85c;
+$successColor:       #579758;
+$orangeColor:        #eea236;
+$warningColor:       #c67b2c;
+$redColor:           #df5320;
+$dangerColor:        #d33331;
+$purpleColor:        #704cc0;
+$mutedTextColor:     #666666;
+
+$backgroundCategoryZone: #e9e9e9;
+$backgroundAsideZone:    #e9e9e9;
 
 /*
  |---------------------------------------------------------------------------

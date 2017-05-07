@@ -1,0 +1,42 @@
+<div class="auth-form">
+    <div class="auth-form-container">
+        <div class="box">
+            <h1>SCRUM APP</h1>
+            <form (ngSubmit)="onSubmit()" method="post" class="sa-form">
+                <div class="sa-field">
+                    <label for="email" class="sa-field-label">
+                        Email
+                    </label>
+                    <input [saInput]="email"
+                           [(ngModel)]="email"
+                           #inputEmail
+                           id="email"
+                           name="email"
+                           type="email"
+                           class="sa-field-input"
+                           autofocus>
+                </div>
+                <div class="sa-field">
+                    <label for="password" class="sa-field-label">
+                        Password
+                    </label>
+                    <input [saInput]="password"
+                           [(ngModel)]="password"
+                           #inputPassword
+                           id="password"
+                           name="password"
+                           type="password"
+                           class="sa-field-input">
+                </div>
+                <p class="text-danger" *ngIf="errorMessage != ''">
+                    {{ errorMessage }}
+                </p>
+                <button type="submit"
+                        name="button"
+                        class="btn btn-primary">
+                    Connection
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
