@@ -7,7 +7,7 @@ import { ToastyService, ToastyConfig } from 'ng2-toasty';
 @Component({
     selector: 'sa-app',
     template: `
-        <ng2-slim-loading-bar [color]="'#1769b7'" [height]="'3px'"></ng2-slim-loading-bar>
+        <ng2-slim-loading-bar [color]="'#eea236'" [height]="'2px'"></ng2-slim-loading-bar>
         <router-outlet>FFFF</router-outlet>
         <ng2-toasty></ng2-toasty>`,
 })
