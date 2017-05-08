@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
 
 import { AuthService } from './auth.service';
+import { AuthGuardService } from './auth-guard.service';
 
 import { LoginComponent } from './components/login.component';
 
@@ -23,6 +24,7 @@ import { LoginComponent } from './components/login.component';
     ],
     providers:    [
 		AuthService,
+        AuthGuardService,
     ],
     exports:      [
 		LoginComponent,

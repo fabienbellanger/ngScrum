@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { HttpModule, Http } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-// import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
-// import { ToastyModule } from 'ng2-toasty';
-// import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
+import { ToastyModule } from 'ng2-toasty';
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { DateService } from './services/date.service';
 import { HttpService } from './services/http.service';
 import { Rc4Service } from './services/rc4.service';
@@ -17,10 +17,10 @@ import { NewLinePipe } from './pipes/new-line.pipe';
 
 import { InputDirective } from './directives/input.directive';
 
-/*export function createTranslateLoader(http: Http)
+export function createTranslateLoader(http: Http)
 {
-    return new TranslateStaticLoader(http, './assets/i18n', '.json');
-}*/
+    return new TranslateStaticLoader(http, '../assets/i18n', '.json');
+}
 
 @NgModule({
     imports:      [
@@ -28,13 +28,13 @@ import { InputDirective } from './directives/input.directive';
         HttpModule,
         FormsModule,
         RouterModule,
-        /*TranslateModule.forRoot({
+        TranslateModule.forRoot({
             provide:    TranslateLoader,
             useFactory: (createTranslateLoader),
             deps:       [Http],
         }),
         ToastyModule.forRoot(),
-        SlimLoadingBarModule.forRoot(),*/
+        SlimLoadingBarModule.forRoot(),
     ],
     declarations: [
         MomentPipe,
@@ -52,9 +52,9 @@ import { InputDirective } from './directives/input.directive';
         HttpModule,
         FormsModule,
         RouterModule,
-        // TranslateModule,
-        // ToastyModule,
-        // SlimLoadingBarModule,
+        TranslateModule,
+        ToastyModule,
+        SlimLoadingBarModule,
         MomentPipe,
         NewLinePipe,
         InputDirective,

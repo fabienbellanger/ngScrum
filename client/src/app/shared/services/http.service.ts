@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-// import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 /**
  * Http service
@@ -28,8 +28,8 @@ export class HttpService
      * @param {SlimLoadingBarService}   slimLoadingBarService
      */
     constructor(private http: Http,
-                private router: Router)
-                //private slimLoadingBarService: SlimLoadingBarService)
+                private router: Router,
+                private slimLoadingBarService: SlimLoadingBarService)
     {
         this.baseUrl = environment.apiUrl;
     }
@@ -83,7 +83,7 @@ export class HttpService
         // Start loader
         if (loading)
         {
-            //this.slimLoadingBarService.start();
+            this.slimLoadingBarService.start();
         }
 
         return new Promise((resolve: any, reject: any) =>
@@ -102,7 +102,7 @@ export class HttpService
                        {
                            if (loading)
                            {
-                               //this.slimLoadingBarService.complete();
+                               this.slimLoadingBarService.complete();
                            }
 
                            return resolve(data);
@@ -111,7 +111,7 @@ export class HttpService
                        {
                            if (loading)
                            {
-                               //this.slimLoadingBarService.complete();
+                               this.slimLoadingBarService.complete();
                            }
 
                            // Gestion de l'erreur 401
@@ -125,7 +125,7 @@ export class HttpService
             {
                 if (loading)
                 {
-                    //this.slimLoadingBarService.complete();
+                    this.slimLoadingBarService.complete();
                 }
 
                 reject();
@@ -153,7 +153,7 @@ export class HttpService
         // Start loader
         if (loading)
         {
-            //this.slimLoadingBarService.start();
+            this.slimLoadingBarService.start();
         }
 
         return new Promise((resolve: any, reject: any) =>
@@ -172,7 +172,7 @@ export class HttpService
                         {
                             if (loading)
                             {
-                                //this.slimLoadingBarService.complete();
+                                this.slimLoadingBarService.complete();
                             }
 
                             return resolve(data);
@@ -181,7 +181,7 @@ export class HttpService
                         {
                             if (loading)
                             {
-                                //this.slimLoadingBarService.complete();
+                                this.slimLoadingBarService.complete();
                             }
 
                             // Gestion de l'erreur 401
@@ -195,7 +195,7 @@ export class HttpService
             {
                 if (loading)
                 {
-                    //this.slimLoadingBarService.complete();
+                    this.slimLoadingBarService.complete();
                 }
 
                 reject();
@@ -223,7 +223,7 @@ export class HttpService
         // Start loader
         if (loading)
         {
-            //this.slimLoadingBarService.start();
+            this.slimLoadingBarService.start();
         }
 
         return new Promise((resolve: any, reject: any) =>
@@ -242,7 +242,7 @@ export class HttpService
                        {
                            if (loading)
                            {
-                               //this.slimLoadingBarService.complete();
+                               this.slimLoadingBarService.complete();
                            }
 
                            return resolve(data);
@@ -251,7 +251,7 @@ export class HttpService
                        {
                            if (loading)
                            {
-                               //this.slimLoadingBarService.complete();
+                               this.slimLoadingBarService.complete();
                            }
 
                            // Gestion de l'erreur 401
@@ -265,7 +265,7 @@ export class HttpService
             {
                 if (loading)
                 {
-                    //this.slimLoadingBarService.complete();
+                    this.slimLoadingBarService.complete();
                 }
 
                 reject();
@@ -293,7 +293,7 @@ export class HttpService
         // Start loader
         if (loading)
         {
-            //this.slimLoadingBarService.start();
+            this.slimLoadingBarService.start();
         }
 
         return new Promise((resolve: any, reject: any) =>
@@ -312,7 +312,7 @@ export class HttpService
                          {
                              if (loading)
                              {
-                                 //this.slimLoadingBarService.complete();
+                                 this.slimLoadingBarService.complete();
                              }
 
                              return resolve(data);
@@ -321,7 +321,7 @@ export class HttpService
                          {
                              if (loading)
                              {
-                                 //this.slimLoadingBarService.complete();
+                                 this.slimLoadingBarService.complete();
                              }
 
                              // Gestion de l'erreur 401
@@ -335,7 +335,7 @@ export class HttpService
             {
                 if (loading)
                 {
-                    //this.slimLoadingBarService.complete();
+                    this.slimLoadingBarService.complete();
                 }
 
                 reject();
@@ -358,7 +358,7 @@ export class HttpService
         // Start loader
         if (loading)
         {
-            //this.slimLoadingBarService.start();
+            this.slimLoadingBarService.start();
         }
 
         return new Promise((resolve: any, reject: any) =>
@@ -376,7 +376,7 @@ export class HttpService
                        {
                            if (loading)
                            {
-                               //this.slimLoadingBarService.complete();
+                               this.slimLoadingBarService.complete();
                            }
 
                            return resolve(data);
@@ -385,7 +385,7 @@ export class HttpService
                        {
                            if (loading)
                            {
-                               //this.slimLoadingBarService.complete();
+                               this.slimLoadingBarService.complete();
                            }
 
                            // Gestion de l'erreur 401
@@ -399,7 +399,7 @@ export class HttpService
             {
                 if (loading)
                 {
-                    //this.slimLoadingBarService.complete();
+                    this.slimLoadingBarService.complete();
                 }
 
                 reject();

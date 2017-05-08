@@ -2,6 +2,10 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
+import { ToastyService } from 'ng2-toasty';
+
+import { AuthService } from '../auth.service';
+
 @Component({
     selector:    'sa-auth-login',
     templateUrl: './login.component.html',
@@ -17,16 +21,18 @@ export class LoginComponent implements OnInit
 	private email: string;
 	private password: string;
 	private errorMessage: string;
+    private currentYear: string;
 
     @ViewChild('inputEmail') private inputEmail: any;
-    @ViewChild('inputPassword') private inputPassword: any;
 
     /**
      * Constructeur
      *
      * @author Fabien Bellanger
+     * @param {AuthService} authService
      */
-    constructor()
+    constructor(private authService: AuthService,
+                private toastyService: ToastyService)
     {
     }
 
@@ -40,6 +46,7 @@ export class LoginComponent implements OnInit
         this.email  	  = '';
         this.password  	  = '';
 		this.errorMessage = '';
+        this.currentYear  = '';
     }
 
     /**
@@ -53,8 +60,13 @@ export class LoginComponent implements OnInit
         this.inputEmail.nativeElement.focus();
     }
 
-	private onSubmit(): void
+    /**
+     * Soumission du formulaire d'authentification
+     * 
+     * @author Fabien Bellanger
+     */
+	private submitForm(): void
 	{
-
+        this.authService.login(this.email, this.password);
 	}
 }
