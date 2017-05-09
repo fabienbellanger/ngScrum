@@ -1,11 +1,15 @@
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuardService, LoginComponent } from './auth';
+import { AuthGuardService, LoginComponent, LogoutComponent } from './auth';
 
 const appRoutes: Routes = [
     {
         path:      'login',
         component: LoginComponent,
+    },
+    {
+        path:      'logout',
+        component: LogoutComponent,
     },
     {
         path:        '',

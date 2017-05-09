@@ -21,6 +21,7 @@
             }
 
             $data = [
+                'id'        => $user->id,
                 'lastname'  => $user->lastname,
                 'firstname' => $user->firstname,
                 'email'     => $user->email,

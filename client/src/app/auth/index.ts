@@ -2,9 +2,11 @@ export { AuthModule } from './auth.module';
 
 // Services
 // --------
-export { AuthService } from './auth.service';
-export { AuthGuardService } from './auth-guard.service';
+export { AuthService } from './services/auth.service';
+export { AuthGuardService } from './services/auth-guard.service';
+export { UserService } from './services/user.service';
 
 // Composants
 // ----------
 export { LoginComponent } from './components/login.component';
+export { LogoutComponent } from './components/logout.component';

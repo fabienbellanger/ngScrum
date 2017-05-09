@@ -6,10 +6,12 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared';
 
-import { AuthService } from './auth.service';
-import { AuthGuardService } from './auth-guard.service';
+import { AuthService } from './services/auth.service';
+import { AuthGuardService } from './services/auth-guard.service';
+import { UserService } from './services/user.service';
 
 import { LoginComponent } from './components/login.component';
+import { LogoutComponent } from './components/logout.component';
 
 @NgModule({
     imports:      [
@@ -21,13 +23,16 @@ import { LoginComponent } from './components/login.component';
     ],
     declarations: [
 		LoginComponent,
+        LogoutComponent,
     ],
     providers:    [
 		AuthService,
         AuthGuardService,
+        UserService,
     ],
     exports:      [
 		LoginComponent,
+        LogoutComponent,
     ],
 })
 

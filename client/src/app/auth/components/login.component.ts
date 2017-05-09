@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { ToastyService } from 'ng2-toasty';
 
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
     selector:    'sa-auth-login',
@@ -67,6 +67,14 @@ export class LoginComponent implements OnInit
      */
 	private submitForm(): void
 	{
-        this.authService.login(this.email, this.password);
+        this.authService.login(this.email, this.password)
+            .then(() =>
+            {
+
+            })
+            .catch((error: string) =>
+            {
+                this.errorMessage = error;
+            });
 	}
 }
