@@ -35,15 +35,12 @@ export class ApiAuthService
             const headers: any = new Headers();
             headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-			this.httpService.post(
-				'/login',
-				{
-					email:    email,
-					password: password,
-				},
-				{headers: headers},
-				false,
-				true)
+			const data: any = {
+				email:    email,
+				password: password,
+			};
+
+			this.httpService.post('/login', data, {headers: headers}, false, true)
 				.then((data: any) =>
 				{
 					resolve(data);

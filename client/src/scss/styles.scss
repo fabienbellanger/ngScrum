@@ -41,6 +41,21 @@ table.table {
     border-radius: 1px;
 }
 
+.btn:focus {
+    @include noOutline();
+}
+
+.btn-primary {
+    background-color: $orangeColor;
+    border-color:     darken($orangeColor, 10%);
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    background-color: darken($orangeColor, 10%) !important;
+    border-color:     darken($orangeColor, 20%) !important;
+    box-shadow:       none !important;
+}
+
 input.form-control, textarea.form-control, select.form-control,
 input.form-control:hover, textarea.form-control:hover, select.form-control:hover,
 input.form-control:focus, textarea.form-control:focus, select.form-control:focus, {

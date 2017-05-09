@@ -1,5 +1,4 @@
 {
-	"login": "Identifiant",
 	"password": "Mot de passe",
 	"new password": "Nouveau mot de passe",
 	"confirm new password": "Confirmer le nouveau mot de passe",
@@ -16,9 +15,7 @@
 	"bad.login.password": "Votre identifiant et/ou votre mot de passe ne sont pas corrects",
 	"forgotten.password.error.message": "Une erreur est survenue. Veuillez essayer de nouveau.",
 	"forgotten.password.success.message": "Un email vient de vous être envoyé à l'adresse suivante <b>{{ email }}</b> avec votre nouveau mot de passe.",
-	"try.again": "Essayer de nouveau",
     "modify": "Modifier",
-    "modify password": "Modifier le mot de passe",
     "cancel": "Annuler",
     "required": "Champ obligatoire"
 }

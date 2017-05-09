@@ -10,7 +10,7 @@
 						</h2>
 
 						<div class="form-group">
-							<label for="email">{{ 'login' | translate }}</label>
+							<label for="email">{{ 'email' | translate }}</label>
 							<input type="email"
                            		   [(ngModel)]="email"
                                    #inputEmail
@@ -32,14 +32,15 @@
 						</div>
 						<p class="forgotten-password">
 							<a routerLink="/forgotten-password">{{ 'forgotten.password' | translate }}</a>
-							<a routerLink="/logout">{{ 'logout' | translate }}</a>
 						</p>
 						<p *ngIf="errorMessage" class="alert alert-danger">
 							{{ 'bad.login.password' | translate }}
 						</p>
-						<button type="submit" class="btn btn-primary btn-block">
-							{{ 'signin' | translate }}
-						</button>
+						<div class="text-center">
+							<button type="submit" class="btn btn-primary">
+								{{ 'signin' | translate }}
+							</button>
+						</div>
 					</form>
 					<footer class="text-center text-muted">
 						{{ 'copyright' | translate }} &copy; {{ currentYear }} 
