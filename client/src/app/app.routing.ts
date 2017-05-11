@@ -1,6 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuardService, LoginComponent, LogoutComponent } from './auth';
+import { SprintListComponent } from './sprint';
 
 const appRoutes: Routes = [
     {
@@ -10,6 +11,10 @@ const appRoutes: Routes = [
     {
         path:      'logout',
         component: LogoutComponent,
+    },
+    {
+        path:      'sprints',
+        component: SprintListComponent,
     },
     {
         path:        '',

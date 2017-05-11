@@ -8,7 +8,8 @@ import { AppComponent } from './app.component';
 
 import { SharedModule } from './shared';
 import { ApiModule } from './api';
-import { AuthModule } from "./auth";
+import { AuthModule } from './auth';
+import { SprintModule } from './sprint';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import { AuthModule } from "./auth";
         SharedModule,
         ApiModule,
         AuthModule,
+        SprintModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

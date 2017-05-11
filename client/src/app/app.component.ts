@@ -8,7 +8,7 @@ import { ToastyService, ToastyConfig } from 'ng2-toasty';
     selector: 'sa-app',
     template: `
         <ng2-slim-loading-bar [color]="'#eea236'" [height]="'2px'"></ng2-slim-loading-bar>
-        <router-outlet>FFFF</router-outlet>
+        <router-outlet></router-outlet>
         <ng2-toasty></ng2-toasty>`,
 })
 
