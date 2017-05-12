@@ -1,13 +1,16 @@
 <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
+            <button class="btn btn-default" (click)="toggleSidebar()">
+                <span class="fa fa-bars"></span>
+            </button>
             <a class="navbar-brand" href="#">Scrum App</a>
         </div>
     </div>
 </nav>
 
 <aside id="sidebar">
-    <div class="sidebar">
+    <div class="sidebar" #sidebar>
         <div class="sidebar-header">Menu</div>
     </div>
 </aside>

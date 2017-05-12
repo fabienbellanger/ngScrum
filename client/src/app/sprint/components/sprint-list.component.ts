@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
     selector:    'sa-sprint-list',
@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 
 export class SprintListComponent implements OnInit
 {
+    private sidebarWidth: string;
+
+    @ViewChild('sidebar') private sidebar: any;
+
 	/**
      * Constructeur
      *
@@ -23,6 +27,20 @@ export class SprintListComponent implements OnInit
      */
     public ngOnInit(): void
     {
-		
+		console.log(this.sidebar);
+    }
+
+    private toggleSidebar(): void
+    {
+        let width: number = this.sidebar.nativeElement.offsetWidth;
+
+        if (width === 0)
+        {
+            this.sidebar.nativeElement.style.width = '220px';
+        }
+        else
+        {
+            this.sidebar.nativeElement.style.width = '0';
+        }
     }
 }
