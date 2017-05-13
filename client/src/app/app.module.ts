@@ -10,6 +10,7 @@ import { SharedModule } from './shared';
 import { ApiModule } from './api';
 import { AuthModule } from './auth';
 import { SprintModule } from './sprint';
+import { LayoutModule } from './layout';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import { SprintModule } from './sprint';
         ApiModule,
         AuthModule,
         SprintModule,
+        LayoutModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

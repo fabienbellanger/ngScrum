@@ -1,21 +1,9 @@
-<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button class="btn btn-default" (click)="toggleSidebar()">
-                <span class="fa fa-bars"></span>
-            </button>
-            <a class="navbar-brand" href="#">Scrum App</a>
-        </div>
-    </div>
-</nav>
+<sa-layout-navbar></sa-layout-navbar>
 
-<aside id="sidebar">
-    <div class="sidebar" #sidebar>
-        <div class="sidebar-header">Menu</div>
-    </div>
-</aside>
+<sa-layout-sidebar></sa-layout-sidebar>
 
-<div class="container-fluid" style="position: absolute; top: 51px; bottom: 35px; left: 0px; right: 0px; overflow: auto">
+<div class="container-fluid" id="content"
+     style="position: absolute; top: 51px; bottom: 35px; left: 0px; right: 0px; overflow: auto">
     <h1>Sprints list</h1>
     <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci maxime fugit quam ullam aliquid labore et enim nisi debitis vel eveniet ipsum quibusdam, natus voluptas eum ut veritatis aut sint.

@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { SharedModule, HttpService } from '../shared';
+import { LayoutModule } from '../layout';
 
 import { SprintListComponent } from './components/sprint-list.component';
 
@@ -13,6 +14,7 @@ import { SprintListComponent } from './components/sprint-list.component';
         HttpModule,
         RouterModule,
         SharedModule,
+        LayoutModule,
     ],
     declarations: [
 		SprintListComponent,

@@ -27,7 +27,6 @@ export class SprintListComponent implements OnInit
      */
     public ngOnInit(): void
     {
-		console.log(this.sidebar);
     }
 
     private toggleSidebar(): void
