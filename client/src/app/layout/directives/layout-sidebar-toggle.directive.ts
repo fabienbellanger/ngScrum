@@ -48,7 +48,7 @@ export class LayoutSidebarToggleDirective implements OnChanges
 		else
 		{
 			this.el.nativeElement.style.width = '0';
-			this.el.nativeElement.style.opacity = '0.5';
+			this.el.nativeElement.style.opacity = '0';
 		}
     }
 }
