@@ -1,5 +1,7 @@
 import { Directive, ElementRef, Renderer, Input, OnChanges } from '@angular/core';
 
+import { LayoutSidebarService } from '../services/layout-sidebar.service';
+
 @Directive({
     selector:   '[saToggleSidebar]',
 })
@@ -16,7 +18,8 @@ export class LayoutSidebarToggleDirective implements OnChanges
      | Variables
      |---------------------------------------------------------------------------
      */
-    //private value: string;
+    private width: number           = 220;
+    private responsiveWidth: number = 900;
 
     @Input('saToggleSidebar') state: string;
 
@@ -29,8 +32,19 @@ export class LayoutSidebarToggleDirective implements OnChanges
      * @param (Renderer) 	renderer
      */
     constructor(private el: ElementRef,
-                private renderer: Renderer)
+                private renderer: Renderer,
+                private layoutSidebarService: LayoutSidebarService)
     {
+        if (window.innerWidth < this.responsiveWidth)
+        {
+            // Mobile
+            this.layoutSidebarService.state = 'close';
+        }
+        else
+        {
+            // Desktop
+            this.layoutSidebarService.state = 'open';
+        }
     }
 
     /**
@@ -42,13 +56,11 @@ export class LayoutSidebarToggleDirective implements OnChanges
     {
         if (this.state === 'open')
 		{
-			this.el.nativeElement.style.width = '220px';
-			this.el.nativeElement.style.opacity = '0.95';
+            this.el.nativeElement.style.width   = this.width + 'px';
 		}
 		else
 		{
-			this.el.nativeElement.style.width = '0';
-			this.el.nativeElement.style.opacity = '0';
+            this.el.nativeElement.style.width   = '0';
 		}
     }
 }

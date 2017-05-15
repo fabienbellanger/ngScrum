@@ -17,7 +17,7 @@ export class LayoutSidebarService
 	 */
 	constructor()
 	{
-		this.state = 'open';
+		this.state = '';
 	}
 
 	/**
