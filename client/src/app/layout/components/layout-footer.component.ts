@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector:    'sa-sprint-list',
-    templateUrl: './sprint-list.component.html',
+    selector:    'sa-layout-footer',
+    templateUrl: './layout-footer.component.html',
 })
 
-export class SprintListComponent
+export class LayoutFooterComponent implements OnInit
 {
     /**
      * Constructeur
@@ -23,5 +23,6 @@ export class SprintListComponent
      */
     public ngOnInit(): void
     {
+		
     }
 }

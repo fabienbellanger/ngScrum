@@ -25,7 +25,8 @@
         "../node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
         "scss/variables.scss",
         "scss/styles.scss",
-        "scss/auth.scss"
+        "scss/auth.scss",
+        "scss/layout.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",

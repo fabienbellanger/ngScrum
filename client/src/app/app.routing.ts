@@ -2,6 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuardService, LoginComponent, LogoutComponent } from './auth';
 import { SprintListComponent } from './sprint';
+import { LayoutComponent } from './layout';
 
 const appRoutes: Routes = [
     {
@@ -13,14 +14,20 @@ const appRoutes: Routes = [
         component: LogoutComponent,
     },
     {
-        path:      'sprints',
-        component: SprintListComponent,
+        path:        '',
+        component:   LayoutComponent,
+        //canActivate: [AuthGuardService],
+        children:    [
+            {
+                path:      'sprints',
+                component: SprintListComponent,
+            },
+        ],
     },
     {
-        path:        '',
-        component:   LoginComponent,
-        canActivate: [AuthGuardService],
-    }
+        path:      '**',
+        component: LayoutComponent,
+    },
 ];
 
 export const Routing: any = RouterModule.forRoot(appRoutes, {

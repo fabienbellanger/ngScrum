@@ -9,6 +9,7 @@ import { Injectable } from '@angular/core';
 export class LayoutSidebarService
 {
 	public state: string;
+	public items: Array<any>;
 
 	/**
 	 * Constructeur
@@ -18,6 +19,13 @@ export class LayoutSidebarService
 	constructor()
 	{
 		this.state = '';
+		this.items = [
+			{
+				'label': 'Login',
+				'route': 'login',
+				'picto': 'fa fa-sign-in',
+			}
+		];
 	}
 
 	/**
@@ -27,13 +35,6 @@ export class LayoutSidebarService
 	 */
 	public toogle(): void
 	{
-		if (this.state === 'open')
-		{
-			this.state = 'close';
-		}
-		else
-		{
-			this.state = 'open';
-		}
+		this.state = (this.state === 'open') ? 'close' : 'open';
 	}
 }

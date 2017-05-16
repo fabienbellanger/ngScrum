@@ -1,0 +1,86 @@
+@import 'variables.scss';
+
+// --------------
+// Main container
+// --------------
+#main-container {
+    display:         flex;
+    flex-direction:  row;
+    flex-wrap:       nowrap;
+    justify-content: space-between;
+    align-items:     stretch;
+    margin-top:      50px;
+    width:           100%;
+    height:          calc(100vh - 92px);
+
+    // -------
+    // Sidebar
+    // -------
+    #sidebar {
+        @include unselectable();
+
+        flex:             1 auto;
+        width:            220px;
+        height:           calc(100vh - 92px);
+        background-color: #2a2a2a;
+        transition:       0.15s;
+        overflow:         auto;
+
+        .sidebar-header {
+            padding:     10px;
+            text-align:  center;
+            font-size:   18px;
+            font-weight: 500;
+            color:       $orangeColor;
+        }
+
+		ul {
+			padding: 10px;
+
+			li {
+				color: $lightColor;
+
+				a {
+					color: $lightColor;
+				}
+
+				a:hover {
+					color:           $orangeColor;
+					text-decoration: none;
+				}
+			}
+		}
+    }
+
+    // -------
+    // Content
+    // -------
+    #content {
+        flex:     1 auto;
+        height:   calc(100vh - 92px);
+		// padding:  10px;
+        overflow: auto;
+
+		h1 {
+			color: $orangeColor;
+		}
+    }
+}
+
+// ------
+// Footer
+// ------
+.footer {
+    position:         absolute;
+    bottom:           0;
+    width:            100%;
+    height:           42px;
+    background-color: #222;
+    border-top:       1px solid #000;
+
+    .footer-text {
+        padding-top: 15px;
+        font-size:   11px;
+        text-align:  center;
+    }
+}

@@ -4,6 +4,8 @@ export { LayoutModule } from './layout.module';
 // ----------
 export { LayoutNavbarComponent } from './components/layout-navbar.component';
 export { LayoutSidebarComponent } from './components/layout-sidebar.component';
+export { LayoutFooterComponent } from './components/layout-footer.component';
+export { LayoutComponent } from './components/layout.component';
 
 // Services
 // --------
