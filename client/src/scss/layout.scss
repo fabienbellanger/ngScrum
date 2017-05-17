@@ -1,5 +1,71 @@
 @import 'variables.scss';
 
+// ------
+// Navbar
+// ------
+#navbar {
+    position:         fixed;
+    display:          block;
+    top:              0px;
+    left:             0px;
+    right:            0px;
+    height:           50px;
+    border-bottom:    1px solid #000;
+    background-color: #222;
+
+    .navbar-container {
+        display:         flex;
+        flex-direction:  row;
+        flex-wrap:       nowrap;
+        justify-content: space-between;
+        align-items:     center;
+        height:          100%;
+
+        .navbar-left {
+            flex:        1 auto;
+            margin-left: 15px;
+
+            a {
+                font-size:  20px;
+                color:      $lightColor;
+                transition: 0.3s;
+            }
+
+            a:hover {
+                color: $greenColor;
+            }
+        }
+
+        .navbar-right {
+            flex:             4 auto;
+            margin-right:     15px;
+            text-align:       right;
+            color:            $lightColor;
+
+        display:         flex;
+        flex-direction:  row;
+        flex-wrap:       nowrap;
+        justify-content: flex-end;
+        align-items:     center;
+
+            .avatar {
+                width:               30px;
+                height:              30px;
+                background-size:     cover;
+                background-position: center;
+                border-radius:       50%;
+                border:              1px solid $mediumLightColor;
+            }
+
+            .user-name {
+                margin-left: 10px;
+                font-size:   13px;
+                font-weight: $fontWeightLight;
+            }
+        }
+    }
+}
+
 // --------------
 // Main container
 // --------------
@@ -31,7 +97,7 @@
             text-align:  center;
             font-size:   18px;
             font-weight: 500;
-            color:       $orangeColor;
+            color:       $greenColor;
         }
 
 		ul {
@@ -41,11 +107,13 @@
 				color: $lightColor;
 
 				a {
-					color: $lightColor;
+                    display: inline-block;
+                    width:   100%;
+					color:   $lightColor;
 				}
 
 				a:hover {
-					color:           $orangeColor;
+					color:           $greenColor;
 					text-decoration: none;
 				}
 			}
@@ -62,7 +130,7 @@
         overflow: auto;
 
 		h1 {
-			color: $orangeColor;
+			color: $greenColor;
 		}
     }
 }

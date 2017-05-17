@@ -1,9 +1,15 @@
-<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand pointer" (click)="toggleSidebar()">
+<nav id="navbar">
+    <div class="navbar-container">
+        <div class="navbar-left">
+            <a class="pointer" (click)="toggleSidebar()">
                 <span class="fa fa-bars"></span>
             </a>
+        </div>
+        <div class="navbar-right">
+            <div class="avatar" 
+                    style="background-image: url(https://www.gravatar.com/avatar/3fdfe9c7c04fe3f1b916575df4134225?s=30)">
+            </div>
+            <div class="user-name">Fabien Bellanger</div>
         </div>
     </div>
 </nav>

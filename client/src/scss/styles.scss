@@ -46,13 +46,13 @@ table.table {
 }
 
 .btn-primary {
-    background-color: $orangeColor;
-    border-color:     darken($orangeColor, 5%);
+    background-color: $greenColor;
+    border-color:     darken($greenColor, 5%);
 }
 
 .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
-    background-color: darken($orangeColor, 5%) !important;
-    border-color:     darken($orangeColor, 10%) !important;
+    background-color: darken($greenColor, 5%) !important;
+    border-color:     darken($greenColor, 10%) !important;
     box-shadow:       none !important;
 }
 
@@ -65,7 +65,7 @@ input.form-control:focus, textarea.form-control:focus, select.form-control:focus
 
 input.form-control:hover, textarea.form-control:hover, select.form-control:hover,
 input.form-control:focus, textarea.form-control:focus, select.form-control:focus, {
-    border-color: $orangeColor;
+    border-color: $greenColor;
 }
 
 label {
@@ -82,6 +82,10 @@ label {
 
 .navbar-inverse .navbar-nav > .active > a {
     color: #eee;
+}
+
+.navbar-inverse .navbar-brand:hover {
+    color: $greenColor;
 }
 
 .navbar-inverse .navbar-nav > .active > a,
@@ -130,7 +134,7 @@ table {
 }
 
 a, a:hover {
-    color: $orangeColor;
+    color: $greenColor;
 }
 
 // ----------
