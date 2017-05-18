@@ -133,8 +133,14 @@ table {
     white-space: normal;
 }
 
-a, a:hover {
-    color: $greenColor;
+a, a:visited {
+    color:      $greenColor;
+    transition: 0.3s;
+}
+
+a:hover, a:active, a:focus {
+    color:           darken($greenColor, 10%);
+    text-decoration: none;
 }
 
 // ----------

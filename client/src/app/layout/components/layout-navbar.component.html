@@ -5,11 +5,16 @@
                 <span class="fa fa-bars"></span>
             </a>
         </div>
-        <div class="navbar-right">
-            <div class="avatar" 
-                    style="background-image: url(https://www.gravatar.com/avatar/3fdfe9c7c04fe3f1b916575df4134225?s=30)">
+        <div class="navbar-right"
+             *ngIf="userService.user !== null">
+            <div class="avatar"
+                 [style.background-image]="'url(' + userService.getGravatarUrl(20) + ')'">
             </div>
-            <div class="user-name">Fabien Bellanger</div>
+            <div class="user-name">
+                {{ userService.getFullname() }}
+                <br>
+                <a routerLink='/logout'>{{ 'signout' | translate }}</a>
+            </div>
         </div>
     </div>
 </nav>

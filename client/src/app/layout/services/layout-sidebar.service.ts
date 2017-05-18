@@ -21,9 +21,9 @@ export class LayoutSidebarService
 		this.state = '';
 		this.items = [
 			{
-				'label': 'Login',
-				'route': 'login',
-				'picto': 'fa fa-sign-in',
+				'label': 'Sprints',
+				'route': 'sprints',
+				'picto': 'fa fa-list',
 			}
 		];
 	}

@@ -30,9 +30,10 @@ export class LoginComponent implements OnInit
      *
      * @author Fabien Bellanger
      * @param {AuthService} authService
+     * @param {Router}      router
      */
     constructor(private authService: AuthService,
-                private toastyService: ToastyService)
+                private router: Router)
     {
     }
 
@@ -70,7 +71,7 @@ export class LoginComponent implements OnInit
         this.authService.login(this.email, this.password)
             .then(() =>
             {
-
+                this.router.navigate(['/']);
             })
             .catch((error: string) =>
             {

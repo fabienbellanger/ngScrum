@@ -37,16 +37,15 @@
         }
 
         .navbar-right {
-            flex:             4 auto;
-            margin-right:     15px;
-            text-align:       right;
-            color:            $lightColor;
-
-        display:         flex;
-        flex-direction:  row;
-        flex-wrap:       nowrap;
-        justify-content: flex-end;
-        align-items:     center;
+            flex:            4 auto;
+            margin-right:    15px;
+            text-align:      right;
+            color:           $lightColor;
+            display:         flex;
+            flex-direction:  row;
+            flex-wrap:       nowrap;
+            justify-content: flex-end;
+            align-items:     center;
 
             .avatar {
                 width:               30px;
@@ -106,16 +105,20 @@
 			li {
 				color: $lightColor;
 
-				a {
+				a, a:visited {
                     display: inline-block;
                     width:   100%;
 					color:   $lightColor;
 				}
 
-				a:hover {
+				a:hover, a:active, a:focus {
 					color:           $greenColor;
 					text-decoration: none;
 				}
+
+                a.active {
+                    color:           $greenColor;
+                }
 			}
 		}
     }

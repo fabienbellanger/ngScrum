@@ -3,8 +3,10 @@
     
     <ul *ngIf="layoutSidebarService.items.length > 0" class="list-unstyled">
         <li *ngFor="let item of layoutSidebarService.items">
-            <a routerLink="/{{ item.route }}">
-                <span class="{{ item.picto }}"></span>
+            <a routerLink="/{{ item.route }}" routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: false}">
+                <span class="{{ item.picto }} picto"></span>
+                &nbsp;
                 <span>{{ item.label }}</span>
             </a>
         </li>

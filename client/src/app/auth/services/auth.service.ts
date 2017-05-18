@@ -76,6 +76,8 @@ export class AuthService
                         data.user.groupId,
                     );
                     this.userService.init(user);
+
+                    resolve();
                 })
                 .catch((error: any) =>
                 {

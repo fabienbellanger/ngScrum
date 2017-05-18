@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { LayoutSidebarService } from '../services/layout-sidebar.service';
+import { UserService } from '../../auth';
 
 @Component({
     selector:    'sa-layout-navbar',
@@ -13,9 +14,11 @@ export class LayoutNavbarComponent implements OnInit
      * Constructeur
      *
      * @author Fabien Bellanger
-	 * @param {LayoutSidebarService} LayoutSidebarService
+	 * @param {LayoutSidebarService} layoutSidebarService
+	 * @param {UserService}          userService
      */
-    constructor(private layoutSidebarService: LayoutSidebarService)
+    constructor(private layoutSidebarService: LayoutSidebarService,
+                private userService: UserService)
     {
     }
 

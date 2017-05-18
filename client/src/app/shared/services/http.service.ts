@@ -59,7 +59,7 @@ export class HttpService
         if (error.hasOwnProperty('status') && error.status === 401)
         {
             // Redirection vers /logout
-            //this.router.navigate(['/logout']);
+            this.router.navigate(['/logout']);
         }
     }
 
