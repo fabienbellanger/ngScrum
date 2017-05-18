@@ -34,6 +34,13 @@
             a:hover {
                 color: $greenColor;
             }
+
+            .app-name {
+                display:     inline-block;
+                margin-left: 6px;
+                font-size:   18px;
+                color:       $lightColor;
+            }
         }
 
         .navbar-right {
@@ -48,8 +55,8 @@
             align-items:     center;
 
             .avatar {
-                width:               30px;
-                height:              30px;
+                width:               32px;
+                height:              32px;
                 background-size:     cover;
                 background-position: center;
                 border-radius:       50%;
@@ -57,7 +64,10 @@
             }
 
             .user-name {
+                @include textEllipsis();
+
                 margin-left: 10px;
+                max-width:   120px;
                 font-size:   13px;
                 font-weight: $fontWeightLight;
             }
@@ -88,7 +98,7 @@
         width:            220px;
         height:           calc(100vh - 92px);
         background-color: #2a2a2a;
-        transition:       0.15s;
+        transition:       0.3s;
         overflow:         auto;
 
         .sidebar-header {
@@ -100,12 +110,13 @@
         }
 
 		ul {
-			padding: 10px;
+			padding:    10px;
+            margin-top: 10px;
 
 			li {
-				color: $lightColor;
-
 				a, a:visited {
+                    @include textEllipsis();
+
                     display: inline-block;
                     width:   100%;
 					color:   $lightColor;
@@ -117,7 +128,7 @@
 				}
 
                 a.active {
-                    color:           $greenColor;
+                    color: $greenColor;
                 }
 			}
 		}

@@ -52,10 +52,10 @@ export class UserService
      * Retourne l'URL Gravatar'
      * 
      * @author Fabien Bellanger
-     * @param {number} size Taille en px
+     * @param {number} size Taille en px (default 32px)
      * @return {string} URL Gravatar
      */
-    public getGravatarUrl(size: number = 20): string | Int32Array
+    public getGravatarUrl(size: number = 32): string
     {
         let url: string = '';
 

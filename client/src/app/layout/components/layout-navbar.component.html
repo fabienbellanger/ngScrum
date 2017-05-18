@@ -4,11 +4,14 @@
             <a class="pointer" (click)="toggleSidebar()">
                 <span class="fa fa-bars"></span>
             </a>
+            <a routerLink='/'>
+                <span class="app-name">Scrum App</span>
+            </a>
         </div>
         <div class="navbar-right"
              *ngIf="userService.user !== null">
             <div class="avatar"
-                 [style.background-image]="'url(' + userService.getGravatarUrl(20) + ')'">
+                 [style.background-image]="'url(' + userService.getGravatarUrl(32) + ')'">
             </div>
             <div class="user-name">
                 {{ userService.getFullname() }}

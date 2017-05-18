@@ -1,6 +1,4 @@
 <aside id="sidebar" #sidebar [saToggleSidebar]="layoutSidebarService.state">
-    <div class="sidebar-header">Menu</div>
-    
     <ul *ngIf="layoutSidebarService.items.length > 0" class="list-unstyled">
         <li *ngFor="let item of layoutSidebarService.items">
             <a routerLink="/{{ item.route }}" routerLinkActive="active"

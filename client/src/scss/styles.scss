@@ -72,28 +72,6 @@ label {
     font-weight: 500;
 }
 
-.navbar {
-    @include unselectable();
-}
-.navbar-inverse .navbar-brand,
-.navbar-inverse .navbar-nav > li > a {
-    color: #eee;
-}
-
-.navbar-inverse .navbar-nav > .active > a {
-    color: #eee;
-}
-
-.navbar-inverse .navbar-brand:hover {
-    color: $greenColor;
-}
-
-.navbar-inverse .navbar-nav > .active > a,
-.navbar-inverse .navbar-nav > .active > a:focus,
-.navbar-inverse .navbar-nav > .active > a:hover {
-    background-color: #444;
-}
-
 .input-group-sm > .form-control,
 .input-group-sm > .input-group-addon,
 .input-group-sm > .input-group-btn > .btn,
@@ -141,6 +119,34 @@ a, a:visited {
 a:hover, a:active, a:focus {
     color:           darken($greenColor, 10%);
     text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: $fontWeightMedium;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 26px;
+}
+
+h3 {
+    font-size: 22px;
+}
+
+h4 {
+    font-size: 16px;
+}
+
+h5 {
+    font-size: 14px;
+}
+
+h6 {
+    font-size: 12px;
 }
 
 // ----------
