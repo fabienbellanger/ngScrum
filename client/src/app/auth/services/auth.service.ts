@@ -37,9 +37,19 @@ export class AuthService
      */
     public checkToken(): void
     {
-        const token: string = this.storageService.get('session', 'token', null);
+        this.apiAuthService.checkToken()
+            .then(() =>
+            {
+                this.isLoggedIn = true;
 
-        this.isLoggedIn = (token !== null);
+                // Redirection du vers la homepage
+                // -------------------------------
+                this.router.navigate(['/']);
+            })
+            .catch(() =>
+            {
+                this.isLoggedIn = false;
+            });
     }
 
     /**

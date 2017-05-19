@@ -68,13 +68,52 @@ export class ApiAuthService
 
 			if (token != null)
 			{
-				// 2. Récupération du compte
-				// -------------------------
+				// 2. Déconnexion
+				// --------------
 				const headers: any = new Headers();
 				headers.append('Authorization', 'Bearer ' + token);
 				headers.append('Content-Type', 'application/json');
 
 				this.httpService.get('/logout', {headers: headers}, true, true)
+					.then(() =>
+					{
+						resolve();
+					})
+					.catch(() =>
+					{
+						reject();
+					});
+			}
+			else
+			{
+				reject();
+			}
+		});
+	}
+
+	/**
+	 * Vérification du token
+	 * 
+	 * @author Fabien Bellanger
+	 * @return {Promise}
+	 */
+	public checkToken(): any
+	{
+		return new Promise((resolve: any, reject: any) =>
+		{
+			// 1. Récupération du token
+			// ------------------------
+			const token: string = this.storageService.get('session', 'token', null);
+
+			if (token != null)
+			{
+				// 2. Vérification du token
+				// ------------------------
+				const headers: any = new Headers();
+				headers.append('Authorization', 'Bearer ' + token);
+				headers.append('Content-Type', 'application/json');
+
+				this.httpService.get('/check-token', {headers: headers}, true, true)
 					.then(() =>
 					{
 						resolve();

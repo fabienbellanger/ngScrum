@@ -16,7 +16,7 @@ const appRoutes: Routes = [
     {
         path:        '',
         component:   LayoutComponent,
-        //canActivate: [AuthGuardService],
+        canActivate: [AuthGuardService],
         children:    [
             {
                 path:      'sprints',
@@ -26,7 +26,7 @@ const appRoutes: Routes = [
     },
     {
         path:      '**',
-        component: LayoutComponent,
+        component: LoginComponent,
     },
 ];
 

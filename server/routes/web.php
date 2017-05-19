@@ -27,11 +27,11 @@
             // ------
             Route::get('logout', 'AuthenticateController@logout');
 
-            // Page de test
-            // ------------
-            Route::get('test', function()
+            // Test du token
+            // -------------
+            Route::get('check-token', function()
             {
-                return Response::json(['data' => 'Test'], 200);
+                return Response::json(['tokenValid' => true], 200);
             });
         });
     });

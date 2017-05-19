@@ -48,6 +48,10 @@ export class LoginComponent implements OnInit
         this.password  	  = '';
 		this.errorMessage = '';
         this.currentYear  = '';
+
+        // L'utilisateur est-il déjà connecté ?
+        // ------------------------------------
+        this.authService.checkToken();
     }
 
     /**
