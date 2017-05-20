@@ -33,5 +33,9 @@
             {
                 return Response::json(['tokenValid' => true], 200);
             });
+
+            // User
+            // ----
+            include_once('api/user.php');
         });
     });

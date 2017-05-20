@@ -4,4 +4,4 @@ docker/database
 docker/logs
 
 .idea/dataSources.local.xml
-.idea/workspace.xml
+.idea/workspace.xm
