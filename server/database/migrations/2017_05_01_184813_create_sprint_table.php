@@ -19,7 +19,7 @@ class CreateSprintTable extends Migration
             $table->string('name', 50);
             $table->unsignedInteger('team_id');
             $table->timestamps();
-            $table->dateTime('finish_at');
+            $table->dateTime('finished_at');
 
             $table->foreign('team_id')
                 ->references('id')->on('team')

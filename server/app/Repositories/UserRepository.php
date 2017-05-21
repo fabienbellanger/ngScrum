@@ -93,4 +93,40 @@
                 'data'    => $teams,
             ];
         }
+
+        /**
+         * Liste des sprints
+         *
+         * @author Fabien Bellanger
+         * @param int $id ID de l'utilisateur
+         * @param string $filter Filtre {'all', 'finished', 'inProgress'}
+         * @return array
+         */
+        public static function getSprints($id, $filter = 'all'): ?array
+        {
+            $query = '
+                SELECT
+                    sprint.id, sprint.name, sprint.team_id, sprint.created_at, sprint.finish_at
+                FROM sprint
+                    INNER JOIN team ON team.id = sprint.team_id
+                    INNER JOIN team_member ON team.id = team_member.team_id AND team_member.user_id = :userId
+            ';
+
+            $results = DB::select($query, ['userId' => $id]);
+            if ($results)
+            {
+                return [
+                    'code'    => 200,
+                    'message' => 'Success',
+                    'data'    => $results,
+                ];
+            }
+            else
+            {
+                return [
+                    'code'    => 500,
+                    'message' => 'Internal Error',
+                ];
+            }
+        }
     }

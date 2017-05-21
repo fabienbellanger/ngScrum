@@ -29,4 +29,26 @@
                 return Response::json($response['data'], 200);
             }
         }
+
+        /**
+         * Liste des sprints d'un utilisateur
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @param int $id ID de l'utilisateur
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function getSprints(Request $request, $id)
+        {
+            $response = UserRepository::getSprints($id, 'all');
+
+            if ($response['code'] == 404)
+            {
+                return Response::notFound($response['message']);
+            }
+            else
+            {
+                return Response::json($response['data'], 200);
+            }
+        }
     }
