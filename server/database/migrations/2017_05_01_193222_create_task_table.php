@@ -23,7 +23,7 @@ class CreateTaskTable extends Migration
             $table->decimal('initial_duration', 10, 2)->default(0);
             $table->decimal('remaining_duration', 10, 2)->default(0);
             $table->timestamps();
-            $table->date('finished_at');
+            $table->date('finished_at')->nullable();
 
             $table->foreign('sprint_id')
                 ->references('id')->on('sprint')
