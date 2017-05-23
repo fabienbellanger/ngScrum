@@ -41,7 +41,7 @@ table.table {
     border-radius: 1px;
 }
 
-.btn:focus {
+.btn:focus, .btn:focus, .btn:active, .btn:active:focus {
     @include noOutline();
 }
 
@@ -58,13 +58,13 @@ table.table {
 
 input.form-control, textarea.form-control, select.form-control,
 input.form-control:hover, textarea.form-control:hover, select.form-control:hover,
-input.form-control:focus, textarea.form-control:focus, select.form-control:focus, {
+input.form-control:focus, textarea.form-control:focus, select.form-control:focus {
     border-radius: 0px;
     box-shadow:    none;
 }
 
 input.form-control:hover, textarea.form-control:hover, select.form-control:hover,
-input.form-control:focus, textarea.form-control:focus, select.form-control:focus, {
+input.form-control:focus, textarea.form-control:focus, select.form-control:focus {
     border-color: $greenColor;
 }
 

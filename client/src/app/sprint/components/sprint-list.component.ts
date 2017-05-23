@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ApiSprintService } from '../../api';
+
 @Component({
     selector:    'sa-sprint-list',
     templateUrl: './sprint-list.component.html',
@@ -7,12 +9,14 @@ import { Component, OnInit } from '@angular/core';
 
 export class SprintListComponent
 {
+    public sprints: any[];
+
     /**
      * Constructeur
      *
      * @author Fabien Bellanger
      */
-    constructor()
+    constructor(private apiSprintService: ApiSprintService)
     {
     }
 
@@ -23,5 +27,30 @@ export class SprintListComponent
      */
     public ngOnInit(): void
     {
+        this.getSprints('all');
+    }
+
+    /**
+     * Liste des sprints
+     *
+     * @author Fabien Bellanger
+     * @param {string} state Etat {all, inProgress, finished}
+     */
+    private getSprints(state: string): void
+    {
+        if (state !== 'all' && state !== 'inProgress' && state !== 'finished')
+        {
+            state = 'all';
+        }
+
+        this.apiSprintService.getList(state)
+            .then((sprints: any) =>
+            {
+                this.sprints = sprints;
+            })
+            .catch(() =>
+            {
+                console.error('[error] Get sprints list');
+            });
     }
 }

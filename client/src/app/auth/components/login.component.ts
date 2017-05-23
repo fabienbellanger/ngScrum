@@ -1,8 +1,5 @@
-import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { ToastyService } from 'ng2-toasty';
 
 import { AuthService } from '../services/auth.service';
 

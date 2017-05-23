@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule, HttpService } from '../shared';
 import { ApiAuthService } from './services/api-auth.service';
 import { ApiUserService } from './services/api-user.service';
+import { ApiSprintService } from './services/api-sprint.service';
 
 @NgModule({
     imports:      [
@@ -20,6 +21,7 @@ import { ApiUserService } from './services/api-user.service';
 		HttpService,
         ApiAuthService,
         ApiUserService,
+        ApiSprintService,
     ],
     exports:      [
     ],

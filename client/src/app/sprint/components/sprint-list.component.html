@@ -1,1 +1,17 @@
 <h1>Sprints List</h1>
+
+<div class="btn-group" role="group">
+    <button type="button" class="btn btn-default" (click)="getSprints('inProgress')">
+        {{ 'sprint.in.progress.list' | translate }}
+    </button>
+    <button type="button" class="btn btn-default" (click)="getSprints('finished')">
+        {{ 'sprint.finished.list' | translate }}
+    </button>
+    <button type="button" class="btn btn-default" (click)="getSprints('all')">
+        {{ 'sprint.all.list' | translate }}
+    </button>
+</div>
+
+<p>
+    {{ sprints | json }}
+</p>

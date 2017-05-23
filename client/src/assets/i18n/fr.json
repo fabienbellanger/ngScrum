@@ -17,5 +17,8 @@
 	"forgotten.password.success.message": "Un email vient de vous être envoyé à l'adresse suivante <b>{{ email }}</b> avec votre nouveau mot de passe.",
     "modify": "Modifier",
     "cancel": "Annuler",
-    "required": "Champ obligatoire"
+    "required": "Champ obligatoire",
+    "sprint.in.progress.list": "En cours",
+    "sprint.finished.list": "Terminés",
+    "sprint.all.list": "Tous"
 }

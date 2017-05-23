@@ -27,7 +27,18 @@ export class AuthService
                 private userService: UserService,
                 private router: Router)
     {
-        this.checkToken();
+        if (this.storageService.get('session', 'token', null))
+        {
+            this.isLoggedIn = true;
+
+            // Si le token existe, on vérifie ça validité
+            // ------------------------------------------
+            this.checkToken();
+        }
+        else
+        {
+            this.isLoggedIn = false;
+        }
     }
 
     /**

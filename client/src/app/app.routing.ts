@@ -26,10 +26,10 @@ const appRoutes: Routes = [
     },
     {
         path:      '**',
-        component: LoginComponent,
+        component: LayoutComponent,
     },
 ];
 
 export const Routing: any = RouterModule.forRoot(appRoutes, {
-    useHash: true,
+    useHash: false,
 });
