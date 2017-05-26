@@ -104,57 +104,29 @@
          */
         public static function getSprints($id, $filter = 'all'): ?array
         {
-            // 1. Requête
-            // ----------
-            $query = '
-                SELECT
-                    sprint.id AS sprintId,
-                    sprint.name AS sprintName,
-                    sprint.team_id AS teamId,
-                    sprint.created_at AS sprintCreatedAt,
-                    sprint.finished_at AS sprintFinishedAt,
-                    COUNT(task.id) AS tasksNumber
-                FROM sprint
-                    INNER JOIN team ON team.id = sprint.team_id
-                    INNER JOIN team_member ON team.id = team_member.team_id AND team_member.user_id = :userId
-                    INNER JOIN task ON sprint.id = task.sprint_id';
-            if ($filter == 'inProgress')
-            {
-                $query .= ' WHERE sprint.finished_at IS NULL';
-            }
-            elseif ($filter == 'finished')
-            {
-                $query .= ' WHERE sprint.finished_at IS NOT NULL';
-            }
-            $query .= ' GROUP BY sprint.id ORDER BY sprint.created_at ASC';
+            // Liste des sprints
+            // -----------------
+            $sprints = SprintRepository::getSprintsOfUser($id, $filter);
 
-            $results = DB::select($query, ['userId' => $id]);
-
-            // Traitement
-            // ----------
-            $sprints = [];
-            if ($results)
+            if ($sprints)
             {
-                // Mise en forme des données
-                // -------------------------
-                foreach ($results as $line)
+                // Informations sur les tâches
+                // ---------------------------
+                $sprintsTasksWorked = SprintRepository::getSprintsWorkedDurationOfUser($id, $filter);
+
+                // Construction du tableau
+                // -----------------------
+                foreach ($sprints as $sprintId => $sprintData)
                 {
-                    $sprintId = $line->sprintId;
-
-                    if (!isset($sprints[$sprintId]))
+                    if (array_key_exists($sprintId, $sprintsTasksWorked))
                     {
-                        $sprints[$sprintId]['id']          = $sprintId;
-                        $sprints[$sprintId]['name']        = $line->sprintName;
-                        $sprints[$sprintId]['teamId']      = $line->teamId;
-                        $sprints[$sprintId]['createdAt']   = $line->sprintCreatedAt;
-                        $sprints[$sprintId]['finishedAt']  = $line->sprintFinishedAt;
-                        $sprints[$sprintId]['tasksNumber'] = $line->tasksNumber;
+                        $sprints[$sprintId] = array_merge($sprintData, $sprintsTasksWorked[$sprintId]);
                     }
                 }
-
-                // Objet => tableau
-                $sprints = array_values($sprints);
             }
+
+            // Objet => tableau
+            $sprints = array_values($sprints);
 
             return [
                 'code'    => 200,
