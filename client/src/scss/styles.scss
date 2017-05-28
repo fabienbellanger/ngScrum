@@ -127,6 +127,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-size: 32px;
+    margin-bottom: 20px;
 }
 
 h2 {
@@ -147,6 +148,10 @@ h5 {
 
 h6 {
     font-size: 12px;
+}
+
+a.list-group-item {
+    color:  $darkColor;
 }
 
 // ----------

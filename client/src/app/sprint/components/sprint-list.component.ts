@@ -9,7 +9,8 @@ import { ApiSprintService } from '../../api';
 
 export class SprintListComponent
 {
-    public sprints: any[];
+    public sprints: any[] = [];
+    public state: string;
 
     /**
      * Constructeur
@@ -27,7 +28,7 @@ export class SprintListComponent
      */
     public ngOnInit(): void
     {
-        this.getSprints('all');
+        this.getSprints(this.state);
     }
 
     /**
@@ -40,8 +41,9 @@ export class SprintListComponent
     {
         if (state !== 'all' && state !== 'inProgress' && state !== 'finished')
         {
-            state = 'all';
+            state = 'inProgress';
         }
+        this.state = state;
 
         this.apiSprintService.getList(state)
             .then((sprints: any) =>

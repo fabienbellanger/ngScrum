@@ -1,17 +1,39 @@
 <h1>Sprints List</h1>
 
 <div class="btn-group" role="group">
-    <button type="button" class="btn btn-default" (click)="getSprints('inProgress')">
+    <button type="button" class="btn btn-default" [class.btn-primary]="state === 'inProgress'" (click)="getSprints('inProgress')">
         {{ 'sprint.in.progress.list' | translate }}
     </button>
-    <button type="button" class="btn btn-default" (click)="getSprints('finished')">
+    <button type="button" class="btn btn-default" [class.btn-primary]="state === 'finished'" (click)="getSprints('finished')">
         {{ 'sprint.finished.list' | translate }}
     </button>
-    <button type="button" class="btn btn-default" (click)="getSprints('all')">
+    <button type="button" class="btn btn-default" [class.btn-primary]="state === 'all'" (click)="getSprints('all')">
         {{ 'sprint.all.list' | translate }}
     </button>
 </div>
 
-<p>
-    {{ sprints | json }}
-</p>
+<div style="margin-top: 30px">
+    <div class="list-group" *ngIf="sprints?.length > 0">
+        <a href="#" class="list-group-item" *ngFor="let sprint of sprints">
+            <h4 class="list-group-item-heading">{{ sprint.name }} [{{ sprint.id }}]</h4>
+            <div class="list-group-item-text">
+                <ul>
+                    <li>Created at: <b>{{ sprint.createdAt }}</b></li>
+                    <li>Finished at: <b>{{ sprint.finishedAt }}</b></li>
+                    <li>Initial duration: <b>{{ sprint.initialDuration }}h</b></li>
+                    <li>Remaining duration: <b>{{ sprint.remainingDuration }}h</b></li>
+                    <li>Worked duration: <b>{{ sprint.workedDuration }}h</b></li>
+                    <li>Tasks number: <b>{{ sprint.tasksNumber }}</b></li>
+                    <li>Initial duration added after: <b>{{ sprint.initialDurationAddedAfter }}h</b></li>
+                    <li>Remaining duration added after: <b>{{ sprint.remainingDurationAddedAfter }}h</b></li>
+                    <li>Worked duration added after: <b>{{ sprint.workedDurationAddedAfter }}h</b></li>
+                    <li>Tasks number added after: <b>{{ sprint.tasksNumberAddedAfter }}</b></li>
+                </ul>
+            </div>
+        </a>
+    </div>
+
+    <div *ngIf="sprints?.length === 0">
+        No sprint
+    </div>
+</div>
