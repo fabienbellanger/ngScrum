@@ -34,6 +34,10 @@ table.table {
     font-weight: 500;
 }
 
+.green-color {
+    color: $greenColor;
+}
+
 // ---------
 // Bootstrap
 // ---------
@@ -126,7 +130,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: 32px;
+    font-size:     32px;
     margin-bottom: 20px;
 }
 
@@ -151,7 +155,24 @@ h6 {
 }
 
 a.list-group-item {
-    color:  $darkColor;
+    color: $darkColor;
+
+    .list-group-item-heading {
+        color: $greenColor;
+    }
+}
+
+.progress {
+    height:           14px;
+    margin-bottom:    10px;
+    border-radius:    0px;
+    box-shadow:       none;
+    background-color: #eee;
+
+    .progress-bar {
+        line-height: 14px;
+        font-size:   10px;
+    }
 }
 
 // ----------

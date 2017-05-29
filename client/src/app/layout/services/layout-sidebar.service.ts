@@ -37,4 +37,17 @@ export class LayoutSidebarService
 	{
 		this.state = (this.state === 'open') ? 'close' : 'open';
 	}
+
+    /**
+     * Referme la sidebar en mode mobile
+     *
+     * @author Fabien Bellanger
+     */
+    public mobileClose(): void
+    {
+        if (window.innerWidth <= 640)
+        {
+            this.state = 'close';
+        }
+    }
 }

@@ -12,6 +12,7 @@ export { ToolboxService } from './services/toolbox.service';
 // -----
 export { MomentPipe } from './pipes/moment.pipe';
 export { NewLinePipe } from './pipes/new-line.pipe';
+export { HourPipe } from './pipes/hour.pipe';
 
 // Directives
 // ----------

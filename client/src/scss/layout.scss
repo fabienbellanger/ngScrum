@@ -79,22 +79,15 @@
 // Main container
 // --------------
 #main-container {
-    display:         flex;
-    flex-direction:  row;
-    flex-wrap:       nowrap;
-    justify-content: space-between;
-    align-items:     stretch;
-    margin-top:      50px;
-    width:           100%;
-    height:          calc(100vh - 92px);
+    margin-top: 50px;
+    width:      100%;
+    height:     calc(100vh - 92px);
 
     // -------
     // Sidebar
     // -------
     #sidebar {
         @include unselectable();
-
-        flex:             1 auto;
         width:            220px;
         height:           calc(100vh - 92px);
         background-color: #2a2a2a;
@@ -109,42 +102,79 @@
             color:       $greenColor;
         }
 
-		ul {
-			padding:    10px;
+        ul {
+            padding:    10px;
             margin-top: 10px;
 
-			li {
-				a, a:visited {
+            li {
+                a, a:visited {
                     @include textEllipsis();
 
                     display: inline-block;
                     width:   100%;
-					color:   $lightColor;
-				}
+                    color:   $lightColor;
+                }
 
-				a:hover, a:active, a:focus {
-					color:           $greenColor;
-					text-decoration: none;
-				}
+                a:hover, a:active, a:focus {
+                    color:           $greenColor;
+                    text-decoration: none;
+                }
 
                 a.active {
                     color: $greenColor;
                 }
-			}
-		}
+            }
+        }
     }
 
     // -------
     // Content
     // -------
     #content {
-        flex:     1 auto;
         height:   calc(100vh - 92px);
         overflow: auto;
 
-		h1 {
-			color: $greenColor;
-		}
+        h1 {
+            color: $greenColor;
+        }
+    }
+}
+
+// Ecran inférieur ou égal à 640px
+// -------------------------------
+@media screen and (max-width: 640px) {
+    #main-container {
+        #sidebar {
+            position: absolute;
+            left:     0px;
+            z-index:  100;
+        }
+    }
+}
+
+// Ecran supérieur à 640px
+// -----------------------
+@media screen and (min-width: 641px) {
+    #main-container {
+        display:         flex;
+        flex-direction:  row;
+        flex-wrap:       nowrap;
+        justify-content: space-between;
+        align-items:     stretch;
+
+        // -------
+        // Sidebar
+        // -------
+        #sidebar {
+            flex: 1 auto;
+        }
+
+        // -------
+        // Content
+        // -------
+        #content {
+            flex: 1 auto;
+        }
     }
 }
 

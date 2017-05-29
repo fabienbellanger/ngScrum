@@ -24,10 +24,13 @@
                     sprint.name AS sprintName,
                     sprint.team_id AS teamId,
                     sprint.created_at AS sprintCreatedAt,
-                    sprint.finished_at AS sprintFinishedAt
+                    sprint.finished_at AS sprintFinishedAt,
+                    SUM(task.initial_duration) AS initialDuration,
+                    SUM(task.remaining_duration) AS remainingDuration
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
-                    INNER JOIN team_member ON team.id = team_member.team_id AND team_member.user_id = :userId';
+                    INNER JOIN team_member ON team.id = team_member.team_id AND team_member.user_id = :userId
+                    INNER JOIN task ON sprint.id = task.sprint_id';
             if ($filter == 'inProgress')
             {
                 $query .= ' WHERE sprint.finished_at IS NULL';
@@ -53,11 +56,14 @@
 
                     if (!isset($sprints[$sprintId]))
                     {
-                        $sprints[$sprintId]['id']         = $sprintId;
-                        $sprints[$sprintId]['name']       = $line->sprintName;
-                        $sprints[$sprintId]['teamId']     = $line->teamId;
-                        $sprints[$sprintId]['createdAt']  = $line->sprintCreatedAt;
-                        $sprints[$sprintId]['finishedAt'] = $line->sprintFinishedAt;
+                        $sprints[$sprintId]['id']                = $sprintId;
+                        $sprints[$sprintId]['name']              = $line->sprintName;
+                        $sprints[$sprintId]['teamId']            = $line->teamId;
+                        $sprints[$sprintId]['createdAt']         = $line->sprintCreatedAt;
+                        $sprints[$sprintId]['finishedAt']        = $line->sprintFinishedAt;
+                        $sprints[$sprintId]['initialDuration']   = $line->initialDuration;
+                        $sprints[$sprintId]['remainingDuration'] = $line->remainingDuration;
+                        $sprints[$sprintId]['progressPercent']   = round((($line->initialDuration - $line->remainingDuration) / $line->initialDuration) * 100, 2);
                     }
                 }
             }
@@ -73,10 +79,8 @@
                 SELECT
                     sprint.id AS sprintId,
                     task.id AS taskId,
-                    task.added_after AS taskAddedAfter,
                     task.initial_duration AS initialDuration,
-                    task.remaining_duration AS remainingDuration,
-                    SUM(task_user.duration) AS workedDuration
+                    task.remaining_duration AS remainingDuration
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
                     INNER JOIN team_member ON team.id = team_member.team_id AND team_member.user_id = :userId
@@ -110,32 +114,14 @@
                     // --------------
                     if (!isset($tasks[$sprintId]))
                     {
-                        $tasks[$sprintId]['initialDuration']             = 0;
-                        $tasks[$sprintId]['remainingDuration']           = 0;
-                        $tasks[$sprintId]['workedDuration']              = 0;
-                        $tasks[$sprintId]['tasksNumber']                 = 0;
-                        $tasks[$sprintId]['initialDurationAddedAfter']   = 0;
-                        $tasks[$sprintId]['remainingDurationAddedAfter'] = 0;
-                        $tasks[$sprintId]['workedDurationAddedAfter']    = 0;
-                        $tasks[$sprintId]['tasksNumberAddedAfter']       = 0;
+                        $tasks[$sprintId]['initialDuration']   = 0;
+                        $tasks[$sprintId]['remainingDuration'] = 0;
                     }
 
                     // Calculs
                     // -------
-                    if (!$line->taskAddedAfter)
-                    {
-                        $tasks[$sprintId]['initialDuration']   += $line->initialDuration;
-                        $tasks[$sprintId]['remainingDuration'] += $line->remainingDuration;
-                        $tasks[$sprintId]['workedDuration']    += $line->workedDuration;
-                        $tasks[$sprintId]['tasksNumber']       += 1;
-                    }
-                    else
-                    {
-                        $tasks[$sprintId]['initialDurationAddedAfter']   += $line->initialDuration;
-                        $tasks[$sprintId]['remainingDurationAddedAfter'] += $line->remainingDuration;
-                        $tasks[$sprintId]['workedDurationAddedAfter']    += $line->workedDuration;
-                        $tasks[$sprintId]['tasksNumberAddedAfter']       += 1;
-                    }
+                    $tasks[$sprintId]['initialDuration']   += $line->initialDuration;
+                    $tasks[$sprintId]['remainingDuration'] += $line->remainingDuration;
                 }
             }
 

@@ -14,6 +14,7 @@ import { ToolboxService } from './services/toolbox.service';
 
 import { MomentPipe } from './pipes/moment.pipe';
 import { NewLinePipe } from './pipes/new-line.pipe';
+import { HourPipe } from './pipes/hour.pipe';
 
 import { InputDirective } from './directives/input.directive';
 
@@ -39,6 +40,7 @@ export function createTranslateLoader(http: Http)
     declarations: [
         MomentPipe,
         NewLinePipe,
+        HourPipe,
         InputDirective,
     ],
     providers:    [
@@ -57,6 +59,7 @@ export function createTranslateLoader(http: Http)
         SlimLoadingBarModule,
         MomentPipe,
         NewLinePipe,
+        HourPipe,
         InputDirective,
     ],
 })

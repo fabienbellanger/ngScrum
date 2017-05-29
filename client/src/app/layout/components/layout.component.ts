@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { LayoutSidebarService } from '../services/layout-sidebar.service';
+
 @Component({
     selector: 'sa-layout',
     template: `
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
         <section id="main-container">
             <sa-layout-sidebar></sa-layout-sidebar>
 		    <div class="container-fluid" id="content">
-                <router-outlet></router-outlet>
+                <router-outlet (activate)="changeRoute()"></router-outlet>
             </div>
         </section>
 		<sa-layout-footer></sa-layout-footer>
@@ -21,7 +23,7 @@ export class LayoutComponent implements OnInit
      *
      * @author Fabien Bellanger
      */
-    constructor()
+    constructor(private layoutSidebarService: LayoutSidebarService)
     {
     }
 
@@ -33,5 +35,10 @@ export class LayoutComponent implements OnInit
     public ngOnInit(): void
     {
 		
+    }
+
+    private changeRoute(): void
+    {
+        this.layoutSidebarService.mobileClose();
     }
 }

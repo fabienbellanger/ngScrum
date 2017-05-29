@@ -19,6 +19,10 @@ const appRoutes: Routes = [
         canActivate: [AuthGuardService],
         children:    [
             {
+                path:      '',
+                component: SprintListComponent,
+            },
+            {
                 path:      'sprints',
                 component: SprintListComponent,
             },

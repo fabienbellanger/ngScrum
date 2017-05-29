@@ -17,18 +17,27 @@
         <a href="#" class="list-group-item" *ngFor="let sprint of sprints">
             <h4 class="list-group-item-heading">{{ sprint.name }} [{{ sprint.id }}]</h4>
             <div class="list-group-item-text">
-                <ul>
-                    <li>Created at: <b>{{ sprint.createdAt }}</b></li>
-                    <li>Finished at: <b>{{ sprint.finishedAt }}</b></li>
-                    <li>Initial duration: <b>{{ sprint.initialDuration }}h</b></li>
-                    <li>Remaining duration: <b>{{ sprint.remainingDuration }}h</b></li>
-                    <li>Worked duration: <b>{{ sprint.workedDuration }}h</b></li>
-                    <li>Tasks number: <b>{{ sprint.tasksNumber }}</b></li>
-                    <li>Initial duration added after: <b>{{ sprint.initialDurationAddedAfter }}h</b></li>
-                    <li>Remaining duration added after: <b>{{ sprint.remainingDurationAddedAfter }}h</b></li>
-                    <li>Worked duration added after: <b>{{ sprint.workedDurationAddedAfter }}h</b></li>
-                    <li>Tasks number added after: <b>{{ sprint.tasksNumberAddedAfter }}</b></li>
-                </ul>
+                <div class="text-muted">
+                    Created at: <b>{{ sprint.createdAt | date:"dd/MM/yyyy" }}</b>
+                </div>
+                <div class="text-muted" *ngIf="sprint.finishedAt">
+                    Finished at: <b>{{ sprint.finishedAt | date:"dd/MM/yyyy" }}</b>
+                </div>
+                <div class="text-muted">
+                    Remaining hours:
+                    <b>{{ sprint.remainingDuration | number:'.2-2' | hour }}</b>
+                </div>
+                <div class="progress" style="margin-top: 10px">
+                    <div class="progress-bar"
+                         role="progressbar"
+                         [attr.aria-valuenow]="sprint.progressPercent"
+                         aria-valuemin="0"
+                         aria-valuemax="100"
+                         style="min-width: 2em"
+                         [style.width]="sprint.progressPercent + '%'">
+                        {{ sprint.progressPercent }}%
+                    </div>
+                </div>
             </div>
         </a>
     </div>
