@@ -1,7 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuardService, LoginComponent, LogoutComponent } from './auth';
-import { SprintListComponent } from './sprint';
+import { SprintListComponent, SprintInfoComponent } from './sprint';
 import { LayoutComponent } from './layout';
 
 const appRoutes: Routes = [
@@ -19,12 +19,17 @@ const appRoutes: Routes = [
         canActivate: [AuthGuardService],
         children:    [
             {
-                path:      '',
+                path:       '',
+                redirectTo: 'sprints-list',
+                pathMatch:  'prefix',
+            },
+            {
+                path:      'sprints-list',
                 component: SprintListComponent,
             },
             {
-                path:      'sprints',
-                component: SprintListComponent,
+                path:      'sprint-info',
+                component: SprintInfoComponent,
             },
         ],
     },
@@ -35,5 +40,5 @@ const appRoutes: Routes = [
 ];
 
 export const Routing: any = RouterModule.forRoot(appRoutes, {
-    useHash: false,
+    useHash: true,
 });

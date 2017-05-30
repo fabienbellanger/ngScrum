@@ -7,6 +7,7 @@ import { SharedModule, HttpService } from '../shared';
 import { LayoutModule } from '../layout';
 
 import { SprintListComponent } from './components/sprint-list.component';
+import { SprintInfoComponent } from './components/sprint-info.component';
 
 @NgModule({
     imports:      [
@@ -18,12 +19,14 @@ import { SprintListComponent } from './components/sprint-list.component';
     ],
     declarations: [
 		SprintListComponent,
+        SprintInfoComponent,
     ],
     providers:    [
 		HttpService,
     ],
     exports:      [
 		SprintListComponent,
+        SprintInfoComponent,
     ],
 })
 

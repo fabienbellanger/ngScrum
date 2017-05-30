@@ -7,7 +7,7 @@ import { ApiSprintService } from '../../api';
     templateUrl: './sprint-list.component.html',
 })
 
-export class SprintListComponent
+export class SprintListComponent implements OnInit
 {
     public sprints: any[] = [];
     public state: string;

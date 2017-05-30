@@ -7,6 +7,47 @@
     class SprintRepository
     {
         /**
+         * Liste des sprints
+         *
+         * @author Fabien Bellanger
+         * @param int    $id     ID de l'utilisateur
+         * @param string $filter Filtre {'all', 'finished', 'inProgress'}
+         * @return array
+         */
+        public static function getSprints($id, $filter = 'all'): ?array
+        {
+            // Liste des sprints
+            // -----------------
+            $sprints = self::getSprintsOfUser($id, $filter);
+
+            if ($sprints)
+            {
+                // Informations sur les tâches
+                // ---------------------------
+                $sprintsTasksWorked = self::getSprintsWorkedDurationOfUser($id, $filter);
+
+                // Construction du tableau
+                // -----------------------
+                foreach ($sprints as $sprintId => $sprintData)
+                {
+                    if (array_key_exists($sprintId, $sprintsTasksWorked))
+                    {
+                        $sprints[$sprintId] = array_merge($sprintData, $sprintsTasksWorked[$sprintId]);
+                    }
+                }
+            }
+
+            // Objet => tableau
+            $sprints = array_values($sprints);
+
+            return [
+                'code'    => 200,
+                'message' => 'Success',
+                'data'    => $sprints,
+            ];
+        }
+
+        /**
          * Liste des sprints d'un utilisateur
          *
          * @author Fabien Bellanger
@@ -126,5 +167,18 @@
             }
 
             return $tasks;
+        }
+
+        /**
+         * Information d'un sprint
+         *
+         * @author Fabien Bellanger
+         * @param int $id ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @return array
+         */
+        public static function getSprintInfo($id, $sprintId): ?array
+        {
+            dd($id, $sprintId);
         }
     }

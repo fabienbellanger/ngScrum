@@ -6,3 +6,4 @@ export { SprintModule } from './sprint.module';
 // Composants
 // ----------
 export { SprintListComponent } from './components/sprint-list.component';
+export { SprintInfoComponent } from './components/sprint-info.component';
