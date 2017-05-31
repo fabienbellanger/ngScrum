@@ -1,1 +1,8 @@
-<h1>Sprint information</h1>
+<div *ngIf="!sprint">Loading...</div>
+<div>
+    <h1>{{ sprint?.name }}</h1>
+
+    <p>
+        {{ sprint | json }}
+    </p>
+</div>

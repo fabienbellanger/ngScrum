@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
 import { ToastyModule } from 'ng2-toasty';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { ChartsModule } from 'ng2-charts';
+
 import { DateService } from './services/date.service';
 import { HttpService } from './services/http.service';
 import { Rc4Service } from './services/rc4.service';
@@ -36,6 +38,7 @@ export function createTranslateLoader(http: Http)
         }),
         ToastyModule.forRoot(),
         SlimLoadingBarModule.forRoot(),
+        ChartsModule,
     ],
     declarations: [
         MomentPipe,
@@ -57,6 +60,7 @@ export function createTranslateLoader(http: Http)
         TranslateModule,
         ToastyModule,
         SlimLoadingBarModule,
+        ChartsModule,
         MomentPipe,
         NewLinePipe,
         HourPipe,

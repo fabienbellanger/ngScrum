@@ -38,6 +38,7 @@
             }
 
             // Objet => tableau
+            // ----------------
             $sprints = array_values($sprints);
 
             return [
@@ -112,6 +113,14 @@
             return $sprints;
         }
 
+        /**
+         * Informations sur les durées des sprints d'un utilisateur
+         *
+         * @author Fabien Bellanger
+         * @param int    $userId ID de l'utilisateur
+         * @param string $filter Filtre {'all', 'finished', 'inProgress'}
+         * @return array
+         */
         public static function getSprintsWorkedDurationOfUser($userId, $filter)
         {
             // Requête
@@ -173,12 +182,95 @@
          * Information d'un sprint
          *
          * @author Fabien Bellanger
-         * @param int $id ID de l'utilisateur
+         * @param int $id       ID de l'utilisateur
          * @param int $sprintId ID du sprint
          * @return array
          */
         public static function getSprintInfo($id, $sprintId): ?array
         {
-            dd($id, $sprintId);
+            $sprint = [];
+
+            // 1. Récupération du sprint
+            // -------------------------
+            $query   = '
+                SELECT sprint.name, sprint.created_at, sprint.updated_at, sprint.finished_at
+                FROM sprint
+                WHERE sprint.id = :sprintId';
+            $results = DB::select($query, ['sprintId' => $sprintId]);
+            if (!$results || count($results) != 1)
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'No sprint found',
+                ];
+            }
+
+            $sprint['id']         = $sprintId;
+            $sprint['name']       = $results[0]->name;
+            $sprint['createdAt']  = $results[0]->created_at;
+            $sprint['updatedAt']  = $results[0]->updated_at;
+            $sprint['finishedAt'] = $results[0]->finished_at;
+
+            // 2. Récupération des tâches
+            // --------------------------
+            $query   = '
+                SELECT
+                    task.id AS taskId,
+                    task.name AS taskName,
+                    task.description AS taskDescription,
+                    task.initial_duration AS taskInitialDuration,
+                    task.remaining_duration AS taskRemainingDuration,
+                    task.user_id AS taskUserId,
+                    task.added_after AS taskAddedAfter,
+                    task_user.id AS taskPartId,
+                    task_user.user_id AS taskPartUserId,
+                    task_user.duration AS taskPartDuration,
+                    task_user.date AS taskPartDate
+                FROM task
+                    INNER JOIN task_user ON task_user.task_id = task.id
+                WHERE task.sprint_id = :sprintId';
+            $results = DB::select($query, ['sprintId' => $sprintId]);
+            $tasks   = [];
+            foreach ($results as $task)
+            {
+                $taskId     = $task->taskId;
+                $taskPartId = $task->taskPartId;
+
+                if (!array_key_exists($taskId, $tasks))
+                {
+                    $tasks[$taskId]['id']                = $taskId;
+                    $tasks[$taskId]['name']              = $task->taskName;
+                    $tasks[$taskId]['description']       = $task->taskDescription;
+                    $tasks[$taskId]['initialDuration']   = $task->taskInitialDuration;
+                    $tasks[$taskId]['remainingDuration'] = $task->taskRemainingDuration;
+                    $tasks[$taskId]['userId']            = $task->taskUserId;
+                    $tasks[$taskId]['addedAfter']        = $task->taskAddedAfter;
+                    $tasks[$taskId]['list']              = [];
+                }
+
+                if (!array_key_exists($taskPartId, $tasks[$taskId]['list']))
+                {
+                    $tasks[$taskId]['list'][$taskPartId]['id']       = $taskPartId;
+                    $tasks[$taskId]['list'][$taskPartId]['userId']   = $task->taskPartUserId;
+                    $tasks[$taskId]['list'][$taskPartId]['duration'] = $task->taskPartDuration;
+                    $tasks[$taskId]['list'][$taskPartId]['date']     = $task->taskPartDate;
+                }
+            }
+
+            // Objet => tableau
+            // ----------------
+            $tasks = array_values($tasks);
+            foreach ($tasks as $index => $task)
+            {
+                $tasks[$index]['list'] = array_values($tasks[$index]['list']);
+            }
+
+            $sprint['tasks'] = $tasks;
+
+            return [
+                'code'    => 200,
+                'message' => 'Success',
+                'data'    => $sprint,
+            ];
         }
     }

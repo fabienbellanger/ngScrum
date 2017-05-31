@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { ApiSprintService } from '../../api';
+import { Sprint } from '../../models';
 
 @Component({
     selector:    'sa-sprint-info',
@@ -10,6 +11,8 @@ import { ApiSprintService } from '../../api';
 
 export class SprintInfoComponent implements OnInit
 {
+    public sprint: Sprint;
+
     /**
      * Constructeur
      *
@@ -29,6 +32,14 @@ export class SprintInfoComponent implements OnInit
     {
         const sprintId: number = +this.route.snapshot.params['sprintId'];
 
-        console.log(sprintId);
+        this.apiSprintService.getSprintInformation(sprintId)
+            .then((sprint: any) =>
+            {
+                this.sprint = sprint;
+            })
+            .catch(() =>
+            {
+                console.error('Error sprint info');
+            });
     }
 }

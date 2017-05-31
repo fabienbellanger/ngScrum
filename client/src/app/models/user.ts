@@ -9,11 +9,11 @@ export class User
      * Constructeur
      *
      * @author Fabien Bellanger
-     * @param {Number}   id
-     * @param {String}   lastname
-     * @param {String}   firstname
-     * @param {String} 	 email
-     * @param {Number}   groupId
+     * @param {number}   id
+     * @param {string}   lastname
+     * @param {string}   firstname
+     * @param {string} 	 email
+     * @param {number}   groupId
      */
     constructor(public id: number,
                 public lastname: string,
