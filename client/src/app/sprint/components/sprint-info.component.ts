@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ApiSprintService } from '../../api';
-import { Sprint } from '../../models';
+import { SprintService } from '../services/sprint.service';
 
 @Component({
     selector:    'sa-sprint-info',
@@ -11,15 +11,17 @@ import { Sprint } from '../../models';
 
 export class SprintInfoComponent implements OnInit
 {
-    public sprint: Sprint;
-
     /**
      * Constructeur
      *
      * @author Fabien Bellanger
+     * @param {ApiSprintService}    apiSprintService
+     * @param {ActivatedRoute}      route
+     * @param {SprintService}       sprintService
      */
     constructor(private apiSprintService: ApiSprintService,
-                private route: ActivatedRoute)
+                private route: ActivatedRoute,
+                private sprintService: SprintService)
     {
     }
 
@@ -35,7 +37,7 @@ export class SprintInfoComponent implements OnInit
         this.apiSprintService.getSprintInformation(sprintId)
             .then((sprint: any) =>
             {
-                this.sprint = sprint;
+                this.sprintService.init(sprint);
             })
             .catch(() =>
             {

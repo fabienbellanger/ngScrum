@@ -1,8 +1,32 @@
-<div *ngIf="!sprint">Loading...</div>
-<div>
-    <h1>{{ sprint?.name }}</h1>
+<div *ngIf="!sprintService.sprint"><h2>Loading...</h2></div>
+<div *ngIf="sprintService.sprint">
+    <h1>{{ sprintService.sprint.name }}</h1>
 
     <p>
-        {{ sprint | json }}
+        {{ sprintService.sprint | json }}
     </p>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-xs-6 col-md-2">
+                {{ 'initial.duration' | translate }}
+            </div>
+            <div class="col-xs-6 col-md-2 bold">
+                {{ sprintService.initialDuration | hour }}
+            </div>
+            <div class="col-xs-6 col-md-2">
+                {{ 'added.duration' | translate }}
+            </div>
+            <div class="col-xs-6 col-md-2 bold">
+                {{ sprintService.addedDuration | hour }}
+                ({{ sprintService.addedDuration / sprintService.totalDuration * 100 }} %)
+            </div>
+            <div class="col-xs-6 col-md-2">
+                {{ 'total.duration' | translate }}
+            </div>
+            <div class="col-xs-6 col-md-2 bold">
+                {{ sprintService.totalDuration | hour }}
+            </div>
+        </div>
+    </div>
 </div>

@@ -12,15 +12,21 @@ export class Task
      * @param {number}   id
      * @param {string}   name
      * @param {string}   description
-     * @param {string} 	 date
-     * @param {number}   duration
+     * @param {number}   initialDuration
+     * @param {number}   remainingDuration
+     * @param {boolean}  addedAfter
+     * @param {number}   userId
+     * @param {string}   createdDate
      * @param {list}     any[]
      */
     constructor(public id: number,
                 public name: string,
                 public description: string,
-                public date: string,
-                public duration: number,
+                public initialDuration: number,
+                public remainingDuration: number,
+                public addedAfter: boolean,
+                public userId: number,
+                public createdDate: string,
                 public list: any[])
     {
     }

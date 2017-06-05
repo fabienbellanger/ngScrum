@@ -14,7 +14,7 @@ export class Sprint
      * @param {number}   id
      * @param {string}   name
      * @param {string}   createdAt
-     * @param {string} 	 updatedAt
+     * @param {string}     updatedAt
      * @param {string}   finishedAt
      * @param {Task[]}    tasks
      */

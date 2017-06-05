@@ -2,6 +2,7 @@ export { SprintModule } from './sprint.module';
 
 // Services
 // --------
+export { SprintService } from './services/sprint.service';
 
 // Composants
 // ----------

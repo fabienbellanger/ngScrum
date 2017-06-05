@@ -22,5 +22,8 @@
     "sprint.finished.list": "Terminés",
     "sprint.all.list": "Tous",
     "no.sprint": "Pas de sprint",
-    "sprints.list": "Liste des sprints"
+    "sprints.list": "Liste des sprints",
+    "initial.duration": "Durée initiale",
+    "added.duration": "Durée non prévue",
+    "total.duration": "Durée Totale"
 }

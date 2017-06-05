@@ -23,6 +23,9 @@ export class HourPipe implements PipeTransform
         {
             return '0h';
         }
+
+        value = value + '';
+
         return value.replace('.', ',') + 'h';
     }
 }
