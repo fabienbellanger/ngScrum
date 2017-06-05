@@ -25,4 +25,15 @@ export class Sprint
                 public tasks: Task[])
     {
     }
+
+    /**
+     * Nombre de tâches
+     * 
+     * @author Fabien Bellanger
+     * @return {number} Nombre de tâches
+     */
+    public getTasksNumber(): number
+    {
+        return this.tasks.length;
+    }
 }

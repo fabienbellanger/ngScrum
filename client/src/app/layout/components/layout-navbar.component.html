@@ -5,13 +5,13 @@
                 <span class="fa fa-bars"></span>
             </a>
             <a routerLink='/'>
-                <span class="app-name">Scrum App</span>
+                <span class="app-name">ApiScrum</span>
             </a>
         </div>
         <div class="navbar-right"
              *ngIf="userService.user !== null">
             <div class="avatar"
-                 [style.background-image]="'url(' + userService.getGravatarUrl(32) + ')'">
+                 [style.background-image]="'url(' + userService.getGravatarUrl() + ')'">
             </div>
             <div class="user-name">
                 {{ userService.getFullname() }}
