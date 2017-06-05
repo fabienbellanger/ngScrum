@@ -12,8 +12,7 @@ import { LayoutSidebarService } from '../services/layout-sidebar.service';
                 <router-outlet (activate)="changeRoute()"></router-outlet>
             </div>
         </section>
-		<sa-layout-footer></sa-layout-footer>
-	`,
+		<sa-layout-footer></sa-layout-footer>`,
 })
 
 export class LayoutComponent implements OnInit
@@ -34,11 +33,16 @@ export class LayoutComponent implements OnInit
      */
     public ngOnInit(): void
     {
-		
     }
 
+    /**
+     * Changement de route
+     *
+     * @author Fabien Bellanger
+     */
     private changeRoute(): void
     {
+        // On referme la sidebar en mode mobile       
         this.layoutSidebarService.mobileClose();
     }
 }

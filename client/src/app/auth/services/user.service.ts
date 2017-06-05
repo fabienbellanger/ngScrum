@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { StorageService } from '../../shared';
 import { User } from '../../models';
 
-import { Md5 } from 'ts-md5/dist/md5';
-
 @Injectable()
 
 export class UserService
@@ -45,27 +43,20 @@ export class UserService
      */
     public getFullname(): string
     {
-        return (this.user !== null) ? this.user.firstname + ' ' + this.user.lastname : '';
+        //return (this.user !== null) ? this.user.firstname + ' ' + this.user.lastname : '';
+        return (this.user !== null) ? this.user.getFullname() : '';
     }
 
     /**
      * Retourne l'URL Gravatar'
      * 
      * @author Fabien Bellanger
-     * @param {number} size Taille en px (default 32px)
      * @return {string} URL Gravatar
      */
-    public getGravatarUrl(size: number = 32): string
+    public getGravatarUrl(): string
     {
-        let url: string = '';
-
-        if (this.user !== null && this.user.email !== null && this.user.email !== '' && this.user.email !== undefined)
-        {
-            let md5: Md5 = new Md5();
-
-            url = 'https://www.gravatar.com/avatar/' + Md5.hashStr(this.user.email) + '?s=' + size;
-        }
-
-        return url;
+        return (this.user !== null)
+            ? this.user.getGravatarUrl()
+            : '';
     }
 }
