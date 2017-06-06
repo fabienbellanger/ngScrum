@@ -27,7 +27,7 @@
                 </div>
                 <div class="text-muted">
                     Remaining hours:
-                    <b>{{ sprint.remainingDuration | number:'.2-2' | hour }}</b>
+                    <b>{{ sprint.remainingDuration | duration:'hour' }}</b>
                 </div>
                 <div class="progress" style="margin-top: 10px">
                     <div class="progress-bar"

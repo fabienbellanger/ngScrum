@@ -12,20 +12,32 @@
                 {{ 'initial.duration' | translate }}
             </div>
             <div class="col-xs-6 col-md-2 bold">
-                {{ sprintService.initialDuration | hour }}
+                {{ sprintService.initialDuration | duration:'hour' }}
             </div>
             <div class="col-xs-6 col-md-2">
                 {{ 'added.duration' | translate }}
             </div>
             <div class="col-xs-6 col-md-2 bold">
-                {{ sprintService.addedDuration | hour }}
-                ({{ sprintService.addedDuration / sprintService.totalDuration * 100 }} %)
+                {{ sprintService.addedDuration | duration:'hour' }}
+                ({{ sprintService.addedDuration / sprintService.totalDuration * 100 | percentFr }})
             </div>
             <div class="col-xs-6 col-md-2">
                 {{ 'total.duration' | translate }}
             </div>
             <div class="col-xs-6 col-md-2 bold">
-                {{ sprintService.totalDuration | hour }}
+                {{ sprintService.totalDuration | duration:'hour' }}
+            </div>
+            <div class="col-xs-6 col-md-2">
+                {{ 'remaining.duration' | translate }}
+            </div>
+            <div class="col-xs-6 col-md-2 bold">
+                {{ sprintService.remainingDuration | duration:'hour' }}
+            </div>
+            <div class="col-xs-6 col-md-2">
+                {{ 'total.worked.duration' | translate }}
+            </div>
+            <div class="col-xs-6 col-md-2 bold">
+                TODO
             </div>
         </div>
     </div>

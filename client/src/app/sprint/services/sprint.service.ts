@@ -11,6 +11,7 @@ export class SprintService
     public initialDuration: number;
     public addedDuration: number;
     public totalDuration: number;
+    public remainingDuration: number;
 
     /**
      * Constructeur
@@ -19,10 +20,11 @@ export class SprintService
      */
     constructor(private storageService: StorageService)
     {
-        this.sprint          = null;
-        this.initialDuration = 0;
-        this.addedDuration   = 0;
-        this.totalDuration   = 0;
+        this.sprint            = null;
+        this.initialDuration   = 0;
+        this.addedDuration     = 0;
+        this.totalDuration     = 0;
+        this.remainingDuration = 0;
     }
 
     /**
@@ -33,17 +35,18 @@ export class SprintService
      */
     public init(sprint: Sprint): void
     {
-        this.sprint          = sprint;
-        this.initialDuration = this.getDuration(false);
-        this.addedDuration   = this.getDuration(true);
-        this.totalDuration   = this.initialDuration + this.addedDuration;
+        this.sprint            = sprint;
+        this.initialDuration   = this.getDuration(false);
+        this.addedDuration     = this.getDuration(true);
+        this.totalDuration     = this.initialDuration + this.addedDuration;
+        this.remainingDuration = this.getRemainigDuration();
     }
 
     /**
      * Retourne une durée
      *
      * @author Fabien Bellanger
-     * @param {}
+     * @param {boolean} added Tâches non prévues
      * @return {number} Durée
      */
     private getDuration(added: boolean): number
@@ -58,6 +61,27 @@ export class SprintService
                 {
                     duration += +task.initialDuration;
                 }
+            }
+        }
+
+        return duration;
+    }
+
+    /**
+     * Retourne la durée restante
+     *
+     * @author Fabien Bellanger
+     * @return {number} Durée
+     */
+    private getRemainigDuration(): number
+    {
+        let duration: number = 0;
+
+        if (this.sprint !== null)
+        {
+            for (let task of this.sprint.tasks)
+            {
+                duration += +task.remainingDuration;
             }
         }
 

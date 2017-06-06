@@ -14,26 +14,16 @@ export class Sprint
      * @param {number}   id
      * @param {string}   name
      * @param {string}   createdAt
-     * @param {string}     updatedAt
+     * @param {string}   updatedAt
      * @param {string}   finishedAt
-     * @param {Task[]}    tasks
+     * @param {Task[]}   tasks
      */
     constructor(public id: number,
                 public name: string,
                 public createdAt: string,
                 public updatedAt: string,
+                public finishedAt: string,
                 public tasks: Task[])
     {
-    }
-
-    /**
-     * Nombre de tâches
-     * 
-     * @author Fabien Bellanger
-     * @return {number} Nombre de tâches
-     */
-    public getTasksNumber(): number
-    {
-        return this.tasks.length;
     }
 }
