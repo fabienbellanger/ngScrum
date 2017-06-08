@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule, HttpService } from '../shared';
 import { LayoutModule } from '../layout';
 
+import { SprintComponent } from './components/sprint.component';
 import { SprintListComponent } from './components/sprint-list.component';
 import { SprintInfoComponent } from './components/sprint-info.component';
 import { SprintService } from './services/sprint.service';
@@ -23,6 +24,7 @@ export { SprintService } from './services/sprint.service';
     declarations: [
 		SprintListComponent,
         SprintInfoComponent,
+        SprintComponent,
     ],
     providers:    [
 		HttpService,
@@ -31,6 +33,7 @@ export { SprintService } from './services/sprint.service';
     exports:      [
 		SprintListComponent,
         SprintInfoComponent,
+        SprintComponent,
     ],
 })
 

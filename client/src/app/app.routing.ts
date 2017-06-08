@@ -1,7 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuardService, LoginComponent, LogoutComponent } from './auth';
-import { SprintListComponent, SprintInfoComponent } from './sprint';
+import { SprintComponent, SprintListComponent, SprintInfoComponent } from './sprint';
 import { LayoutComponent } from './layout';
 
 const appRoutes: Routes = [
@@ -20,16 +20,22 @@ const appRoutes: Routes = [
         children:    [
             {
                 path:       '',
-                redirectTo: 'sprints-list',
+                redirectTo: 'sprints/list',
                 pathMatch:  'prefix',
             },
             {
-                path:      'sprints-list',
-                component: SprintListComponent,
-            },
-            {
-                path:      'sprint-info',
-                component: SprintInfoComponent,
+                path:        'sprints',
+                component:   SprintComponent,
+                children:    [
+                    {
+                        path:      'list',
+                        component: SprintListComponent,
+                    },
+                    {
+                        path:      'info',
+                        component: SprintInfoComponent,
+                    },
+                ],
             },
         ],
     },

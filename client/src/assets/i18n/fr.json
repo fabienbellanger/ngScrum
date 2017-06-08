@@ -27,5 +27,9 @@
     "added.duration": "Durée non prévue",
     "total.duration": "Durée totale",
     "remaining.duration": "Durée restante",
-    "total.worked.duration": "Durée totale travaillée"
+    "total.worked.duration": "Durée totale travaillée",
+	"created.at": "Créé le :",
+	"finished.at": "Terminé le :",
+	"remaining.hours": "Heures restantes",
+	"loading": "Chargement"
 }

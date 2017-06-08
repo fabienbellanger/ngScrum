@@ -1,4 +1,4 @@
-<div *ngIf="!sprintService.sprint"><h2>Loading...</h2></div>
+<div *ngIf="!sprintService.sprint"><h2>{{ 'loading' | translate }}...</h2></div>
 <div *ngIf="sprintService.sprint">
     <h1>{{ sprintService.sprint.name }}</h1>
 
@@ -8,36 +8,48 @@
 
     <div class="panel panel-default">
         <div class="panel-body">
-            <div class="col-xs-6 col-md-2">
-                {{ 'initial.duration' | translate }}
+            <div class="row">
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                    {{ 'initial.duration' | translate }}
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 bold">
+                    {{ sprintService.initialDuration | duration:'hour' }}
+                </div>
             </div>
-            <div class="col-xs-6 col-md-2 bold">
-                {{ sprintService.initialDuration | duration:'hour' }}
+            <div class="row">
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                    {{ 'added.duration' | translate }}
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 bold">
+                    {{ sprintService.addedDuration | duration:'hour' }}
+                    <span class="normal">
+                        ({{ sprintService.addedDuration / sprintService.totalDuration * 100 | percentFr }})
+                    </span>
+                </div>
             </div>
-            <div class="col-xs-6 col-md-2">
-                {{ 'added.duration' | translate }}
+            <div class="row">
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                    {{ 'total.duration' | translate }}
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 bold">
+                    {{ sprintService.totalDuration | duration:'hour' }}
+                </div>
             </div>
-            <div class="col-xs-6 col-md-2 bold">
-                {{ sprintService.addedDuration | duration:'hour' }}
-                ({{ sprintService.addedDuration / sprintService.totalDuration * 100 | percentFr }})
+            <div class="row">
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                    {{ 'remaining.duration' | translate }}
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 bold">
+                    {{ sprintService.remainingDuration | duration:'hour' }}
+                </div>
             </div>
-            <div class="col-xs-6 col-md-2">
-                {{ 'total.duration' | translate }}
-            </div>
-            <div class="col-xs-6 col-md-2 bold">
-                {{ sprintService.totalDuration | duration:'hour' }}
-            </div>
-            <div class="col-xs-6 col-md-2">
-                {{ 'remaining.duration' | translate }}
-            </div>
-            <div class="col-xs-6 col-md-2 bold">
-                {{ sprintService.remainingDuration | duration:'hour' }}
-            </div>
-            <div class="col-xs-6 col-md-2">
-                {{ 'total.worked.duration' | translate }}
-            </div>
-            <div class="col-xs-6 col-md-2 bold">
-                TODO
+            <div class="row">
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                    {{ 'total.worked.duration' | translate }}
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 bold">
+                    TODO
+                </div>
             </div>
         </div>
     </div>

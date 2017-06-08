@@ -23,6 +23,7 @@ export class SprintInfoComponent implements OnInit
                 private route: ActivatedRoute,
                 private sprintService: SprintService)
     {
+        this.sprintService.init(null);
     }
 
     /**

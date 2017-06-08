@@ -1,50 +1,56 @@
-<h1>{{ 'sprints.list' | translate }}</h1>
+<div *ngIf="!sprints"><h2>{{ 'loading' | translate }}...</h2></div>
+<div *ngIf="sprints">
+    <h1>{{ 'sprints.list' | translate }}</h1>
 
-<div class="btn-group" role="group">
-    <button type="button" class="btn btn-default" [class.btn-primary]="state === 'inProgress'" (click)="getSprints('inProgress')">
-        {{ 'sprint.in.progress.list' | translate }}
-    </button>
-    <button type="button" class="btn btn-default" [class.btn-primary]="state === 'finished'" (click)="getSprints('finished')">
-        {{ 'sprint.finished.list' | translate }}
-    </button>
-    <button type="button" class="btn btn-default" [class.btn-primary]="state === 'all'" (click)="getSprints('all')">
-        {{ 'sprint.all.list' | translate }}
-    </button>
-</div>
-
-<div style="margin-top: 30px">
-    <div class="list-group" *ngIf="sprints?.length > 0">
-        <a [routerLink]="['/sprint-info', { sprintId: sprint.id }]"
-           class="list-group-item"
-           *ngFor="let sprint of sprints">
-            <h4 class="list-group-item-heading">{{ sprint.name }}</h4>
-            <div class="list-group-item-text">
-                <div class="text-muted">
-                    Created at: <b>{{ sprint.createdAt | date:"dd/MM/yyyy" }}</b>
-                </div>
-                <div class="text-muted" *ngIf="sprint.finishedAt">
-                    Finished at: <b>{{ sprint.finishedAt | date:"dd/MM/yyyy" }}</b>
-                </div>
-                <div class="text-muted">
-                    Remaining hours:
-                    <b>{{ sprint.remainingDuration | duration:'hour' }}</b>
-                </div>
-                <div class="progress" style="margin-top: 10px">
-                    <div class="progress-bar"
-                         role="progressbar"
-                         [attr.aria-valuenow]="sprint.progressPercent"
-                         aria-valuemin="0"
-                         aria-valuemax="100"
-                         style="min-width: 2em"
-                         [style.width]="sprint.progressPercent + '%'">
-                        {{ sprint.progressPercent }}%
-                    </div>
-                </div>
-            </div>
-        </a>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default" [class.btn-primary]="state === 'inProgress'" (click)="getSprints('inProgress')">
+            {{ 'sprint.in.progress.list' | translate }}
+        </button>
+        <button type="button" class="btn btn-default" [class.btn-primary]="state === 'finished'" (click)="getSprints('finished')">
+            {{ 'sprint.finished.list' | translate }}
+        </button>
+        <button type="button" class="btn btn-default" [class.btn-primary]="state === 'all'" (click)="getSprints('all')">
+            {{ 'sprint.all.list' | translate }}
+        </button>
     </div>
 
-    <div *ngIf="sprints?.length === 0">
-        {{ 'no.sprint' | translate }}
+    <div style="margin-top: 30px">
+        <div class="list-group" *ngIf="sprints?.length > 0">
+            <a [routerLink]="['/sprints/info', { sprintId: sprint.id }]" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: false}"
+            class="list-group-item"
+            *ngFor="let sprint of sprints">
+                <h4 class="list-group-item-heading">{{ sprint.name }}</h4>
+                <div class="list-group-item-text">
+                    <div class="text-muted">
+                        {{ 'created.at' | translate }}
+                        <b>{{ sprint.createdAt | date:"dd/MM/yyyy" }}</b>
+                    </div>
+                    <div class="text-muted" *ngIf="sprint.finishedAt">
+                        {{ 'finished.at' | translate }}
+                        <b>{{ sprint.finishedAt | date:"dd/MM/yyyy" }}</b>
+                    </div>
+                    <div class="text-muted">
+                        {{ 'remaining.hours' | translate }}
+                        <b>{{ sprint.remainingDuration | duration:'hour' }}</b>
+                    </div>
+                    <div class="progress" style="margin-top: 10px">
+                        <div class="progress-bar"
+                            role="progressbar"
+                            [attr.aria-valuenow]="sprint.progressPercent"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            style="min-width: 2em"
+                            [style.width]="sprint.progressPercent + '%'">
+                            {{ sprint.progressPercent }}%
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div *ngIf="sprints?.length === 0">
+            {{ 'no.sprint' | translate }}
+        </div>
     </div>
 </div>
