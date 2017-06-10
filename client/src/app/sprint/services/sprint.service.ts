@@ -12,6 +12,8 @@ export class SprintService
     public addedDuration: number;
     public totalDuration: number;
     public remainingDuration: number;
+    public totalTaskUserWorkedDuration: number;
+    public totalTaskUserDuration: number;
 
     /**
      * Constructeur
@@ -20,11 +22,13 @@ export class SprintService
      */
     constructor(private storageService: StorageService)
     {
-        this.sprint            = null;
-        this.initialDuration   = 0;
-        this.addedDuration     = 0;
-        this.totalDuration     = 0;
-        this.remainingDuration = 0;
+        this.sprint                      = null;
+        this.initialDuration             = 0;
+        this.addedDuration               = 0;
+        this.totalDuration               = 0;
+        this.remainingDuration           = 0;
+        this.totalTaskUserWorkedDuration = 0;
+        this.totalTaskUserDuration       = 0;
     }
 
     /**
@@ -35,11 +39,13 @@ export class SprintService
      */
     public init(sprint: Sprint): void
     {
-        this.sprint            = sprint;
-        this.initialDuration   = this.getDuration(false);
-        this.addedDuration     = this.getDuration(true);
-        this.totalDuration     = this.initialDuration + this.addedDuration;
-        this.remainingDuration = this.getRemainigDuration();
+        this.sprint                      = sprint;
+        this.initialDuration             = this.getDuration(false);
+        this.addedDuration               = this.getDuration(true);
+        this.totalDuration               = this.initialDuration + this.addedDuration;
+        this.remainingDuration           = this.getRemainigDuration();
+        this.totalTaskUserWorkedDuration = this.getTotalTaskUserDuration(true);
+        this.totalTaskUserDuration       = this.getTotalTaskUserDuration(false);
     }
 
     /**
@@ -82,6 +88,41 @@ export class SprintService
             for (let task of this.sprint.tasks)
             {
                 duration += +task.remainingDuration;
+            }
+        }
+
+        return duration;
+    }
+
+    /**
+     * Retourne la durée totales des tâches réalisées par les utilisateurs
+     *
+     * @author Fabien Bellanger
+     * @param {boolean} worked Travaillées
+     * @return {number} Durée
+     */
+    private getTotalTaskUserDuration(worked: boolean = false): number
+    {
+        let duration: number = 0;
+
+        if (this.sprint !== null)
+        {
+            for (let task of this.sprint.tasks)
+            {
+                if (task.list.length > 0)
+                {
+                    for (let taskUser of task.list)
+                    {
+                        if (worked)
+                        {
+                            duration += +taskUser.workedDuration;
+                        }
+                        else
+                        {
+                            duration += +taskUser.duration;
+                        }
+                    }
+                }
             }
         }
 

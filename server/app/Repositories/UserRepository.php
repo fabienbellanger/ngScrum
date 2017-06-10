@@ -23,11 +23,12 @@
             }
 
             $data = [
-                'id'        => $user->id,
-                'lastname'  => $user->lastname,
-                'firstname' => $user->firstname,
-                'email'     => $user->email,
-                'groupId'   => $user->group_id
+                'id'                => $user->id,
+                'lastname'          => $user->lastname,
+                'firstname'         => $user->firstname,
+                'email'             => $user->email,
+                'groupId'           => $user->group_id,
+                'workedHoursPerDay' => $user->worked_hours_per_day,
             ];
 
             return $data;

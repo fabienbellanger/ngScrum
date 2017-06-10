@@ -28,6 +28,7 @@
     "total.duration": "Durée totale",
     "remaining.duration": "Durée restante",
     "total.worked.duration": "Durée totale travaillée",
+    "total.tasks.duration": "Durée totale des tâches réalisées",
 	"created.at": "Créé le :",
 	"finished.at": "Terminé le :",
 	"remaining.hours": "Heures restantes",

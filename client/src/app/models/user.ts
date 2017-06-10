@@ -14,12 +14,14 @@ export class User
      * @param {string}   firstname
      * @param {string} 	 email
      * @param {number}   groupId
+     * @param {number}   workedHoursPerDay
      */
     constructor(public id: number,
                 public lastname: string,
                 public firstname: string,
                 public email: string,
-                public groupId: number)
+                public groupId: number,
+                public workedHoursPerDay: number)
     {
     }
 }

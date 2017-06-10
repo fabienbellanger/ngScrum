@@ -225,6 +225,7 @@
                     task_user.id AS taskPartId,
                     task_user.user_id AS taskPartUserId,
                     task_user.duration AS taskPartDuration,
+                    task_user.worked_duration AS taskPartWorkedDuration,
                     task_user.date AS taskPartDate
                 FROM task
                     INNER JOIN task_user ON task_user.task_id = task.id
@@ -250,10 +251,11 @@
 
                 if (!array_key_exists($taskPartId, $tasks[$taskId]['list']))
                 {
-                    $tasks[$taskId]['list'][$taskPartId]['id']       = $taskPartId;
-                    $tasks[$taskId]['list'][$taskPartId]['userId']   = $task->taskPartUserId;
-                    $tasks[$taskId]['list'][$taskPartId]['duration'] = $task->taskPartDuration;
-                    $tasks[$taskId]['list'][$taskPartId]['date']     = $task->taskPartDate;
+                    $tasks[$taskId]['list'][$taskPartId]['id']             = $taskPartId;
+                    $tasks[$taskId]['list'][$taskPartId]['userId']         = $task->taskPartUserId;
+                    $tasks[$taskId]['list'][$taskPartId]['duration']       = $task->taskPartDuration;
+                    $tasks[$taskId]['list'][$taskPartId]['workedDuration'] = $task->taskPartWorkedDuration;
+                    $tasks[$taskId]['list'][$taskPartId]['date']           = $task->taskPartDate;
                 }
             }
 
