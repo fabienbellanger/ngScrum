@@ -14,6 +14,8 @@ export class SprintService
     public remainingDuration: number;
     public totalTaskUserWorkedDuration: number;
     public totalTaskUserDuration: number;
+    public usersNumber: number;
+    public averageWorkedHoursPerDay: number;
 
     /**
      * Constructeur
@@ -29,6 +31,8 @@ export class SprintService
         this.remainingDuration           = 0;
         this.totalTaskUserWorkedDuration = 0;
         this.totalTaskUserDuration       = 0;
+        this.usersNumber                 = 0;
+        this.averageWorkedHoursPerDay    = 7;
     }
 
     /**
@@ -46,6 +50,8 @@ export class SprintService
         this.remainingDuration           = this.getRemainigDuration();
         this.totalTaskUserWorkedDuration = this.getTotalTaskUserDuration(true);
         this.totalTaskUserDuration       = this.getTotalTaskUserDuration(false);
+        this.usersNumber                 = this.getUsersNumber();
+        this.averageWorkedHoursPerDay    = this.getAverageWorkedHoursPerDay();
     }
 
     /**
@@ -127,5 +133,58 @@ export class SprintService
         }
 
         return duration;
+    }
+
+    /**
+     * Retourne le nombre d'utilisateurs participants au sprint
+     *
+     * @author Fabien Bellanger
+     * @return {number} Nombre d'utilisateurs
+     */
+    private getUsersNumber(): number
+    {
+        let usersList: number[] = [];
+
+        if (this.sprint !== null)
+        {
+            for (let task of this.sprint.tasks)
+            {
+                if (task.list.length > 0)
+                {
+                    for (let taskUser of task.list)
+                    {
+                        if (usersList.indexOf(taskUser.userId) === -1)
+                        {
+                            usersList.push(taskUser.userId);
+                        }
+                    }
+                }
+            }
+        }
+
+        return usersList.length;
+    }
+
+    /**
+     * Moyenne des heures travaillées
+     *
+     * @author Fabien Bellanger
+     * @return {number} Moyenne des heures travaillées
+     */
+    private getAverageWorkedHoursPerDay(): number
+    {
+        let taskUserLength: number = 0;
+
+        if (this.sprint !== null)
+        {
+            for (let task of this.sprint.tasks)
+            {
+                taskUserLength += task.list.length;
+            }
+        }
+
+        return (taskUserLength !== 0)
+            ? this.totalTaskUserWorkedDuration / taskUserLength
+            : 7;
     }
 }

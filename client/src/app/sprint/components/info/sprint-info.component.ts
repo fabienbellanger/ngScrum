@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { ApiSprintService } from '../../api';
-import { SprintService } from '../services/sprint.service';
+import { ApiSprintService } from '../../../api';
+import { SprintService } from '../../services/sprint.service';
 
 @Component({
     selector:    'sa-sprint-info',
