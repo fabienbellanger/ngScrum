@@ -3,6 +3,7 @@ export { SprintModule } from './sprint.module';
 // Services
 // --------
 export { SprintService } from './services/sprint.service';
+export { SprintChartsService } from './services/sprint-charts.service';
 
 // Composants
 // ----------

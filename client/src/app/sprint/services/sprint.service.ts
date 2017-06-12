@@ -21,6 +21,7 @@ export class SprintService
      * Constructeur
      *
      * @author Fabien Bellanger
+     * @param {StorageService} storageService
      */
     constructor(private storageService: StorageService)
     {

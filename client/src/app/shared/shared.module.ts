@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HttpModule, Http } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToastyModule } from 'ng2-toasty';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { ChartsModule } from 'ng2-charts';
@@ -23,7 +24,7 @@ import { InputDirective } from './directives/input.directive';
 
 export function createTranslateLoader(http: Http)
 {
-    return new TranslateStaticLoader(http, '../assets/i18n', '.json');
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
@@ -33,9 +34,11 @@ export function createTranslateLoader(http: Http)
         FormsModule,
         RouterModule,
         TranslateModule.forRoot({
-            provide:    TranslateLoader,
-            useFactory: (createTranslateLoader),
-            deps:       [Http],
+            loader: {
+                provide:    TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps:       [Http],
+            }
         }),
         ToastyModule.forRoot(),
         SlimLoadingBarModule.forRoot(),

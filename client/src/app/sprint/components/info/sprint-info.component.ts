@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { ApiSprintService } from '../../../api';
 import { SprintService } from '../../services/sprint.service';
+import { SprintChartsService } from '../../services/sprint-charts.service';
 
 @Component({
     selector:    'sa-sprint-info',
@@ -11,6 +12,8 @@ import { SprintService } from '../../services/sprint.service';
 
 export class SprintInfoComponent implements OnInit
 {
+    public pieChartTotalRemainingHours: any;
+
     /**
      * Constructeur
      *
@@ -18,10 +21,12 @@ export class SprintInfoComponent implements OnInit
      * @param {ApiSprintService}    apiSprintService
      * @param {ActivatedRoute}      route
      * @param {SprintService}       sprintService
+     * @param {SprintChartsService} sprintChartsService
      */
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
-                private sprintService: SprintService)
+                private sprintService: SprintService,
+                private sprintChartsService: SprintChartsService)
     {
         this.sprintService.init(null);
     }
@@ -39,10 +44,18 @@ export class SprintInfoComponent implements OnInit
             .then((sprint: any) =>
             {
                 this.sprintService.init(sprint);
+
+                // Graphiques
+                // ----------
+                this.pieChartTotalRemainingHours = this.sprintChartsService.getPieChartTotalRemainingHours();
             })
             .catch(() =>
             {
                 console.error('Error sprint info');
+
+                // Graphiques
+                // ----------
+                this.pieChartTotalRemainingHours = {};
             });
     }
 }

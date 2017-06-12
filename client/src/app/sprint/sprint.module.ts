@@ -9,9 +9,9 @@ import { LayoutModule } from '../layout';
 import { SprintComponent } from './components/sprint.component';
 import { SprintListComponent } from './components/sprint-list.component';
 import { SprintInfoComponent } from './components/info/sprint-info.component';
-import { SprintService } from './services/sprint.service';
 
-export { SprintService } from './services/sprint.service';
+import { SprintService } from './services/sprint.service';
+import { SprintChartsService } from './services/sprint-charts.service';
 
 @NgModule({
     imports:      [
@@ -29,6 +29,7 @@ export { SprintService } from './services/sprint.service';
     providers:    [
 		HttpService,
         SprintService,
+        SprintChartsService,
     ],
     exports:      [
 		SprintListComponent,
