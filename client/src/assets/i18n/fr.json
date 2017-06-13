@@ -35,5 +35,10 @@
 	"finished.at": "Terminé le :",
 	"remaining.hours": "Heures restantes",
 	"loading": "Chargement",
-	"sprint.users.number": "Nombre d'utilisateurs"
+	"sprint.users.number": "Nombre d'utilisateurs",
+	"name": "Nom",
+	"coefficient": "Coefficient",
+	"duration": "Durée",
+	"worked.duration": "Durée travaillée",
+	"performance": "Performance"
 }

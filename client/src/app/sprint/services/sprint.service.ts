@@ -16,6 +16,7 @@ export class SprintService
     public totalTaskUserDuration: number;
     public usersNumber: number;
     public averageWorkedHoursPerDay: number;
+    public usersInformation: any;
 
     /**
      * Constructeur
@@ -34,6 +35,7 @@ export class SprintService
         this.totalTaskUserDuration       = 0;
         this.usersNumber                 = 0;
         this.averageWorkedHoursPerDay    = 7;
+        this.usersInformation            = {};
     }
 
     /**
@@ -53,6 +55,7 @@ export class SprintService
         this.totalTaskUserDuration       = this.getTotalTaskUserDuration(false);
         this.usersNumber                 = this.getUsersNumber();
         this.averageWorkedHoursPerDay    = this.getAverageWorkedHoursPerDay();
+        this.usersInformation            = this.getUsersInformation();
     }
 
     /**
@@ -187,5 +190,64 @@ export class SprintService
         return (taskUserLength !== 0)
             ? this.totalTaskUserWorkedDuration / taskUserLength
             : 7;
+    }
+
+    /**
+     * Retourne les informations sur les utilisateurs
+     *
+     * @author Fabien Bellanger
+     * @return {any[]} Durée
+     */
+    private getUsersInformation(): any[]
+    {
+        let informations: any = {};
+
+        // Récupération des données
+        // ------------------------
+        if (this.sprint !== null)
+        {
+            for (let task of this.sprint.tasks)
+            {
+                if (task.list.length > 0)
+                {
+                    for (let taskUser of task.list)
+                    {
+                        // 1. Initialisation
+                        // -----------------
+                        if (!informations.hasOwnProperty(taskUser.userId))
+                        {
+                            informations[taskUser.userId] = {
+                                name:           '' + taskUser.userId,
+                                duration:       0,
+                                workedDuration: 0,
+                                coef:           0,
+                                perf:           0,
+                                tasks:          0,
+                            };
+                        }
+
+                        // 2. Construction
+                        // ---------------
+                        informations[taskUser.userId].duration       += +taskUser.duration;
+                        informations[taskUser.userId].workedDuration += +taskUser.workedDuration;
+                        informations[taskUser.userId].tasks++;
+                    }
+                }
+            }
+        }
+
+        // Calcul des coéfficiants et des performances
+        // -------------------------------------------
+        for (let userId in informations)
+        {
+            informations[userId].coef = informations[userId].duration / informations[userId].workedDuration;
+            informations[userId].perf = informations[userId].coef * 100;
+        }
+
+        // Conversion Object => Array
+        // --------------------------
+        let result: any[] = Object.keys(informations).map((k: any) => informations[k]);
+
+        return result;
     }
 }
