@@ -1,4 +1,5 @@
 import { Task } from './task';
+import { User } from './user';
 
 /**
  * Sprint class
@@ -17,13 +18,15 @@ export class Sprint
      * @param {string}   updatedAt
      * @param {string}   finishedAt
      * @param {Task[]}   tasks
+     * @param {User[]}   users
      */
     constructor(public id: number,
                 public name: string,
                 public createdAt: string,
                 public updatedAt: string,
                 public finishedAt: string,
-                public tasks: Task[])
+                public tasks: Task[],
+                public users: User[])
     {
     }
 }

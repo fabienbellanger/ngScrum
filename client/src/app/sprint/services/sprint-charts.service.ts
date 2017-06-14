@@ -24,6 +24,7 @@ export class SprintChartsService
 	 * Initialisation du graphique des heures totales / restantes
 	 * 
 	 * @author Fabien Bellanger
+	 * @return {any} Données pour le graphique
 	 */
 	public getPieChartTotalRemainingHours(): any
 	{

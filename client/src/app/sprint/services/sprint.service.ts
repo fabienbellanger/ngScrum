@@ -14,7 +14,6 @@ export class SprintService
     public remainingDuration: number;
     public totalTaskUserWorkedDuration: number;
     public totalTaskUserDuration: number;
-    public usersNumber: number;
     public averageWorkedHoursPerDay: number;
     public usersInformation: any;
 
@@ -33,7 +32,6 @@ export class SprintService
         this.remainingDuration           = 0;
         this.totalTaskUserWorkedDuration = 0;
         this.totalTaskUserDuration       = 0;
-        this.usersNumber                 = 0;
         this.averageWorkedHoursPerDay    = 7;
         this.usersInformation            = {};
     }
@@ -53,7 +51,6 @@ export class SprintService
         this.remainingDuration           = this.getRemainigDuration();
         this.totalTaskUserWorkedDuration = this.getTotalTaskUserDuration(true);
         this.totalTaskUserDuration       = this.getTotalTaskUserDuration(false);
-        this.usersNumber                 = this.getUsersNumber();
         this.averageWorkedHoursPerDay    = this.getAverageWorkedHoursPerDay();
         this.usersInformation            = this.getUsersInformation();
     }
@@ -140,36 +137,6 @@ export class SprintService
     }
 
     /**
-     * Retourne le nombre d'utilisateurs participants au sprint
-     *
-     * @author Fabien Bellanger
-     * @return {number} Nombre d'utilisateurs
-     */
-    private getUsersNumber(): number
-    {
-        let usersList: number[] = [];
-
-        if (this.sprint !== null)
-        {
-            for (let task of this.sprint.tasks)
-            {
-                if (task.list.length > 0)
-                {
-                    for (let taskUser of task.list)
-                    {
-                        if (usersList.indexOf(taskUser.userId) === -1)
-                        {
-                            usersList.push(taskUser.userId);
-                        }
-                    }
-                }
-            }
-        }
-
-        return usersList.length;
-    }
-
-    /**
      * Moyenne des heures travaillées
      *
      * @author Fabien Bellanger
@@ -217,7 +184,7 @@ export class SprintService
                         if (!informations.hasOwnProperty(taskUser.userId))
                         {
                             informations[taskUser.userId] = {
-                                name:           '' + taskUser.userId,
+                                name:           '',
                                 duration:       0,
                                 workedDuration: 0,
                                 coef:           0,
@@ -240,6 +207,10 @@ export class SprintService
         // -------------------------------------------
         for (let userId in informations)
         {
+            if (this.sprint.users.hasOwnProperty(userId))
+            {
+                informations[userId].name = this.sprint.users[userId].firstname + ' ' + this.sprint.users[userId].lastname;
+            }
             informations[userId].coef = informations[userId].duration / informations[userId].workedDuration;
             informations[userId].perf = informations[userId].coef * 100;
         }

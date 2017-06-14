@@ -259,8 +259,41 @@
                 }
             }
 
-            // Objet => tableau
-            // ----------------
+            // 3. Récupération des utilisateurs
+            // --------------------------------
+            $users = [];
+            $query           = '
+                SELECT DISTINCT 
+                    users.id,
+                    users.firstname,
+                    users.lastname, 
+                    users.email,
+                    users.worked_hours_per_day,
+                    users.group_id
+                FROM task
+                    INNER JOIN task_user ON task_user.task_id = task.id
+                    INNER JOIN users ON users.id = task_user.user_id
+                WHERE task.sprint_id = :sprintId';
+            $results = DB::select($query, ['sprintId' => $sprintId]);
+            if ($results && count($results) > 0)
+            {
+                foreach ($results as $user)
+                {
+                    if (!array_key_exists($user->id, $users))
+                    {
+                        $users[$user->id]['id']                = intval($user->id);
+                        $users[$user->id]['firstname']         = $user->firstname;
+                        $users[$user->id]['lastname']          = $user->lastname;
+                        $users[$user->id]['email']             = $user->email;
+                        $users[$user->id]['groupId']           = intval($user->group_id);
+                        $users[$user->id]['workedHoursPerDay'] = intval($user->worked_hours_per_day);
+                    }
+                }
+            }
+            $sprint['users'] = $users;
+
+            // 4. Objet => tableau
+            // -------------------
             $tasks = array_values($tasks);
             foreach ($tasks as $index => $task)
             {

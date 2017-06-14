@@ -32,8 +32,8 @@ export class PercentPipe implements PipeTransform
         }
 
         const digit: number  = Math.pow(10, digits);
-        let newValue: string = Math.floor(value * digit) / digit + '';
+        let newValue: number = Math.floor(value * digit) / digit;
 
-        return newValue.replace('.', ',') + ' %';
+        return newValue.toLocaleString() + ' %';
     }
 }

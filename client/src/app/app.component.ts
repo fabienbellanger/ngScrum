@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { Component } from '@angular/core';
+import { Component, LOCALE_ID } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastyService, ToastyConfig } from 'ng2-toasty';
 
@@ -31,6 +31,7 @@ export class AppComponent
                 private toastyService: ToastyService,
                 private toastyConfig: ToastyConfig)
     {
+        console.log(LOCALE_ID);
         // Traduction
         // ----------
         this.translateService.setDefaultLang('fr');

@@ -2,6 +2,19 @@
 <div *ngIf="sprintService.sprint">
     <h1>{{ sprintService.sprint.name }}</h1>
 
+    <div class="row" style="margin-bottom: 20px">
+        <div class="col-xs-12">
+            <button type="button" 
+                class="btn btn-default"
+                routerLink="/sprints/list" 
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: false}">
+                {{ 'sprints.list' | translate }}
+            </button>
+            
+        </div>
+    </div>
+
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="row">
@@ -71,14 +84,6 @@
                         </div>
                         <div class="col-xs-5 bold">
                             {{ sprintService.totalTaskUserWorkedDuration | duration:'hour' }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-7">
-                            {{ 'sprint.users.number' | translate }}
-                        </div>
-                        <div class="col-xs-5 bold">
-                            {{ sprintService.usersNumber }}
                         </div>
                     </div>
                 </div>
