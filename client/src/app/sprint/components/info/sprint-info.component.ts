@@ -13,6 +13,7 @@ import { SprintChartsService } from '../../services/sprint-charts.service';
 export class SprintInfoComponent implements OnInit
 {
     public pieChartTotalRemainingHours: any;
+    public lineChartUsesCoefficient: any;
 
     /**
      * Constructeur
@@ -48,6 +49,7 @@ export class SprintInfoComponent implements OnInit
                 // Graphiques
                 // ----------
                 this.pieChartTotalRemainingHours = this.sprintChartsService.getPieChartTotalRemainingHours();
+                this.lineChartUsesCoefficient    = this.sprintChartsService.getLineChartUsesCoefficient();
             })
             .catch(() =>
             {
@@ -56,6 +58,7 @@ export class SprintInfoComponent implements OnInit
                 // Graphiques
                 // ----------
                 this.pieChartTotalRemainingHours = {};
+                this.lineChartUsesCoefficient    = {};
             });
     }
 }

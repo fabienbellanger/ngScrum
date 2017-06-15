@@ -14,6 +14,7 @@ export { MomentPipe } from './pipes/moment.pipe';
 export { NewLinePipe } from './pipes/new-line.pipe';
 export { DurationPipe } from './pipes/duration.pipe';
 export { PercentPipe } from './pipes/percent.pipe';
+export { NumberPipe } from './pipes/number.pipe';
 
 // Directives
 // ----------

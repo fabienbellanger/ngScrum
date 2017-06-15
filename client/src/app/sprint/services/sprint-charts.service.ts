@@ -51,4 +51,86 @@ export class SprintChartsService
 			],
 		};
 	}
+
+	/**
+	 * Initialisation du graphique de variations des coefficients des utilisateurs
+	 * 
+	 * @author Fabien Bellanger
+	 * @return {any} Données pour le graphique
+	 */
+	public getLineChartUsesCoefficient(): any
+	{
+		// Traitement des données
+		// ----------------------
+		let data:    any      = {};
+		const tasks: any[]    = this.sprintService.sprint.tasks;
+		for (let task of tasks)
+		{
+			if (task.list.length > 0)
+			{
+				for (let taskUser of task.list)
+				{
+					if (!data.hasOwnProperty(taskUser.date))
+					{
+						data[taskUser.date] = {};
+					}
+					if (!data[taskUser.date].hasOwnProperty(taskUser.userId))
+					{
+						data[taskUser.date][taskUser.userId] = {
+							duration: 0,
+							workedDuration: 0,
+						};
+					}
+					data[taskUser.date][taskUser.userId].duration 		+= +taskUser.duration;
+					data[taskUser.date][taskUser.userId].workedDuration += +taskUser.workedDuration;
+				}
+			}
+		}
+
+		// Calcul des coefficients
+		// -----------------------
+		for (let date in data)
+		{
+			for (let userId in data[date])
+			{
+				data[date][userId] = data[date][userId].duration / data[date][userId].workedDuration;
+			}
+		}
+
+		// Labels
+		// ------
+		const labels: string[] = Object.keys(data);
+
+		// Datasets
+		// --------
+		// TODO: à reprendre
+		let datasetsTmp: any = {};
+		for (let date in data)
+		{
+			for (let userId in data[date])
+			{
+				if (!datasetsTmp.hasOwnProperty(userId))
+				{
+					datasetsTmp[userId] = {
+						label: 'ID ' + userId,
+						fill:  false,
+						data:  [],
+					};
+				}
+				datasetsTmp[userId].data.push(1);
+			}
+		}
+		// Conversion Object => Array
+        // --------------------------
+        let datasets: any[] = Object.keys(datasetsTmp).map((k: any) => datasetsTmp[k]);
+
+console.log(data, this.sprintService.sprint.users, datasets);
+
+		return {
+			type:     'line',
+			labels:   labels,
+			datasets: datasets,
+		};
+	}
 }
+    

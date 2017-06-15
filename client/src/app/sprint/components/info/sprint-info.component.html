@@ -113,13 +113,22 @@
             <tbody>
                 <tr *ngFor="let user of sprintService.usersInformation">
                     <td align="left" valign="middle">{{ user.name }}</td>
-                    <td align="right" valign="middle">{{ user.coef | number:'.2-2' }}</td>
+                    <td align="right" valign="middle">{{ user.coefficient | numberFr:'2' }}</td>
                     <td align="right" valign="middle">{{ user.duration | duration:'hour' }}</td>
                     <td align="right" valign="middle">{{ user.workedDuration | duration:'hour' }}</td>
-                    <td align="right" valign="middle">{{ user.perf | number:'3.2-2' | percentFr }}</td>
+                    <td align="right" valign="middle">{{ user.performance | percentFr:2 }}</td>
                 </tr>
             </tbody>
         </table>
+        <div class="row" style="margin-bottom: 20px">
+            <div class="col-xs-12">
+                <canvas baseChart height="80px"
+                    [datasets]="lineChartUsesCoefficient.datasets"
+                    [labels]="lineChartUsesCoefficient.labels"
+                    [chartType]="lineChartUsesCoefficient.type"
+                    [options]="{responsive: true}"></canvas>
+            </div>
+        </div>
     </div>
 </div>
 

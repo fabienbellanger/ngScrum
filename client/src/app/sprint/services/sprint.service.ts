@@ -187,8 +187,8 @@ export class SprintService
                                 name:           '',
                                 duration:       0,
                                 workedDuration: 0,
-                                coef:           0,
-                                perf:           0,
+                                coefficient:    0,
+                                performance:    0,
                                 tasks:          0,
                             };
                         }
@@ -209,10 +209,11 @@ export class SprintService
         {
             if (this.sprint.users.hasOwnProperty(userId))
             {
-                informations[userId].name = this.sprint.users[userId].firstname + ' ' + this.sprint.users[userId].lastname;
+                informations[userId].name  = this.sprint.users[userId].firstname + ' ';
+                informations[userId].name += this.sprint.users[userId].lastname;
             }
-            informations[userId].coef = informations[userId].duration / informations[userId].workedDuration;
-            informations[userId].perf = informations[userId].coef * 100;
+            informations[userId].coefficient = informations[userId].duration / informations[userId].workedDuration;
+            informations[userId].performance = informations[userId].coefficient * 100;
         }
 
         // Conversion Object => Array

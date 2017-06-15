@@ -52,10 +52,6 @@ export class AuthService
             .then(() =>
             {
                 this.isLoggedIn = true;
-
-                // Redirection du vers la homepage
-                // -------------------------------
-                this.router.navigate(['/']);
             })
             .catch(() =>
             {

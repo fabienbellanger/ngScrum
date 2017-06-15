@@ -19,6 +19,7 @@ import { MomentPipe } from './pipes/moment.pipe';
 import { NewLinePipe } from './pipes/new-line.pipe';
 import { DurationPipe } from './pipes/duration.pipe';
 import { PercentPipe } from './pipes/percent.pipe';
+import { NumberPipe } from './pipes/number.pipe';
 
 import { InputDirective } from './directives/input.directive';
 
@@ -49,6 +50,7 @@ export function createTranslateLoader(http: Http)
         NewLinePipe,
         DurationPipe,
         PercentPipe,
+        NumberPipe,
         InputDirective,
     ],
     providers:    [
@@ -70,6 +72,7 @@ export function createTranslateLoader(http: Http)
         NewLinePipe,
         DurationPipe,
         PercentPipe,
+        NumberPipe,
         InputDirective,
     ],
 })

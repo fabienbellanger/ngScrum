@@ -229,7 +229,8 @@
                     task_user.date AS taskPartDate
                 FROM task
                     INNER JOIN task_user ON task_user.task_id = task.id
-                WHERE task.sprint_id = :sprintId';
+                WHERE task.sprint_id = :sprintId
+                ORDER BY task_user.date ASC';
             $results = DB::select($query, ['sprintId' => $sprintId]);
             $tasks   = [];
             foreach ($results as $task)
