@@ -53,17 +53,18 @@ export class SprintChartsService
 	}
 
 	/**
-	 * Initialisation du graphique de variations des coefficients des utilisateurs
+	 * Calcul des données pour l'affichage du graphique de variations des coefficients des utilisateurs
 	 * 
 	 * @author Fabien Bellanger
-	 * @return {any} Données pour le graphique
+	 * @return {any} Données
 	 */
-	public getLineChartUsesCoefficient(): any
+	private getLineChartUsesCoefficientData(): any
 	{
 		// Traitement des données
 		// ----------------------
-		let data:    any      = {};
-		const tasks: any[]    = this.sprintService.sprint.tasks;
+		let data:    any   = {};
+		const tasks: any[] = this.sprintService.sprint.tasks;
+
 		for (let task of tasks)
 		{
 			if (task.list.length > 0)
@@ -97,34 +98,63 @@ export class SprintChartsService
 			}
 		}
 
+		return data;
+	}
+
+	/**
+	 * Initialisation du graphique de variations des coefficients des utilisateurs
+	 * 
+	 * @author Fabien Bellanger
+	 * @return {any} Données pour le graphique
+	 */
+	public getLineChartUsesCoefficient(): any
+	{
+		// Traitement des données
+		// ----------------------
+		let data: any = this.getLineChartUsesCoefficientData();
+
 		// Labels
 		// ------
 		const labels: string[] = Object.keys(data);
 
 		// Datasets
 		// --------
-		// TODO: à reprendre
-		let datasetsTmp: any = {};
-		for (let date in data)
+		let datasetsObject: any = {};
+		let lastData:       number;
+		
+		for (let userId in this.sprintService.sprint.users)
 		{
-			for (let userId in data[date])
+			// Initialisation de la structure
+			// ------------------------------
+			datasetsObject[userId] = {
+				label: this.sprintService.sprint.users[userId].firstname,
+				fill:  false,
+				data:  [],
+			};
+
+			// Ajout des données
+			// -----------------
+			for (let date in data)
 			{
-				if (!datasetsTmp.hasOwnProperty(userId))
+				if (data[date].hasOwnProperty(userId))
 				{
-					datasetsTmp[userId] = {
-						label: 'ID ' + userId,
-						fill:  false,
-						data:  [],
-					};
+					datasetsObject[userId].data.push(data[date][userId]);
 				}
-				datasetsTmp[userId].data.push(1);
+				else
+				{
+					// Quand il n'y a pas de valeur on prend la précédente si elle existe, 0 sinon
+					lastData = (datasetsObject[userId].data.length === 0)
+						? 0
+						: datasetsObject[userId].data[datasetsObject[userId].data.length - 1];
+
+					datasetsObject[userId].data.push(lastData);
+				}
 			}
 		}
+
 		// Conversion Object => Array
         // --------------------------
-        let datasets: any[] = Object.keys(datasetsTmp).map((k: any) => datasetsTmp[k]);
-
-console.log(data, this.sprintService.sprint.users, datasets);
+        let datasets: any[] = Object.keys(datasetsObject).map((k: any) => datasetsObject[k]);
 
 		return {
 			type:     'line',
