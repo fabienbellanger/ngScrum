@@ -94,7 +94,10 @@ export class SprintChartsService
 		{
 			for (let userId in data[date])
 			{
-				data[date][userId] = data[date][userId].duration / data[date][userId].workedDuration;
+				// On arrondi le coefficient à 1 chiffre après la virgule
+				data[date][userId] = Math.round(
+					data[date][userId].duration / data[date][userId].workedDuration * 10
+				) / 10;
 			}
 		}
 

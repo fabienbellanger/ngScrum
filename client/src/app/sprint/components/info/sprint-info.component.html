@@ -104,19 +104,19 @@
             <thead>
                 <tr>
                     <th>{{ 'name' | translate }}</th>
-                    <th>{{ 'coefficient' | translate }}</th>
                     <th>{{ 'duration' | translate }}</th>
                     <th>{{ 'worked.duration' | translate }}</th>
+                    <th>{{ 'coefficient' | translate }}</th>
                     <th>{{ 'performance' | translate }}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let user of sprintService.usersInformation">
                     <td align="left" valign="middle">{{ user.name }}</td>
-                    <td align="right" valign="middle">{{ user.coefficient | numberFr:'2' }}</td>
                     <td align="right" valign="middle">{{ user.duration | duration:'hour' }}</td>
                     <td align="right" valign="middle">{{ user.workedDuration | duration:'hour' }}</td>
-                    <td align="right" valign="middle">{{ user.performance | percentFr:2 }}</td>
+                    <td align="right" valign="middle">{{ user.coefficient | numberFr:'1' }}</td>
+                    <td align="right" valign="middle">{{ user.performance | percentFr:0 }}</td>
                 </tr>
             </tbody>
         </table>
