@@ -40,5 +40,9 @@
 	"coefficient": "Coefficient",
 	"duration": "Durée",
 	"worked.duration": "Durée travaillée",
-	"performance": "Performance"
+	"performance": "Performance",
+	"details": "Détails",
+	"tasks.list": "Liste des tâches",
+	"add.task": "Ajouter un tâche",
+	"add.member": "Ajouter un membre"
 }

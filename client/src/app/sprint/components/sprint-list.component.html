@@ -16,10 +16,8 @@
 
     <div style="margin-top: 30px">
         <div class="list-group" *ngIf="sprints?.length > 0">
-            <a [routerLink]="['/sprints/info', { sprintId: sprint.id }]" routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: false}"
-            class="list-group-item"
-            *ngFor="let sprint of sprints">
+            <a class="list-group-item"
+               *ngFor="let sprint of sprints">
                 <h4 class="list-group-item-heading">{{ sprint.name }}</h4>
                 
                 <div class="list-group-item-text">
@@ -44,6 +42,24 @@
                             style="min-width: 2em"
                             [style.width]="sprint.progressPercent + '%'">
                             {{ sprint.progressPercent }}%
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button class="btn btn-default"
+                                    [routerLink]="['/sprints/info', { sprintId: sprint.id }]" routerLinkActive="true"
+                                    [routerLinkActiveOptions]="{exact: false}">
+                                <span class="fa fa-info"></span>
+                                <span class="hidden-xs">{{ 'details' | translate }}</span>
+                            </button>
+                            &nbsp;
+                            <button class="btn btn-default"
+                                    [routerLink]="['/sprints/tasks', { sprintId: sprint.id }]" routerLinkActive="true"
+                                    [routerLinkActiveOptions]="{exact: false}">
+                                <span class="fa fa-tasks"></span>
+                                <span class="hidden-xs">{{ 'tasks.list' | translate }}</span>
+                            </button>
                         </div>
                     </div>
                 </div>

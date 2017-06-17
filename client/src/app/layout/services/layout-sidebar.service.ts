@@ -22,7 +22,7 @@ export class LayoutSidebarService
 		this.items = [
 			{
 				'label': 'Sprints',
-				'route': 'sprints/list',
+				'route': 'sprints',
 				'picto': 'fa fa-list',
 			}
 		];
