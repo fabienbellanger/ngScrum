@@ -43,6 +43,9 @@
 	"performance": "Performance",
 	"details": "Détails",
 	"tasks.list": "Liste des tâches",
-	"add.task": "Ajouter un tâche",
-	"add.member": "Ajouter un membre"
+	"add.task": "Ajouter une tâche",
+	"add.member": "Ajouter un membre",
+	"description": "Description",
+	"planned": "Prévue ?",
+	"actions": "Actions"
 }

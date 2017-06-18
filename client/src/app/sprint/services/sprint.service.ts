@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { StorageService } from '../../shared';
-import { Sprint } from '../../models';
+import { Sprint, Task } from '../../models';
 
 @Injectable()
 
@@ -53,6 +53,10 @@ export class SprintService
         this.totalTaskUserDuration       = this.getTotalTaskUserDuration(false);
         this.averageWorkedHoursPerDay    = this.getAverageWorkedHoursPerDay();
         this.usersInformation            = this.getUsersInformation();
+
+        // Calcul de la durée travaillée des tâches
+        // ----------------------------------------
+        this.getTasksWorkedDuration();
     }
 
     /**
@@ -221,5 +225,35 @@ export class SprintService
         let result: any[] = Object.keys(informations).map((k: any) => informations[k]);
 
         return result;
+    }
+
+    /**
+     * Calcul de la durée travaillée des tâches
+     *
+     * @author Fabien Bellanger
+     */
+    private getTasksWorkedDuration(): void
+    {
+        let duration: number;
+        let task: Task;
+
+        if (this.sprint !== null)
+        {
+            for (let taskIndex in this.sprint.tasks)
+            {
+                task     = this.sprint.tasks[taskIndex];
+                duration = 0;
+
+                if (task.list.length > 0)
+                {
+                    for (let taskUser of task.list)
+                    {
+                        duration += +taskUser.workedDuration;
+                    }
+                }
+
+                this.sprint.tasks[taskIndex].workedDuration = duration;
+            }
+        }
     }
 }

@@ -23,6 +23,7 @@ export class Task
                 public name: string,
                 public description: string,
                 public initialDuration: number,
+                public workedDuration: number = 0,
                 public remainingDuration: number,
                 public addedAfter: boolean,
                 public userId: number,

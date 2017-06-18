@@ -32,4 +32,48 @@
             </button>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-striped table-bordered table-hover table-condensed"
+                   *ngIf="sprintService.sprint.tasks?.length > 0">
+                <thead>
+                    <tr>
+                        <th>{{ 'name' | translate }}</th>
+                        <th class="hidden-xs">{{ 'description' | translate }}</th>
+                        <th>{{ 'initial.duration' | translate }}</th>
+                        <th>{{ 'worked.duration' | translate }}</th>
+                        <th>{{ 'remaining.duration' | translate }}</th>
+                        <th>{{ 'planned' | translate }}</th>
+                        <th>{{ 'actions' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let task of sprintService.sprint.tasks">
+                        <td align="left" valign="middle">{{ task.name }}</td>
+                        <td align="left" valign="middle" class="hidden-xs">{{ task.description }}</td>
+                        <td align="right" valign="middle">{{ task.initialDuration | duration:'hour' }}</td>
+                        <td align="right" valign="middle">{{ task.workedDuration | duration:'hour' }}</td>
+                        <td align="right" valign="middle">{{ task.remainingDuration | duration:'hour' }}</td>
+                        <td align="center" valign="middle">
+                            <span class="fa"
+                                  [ngClass]="{
+                                      'fa-check': !task.addedAfter,
+                                      'text-success': !task.addedAfter,
+                                      'fa-times': task.addedAfter,
+                                      'text-danger': task.addedAfter}"></span>
+                        </td>
+                        <td align="center" valign="middle">
+                            <button class="btn btn-success btn-xs">
+                                <span class="fa fa-pencil"></span>
+                            </button>
+                            <button class="btn btn-danger btn-xs">
+                                <span class="fa fa-trash-o"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
