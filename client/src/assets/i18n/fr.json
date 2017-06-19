@@ -47,5 +47,7 @@
 	"add.member": "Ajouter un membre",
 	"description": "Description",
 	"planned": "Prévue ?",
-	"actions": "Actions"
+	"actions": "Actions",
+	"total": "Total",
+	"search": "Recherche"
 }

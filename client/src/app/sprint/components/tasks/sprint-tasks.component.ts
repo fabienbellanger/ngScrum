@@ -35,7 +35,9 @@ export class SprintTasksComponent implements OnInit
      */
     public ngOnInit(): void
     {
-		const sprintId: number = +this.route.snapshot.params['sprintId'];
+        // Récupération du sprint
+        // ----------------------
+        const sprintId: number = +this.route.snapshot.params['sprintId'];
 
         this.apiSprintService.getSprintInformation(sprintId)
             .then((sprint: any) =>
@@ -46,5 +48,16 @@ export class SprintTasksComponent implements OnInit
             {
                 console.error('Error sprint tasks list');
             });
+    }
+
+    /**
+     * Recherche
+     * 
+     * @author Fabien Bellanger
+     * @param {string} searchValue 
+     */
+    public search(searchValue: string): void
+    {
+        console.log(this.sprintService.sprint.tasks);
     }
 }

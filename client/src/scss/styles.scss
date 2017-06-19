@@ -94,7 +94,8 @@ label {
 .input-group-sm > .input-group-addon,
 .input-group-sm > .input-group-btn > .btn,
 .list-group-item:last-child,
-.list-group-item:first-child {
+.list-group-item:first-child,
+.input-group-addon {
     border-radius: 1px;
 }
 

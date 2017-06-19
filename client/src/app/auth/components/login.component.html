@@ -16,7 +16,7 @@
                                    #inputEmail
 								   name="email"
 								   class="form-control input-sm" 
-								   placeholder="{{ 'login' | translate }}" 
+								   [placeholder]="'login' | translate" 
 								   required 
 								   autofocus>
 						</div>
@@ -27,7 +27,7 @@
                            		   [(ngModel)]="password"
 								   name="password" 
 								   class="form-control input-sm" 
-								   placeholder="{{ 'password' | translate }}" 
+								   [placeholder]="'password' | translate" 
 								   required>
 						</div>
 						<p class="forgotten-password">
