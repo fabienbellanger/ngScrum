@@ -13,7 +13,7 @@
             
             <button type="button" 
                 class="btn btn-default"
-                routerLink="/sprints">
+                [routerLink]="['/sprints/add-task', { sprintId: sprintService.sprint.id }]">
 				<span class="fa fa-plus"></span>
                 <span class="hidden-xs">{{ 'add.task' | translate }}</span>
             </button>

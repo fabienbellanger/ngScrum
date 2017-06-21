@@ -10,6 +10,7 @@ import { SprintComponent } from './components/sprint.component';
 import { SprintListComponent } from './components/sprint-list.component';
 import { SprintInfoComponent } from './components/info/sprint-info.component';
 import { SprintTasksComponent } from './components/tasks/sprint-tasks.component';
+import { SprintAddTaskComponent } from './components/addTask/sprint-add-task.component';
 
 import { SprintService } from './services/sprint.service';
 import { SprintChartsService } from './services/sprint-charts.service';
@@ -26,6 +27,7 @@ import { SprintChartsService } from './services/sprint-charts.service';
 		SprintListComponent,
         SprintInfoComponent,
         SprintTasksComponent,
+        SprintAddTaskComponent,
         SprintComponent,
     ],
     providers:    [
