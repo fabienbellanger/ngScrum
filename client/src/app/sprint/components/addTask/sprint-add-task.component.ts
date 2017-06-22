@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ApiSprintService } from '../../../api';
+import { StorageService } from '../../../shared';
 import { SprintService } from '../../services/sprint.service';
 
 import { Task } from '../../../models';
@@ -15,6 +16,11 @@ export class SprintAddTaskComponent implements OnInit
 {
 	public sprintId: number;
 	public name: string;
+	public description: string;
+    public duration: number;
+    public applications: any[];
+    public applicationsIds: any;
+    public notPlanned: boolean;
 
     /**
      * Constructeur
@@ -23,10 +29,12 @@ export class SprintAddTaskComponent implements OnInit
      * @param {ApiSprintService}    apiSprintService
      * @param {ActivatedRoute}      route
      * @param {SprintService}       sprintService
+     * @param {StorageService}      storageService
      */
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
-                private sprintService: SprintService)
+                private sprintService: SprintService,
+                private storageService: StorageService)
     {
     }
 
@@ -43,7 +51,12 @@ export class SprintAddTaskComponent implements OnInit
 
 		// Initialisation
 		// --------------
-		this.name = '';
+		this.name            = '';
+		this.description     = '';
+        this.duration        = null;
+        this.notPlanned      = false;
+        this.applications    = this.storageService.get('session', 'applications', []);
+        this.applicationsIds = {};
     }
 
 	/**
@@ -53,6 +66,39 @@ export class SprintAddTaskComponent implements OnInit
 	 */
 	private addTask(): void
 	{
-		alert('Add task');
+        // Conversion Object => Array
+        // --------------------------
+        let applicationsIdsSelected: number[] = Object.keys(this.applicationsIds)
+                                                      .map((k: any) => this.applicationsIds[k]);
+
+        console.log(
+            this.name,
+            this.description,
+            this.duration,
+            this.notPlanned,
+            applicationsIdsSelected
+        );
 	}
+    
+    /**
+     * Sélection ou désélection d'une application
+     *
+     * @author Fabien Bellanger
+     * @param {any)     event
+     * @param {number}  index
+     * @param {number}  applicationId
+     */
+    private toggleApplication(event: any, index: number, applicationId: number): void
+    {
+        const isApplicationPresent: boolean = (this.applicationsIds[index] !== undefined);
+
+        if (event.target.checked && !isApplicationPresent)
+        {
+            this.applicationsIds[index] = applicationId;
+        }
+        else if (!event.target.checked && isApplicationPresent)
+        {
+            delete this.applicationsIds[index];
+        }
+    }
 }

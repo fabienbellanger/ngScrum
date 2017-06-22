@@ -33,7 +33,7 @@
 
             // Récupération des applications
             // -----------------------------
-            $data['applications'] = DB::select('SELECT * FROM application');
+            $data['applications'] = DB::select('SELECT * FROM application ORDER BY name ASC');
 
             return $data;
         }
