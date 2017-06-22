@@ -54,8 +54,8 @@ const appRoutes: Routes = [
         ],
     },
     {
-        path:      '**',
-        component: LayoutComponent,
+        path:       '**',
+        redirectTo: 'login',
     },
 ];
 
