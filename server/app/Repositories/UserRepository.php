@@ -31,6 +31,10 @@
                 'workedHoursPerDay' => $user->worked_hours_per_day,
             ];
 
+            // Récupération des applications
+            // -----------------------------
+            $data['applications'] = DB::select('SELECT * FROM application');
+
             return $data;
         }
 

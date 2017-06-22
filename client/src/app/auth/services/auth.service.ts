@@ -95,6 +95,10 @@ export class AuthService
                     );
                     this.userService.init(user);
 
+                    // Enregistrement de la liste des applications
+                    // -------------------------------------------
+                    this.storageService.set('session', 'applications', data.user.applications);
+
                     resolve();
                 })
                 .catch((error: any) =>
