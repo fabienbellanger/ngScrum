@@ -2,7 +2,7 @@ version: '2'
 
 services:
   nginx:
-    container_name: nginx
+    container_name: apiScrum_nginx
     image: nginx:latest
     ports:
       - "8080:80"
@@ -18,41 +18,41 @@ services:
     restart: always
 
   php:
-    container_name: php
+    container_name: apiScrum_php
     build: docker/php
     volumes:
       - ./server/:/var/www/laravel
     links:
-      - mysql
+      - mariadb
     networks:
       - code-network
     entrypoint:
       - php-fpm
     restart: always
 
-  mysql:
-    container_name: mysql
+  mariadb:
+    container_name: apiScrum_mariadb
     image: mariadb:latest
     ports:
       - "3307:3306"
     networks:
       - code-network
     environment:
-      MYSQL_DATABASE: laravel
+      MYSQL_DATABASE: apiscrum
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - ./docker/database:/var/lib/mysql
     restart: always
 
   phpmyadmin:
-    container_name: phpmyadmin
+    container_name: apiScrum_phpmyadmin
     image: phpmyadmin/phpmyadmin
     ports:
       - "8081:80"
     links:
-      - mysql
+      - mariadb
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: apiScrum_mysql
       PMA_PORT: "3306"
     networks:
       - code-network
