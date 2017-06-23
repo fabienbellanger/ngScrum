@@ -49,6 +49,28 @@
         }
 
         /**
+         * Liste des sprints
+         *
+         * @author Fabien Bellanger
+         * @param int    $sprintId     ID du sprint
+         * @return array
+         */
+        public static function isSprintValid($sprintId): ?bool
+        {
+            $query   = '
+                SELECT sprint.id
+                FROM sprint
+                WHERE sprint.id = :sprintId';
+            $results = DB::select($query, ['sprintId' => $sprintId]);
+            if (!$results || count($results) != 1)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /**
          * Liste des sprints d'un utilisateur
          *
          * @author Fabien Bellanger
@@ -56,7 +78,7 @@
          * @param string $filter Filtre {'all', 'finished', 'inProgress'}
          * @return array
          */
-        public static function getSprintsOfUser($userId, $filter)
+        public static function getSprintsOfUser($userId, $filter): ?array
         {
             // Requête
             // -------
@@ -121,7 +143,7 @@
          * @param string $filter Filtre {'all', 'finished', 'inProgress'}
          * @return array
          */
-        public static function getSprintsWorkedDurationOfUser($userId, $filter)
+        public static function getSprintsWorkedDurationOfUser($userId, $filter): ?array
         {
             // Requête
             // -------
@@ -308,5 +330,29 @@
                 'message' => 'Success',
                 'data'    => $sprint,
             ];
+        }
+
+        /**
+         * Ajout d'une tâche
+         *
+         * @author Fabien Bellanger
+         * @param int $id       ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @param array $data   POST data
+         * @return array
+         */
+        public static function addTask($id, $sprintId, $data): ?array
+        {
+            // 1. Sprint valide ?
+            // ------------------
+            if (!self::isSprintValid($id, $sprintId))
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'No sprint found',
+                ];
+            }
+
+            
         }
     }

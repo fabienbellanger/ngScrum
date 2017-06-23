@@ -5,6 +5,7 @@
     use App\Helpers\ResponseHelper as Response;
     use Illuminate\Http\Request;
     use App\Repositories\SprintRepository;
+    use Illuminate\Support\Facades\Input;
 
     class SprintController extends Controller
     {
@@ -66,6 +67,34 @@
         {
             $response = SprintRepository::getSprintInfo($id, $sprintId);
 
+            if ($response['code'] == 404)
+            {
+                return Response::notFound($response['message']);
+            }
+            else
+            {
+                return Response::json($response['data'], 200);
+            }
+        }
+
+        /**
+         * Ajout d'une tâche
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @param int $id ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function addTask(Request $request, $id, $sprintId)
+        {
+            $data = Input::all();
+            if (!$data || count($data) == 0)
+            {
+                return Response::internalError('No data');
+            }
+            
+            $response = SprintRepository::addTask($id, $sprintId, $data);
             if ($response['code'] == 404)
             {
                 return Response::notFound($response['message']);
