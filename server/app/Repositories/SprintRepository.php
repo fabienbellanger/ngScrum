@@ -3,6 +3,7 @@
     namespace App\Repositories;
 
     use DB;
+    use Exception;
 
     class SprintRepository
     {
@@ -336,16 +337,27 @@
          * Ajout d'une tâche
          *
          * @author Fabien Bellanger
-         * @param int $id       ID de l'utilisateur
+         * @param int $userId   ID de l'utilisateur
          * @param int $sprintId ID du sprint
          * @param array $data   POST data
          * @return array
          */
-        public static function addTask($id, $sprintId, $data): ?array
+        public static function addTask($userId, $sprintId, $data): ?array
         {
-            // 1. Sprint valide ?
+            // 1. Vérification des données
+            // ---------------------------
+            if (!array_key_exists('name', $data) || !array_key_exists('duration', $data)
+                || !array_key_exists('notPlanned', $data))
+            {
+                return [
+                    'code'    => 500,
+                    'message' => 'Bad data',
+                ];
+            }
+
+            // 2. Sprint valide ?
             // ------------------
-            if (!self::isSprintValid($id, $sprintId))
+            if (!self::isSprintValid($userId, $sprintId))
             {
                 return [
                     'code'    => 404,
@@ -353,6 +365,71 @@
                 ];
             }
 
+            // 3. Traitement des données
+            // -------------------------
+            $data['applicationsIds'] = (!array_key_exists('applicationsIds', $data))
+                ? []
+                : json_decode($data['applicationsIds']);
+
+            // 4. Enregistrement en base
+            // -------------------------
+            try
+            {
+                DB::transaction(function() use ($userId, $sprintId, &$data)
+                {
+                    // Ajout dans la table task
+                    // ------------------------
+                    $taskData = [
+                        'user_id'            => $userId,
+                        'sprint_id'          => $sprintId,
+                        'name'               => $data['name'],
+                        'description'        => ($data['description']) ? $data['description']: null,
+                        'initial_duration'   => floatval($data['duration']),
+                        'remaining_duration' => 0,
+                        'added_after'        => intval($data['notPlanned']),
+                        'created_at'         => date('Y-m-d H:i:s'),
+                        'updated_at'         => date('Y-m-d H:i:s'),
+                    ];
+                    $taskId = DB::table('task')->insertGetId($taskData);
+
+                    // Ajout dans la table task_application
+                    // ------------------------------------
+                    $taskApplicationData = [];
+                    $taskApplicationItem = ['task_id' => 0, 'application_id' => 0];
+                    foreach ($data['applicationsIds'] as $applicationId)
+                    {
+                        $taskApplicationItem['task_id']        = $taskId;
+                        $taskApplicationItem['application_id'] = $applicationId;
+
+                        $taskApplicationData[] = $taskApplicationItem;
+                    }
+                    DB::table('task_application')->insert($taskApplicationData);
+
+                    // Ajout de l'ID de la tâche
+                    // -------------------------
+                    $data['id'] = $taskId;
+                });
+            }
+            catch(Exception $exception)
+            {
+                return [
+                    'code'    => 500,
+                    'message' => 'Internal error',
+                ];
+            }
             
+            if (!isset($data['id']))
+            {
+                return [
+                    'code'    => 500,
+                    'message' => 'Internal error',
+                ];
+            }
+
+            return [
+                'code'    => 200,
+                'message' => 'Success',
+                'data'    => $data,
+            ];
         }
     }

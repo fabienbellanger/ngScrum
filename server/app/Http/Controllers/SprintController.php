@@ -99,6 +99,10 @@
             {
                 return Response::notFound($response['message']);
             }
+            elseif ($response['code'] == 500)
+            {
+                return Response::internalError($response['message']);
+            }
             else
             {
                 return Response::json($response['data'], 200);

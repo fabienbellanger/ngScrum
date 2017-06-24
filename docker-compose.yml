@@ -52,7 +52,7 @@ services:
     links:
       - mariadb
     environment:
-      PMA_HOST: apiScrum_mysql
+      PMA_HOST: apiScrum_mariadb
       PMA_PORT: "3306"
     networks:
       - code-network
