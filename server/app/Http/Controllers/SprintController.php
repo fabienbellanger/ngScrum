@@ -89,6 +89,12 @@
         public function addTask(Request $request, $id, $sprintId)
         {
             $data = Input::all();
+            if (!array_key_exists('data', $data))
+            {
+                return Response::internalError('No data');
+            }
+
+            $data = json_decode($data['data'], true);
             if (!$data || count($data) == 0)
             {
                 return Response::internalError('No data');

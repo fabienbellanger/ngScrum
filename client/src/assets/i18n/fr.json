@@ -53,5 +53,8 @@
 	"add.task.title": "Ajout d'une tâche",
 	"add": "Ajouter",
 	"duration.in.hour": "Durée (en h)",
-	"applications": "Applications"
+	"applications": "Applications",
+	"token.error": "Erreur token",
+	"no.user": "Pas d'utilisateur",
+	"add.task.error": "Erreur lors de l'ajout d'une tâche"
 }

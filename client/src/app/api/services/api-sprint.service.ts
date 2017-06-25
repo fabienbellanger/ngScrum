@@ -122,4 +122,61 @@ export class ApiSprintService
             }
         });
     }
+
+    /**
+     * Ajout d'une tâche
+     * 
+     * @author Fabien Bellanger
+     * @param {number} sprintId ID du sprint
+     * @param {any[]}  data     Données 
+     * @return {Promise}
+     */
+    public addTask(sprintId: number, data: any): any
+    {
+        return new Promise((resolve: any, reject: any) =>
+        {
+            // 1. Récupération du token
+            // ------------------------
+            const token: string = this.storageService.get('session', 'token', null);
+
+            if (token != null)
+            {
+                // 2. Utilisateur
+                // --------------
+                const user: User = this.storageService.get('session', 'user', null);
+
+                if (user != null)
+                {
+                    // 3. Déconnexion
+                    // --------------
+                    const headers: any = new Headers();
+                    headers.append('Authorization', 'Bearer ' + token);
+                    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+                    this.httpService.post(
+                        `/users/${user.id}/sprints/${sprintId}/tasks`,
+                        {data: JSON.stringify(data)},
+                        {headers: headers},
+                        true,
+                        true)
+                        .then((task: any) =>
+                        {
+                            resolve(task);
+                        })
+                        .catch(() =>
+                        {
+                            reject('add.task.error');
+                        });
+                }
+                else
+                {
+                    reject('no.user');
+                }
+            }
+            else
+            {
+                reject('token.error');
+            }
+        });
+    }
 }

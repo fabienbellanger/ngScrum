@@ -71,13 +71,22 @@ export class SprintAddTaskComponent implements OnInit
         let applicationsIdsSelected: number[] = Object.keys(this.applicationsIds)
                                                       .map((k: any) => this.applicationsIds[k]);
 
-        console.log(
-            this.name,
-            this.description,
-            this.duration,
-            this.notPlanned,
-            applicationsIdsSelected
-        );
+        // Requête
+        // -------
+        this.apiSprintService.addTask(this.sprintId, {
+            name:            this.name,
+            description:     this.description,
+            duration:        this.duration,
+            notPlanned:      +this.notPlanned,
+            applicationsIds: applicationsIdsSelected,
+        }).then((task: any) =>
+        {
+            console.log(task);
+        })
+        .catch((error: any) =>
+        {
+            console.error('KO: ' + error);
+        });
 	}
     
     /**

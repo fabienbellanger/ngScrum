@@ -369,7 +369,7 @@
             // -------------------------
             $data['applicationsIds'] = (!array_key_exists('applicationsIds', $data))
                 ? []
-                : json_decode($data['applicationsIds']);
+                : $data['applicationsIds'];
 
             // 4. Enregistrement en base
             // -------------------------
