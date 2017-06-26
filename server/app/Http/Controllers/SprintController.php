@@ -114,4 +114,27 @@
                 return Response::json($response['data'], 200);
             }
         }
+
+        /**
+         * Suppression d'une tâche
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @param int $id ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @param int $taskId ID d'une tâche
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function deleteTask(Request $request, $id, $sprintId, $taskId)
+        {
+            $response = SprintRepository::deleteTask($id, $sprintId, $taskId);
+            if ($response['code'] == 404)
+            {
+                return Response::notFound($response['message']);
+            }
+            else
+            {
+                return Response::json(null, 200);
+            }
+        }
     }

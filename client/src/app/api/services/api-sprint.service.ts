@@ -179,4 +179,61 @@ export class ApiSprintService
             }
         });
     }
+
+    /**
+     * Suppression d'une tâche
+     * 
+     * @author Fabien Bellanger
+     * @param {number} sprintId ID du sprint
+     * @param {number} taskId   ID de la tâche
+     * @return {Promise}
+     */
+    public deleteTask(sprintId: number, taskId: number): any
+    {
+        return new Promise((resolve: any, reject: any) =>
+        {
+            // 1. Récupération du token
+            // ------------------------
+            const token: string = this.storageService.get('session', 'token', null);
+
+            if (token != null)
+            {
+                // 2. Utilisateur
+                // --------------
+                const user: User = this.storageService.get('session', 'user', null);
+
+                if (user != null)
+                {
+                    // 3. Déconnexion
+                    // --------------
+                    const headers: any = new Headers();
+                    headers.append('Authorization', 'Bearer ' + token);
+                    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+                    this.httpService.delete(
+                        `/users/${user.id}/sprints/${sprintId}/tasks/${taskId}`,
+                        {headers: headers},
+                        true,
+                        true)
+                        .then(() =>
+                        {
+                            alert('OK');
+                            resolve();
+                        })
+                        .catch(() =>
+                        {
+                            reject('delete.task.error');
+                        });
+                }
+                else
+                {
+                    reject('no.user');
+                }
+            }
+            else
+            {
+                reject('token.error');
+            }
+        });
+    }
 }

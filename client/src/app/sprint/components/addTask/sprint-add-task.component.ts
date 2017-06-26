@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { ToastyService } from 'ng2-toasty';
+import { TranslateService } from '@ngx-translate/core';
 
 import { ApiSprintService } from '../../../api';
 import { StorageService } from '../../../shared';
@@ -30,11 +33,17 @@ export class SprintAddTaskComponent implements OnInit
      * @param {ActivatedRoute}      route
      * @param {SprintService}       sprintService
      * @param {StorageService}      storageService
+     * @param {ToastyService}       toastyService
+     * @param {Router}              router
+     * @param {TranslateService}    translateService
      */
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
                 private sprintService: SprintService,
-                private storageService: StorageService)
+                private storageService: StorageService,
+                private toastyService: ToastyService,
+                private router: Router,
+				private translateService: TranslateService)
     {
     }
 
@@ -81,11 +90,25 @@ export class SprintAddTaskComponent implements OnInit
             applicationsIds: applicationsIdsSelected,
         }).then((task: any) =>
         {
-            console.log(task);
+            // Notification
+            // ------------
+            this.translateService.get('add.task.success').subscribe((msg: string) =>
+            {
+                this.toastyService.success(msg);
+            });
+
+            // Redirection
+            // -----------
+            this.router.navigate(['/sprints/tasks', {sprintId: this.sprintId}]);
         })
         .catch((error: any) =>
         {
-            console.error('KO: ' + error);
+            // Notification
+            // ------------
+            this.translateService.get('add.task.error').subscribe((msg: string) =>
+            {
+                this.toastyService.error(msg);
+            });
         });
 	}
     

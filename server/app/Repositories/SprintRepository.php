@@ -128,7 +128,7 @@
                         $sprints[$sprintId]['finishedAt']        = $line->sprintFinishedAt;
                         $sprints[$sprintId]['initialDuration']   = $line->initialDuration;
                         $sprints[$sprintId]['remainingDuration'] = $line->remainingDuration;
-                        $sprints[$sprintId]['progressPercent']   = round((($line->initialDuration - $line->remainingDuration) / $line->initialDuration) * 100, 2);
+                        $sprints[$sprintId]['progressPercent']   = round((($line->initialDuration - $line->remainingDuration) / $line->initialDuration) * 100, 0);
                     }
                 }
             }
@@ -251,9 +251,9 @@
                     task_user.worked_duration AS taskPartWorkedDuration,
                     task_user.date AS taskPartDate
                 FROM task
-                    INNER JOIN task_user ON task_user.task_id = task.id
+                    LEFT JOIN task_user ON task_user.task_id = task.id
                 WHERE task.sprint_id = :sprintId
-                ORDER BY task_user.date ASC';
+                ORDER BY task.created_at ASC';
             $results = DB::select($query, ['sprintId' => $sprintId]);
             $tasks   = [];
             foreach ($results as $task)
@@ -266,19 +266,19 @@
                     $tasks[$taskId]['id']                = $taskId;
                     $tasks[$taskId]['name']              = $task->taskName;
                     $tasks[$taskId]['description']       = $task->taskDescription;
-                    $tasks[$taskId]['initialDuration']   = $task->taskInitialDuration;
-                    $tasks[$taskId]['remainingDuration'] = $task->taskRemainingDuration;
+                    $tasks[$taskId]['initialDuration']   = floatval($task->taskInitialDuration);
+                    $tasks[$taskId]['remainingDuration'] = floatval($task->taskRemainingDuration);
                     $tasks[$taskId]['userId']            = $task->taskUserId;
                     $tasks[$taskId]['addedAfter']        = $task->taskAddedAfter;
                     $tasks[$taskId]['list']              = [];
                 }
 
-                if (!array_key_exists($taskPartId, $tasks[$taskId]['list']))
+                if ($taskPartId && !array_key_exists($taskPartId, $tasks[$taskId]['list']))
                 {
                     $tasks[$taskId]['list'][$taskPartId]['id']             = $taskPartId;
                     $tasks[$taskId]['list'][$taskPartId]['userId']         = $task->taskPartUserId;
-                    $tasks[$taskId]['list'][$taskPartId]['duration']       = $task->taskPartDuration;
-                    $tasks[$taskId]['list'][$taskPartId]['workedDuration'] = $task->taskPartWorkedDuration;
+                    $tasks[$taskId]['list'][$taskPartId]['duration']       = floatval($task->taskPartDuration);
+                    $tasks[$taskId]['list'][$taskPartId]['workedDuration'] = floatval($task->taskPartWorkedDuration);
                     $tasks[$taskId]['list'][$taskPartId]['date']           = $task->taskPartDate;
                 }
             }
@@ -383,9 +383,9 @@
                         'user_id'            => $userId,
                         'sprint_id'          => $sprintId,
                         'name'               => $data['name'],
-                        'description'        => ($data['description']) ? $data['description']: null,
+                        'description'        => ($data['description']) ? $data['description'] : null,
                         'initial_duration'   => floatval($data['duration']),
-                        'remaining_duration' => 0,
+                        'remaining_duration' => floatval($data['duration']),
                         'added_after'        => intval($data['notPlanned']),
                         'created_at'         => date('Y-m-d H:i:s'),
                         'updated_at'         => date('Y-m-d H:i:s'),
@@ -414,7 +414,7 @@
             {
                 return [
                     'code'    => 500,
-                    'message' => 'Internal error',
+                    'message' => 'Internal error 1',
                 ];
             }
             
@@ -422,7 +422,7 @@
             {
                 return [
                     'code'    => 500,
-                    'message' => 'Internal error',
+                    'message' => 'Internal error 2',
                 ];
             }
 
@@ -431,5 +431,41 @@
                 'message' => 'Success',
                 'data'    => $data,
             ];
+        }
+
+        /**
+         * Suppression d'une tâche
+         *
+         * @author Fabien Bellanger
+         * @param int $userId   ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @param int $taskOd   ID de la tâche
+         * @return array
+         */
+        static public function deleteTask($userId, $sprintId, $taskId): ?array
+        {
+            // 1. Sprint valide ?
+            // ------------------
+            if (!self::isSprintValid($userId, $sprintId))
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'No sprint found',
+                ];
+            }
+
+            // 2. Suppression de la tâche et des données associées
+            // ---------------------------------------------------
+            $query = '
+                DELETE FROM task
+                WHERE task.id = :taskId 
+                    AND task.sprint_id = :sprintId';
+            DB::delete($query, ['taskId' => $taskId, 'sprintId' => $sprintId]);
+
+            return [
+                'code'    => 200,
+                'message' => 'Success',
+                'data'    => $taskId,
+            ]; 
         }
     }

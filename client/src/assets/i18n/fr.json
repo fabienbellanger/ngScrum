@@ -56,5 +56,9 @@
 	"applications": "Applications",
 	"token.error": "Erreur token",
 	"no.user": "Pas d'utilisateur",
-	"add.task.error": "Erreur lors de l'ajout d'une tâche"
+	"add.task.error": "Erreur lors de l'ajout d'une tâche",
+	"add.task.success": "Ajout de la tâche avec succès",
+	"delete.task.success": "Suppression de la tâche avec succès",
+	"delete.task.error": "Erreur lors de la suppression de la tâche",
+	"delete.task.confirm": "Voulez-vous vraiment supprimer cette tâche ?"
 }
