@@ -8,7 +8,7 @@ import { LayoutModule } from '../layout';
 
 import { SprintComponent } from './components/sprint.component';
 import { SprintListComponent } from './components/sprint-list.component';
-import { SprintInfoComponent } from './components/info/sprint-info.component';
+import { SprintInfoComponent } from './components/sprint-info.component';
 import { SprintTasksComponent } from './components/task/sprint-tasks.component';
 import { SprintAddTaskComponent } from './components/task/sprint-add-task.component';
 

@@ -16,6 +16,7 @@
 	"forgotten.password.error.message": "Une erreur est survenue. Veuillez essayer de nouveau.",
 	"forgotten.password.success.message": "Un email vient de vous être envoyé à l'adresse suivante <b>{{ email }}</b> avec votre nouveau mot de passe.",
     "modify": "Modifier",
+	"ok": "Ok",
     "cancel": "Annuler",
     "required": "Champ obligatoire",
     "sprint.in.progress.list": "En cours",
@@ -47,6 +48,7 @@
 	"add.member": "Ajouter un membre",
 	"description": "Description",
 	"not.planned": "Non prévue ?",
+	"planned": "Prévue ?",
 	"actions": "Actions",
 	"total": "Total",
 	"search": "Recherche",
@@ -60,5 +62,6 @@
 	"add.task.success": "Ajout de la tâche avec succès",
 	"delete.task.success": "Suppression de la tâche avec succès",
 	"delete.task.error": "Erreur lors de la suppression de la tâche",
-	"delete.task.confirm": "Voulez-vous vraiment supprimer cette tâche ?"
+	"delete.task.confirm.body": "Voulez-vous vraiment supprimer cette tâche ?",
+	"delete.task.confirm.title": "Suppresion d'une tâche"
 }

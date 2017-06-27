@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { ToastyService } from 'ng2-toasty';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -35,7 +36,8 @@ export class SprintTasksComponent implements OnInit
                 private sprintChartsService: SprintChartsService,
                 private toastyService: ToastyService,
                 private router: Router,
-				private translateService: TranslateService)
+				private translateService: TranslateService,
+                private modal: Modal)
     {
     }
 
@@ -50,6 +52,22 @@ export class SprintTasksComponent implements OnInit
         // ----------------------
         this.sprintId = +this.route.snapshot.params['sprintId'];
 
+        this.init();
+    }
+
+    /**
+     * Initialisation du sprint
+     * 
+     * @author Fabien Bellanger
+     */
+    private init(): void
+    {
+        // Remise à zéro du sprint
+        // -----------------------
+        this.sprintService.sprint = null;
+
+        // Initialisation du sprint
+        // ------------------------
         this.apiSprintService.getSprintInformation(this.sprintId)
             .then((sprint: any) =>
             {
@@ -80,34 +98,51 @@ export class SprintTasksComponent implements OnInit
      */
     public deleteTask(taskId: number): void
     {
-        this.translateService.get('delete.task.confirm').subscribe((deleteTaskConfirm: string) =>
+        this.translateService.get([
+            'delete.task.confirm.title', 
+            'delete.task.confirm.body',
+            'delete.task.success',
+            'delete.task.error',
+            'ok',
+            'cancel',
+        ]).subscribe((transltationObject: Object) =>
 		{
-			if (window.confirm(deleteTaskConfirm))
-            {
-                this.apiSprintService.deleteTask(this.sprintId, taskId)
-                    .then(() =>
-                    {
-                        // Notification
-                        // ------------
-                        this.translateService.get('delete.task.success').subscribe((msg: string) =>
-		                {
-                            this.toastyService.success(msg);
-                        });
+            this.modal.confirm()
+                .size('sm')
+                .isBlocking(true)
+                .showClose(true)
+                .keyboard(27)
+                .okBtn(transltationObject['ok'])
+                .cancelBtn(transltationObject['cancel'])
+                .title(transltationObject['delete.task.confirm.title'])
+                .body(transltationObject['delete.task.confirm.body'])
+                .open()
+                .catch((error: any) => console.error('ERROR: ' + error))
+                .then((dialog: any) => 
+                {
+                    return dialog.result;
+                })
+                .then((result: any) =>
+                {
+                    this.apiSprintService.deleteTask(this.sprintId, taskId)
+                        .then(() =>
+                        {
+                            // Notification
+                            // ------------
+                            this.toastyService.success(transltationObject['delete.task.success']);
 
-                        // TODO: Refreh des données
-                        // ------------------------
-                    })
-                    .catch(() =>
-                    {
-                        // Notification
-                        // ------------
-                        this.translateService.get('delete.task.error').subscribe((msg: string) =>
-		                {
-                            this.toastyService.error(msg);
+                            // TODO: Refreh des données
+                            // ------------------------
+                            this.init();
+                        })
+                        .catch(() =>
+                        {
+                            // Notification
+                            // ------------
+                            this.toastyService.error(transltationObject['delete.task.error']);
                         });
-                    });
-            }
-		});
-        
+                })
+                .catch((cancel: any) => {});
+        });
     }
 }

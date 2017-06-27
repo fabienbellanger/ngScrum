@@ -217,7 +217,6 @@ export class ApiSprintService
                         true)
                         .then(() =>
                         {
-                            alert('OK');
                             resolve();
                         })
                         .catch(() =>
