@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 import { HttpModule, Http } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToastyModule } from 'ng2-toasty';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { ChartsModule } from 'ng2-charts';
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
 import { DateService } from './services/date.service';
 import { HttpService } from './services/http.service';
@@ -44,6 +47,8 @@ export function createTranslateLoader(http: Http)
         ToastyModule.forRoot(),
         SlimLoadingBarModule.forRoot(),
         ChartsModule,
+        ModalModule.forRoot(),
+        BootstrapModalModule,
     ],
     declarations: [
         MomentPipe,
@@ -74,6 +79,9 @@ export function createTranslateLoader(http: Http)
         PercentPipe,
         NumberPipe,
         InputDirective,
+    ],
+    entryComponents: [
+        // CustomModal,
     ],
 })
 
