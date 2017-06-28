@@ -44,8 +44,8 @@ export class ApiSprintService
 
                 if (user != null)
                 {
-                    // 3. Déconnexion
-                    // --------------
+                    // 3. Requête
+                    // ----------
                     const headers: any = new Headers();
                     headers.append('Authorization', 'Bearer ' + token);
                     headers.append('Content-Type', 'application/json');
@@ -95,8 +95,8 @@ export class ApiSprintService
 
                 if (user != null)
                 {
-                    // 3. Déconnexion
-                    // --------------
+                    // 3. Requête
+                    // ----------
                     const headers: any = new Headers();
                     headers.append('Authorization', 'Bearer ' + token);
                     headers.append('Content-Type', 'application/json');
@@ -147,8 +147,8 @@ export class ApiSprintService
 
                 if (user != null)
                 {
-                    // 3. Déconnexion
-                    // --------------
+                    // 3. Requête
+                    // ----------
                     const headers: any = new Headers();
                     headers.append('Authorization', 'Bearer ' + token);
                     headers.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -204,8 +204,8 @@ export class ApiSprintService
 
                 if (user != null)
                 {
-                    // 3. Déconnexion
-                    // --------------
+                    // 3. Requête
+                    // ----------
                     const headers: any = new Headers();
                     headers.append('Authorization', 'Bearer ' + token);
                     headers.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -218,6 +218,62 @@ export class ApiSprintService
                         .then(() =>
                         {
                             resolve();
+                        })
+                        .catch(() =>
+                        {
+                            reject('delete.task.error');
+                        });
+                }
+                else
+                {
+                    reject('no.user');
+                }
+            }
+            else
+            {
+                reject('token.error');
+            }
+        });
+    }
+
+    /**
+     * Récupération d'une tâche
+     * 
+     * @author Fabien Bellanger
+     * @param {number} sprintId ID du sprint
+     * @param {number} taskId   ID de la tâche
+     * @return {Promise}
+     */
+    public getTask(sprintId: number, taskId: number): any
+    {
+        return new Promise((resolve: any, reject: any) =>
+        {
+            // 1. Récupération du token
+            // ------------------------
+            const token: string = this.storageService.get('session', 'token', null);
+
+            if (token != null)
+            {
+                // 2. Utilisateur
+                // --------------
+                const user: User = this.storageService.get('session', 'user', null);
+
+                if (user != null)
+                {
+                    // 3. Requête
+                    // ----------
+                    const headers: any = new Headers();
+                    headers.append('Authorization', 'Bearer ' + token);
+                    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+                    this.httpService.get(
+                        `/users/${user.id}/sprints/${sprintId}/tasks/${taskId}`,
+                        {headers: headers},
+                        true,
+                        true)
+                        .then((response: any) =>
+                        {
+                            resolve(response);
                         })
                         .catch(() =>
                         {

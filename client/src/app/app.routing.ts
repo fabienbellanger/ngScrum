@@ -6,7 +6,7 @@ import {
     SprintListComponent,
     SprintInfoComponent,
     SprintTasksComponent,
-    SprintAddTaskComponent,
+    SprintEditTaskComponent,
 } from './sprint';
 import { LayoutComponent } from './layout';
 
@@ -46,8 +46,8 @@ const appRoutes: Routes = [
                         component: SprintTasksComponent,
                     },
                     {
-                        path:      'add-task',
-                        component: SprintAddTaskComponent,
+                        path:      'edit-task',
+                        component: SprintEditTaskComponent,
                     },
                 ],
             },

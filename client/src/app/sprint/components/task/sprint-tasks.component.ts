@@ -10,7 +10,7 @@ import { SprintService } from '../../services/sprint.service';
 import { SprintChartsService } from '../../services/sprint-charts.service';
 
 @Component({
-    selector: 'sa-sprint-tasks-info',
+    selector:    'sa-sprint-tasks-info',
     templateUrl: './sprint-tasks.component.html',
 })
 
@@ -52,6 +52,8 @@ export class SprintTasksComponent implements OnInit
         // ----------------------
         this.sprintId = +this.route.snapshot.params['sprintId'];
 
+        // Initialisation
+        // --------------
         this.init();
     }
 
@@ -80,23 +82,12 @@ export class SprintTasksComponent implements OnInit
     }
 
     /**
-     * Recherche
-     * 
-     * @author Fabien Bellanger
-     * @param {string} searchValue 
-     */
-    public search(searchValue: string): void
-    {
-        console.log(this.sprintService.sprint.tasks);
-    }
-
-    /**
      * Suppression d'une tâche
      * 
      * @author Fabien Bellanger
-     * @param {number} taskId 
+     * @param {number} taskId ID de la tâche
      */
-    public deleteTask(taskId: number): void
+    private deleteTask(taskId: number): void
     {
         this.translateService.get([
             'delete.task.confirm.title', 
@@ -131,8 +122,8 @@ export class SprintTasksComponent implements OnInit
                             // ------------
                             this.toastyService.success(transltationObject['delete.task.success']);
 
-                            // TODO: Refreh des données
-                            // ------------------------
+                            // Rechargement de la vue
+                            // ----------------------
                             this.init();
                         })
                         .catch(() =>
@@ -144,5 +135,16 @@ export class SprintTasksComponent implements OnInit
                 })
                 .catch((cancel: any) => {});
         });
+    }
+
+    /**
+     * Edition d'une tâche
+     * 
+     * @author Fabien Bellanger
+     * @param {number} taskId ID de la tâche
+     */
+    private editTask(taskId: number): void
+    {
+        this.router.navigate(['/sprints/edit-task', {sprintId: this.sprintId, taskId: taskId}]);
     }
 }

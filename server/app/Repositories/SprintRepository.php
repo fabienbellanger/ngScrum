@@ -468,4 +468,81 @@
                 'data'    => $taskId,
             ]; 
         }
+
+        /**
+         * Récupération d'une tâche
+         *
+         * @author Fabien Bellanger
+         * @param int $userId   ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @param int $taskOd   ID de la tâche
+         * @return array
+         */
+        static public function getTask($userId, $sprintId, $taskId): ?array
+        {
+            // 1. Tâche valide ?
+            // -----------------
+            $taskId = intval($taskId);
+            if ($taskId == 0)
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'No task found',
+                ];
+            }
+
+            // 2. Sprint valide ?
+            // ------------------
+            if (!self::isSprintValid($userId, $sprintId))
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'No sprint found',
+                ];
+            }
+
+            // 3. Récupération de la tâche
+            // ---------------------------
+            $query = '
+                SELECT *
+                FROM task
+                WHERE task.id = :taskId 
+                    AND task.sprint_id = :sprintId';
+            $tasks = DB::select($query, ['taskId' => $taskId, 'sprintId' => $sprintId]);
+            if (!$tasks || count($tasks) != 1)
+            {
+                return [
+                    'code'    => 500,
+                    'message' => 'Internal error',
+                ];
+            }
+            $task = [
+                'id'                => intval($tasks[0]->id),
+                'sprintId'          => intval($tasks[0]->sprint_id),
+                'name'              => $tasks[0]->name,
+                'description'       => $tasks[0]->description,
+                'initialDuration'   => floatval($tasks[0]->initial_duration),
+                'remainingDuration' => floatval($tasks[0]->remaining_duration),
+                'addedAfter'        => intval($tasks[0]->added_after),
+                'applications'      => [],
+            ];
+
+            // 4. Récupération des applications
+            // --------------------------------
+            $query = '
+                SELECT application_id AS id
+                FROM task_application
+                WHERE task_id = :taskId';
+            $applications = DB::select($query, ['taskId' => $taskId]);
+            foreach ($applications as $application)
+            {
+                $task['applications'][] = $application->id;
+            }
+
+            return [
+                'code'    => 200,
+                'message' => 'Success',
+                'data'    => $task,
+            ];
+        }
     }

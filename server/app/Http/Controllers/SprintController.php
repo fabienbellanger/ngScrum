@@ -137,4 +137,31 @@
                 return Response::json(null, 200);
             }
         }
+
+        /**
+         * Récupréation d'une tâche
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @param int $id ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @param int $taskId ID d'une tâche
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function getTask(Request $request, $id, $sprintId, $taskId)
+        {
+            $response = SprintRepository::getTask($id, $sprintId, $taskId);
+            if ($response['code'] == 404)
+            {
+                return Response::notFound($response['message']);
+            }
+            elseif ($response['code'] == 500)
+            {
+                return Response::internalError($response['message']);
+            }
+            else
+            {
+                return Response::json($response['data'], 200);
+            }
+        }
     }

@@ -23,9 +23,22 @@
                          'id'       => '[0-9]+',
                          'sprintId' => '[0-9]+',
                      ]);
-
+                    
+        /*
+        |----------------------------------------------------------------------
+        | Task Routes
+        |----------------------------------------------------------------------
+        |
+        */
         Route::group(['prefix' => '{sprintId}/tasks'], function()
         {
+            Route::get('/{taskId}', 'SprintController@getTask')
+                ->where([
+                            'id'       => '[0-9]+',
+                            'sprintId' => '[0-9]+',
+                            'taskId'   => '[0-9]+',
+                        ]);
+
             Route::post('/', 'SprintController@addTask')
                 ->where([
                             'id'       => '[0-9]+',
