@@ -5,7 +5,7 @@ services:
     container_name: apiScrum_nginx
     image: nginx:latest
     ports:
-      - "8080:80"
+      - "8880:80"
     volumes_from:
       - php
     volumes:
@@ -34,7 +34,7 @@ services:
     container_name: apiScrum_mariadb
     image: mariadb:latest
     ports:
-      - "3307:3306"
+      - "3308:3306"
     networks:
       - code-network
     environment:
@@ -48,7 +48,7 @@ services:
     container_name: apiScrum_phpmyadmin
     image: phpmyadmin/phpmyadmin
     ports:
-      - "8081:80"
+      - "8881:80"
     links:
       - mariadb
     environment:
