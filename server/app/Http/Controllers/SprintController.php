@@ -100,7 +100,46 @@
                 return Response::internalError('No data');
             }
             
-            $response = SprintRepository::addTask($id, $sprintId, $data);
+            $response = SprintRepository::editTask($id, $sprintId, $data);
+            if ($response['code'] == 404)
+            {
+                return Response::notFound($response['message']);
+            }
+            elseif ($response['code'] == 500)
+            {
+                return Response::internalError($response['message']);
+            }
+            else
+            {
+                return Response::json($response['data'], 200);
+            }
+        }
+
+        /**
+         * Modification d'une tâche
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @param int $id ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @param int $taskId ID d'une tâche
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function modifyTask(Request $request, $id, $sprintId, $taskId)
+        {
+            $data = Input::all();
+            if (!array_key_exists('data', $data))
+            {
+                return Response::internalError('No data');
+            }
+
+            $data = json_decode($data['data'], true);
+            if (!$data || count($data) == 0)
+            {
+                return Response::internalError('No data');
+            }
+            
+            $response = SprintRepository::editTask($id, $sprintId, $data, $taskId);
             if ($response['code'] == 404)
             {
                 return Response::notFound($response['message']);

@@ -45,6 +45,13 @@
                             'sprintId' => '[0-9]+',
                         ]);
 
+            Route::put('/{taskId}', 'SprintController@modifyTask')
+                ->where([
+                            'id'       => '[0-9]+',
+                            'sprintId' => '[0-9]+',
+                            'taskId'   => '[0-9]+',
+                        ]);
+
             Route::delete('/{taskId}', 'SprintController@deleteTask')
                 ->where([
                             'id'       => '[0-9]+',

@@ -334,15 +334,16 @@
         }
 
         /**
-         * Ajout d'une tâche
+         * Ajout / Modification d'une tâche
          *
          * @author Fabien Bellanger
          * @param int $userId   ID de l'utilisateur
          * @param int $sprintId ID du sprint
          * @param array $data   POST data
+         * @param int $taskId   ID de la tâche (default 0)
          * @return array
          */
-        public static function addTask($userId, $sprintId, $data): ?array
+        public static function editTask($userId, $sprintId, $data, $taskId = 0): ?array
         {
             // 1. Vérification des données
             // ---------------------------
@@ -375,43 +376,25 @@
             // -------------------------
             try
             {
-                DB::transaction(function() use ($userId, $sprintId, &$data)
+                DB::transaction(function() use ($userId, $sprintId, $taskId, &$data)
                 {
-                    // Ajout dans la table task
-                    // ------------------------
-                    $taskData = [
-                        'user_id'            => $userId,
-                        'sprint_id'          => $sprintId,
-                        'name'               => $data['name'],
-                        'description'        => ($data['description']) ? $data['description'] : null,
-                        'initial_duration'   => floatval($data['duration']),
-                        'remaining_duration' => floatval($data['duration']),
-                        'added_after'        => intval($data['notPlanned']),
-                        'created_at'         => date('Y-m-d H:i:s'),
-                        'updated_at'         => date('Y-m-d H:i:s'),
-                    ];
-                    $taskId = DB::table('task')->insertGetId($taskData);
-
-                    // Ajout dans la table task_application
-                    // ------------------------------------
-                    $taskApplicationData = [];
-                    $taskApplicationItem = ['task_id' => 0, 'application_id' => 0];
-                    foreach ($data['applicationsIds'] as $applicationId)
+                    if ($taskId == 0)
                     {
-                        $taskApplicationItem['task_id']        = $taskId;
-                        $taskApplicationItem['application_id'] = $applicationId;
-
-                        $taskApplicationData[] = $taskApplicationItem;
+                        // Création
+                        // --------
+                        self::addTask($userId, $sprintId, $data);
                     }
-                    DB::table('task_application')->insert($taskApplicationData);
-
-                    // Ajout de l'ID de la tâche
-                    // -------------------------
-                    $data['id'] = $taskId;
+                    else
+                    {
+                        // Modification
+                        // ------------
+                        self::modifyTask($userId, $sprintId, $taskId, $data);
+                    }
                 });
             }
             catch(Exception $exception)
             {
+                var_dump($exception);
                 return [
                     'code'    => 500,
                     'message' => 'Internal error 1',
@@ -431,6 +414,98 @@
                 'message' => 'Success',
                 'data'    => $data,
             ];
+        }
+
+        /**
+         * Ajout d'une tâche
+         *
+         * @author Fabien Bellanger
+         * @param int $userId   ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @param array $data   POST data (Référence)
+         */
+        static private function addTask($userId, $sprintId, &$data)
+        {
+            // Ajout dans la table task
+            // ------------------------
+            $taskData = [
+                'user_id'            => $userId,
+                'sprint_id'          => $sprintId,
+                'name'               => $data['name'],
+                'description'        => ($data['description']) ? $data['description'] : null,
+                'initial_duration'   => floatval($data['duration']),
+                'remaining_duration' => floatval($data['duration']),
+                'added_after'        => intval($data['notPlanned']),
+                'created_at'         => date('Y-m-d H:i:s'),
+                'updated_at'         => date('Y-m-d H:i:s'),
+            ];
+            $taskId = DB::table('task')->insertGetId($taskData);
+
+            // Ajout dans la table task_application
+            // ------------------------------------
+            $taskApplicationData = [];
+            $taskApplicationItem = ['task_id' => 0, 'application_id' => 0];
+            foreach ($data['applicationsIds'] as $applicationId)
+            {
+                $taskApplicationItem['task_id']        = $taskId;
+                $taskApplicationItem['application_id'] = $applicationId;
+
+                $taskApplicationData[] = $taskApplicationItem;
+            }
+            DB::table('task_application')->insert($taskApplicationData);
+
+            // Ajout de l'ID de la tâche
+            // -------------------------
+            $data['id'] = $taskId;
+        }
+
+        /**
+         * Modification d'une tâche
+         *
+         * @author Fabien Bellanger
+         * @param int $userId   ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @param int $taskId   ID de la tâche
+         * @param array $data   POST data (Référence)
+         * @return array
+         */
+        static private function modifyTask($userId, $sprintId, $taskId, &$data)
+        {
+            // Mise à jou dans la table task
+            // -----------------------------
+            $taskData = [
+                'name'               => $data['name'],
+                'description'        => ($data['description']) ? $data['description'] : null,
+                'initial_duration'   => floatval($data['duration']),
+                'added_after'        => intval($data['notPlanned']),
+                'updated_at'         => date('Y-m-d H:i:s'),
+            ];
+            DB::table('task')
+                ->where('id', $taskId)
+                ->update($taskData);
+
+            // Suppression des éléments de la table task_application
+            // -----------------------------------------------------
+            DB::table('task_application')
+                ->where('task_id', $taskId)
+                ->delete();
+
+            // Ajout dans la table task_application
+            // ------------------------------------
+            $taskApplicationData = [];
+            $taskApplicationItem = ['task_id' => 0, 'application_id' => 0];
+            foreach ($data['applicationsIds'] as $applicationId)
+            {
+                $taskApplicationItem['task_id']        = $taskId;
+                $taskApplicationItem['application_id'] = $applicationId;
+
+                $taskApplicationData[] = $taskApplicationItem;
+            }
+            DB::table('task_application')->insert($taskApplicationData);
+
+            // Ajout de l'ID de la tâche
+            // -------------------------
+            $data['id'] = $taskId;
         }
 
         /**

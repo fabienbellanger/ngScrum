@@ -181,6 +181,64 @@ export class ApiSprintService
     }
 
     /**
+     * Modification d'une tâche
+     * 
+     * @author Fabien Bellanger
+     * @param {number} sprintId ID du sprint
+     * @param {number} taskId   ID de la tâche
+     * @param {any[]}  data     Données 
+     * @return {Promise}
+     */
+    public modifyTask(sprintId: number, taskId: number, data: any): any
+    {
+        return new Promise((resolve: any, reject: any) =>
+        {
+            // 1. Récupération du token
+            // ------------------------
+            const token: string = this.storageService.get('session', 'token', null);
+
+            if (token != null)
+            {
+                // 2. Utilisateur
+                // --------------
+                const user: User = this.storageService.get('session', 'user', null);
+
+                if (user != null)
+                {
+                    // 3. Requête
+                    // ----------
+                    const headers: any = new Headers();
+                    headers.append('Authorization', 'Bearer ' + token);
+                    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+                    this.httpService.put(
+                        `/users/${user.id}/sprints/${sprintId}/tasks/${taskId}`,
+                        {data: JSON.stringify(data)},
+                        {headers: headers},
+                        true,
+                        true)
+                        .then((task: any) =>
+                        {
+                            resolve(task);
+                        })
+                        .catch(() =>
+                        {
+                            reject('add.task.error');
+                        });
+                }
+                else
+                {
+                    reject('no.user');
+                }
+            }
+            else
+            {
+                reject('token.error');
+            }
+        });
+    }
+
+    /**
      * Suppression d'une tâche
      * 
      * @author Fabien Bellanger

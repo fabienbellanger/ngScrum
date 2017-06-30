@@ -27,6 +27,7 @@ export class SprintEditTaskComponent implements OnInit
     private applicationsIds: any;
     private notPlanned: boolean;
     private title: string;
+    private buttonTitle: string;
     private task: Task;
     private loading: boolean = true;
 
@@ -70,11 +71,17 @@ export class SprintEditTaskComponent implements OnInit
         this.translateService.get([
             'add.task.title', 
             'edit.task.title',
+            'add',
+            'modify',
         ]).subscribe((transltationObject: Object) =>
 		{
             this.title = (this.id === 0)
                 ? transltationObject['add.task.title']
                 : transltationObject['edit.task.title'];
+
+            this.buttonTitle = (this.id === 0)
+                ? transltationObject['add']
+                : transltationObject['modify'];
         });
 
 		// Initialisation
