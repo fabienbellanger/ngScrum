@@ -51,11 +51,12 @@
 					</label>
 					<div class="col-sm-9 col-md-6">
 						<input type="number" step="0.5" min="0" max="35"
-							name="duration"
-							class="form-control AddTaskForm-duration"
-							[(ngModel)]="duration"
-							[placeholder]="'duration' | translate"
-							required>
+							   name="duration"
+							   class="form-control AddTaskForm-duration"
+							   [(ngModel)]="duration"
+							   [placeholder]="'duration' | translate"
+							   required
+							   [readonly]="id !== 0">
 					</div>
 				</div>
 

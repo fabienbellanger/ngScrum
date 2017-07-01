@@ -210,7 +210,34 @@ export class SprintEditTaskComponent implements OnInit
 	 */
     private modifyTask(applicationsIdsSelected: number[]): void
     {
-        alert('TODO');
+        this.apiSprintService.modifyTask(this.sprintId, this.id, {
+            name:            this.name,
+            description:     this.description,
+            duration:        this.duration,
+            notPlanned:      +this.notPlanned,
+            applicationsIds: applicationsIdsSelected,
+        }).then((task: any) =>
+        {
+            // Notification
+            // ------------
+            this.translateService.get('modify.task.success').subscribe((msg: string) =>
+            {
+                this.toastyService.success(msg);
+            });
+
+            // Redirection
+            // -----------
+            this.router.navigate(['/sprints/tasks', {sprintId: this.sprintId}]);
+        })
+        .catch((error: any) =>
+        {
+            // Notification
+            // ------------
+            this.translateService.get('modify.task.error').subscribe((msg: string) =>
+            {
+                this.toastyService.error(msg);
+            });
+        });
     }
     
     /**

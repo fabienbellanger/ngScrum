@@ -50,6 +50,31 @@
         }
 
         /**
+         * Récupération d'une tâche
+         *
+         * @author Fabien Bellanger
+         * @param int $sprintId ID du sprint
+         * @param int $taskId   ID de la tâche (default 0)
+         * @return stdClass
+         */
+        public static function getTask($sprintId, $taskId)
+        {
+            $taskId = intval($taskId);
+            $query  = '
+                SELECT *
+                FROM task
+                WHERE task.id = :taskId 
+                    AND task.sprint_id = :sprintId';
+            $tasks = DB::select($query, ['taskId' => $taskId, 'sprintId' => $sprintId]);
+            if (!$tasks || count($tasks) != 1)
+            {
+                return null;
+            }
+
+            return $tasks[0];
+        }
+
+        /**
          * Liste des sprints
          *
          * @author Fabien Bellanger
@@ -394,7 +419,6 @@
             }
             catch(Exception $exception)
             {
-                var_dump($exception);
                 return [
                     'code'    => 500,
                     'message' => 'Internal error 1',
@@ -471,12 +495,16 @@
          */
         static private function modifyTask($userId, $sprintId, $taskId, &$data)
         {
+            // Récupération de la tâche
+            // ------------------------
+            //$task = self::getTask($sprintId, $taskId);
+
             // Mise à jou dans la table task
             // -----------------------------
             $taskData = [
                 'name'               => $data['name'],
                 'description'        => ($data['description']) ? $data['description'] : null,
-                'initial_duration'   => floatval($data['duration']),
+                //'initial_duration'   => floatval($data['duration']),
                 'added_after'        => intval($data['notPlanned']),
                 'updated_at'         => date('Y-m-d H:i:s'),
             ];
@@ -553,7 +581,7 @@
          * @param int $taskOd   ID de la tâche
          * @return array
          */
-        static public function getTask($userId, $sprintId, $taskId): ?array
+        static public function getTaskInfo($userId, $sprintId, $taskId): ?array
         {
             // 1. Tâche valide ?
             // -----------------
@@ -578,27 +606,22 @@
 
             // 3. Récupération de la tâche
             // ---------------------------
-            $query = '
-                SELECT *
-                FROM task
-                WHERE task.id = :taskId 
-                    AND task.sprint_id = :sprintId';
-            $tasks = DB::select($query, ['taskId' => $taskId, 'sprintId' => $sprintId]);
-            if (!$tasks || count($tasks) != 1)
+            $task = self::getTask($sprintId, $taskId);
+            if (!$task)
             {
                 return [
                     'code'    => 500,
                     'message' => 'Internal error',
                 ];
             }
-            $task = [
-                'id'                => intval($tasks[0]->id),
-                'sprintId'          => intval($tasks[0]->sprint_id),
-                'name'              => $tasks[0]->name,
-                'description'       => $tasks[0]->description,
-                'initialDuration'   => floatval($tasks[0]->initial_duration),
-                'remainingDuration' => floatval($tasks[0]->remaining_duration),
-                'addedAfter'        => intval($tasks[0]->added_after),
+            $taskData = [
+                'id'                => intval($task->id),
+                'sprintId'          => intval($task->sprint_id),
+                'name'              => $task->name,
+                'description'       => $task->description,
+                'initialDuration'   => floatval($task->initial_duration),
+                'remainingDuration' => floatval($task->remaining_duration),
+                'addedAfter'        => intval($task->added_after),
                 'applications'      => [],
             ];
 
@@ -611,13 +634,13 @@
             $applications = DB::select($query, ['taskId' => $taskId]);
             foreach ($applications as $application)
             {
-                $task['applications'][] = $application->id;
+                $taskData['applications'][] = $application->id;
             }
 
             return [
                 'code'    => 200,
                 'message' => 'Success',
-                'data'    => $task,
+                'data'    => $taskData,
             ];
         }
     }

@@ -189,7 +189,7 @@
          */
         public function getTask(Request $request, $id, $sprintId, $taskId)
         {
-            $response = SprintRepository::getTask($id, $sprintId, $taskId);
+            $response = SprintRepository::getTaskInfo($id, $sprintId, $taskId);
             if ($response['code'] == 404)
             {
                 return Response::notFound($response['message']);
