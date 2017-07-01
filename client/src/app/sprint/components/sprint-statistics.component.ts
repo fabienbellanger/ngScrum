@@ -6,11 +6,11 @@ import { SprintService } from '../services/sprint.service';
 import { SprintChartsService } from '../services/sprint-charts.service';
 
 @Component({
-    selector:    'sa-sprint-info',
-    templateUrl: './sprint-info.component.html',
+    selector:    'sa-sprint-statistics',
+    templateUrl: './sprint-statistics.component.html',
 })
 
-export class SprintInfoComponent implements OnInit
+export class SprintStatisticsComponent implements OnInit
 {
     public pieChartTotalRemainingHours: any;
     public lineChartUsesCoefficient: any;

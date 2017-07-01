@@ -8,9 +8,10 @@ import { LayoutModule } from '../layout';
 
 import { SprintComponent } from './components/sprint.component';
 import { SprintListComponent } from './components/sprint-list.component';
-import { SprintInfoComponent } from './components/sprint-info.component';
+import { SprintStatisticsComponent } from './components/sprint-statistics.component';
 import { SprintTasksComponent } from './components/task/sprint-tasks.component';
 import { SprintEditTaskComponent } from './components/task/sprint-edit-task.component';
+import { SprintParametersComponent } from './components/sprint-parameters.component';
 
 import { SprintService } from './services/sprint.service';
 import { SprintChartsService } from './services/sprint-charts.service';
@@ -25,10 +26,11 @@ import { SprintChartsService } from './services/sprint-charts.service';
     ],
     declarations: [
 		SprintListComponent,
-        SprintInfoComponent,
+        SprintStatisticsComponent,
         SprintTasksComponent,
         SprintEditTaskComponent,
         SprintComponent,
+        SprintParametersComponent,
     ],
     providers:    [
 		HttpService,

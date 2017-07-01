@@ -9,6 +9,7 @@ export { SprintChartsService } from './services/sprint-charts.service';
 // ----------
 export { SprintComponent } from './components/sprint.component';
 export { SprintListComponent } from './components/sprint-list.component';
-export { SprintInfoComponent } from './components/sprint-info.component';
+export { SprintStatisticsComponent } from './components/sprint-statistics.component';
 export { SprintTasksComponent } from './components/task/sprint-tasks.component';
 export { SprintEditTaskComponent } from './components/task/sprint-edit-task.component';
+export { SprintParametersComponent } from './components/sprint-parameters.component';

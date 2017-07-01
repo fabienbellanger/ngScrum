@@ -67,5 +67,7 @@
 	"delete.task.success": "Suppression de la tâche avec succès",
 	"delete.task.error": "Erreur lors de la suppression de la tâche",
 	"delete.task.confirm.body": "Voulez-vous vraiment supprimer cette tâche ?",
-	"delete.task.confirm.title": "Suppresion d'une tâche"
+	"delete.task.confirm.title": "Suppresion d'une tâche",
+	"statistics": "Statistiques",
+	"parameters": "Paramètres"
 }
