@@ -1,5 +1,5 @@
-<div *ngIf="!sprints"><h2>{{ 'loading' | translate }}...</h2></div>
-<div *ngIf="sprints">
+<div *ngIf="loading"><h2>{{ 'loading' | translate }}...</h2></div>
+<div *ngIf="!loading">
     <h1>{{ 'sprints.list' | translate }}</h1>
 
     <div class="btn-group" role="group">

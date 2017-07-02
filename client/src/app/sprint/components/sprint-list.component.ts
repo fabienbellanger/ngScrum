@@ -9,8 +9,9 @@ import { ApiSprintService } from '../../api';
 
 export class SprintListComponent implements OnInit
 {
-    public sprints: any[] = [];
-    public state: string;
+    private sprints: any[]   = [];
+    private loading: boolean = true;
+    private state: string;
 
     /**
      * Constructeur
@@ -49,10 +50,14 @@ export class SprintListComponent implements OnInit
             .then((sprints: any) =>
             {
                 this.sprints = sprints;
+
+                this.loading = false;
             })
             .catch(() =>
             {
                 console.error('[error] Get sprints list');
+
+                this.loading = false;
             });
     }
 }

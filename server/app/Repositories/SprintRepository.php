@@ -230,11 +230,11 @@
          * Information d'un sprint
          *
          * @author Fabien Bellanger
-         * @param int $id       ID de l'utilisateur
+         * @param int $userId   ID de l'utilisateur
          * @param int $sprintId ID du sprint
          * @return array
          */
-        public static function getSprintInfo($id, $sprintId): ?array
+        public static function getSprintInfo($userId, $sprintId): ?array
         {
             $sprint = [];
 
@@ -643,4 +643,70 @@
                 'data'    => $taskData,
             ];
         }
+
+        /**
+         * Récupération des paramètres d'un sprint
+         *
+         * @author Fabien Bellanger
+         * @param int $userId   ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @return array
+         */
+        static public function getSprintParameters($id, $sprintId): ?array
+        {
+            $sprint = [];
+
+            // 1. Récupération du sprint
+            // -------------------------
+            $query   = '
+                SELECT 
+                    sprint.name    AS sprintName,
+                    sprint.team_id AS teamId,
+                    team.name      AS teamName
+                FROM sprint
+                    INNER JOIN team ON team.id = sprint.team_id
+                WHERE sprint.id = :sprintId';
+            $results = DB::select($query, ['sprintId' => $sprintId]);
+            if (!$results || count($results) != 1)
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'No sprint found',
+                ];
+            }
+            $sprint['id']   = $sprintId;
+            $sprint['name'] = $results[0]->sprintName;
+            $sprint['teamName'] = $results[0]->teamName;
+
+            // 2. Récupération des membres de l'équipe
+            // ---------------------------------------
+            $teamId = $results[0]->teamId;
+            $users = [];
+            $query = '
+                SELECT DISTINCT
+                    users.id,
+                    users.firstname,
+                    users.lastname
+                FROM users
+                    INNER JOIN team_member ON team_member.user_id = users.id AND team_member.team_id = :teamId';
+            $results = DB::select($query, ['teamId' => $teamId]);
+            if ($results && count($results) > 0)
+            {
+                foreach ($results as $user)
+                {
+                    if (!array_key_exists($user->id, $users))
+                    {
+                        $users[$user->id] = $user->firstname . ' ' . $user->lastname;
+                    }
+                }
+            }
+            $sprint['users'] = $users;
+            
+            return [
+                'code'    => 200,
+                'message' => 'Success',
+                'data'    => $sprint,
+            ];
+        }
     }
+    

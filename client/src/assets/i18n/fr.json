@@ -16,6 +16,7 @@
 	"forgotten.password.error.message": "Une erreur est survenue. Veuillez essayer de nouveau.",
 	"forgotten.password.success.message": "Un email vient de vous être envoyé à l'adresse suivante <b>{{ email }}</b> avec votre nouveau mot de passe.",
     "modify": "Modifier",
+	"save": "Enregistrer",
 	"ok": "Ok",
     "cancel": "Annuler",
     "required": "Champ obligatoire",
