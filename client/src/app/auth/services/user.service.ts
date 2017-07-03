@@ -67,4 +67,26 @@ export class UserService
 
         return url;
     }
+
+    /**
+     * Retourne l'URL Gravatar'
+     * 
+     * @author Fabien Bellanger
+     * @param {string} email Email
+     * @param {number} size  Taille de l'image en px (default 32)
+     * @return {string} URL Gravatar
+     */
+    public getGravatarUrl2(email: string, size: number = 32): string
+    {
+        let url: string = '';
+
+        if (email !== null && email !== '' && email !== undefined)
+        {
+            let md5: Md5 = new Md5();
+
+            url = 'https://www.gravatar.com/avatar/' + Md5.hashStr(email) + '?s=' + size;
+        }
+
+        return url;
+    }
 }

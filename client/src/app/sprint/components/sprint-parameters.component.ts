@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ApiSprintService } from '../../api';
+import { UserService } from '../../auth';
 
 @Component({
     selector:    'sa-sprint-parameters',
@@ -19,9 +20,11 @@ export class SprintParametersComponent implements OnInit
      * @author Fabien Bellanger
      * @param {ApiSprintService}    apiSprintService
      * @param {ActivatedRoute}      route
+     * @param {UserService}         userService
      */
     constructor(private apiSprintService: ApiSprintService,
-                private route: ActivatedRoute)
+                private route: ActivatedRoute,
+                private userService: UserService)
     {
     }
 

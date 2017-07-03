@@ -34,11 +34,56 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="col-xs-12">
-				<p>{{ sprint.teamName }}</p>
-				
-				{{ sprint.users | json }}
+				<div class="form-group">
+					<label for="startedAt" class="col-sm-3 col-md-2 control-label">
+						{{ 'started.at' | translate }}*
+					</label>
+					<div class="col-sm-9 col-md-6">
+						<input type="date" class="form-control" name="startedAt"
+							[placeholder]="'started.at' | translate"
+							[(ngModel)]="sprint.startedAt"
+							autofocus
+							required>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						{{ 'team' | translate }}
+						<span class="green-color">{{ sprint.teamName }}</span>
+					</div>
+					<div class="panel-body">
+						<ul class="list-group margin-bottom-0px" *ngIf="sprint.users.length > 0">
+							<li class="list-group-item" *ngFor="let user of sprint.users">
+								<div class="users-avatar"
+                					 [style.background-image]="'url(' + userService.getGravatarUrl2(user.email, 24) + ')'">
+									 </div>
+								<div style="display: inline-block">{{ user.name }}</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row margin-bottom-20px">
+			<div class="col-xs-12">
+				<button class="btn btn-default" type="button"
+						[routerLink]="['/sprints', { sprintId: sprintId }]" 
+						[routerLinkActiveOptions]="{exact: false}"
+						routerLinkActive="true">
+					<span class="fa fa-tasks"></span>
+					<span>{{ 'sprints.list' | translate }}</span>
+				</button>
+				&nbsp;&nbsp;
+				<button type="submit" class="btn btn-primary" [disabled]="!parametersForm.valid">
+					{{ 'save' | translate }}
+				</button>
 			</div>
 		</div>
 	</form>

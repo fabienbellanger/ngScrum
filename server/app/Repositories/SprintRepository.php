@@ -110,12 +110,13 @@
             // -------
             $query = '
                 SELECT
-                    sprint.id AS sprintId,
-                    sprint.name AS sprintName,
-                    sprint.team_id AS teamId,
-                    sprint.created_at AS sprintCreatedAt,
-                    sprint.finished_at AS sprintFinishedAt,
-                    SUM(task.initial_duration) AS initialDuration,
+                    sprint.id                    AS sprintId,
+                    sprint.name                  AS sprintName,
+                    sprint.team_id               AS teamId,
+                    sprint.created_at            AS sprintCreatedAt,
+                    sprint.started_at            AS sprintStartedAt,
+                    sprint.finished_at           AS sprintFinishedAt,
+                    SUM(task.initial_duration)   AS initialDuration,
                     SUM(task.remaining_duration) AS remainingDuration
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
@@ -129,7 +130,7 @@
             {
                 $query .= ' WHERE sprint.finished_at IS NOT NULL';
             }
-            $query .= ' GROUP BY sprint.id ORDER BY sprint.created_at ASC';
+            $query .= ' GROUP BY sprint.id ORDER BY sprint.started_at ASC';
 
             $results = DB::select($query, ['userId' => $userId]);
 
@@ -151,6 +152,7 @@
                         $sprints[$sprintId]['teamId']            = $line->teamId;
                         $sprints[$sprintId]['createdAt']         = $line->sprintCreatedAt;
                         $sprints[$sprintId]['finishedAt']        = $line->sprintFinishedAt;
+                        $sprints[$sprintId]['startedAt']         = $line->sprintStartedAt;
                         $sprints[$sprintId]['initialDuration']   = $line->initialDuration;
                         $sprints[$sprintId]['remainingDuration'] = $line->remainingDuration;
                         $sprints[$sprintId]['progressPercent']   = round((($line->initialDuration - $line->remainingDuration) / $line->initialDuration) * 100, 0);
@@ -660,9 +662,10 @@
             // -------------------------
             $query   = '
                 SELECT 
-                    sprint.name    AS sprintName,
-                    sprint.team_id AS teamId,
-                    team.name      AS teamName
+                    sprint.name       AS sprintName,
+                    sprint.started_at AS startedAt,
+                    sprint.team_id    AS teamId,
+                    team.name         AS teamName
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
                 WHERE sprint.id = :sprintId';
@@ -674,9 +677,10 @@
                     'message' => 'No sprint found',
                 ];
             }
-            $sprint['id']   = $sprintId;
-            $sprint['name'] = $results[0]->sprintName;
-            $sprint['teamName'] = $results[0]->teamName;
+            $sprint['id']        = $sprintId;
+            $sprint['name']      = $results[0]->sprintName;
+            $sprint['startedAt'] = $results[0]->startedAt;
+            $sprint['teamName']  = $results[0]->teamName;
 
             // 2. Récupération des membres de l'équipe
             // ---------------------------------------
@@ -686,7 +690,8 @@
                 SELECT DISTINCT
                     users.id,
                     users.firstname,
-                    users.lastname
+                    users.lastname,
+                    users.email
                 FROM users
                     INNER JOIN team_member ON team_member.user_id = users.id AND team_member.team_id = :teamId';
             $results = DB::select($query, ['teamId' => $teamId]);
@@ -696,11 +701,13 @@
                 {
                     if (!array_key_exists($user->id, $users))
                     {
-                        $users[$user->id] = $user->firstname . ' ' . $user->lastname;
+                        $users[$user->id]['id']    = $user->id;
+                        $users[$user->id]['email'] = $user->email;
+                        $users[$user->id]['name']  = $user->firstname . ' ' . $user->lastname;
                     }
                 }
             }
-            $sprint['users'] = $users;
+            $sprint['users'] = array_values($users);
             
             return [
                 'code'    => 200,

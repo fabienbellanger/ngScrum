@@ -60,6 +60,20 @@ table.table {
     margin-bottom: 20px;
 }
 
+.margin-bottom-0px {
+    margin-bottom: 0px;
+}
+
+.users-avatar {
+    display:             inline-block;
+    width:               24px;
+    height:              24px;
+    background-size:     cover;
+    background-position: center;
+    border-radius:       50%;
+    //border:              1px solid $mediumLightColor;
+}
+
 // ---------
 // Bootstrap
 // ---------

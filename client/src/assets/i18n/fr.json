@@ -34,6 +34,7 @@
     "total.worked.duration": "Durée totale travaillée",
     "total.tasks.duration": "Durée totale des tâches réalisées",
 	"created.at": "Créé le",
+	"started.at": "Démarré le",
 	"finished.at": "Terminé le",
 	"remaining.hours": "Heures restantes",
 	"loading": "Chargement",
@@ -70,5 +71,6 @@
 	"delete.task.confirm.body": "Voulez-vous vraiment supprimer cette tâche ?",
 	"delete.task.confirm.title": "Suppresion d'une tâche",
 	"statistics": "Statistiques",
-	"parameters": "Paramètres"
+	"parameters": "Paramètres",
+	"team": "Équipe"
 }
