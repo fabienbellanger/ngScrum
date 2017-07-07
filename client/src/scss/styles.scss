@@ -8,7 +8,7 @@ html {
 body {
     font-family:   $fontFamily;
     font-weight:   300;
-    font-size:     12px;
+    font-size:     13px;
     margin-bottom: 35px;
 }
 
@@ -239,3 +239,23 @@ a.list-group-item {
     }
 }
 
+// ----------------------
+// Paramètres d'un sprint
+// ----------------------
+.SprintParameters {
+    &-Users {
+        &-container {
+            display:     flex; 
+            align-items: center; 
+            padding:     5px 0px;
+        }
+
+        &-avatar {
+            margin: 5px
+        }
+
+        &-name {
+
+        }
+    }
+}

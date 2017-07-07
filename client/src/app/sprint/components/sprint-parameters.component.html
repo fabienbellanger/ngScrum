@@ -2,7 +2,7 @@
 <div *ngIf="!loading">
 	<h1>{{ 'parameters' | translate }}</h1>
 
-	<form class="form-horizontal" #parametersForm="ngForm" (ngSubmit)="saveParameters()">
+	<form class="form-horizontal SprintParameters" #parametersForm="ngForm" (ngSubmit)="saveParameters()">
 		<div class="row margin-bottom-20px">
 			<div class="col-xs-12">
 				<button class="btn btn-default" type="button"
@@ -50,7 +50,7 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row SprintParameters-Users">
 			<div class="col-xs-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -58,14 +58,19 @@
 						<span class="green-color">{{ sprint.teamName }}</span>
 					</div>
 					<div class="panel-body">
-						<ul class="list-group margin-bottom-0px" *ngIf="sprint.users.length > 0">
+						<!--<ul class="list-group margin-bottom-0px" *ngIf="sprint.users.length > 0">
 							<li class="list-group-item" *ngFor="let user of sprint.users">
-								<div class="users-avatar"
-                					 [style.background-image]="'url(' + userService.getGravatarUrl2(user.email, 24) + ')'">
-									 </div>
-								<div style="display: inline-block">{{ user.name }}</div>
 							</li>
-						</ul>
+						</ul>-->
+						<div *ngIf="sprint.users.length > 0">
+							<div class="SprintParameters-Users-container" 
+								 *ngFor="let user of sprint.users">
+								<div class="users-avatar SprintParameters-Users-avatar"
+									[style.background-image]="'url(' + userService.getGravatarUrl2(user.email, 24) + ')'">
+									</div>
+								<div style="display: inline-block">{{ user.name }}</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
