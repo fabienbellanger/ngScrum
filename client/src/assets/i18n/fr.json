@@ -72,5 +72,6 @@
 	"delete.task.confirm.title": "Suppresion d'une tâche",
 	"statistics": "Statistiques",
 	"parameters": "Paramètres",
-	"team": "Équipe"
+	"team": "Équipe",
+	"estimated.end.date": "Date de fin estimée"
 }

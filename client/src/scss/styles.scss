@@ -8,6 +8,7 @@ html {
 body {
     font-family:   $fontFamily;
     font-weight:   300;
+    font-size:     12px;
     margin-bottom: 35px;
 }
 
@@ -79,6 +80,7 @@ table.table {
 // ---------
 .btn {
     border-radius: 1px;
+    font-size:     13px;
 }
 
 .btn:focus, .btn:focus, .btn:active, .btn:active:focus {
@@ -181,11 +183,11 @@ h3 {
 }
 
 h4 {
-    font-size: 16px;
+    font-size: 18px;
 }
 
 h5 {
-    font-size: 14px;
+    font-size: 16px;
 }
 
 h6 {
