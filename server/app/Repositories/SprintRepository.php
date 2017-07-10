@@ -243,7 +243,7 @@
             // 1. Récupération du sprint
             // -------------------------
             $query   = '
-                SELECT sprint.name, sprint.created_at, sprint.updated_at, sprint.finished_at
+                SELECT sprint.name, sprint.created_at, sprint.updated_at, sprint.started_at, sprint.finished_at
                 FROM sprint
                 WHERE sprint.id = :sprintId';
             $results = DB::select($query, ['sprintId' => $sprintId]);
@@ -259,6 +259,7 @@
             $sprint['name']       = $results[0]->name;
             $sprint['createdAt']  = $results[0]->created_at;
             $sprint['updatedAt']  = $results[0]->updated_at;
+            $sprint['startedAt']  = $results[0]->started_at;
             $sprint['finishedAt'] = $results[0]->finished_at;
 
             // 2. Récupération des tâches
@@ -501,8 +502,8 @@
             // ------------------------
             //$task = self::getTask($sprintId, $taskId);
 
-            // Mise à jou dans la table task
-            // -----------------------------
+            // Mise à jour dans la table task
+            // ------------------------------
             $taskData = [
                 'name'               => $data['name'],
                 'description'        => ($data['description']) ? $data['description'] : null,
@@ -714,6 +715,32 @@
                 'message' => 'Success',
                 'data'    => $sprint,
             ];
+        }
+
+        /**
+         * Modification des paramètres d'un sprint
+         *
+         * @author Fabien Bellanger
+         * @param int $userId   ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @param array $data   POST data (Référence)
+         * @return array
+         */
+        static public function modifySprintParameters($userId, $sprintId, &$data)
+        {
+            $sprintId = intval($sprintId);
+
+            // Mise à jour dans la table sprint
+            // --------------------------------
+            $sprintData = [
+                'name'       => $data['name'],
+                'started_at' => $data['startedAt'],
+            ];
+            DB::table('sprint')
+                ->where('id', $sprintId)
+                ->update($sprintData);
+
+            return ["id" => $sprintId];
         }
     }
     

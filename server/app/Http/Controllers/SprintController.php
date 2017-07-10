@@ -229,4 +229,32 @@
                 return Response::json($response['data'], 200);
             }
         }
+
+        /**
+         * Modification des paramètres d'un sprint
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @param int $id ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function modifySprintParameters(Request $request, $id, $sprintId)
+        {
+            $data = Input::all();
+            if (!array_key_exists('data', $data))
+            {
+                return Response::internalError('No data');
+            }
+
+            $data = json_decode($data['data'], true);
+            if (!$data || count($data) == 0)
+            {
+                return Response::internalError('No data');
+            }
+
+            $response = SprintRepository::modifySprintParameters($id, $sprintId, $data);
+
+            return Response::json($response, 200);
+        }
     }

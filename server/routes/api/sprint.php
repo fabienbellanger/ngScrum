@@ -28,6 +28,11 @@
                          'id'       => '[0-9]+',
                          'sprintId' => '[0-9]+',
                      ]);
+        Route::put('/{sprintId}/parameters', 'SprintController@modifySprintParameters')
+             ->where([
+                         'id'       => '[0-9]+',
+                         'sprintId' => '[0-9]+',
+                     ]);
                     
         /*
         |----------------------------------------------------------------------

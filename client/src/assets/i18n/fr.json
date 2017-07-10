@@ -73,5 +73,9 @@
 	"statistics": "Statistiques",
 	"parameters": "Paramètres",
 	"team": "Équipe",
-	"estimated.end.date": "Date de fin estimée"
+	"estimated.end.date": "Date de fin estimée",
+	"modify.sprint.parameters.success": "Modification des paramètres du sprint avec succès",
+	"modify.sprint.parameters.error": "Erreur lors des modifications des paramètres du sprint",
+	"name.must.be.enter": "Le nom doit être renseigné",
+	"started.date.must.be.enter": "La date de début doit être renseignée"
 }
