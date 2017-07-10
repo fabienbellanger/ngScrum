@@ -225,6 +225,28 @@ a.list-group-item {
 // ---------------------
 // AddTaskForm component
 // ---------------------
+.SprintsList {
+    &-Sprint {
+        &-infos {
+            color: $mediumDarkColor;
+        }
+        &-label {
+            display:    inline-block;
+            width:      150px;
+            text-align: right;
+        }
+
+        &-value {
+            display:     inline-block;
+            margin-left: 20px;
+            font-weight: $fontWeightMedium;
+        }
+    }
+}
+
+// ---------------------
+// AddTaskForm component
+// ---------------------
 .AddTaskForm {
     &-duration {
         width: 100px;
@@ -252,10 +274,6 @@ a.list-group-item {
 
         &-avatar {
             margin: 5px
-        }
-
-        &-name {
-
         }
     }
 }

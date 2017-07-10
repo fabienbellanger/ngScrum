@@ -1,7 +1,7 @@
 <div *ngIf="loading"><h2>{{ 'loading' | translate }}...</h2></div>
 <div *ngIf="!loading">
 	<h1>{{ 'parameters' | translate }}</h1>
-
+	
 	<form class="form-horizontal SprintParameters" #parametersForm="ngForm" (ngSubmit)="saveParameters()">
 		<div class="row margin-bottom-20px">
 			<div class="col-xs-12">
