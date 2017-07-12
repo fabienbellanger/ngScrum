@@ -91,6 +91,13 @@
                             </button>
                             &nbsp;&nbsp;
                             <button class="btn btn-default" type="button"
+                                    [routerLink]="['/sprints/tasks-management', { sprintId: sprint.id }]" routerLinkActive="true"
+                                    [routerLinkActiveOptions]="{exact: false}">
+                                <span class="fa fa-tasks"></span>
+                                <span class="hidden-xs">{{ 'tasks.management' | translate }}</span>
+                            </button>
+                            &nbsp;&nbsp;
+                            <button class="btn btn-default" type="button"
                                     [routerLink]="['/sprints/parameters', { sprintId: sprint.id }]" routerLinkActive="true"
                                     [routerLinkActiveOptions]="{exact: false}">
                                 <span class="fa fa-gear"></span>

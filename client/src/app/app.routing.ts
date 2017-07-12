@@ -8,6 +8,7 @@ import {
     SprintTasksComponent,
     SprintEditTaskComponent,
     SprintParametersComponent,
+    SprintTasksManagementComponent,
 } from './sprint';
 import { LayoutComponent } from './layout';
 
@@ -54,6 +55,10 @@ const appRoutes: Routes = [
                         path:      'edit-task',
                         component: SprintEditTaskComponent,
                     },
+                    {
+                        path:      'tasks-management',
+                        component: SprintTasksManagementComponent,
+                    },
                 ],
             },
         ],
@@ -65,5 +70,5 @@ const appRoutes: Routes = [
 ];
 
 export const Routing: any = RouterModule.forRoot(appRoutes, {
-    useHash: true,
+    useHash: false,
 });

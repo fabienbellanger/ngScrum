@@ -12,6 +12,7 @@ import { SprintStatisticsComponent } from './components/sprint-statistics.compon
 import { SprintTasksComponent } from './components/task/sprint-tasks.component';
 import { SprintEditTaskComponent } from './components/task/sprint-edit-task.component';
 import { SprintParametersComponent } from './components/sprint-parameters.component';
+import { SprintTasksManagementComponent } from './components/sprint-tasks-management.component';
 
 import { SprintService } from './services/sprint.service';
 import { SprintChartsService } from './services/sprint-charts.service';
@@ -31,6 +32,7 @@ import { SprintChartsService } from './services/sprint-charts.service';
         SprintEditTaskComponent,
         SprintComponent,
         SprintParametersComponent,
+        SprintTasksManagementComponent,
     ],
     providers:    [
 		HttpService,
