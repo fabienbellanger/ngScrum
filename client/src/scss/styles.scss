@@ -65,6 +65,14 @@ table.table {
     margin-bottom: 0px;
 }
 
+.no-margin {
+    margin: Opx;
+}
+
+.no-padding {
+    padding: 0px;
+}
+
 .users-avatar {
     display:             inline-block;
     width:               24px;
@@ -73,6 +81,81 @@ table.table {
     background-position: center;
     border-radius:       50%;
     //border:              1px solid $mediumLightColor;
+}
+
+// ----------------
+// Checkbox / Radio
+// ----------------
+.radio-checkbox-container {
+    margin-top: 0.8rem;
+}
+
+.radio-checkbox {
+    margin: 0rem 0.5rem;
+
+    input[type="radio"], input[type="checkbox"] {
+        position: absolute;
+        opacity:  0;
+
+        + .radio-checkbox-label {
+            //line-height: 1.2;
+            cursor:      pointer;
+            font-weight: $fontWeightNormal;
+
+            &:before {
+                content:        '';
+                background:     $lightColor;
+                border-radius:  100%;
+                border:         1px solid darken($lightColor, 25%);
+                display:        inline-block;
+                width:          1.6em;
+                height:         1.6em;
+                position:       relative;
+                top:            -0.2em;
+                margin-right:   1em; 
+                vertical-align: top;
+                text-align:     center;
+                transition:     all 250ms ease;
+                line-height:    1;
+            }
+        }
+
+        &:checked {
+            + .radio-checkbox-label {
+                &:before {
+                    background-color: $greenColor;
+                    box-shadow:       inset 0 0 0 4px $lightColor;
+                    border:           1px solid $greenColor;
+                }
+            }
+        }
+
+        &:focus {
+            + .radio-checkbox-label {
+                &:before {
+                    outline: none;
+                }
+            }
+        }
+
+        &:disabled {
+            + .radio-checkbox-label {
+                &:before {
+                    box-shadow:   inset 0 0 0 4px $lightColor;
+                    border-color: darken($lightColor, 25%);
+                    background:   darken($lightColor, 25%);
+                }
+            }
+        }
+
+        + .radio-checkbox-label {
+            &:empty {
+                &:before {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
 }
 
 // ---------
@@ -274,77 +357,6 @@ a.list-group-item {
 
         &-avatar {
             margin: 5px
-        }
-    }
-}
-
-$color1: #f4f4f4;
-
-.radio-checkkox {
-    margin: 0.5rem;
-
-    input[type="radio"], input[type="checkbox"] {
-        position: absolute;
-        opacity:  0;
-
-        + .radio-checkkox-label {
-            line-height: 1.2;
-            cursor:      pointer;
-            font-weight: $fontWeightNormal;
-
-            &:before {
-                content:        '';
-                background:     $color1;
-                border-radius:  100%;
-                border:         1px solid darken($color1, 25%);//$greenColor;
-                display:        inline-block;
-                width:          1.6em;
-                height:         1.6em;
-                position:       relative;
-                top:            -0.2em;
-                margin-right:   1em; 
-                vertical-align: top;
-                text-align:     center;
-                transition:     all 250ms ease;
-                line-height:    1;
-            }
-        }
-
-        &:checked {
-            + .radio-checkkox-label {
-                &:before {
-                    background-color: $greenColor;
-                    box-shadow:       inset 0 0 0 4px $color1;
-                    border:           1px solid $greenColor;
-                }
-            }
-        }
-
-        &:focus {
-            + .radio-checkkox-label {
-                &:before {
-                    outline:      none;
-                    border-color: $greenColor;
-                }
-            }
-        }
-
-        &:disabled {
-            + .radio-checkkox-label {
-                &:before {
-                    box-shadow:   inset 0 0 0 4px $color1;
-                    border-color: darken($color1, 25%);
-                    background:   darken($color1, 25%);
-                }
-            }
-        }
-
-        + .radio-checkkox-label {
-            &:empty {
-                &:before {
-                    margin-right: 0;
-                }
-            }
         }
     }
 }
