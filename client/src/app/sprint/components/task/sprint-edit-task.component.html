@@ -2,11 +2,6 @@
 <div *ngIf="!loading" class="margin-bottom-20px">
 	<h1>{{ title }}</h1>
 
-	<div class="radio-checkbox">
-		<input type="checkbox" id="planned2" name="planned2">
-		<label for="planned2" class="radio-checkbox-label">Test</label>
-	</div>
-
 	<form class="form-horizontal" #taskForm="ngForm" (ngSubmit)="editTask()">	
 		<div class="row margin-bottom-20px">
 			<div class="col-xs-12">
