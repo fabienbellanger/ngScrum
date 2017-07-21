@@ -58,18 +58,25 @@
 						<span class="green-color">{{ sprint.teamName }}</span>
 					</div>
 					<div class="panel-body">
-						<!--<ul class="list-group margin-bottom-0px" *ngIf="sprint.users.length > 0">
-							<li class="list-group-item" *ngFor="let user of sprint.users">
-							</li>
-						</ul>-->
 						<div *ngIf="sprint.users.length > 0">
-							<div class="SprintParameters-Users-container" 
-								 *ngFor="let user of sprint.users">
-								<div class="users-avatar SprintParameters-Users-avatar"
-									[style.background-image]="'url(' + userService.getGravatarUrl2(user.email, 24) + ')'">
-									</div>
-								<div style="display: inline-block">{{ user.name }}</div>
+							<div *ngFor="let user of sprint.users">
+								<div class="SprintParameters-Users-container" 
+								     *ngIf="user.inTeam">
+									<div class="users-avatar SprintParameters-Users-avatar"
+										 [style.background-image]="'url(' + userService.getGravatarUrl2(user.email, 24) + ')'">
+										</div>
+									<div style="display: inline-block">{{ user.name }}</div>
+								</div>
 							</div>
+						</div>
+
+						<div>
+							Users not in the team:
+							<ul *ngFor="let user of sprint.users">
+								<li *ngIf="!user.inTeam">
+									{{ user.name }}
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>

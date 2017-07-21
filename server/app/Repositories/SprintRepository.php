@@ -661,7 +661,7 @@
 
             // 1. Récupération du sprint
             // -------------------------
-            $query   = '
+            $query = '
                 SELECT 
                     sprint.name       AS sprintName,
                     sprint.started_at AS startedAt,
@@ -670,6 +670,7 @@
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
                 WHERE sprint.id = :sprintId';
+
             $results = DB::select($query, ['sprintId' => $sprintId]);
             if (!$results || count($results) != 1)
             {
@@ -686,25 +687,28 @@
             // 2. Récupération des membres de l'équipe
             // ---------------------------------------
             $teamId = $results[0]->teamId;
-            $users = [];
-            $query = '
+            $users  = [];
+            $query  = '
                 SELECT DISTINCT
                     users.id,
                     users.firstname,
                     users.lastname,
-                    users.email
+                    users.email,
+                    team_member.team_id
                 FROM users
-                    INNER JOIN team_member ON team_member.user_id = users.id AND team_member.team_id = :teamId';
-            $results = DB::select($query, ['teamId' => $teamId]);
+                    LEFT JOIN team_member ON team_member.user_id = users.id';
+
+            $results = DB::select($query);
             if ($results && count($results) > 0)
             {
                 foreach ($results as $user)
                 {
                     if (!array_key_exists($user->id, $users))
                     {
-                        $users[$user->id]['id']    = $user->id;
-                        $users[$user->id]['email'] = $user->email;
-                        $users[$user->id]['name']  = $user->firstname . ' ' . $user->lastname;
+                        $users[$user->id]['id']     = $user->id;
+                        $users[$user->id]['email']  = $user->email;
+                        $users[$user->id]['name']   = $user->firstname . ' ' . $user->lastname;
+                        $users[$user->id]['inTeam'] = ($teamId == $user->team_id);
                     }
                 }
             }
