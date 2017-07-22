@@ -77,5 +77,7 @@
 	"modify.sprint.parameters.success": "Modification des paramètres du sprint avec succès",
 	"modify.sprint.parameters.error": "Erreur lors des modifications des paramètres du sprint",
 	"name.must.be.enter": "Le nom doit être renseigné",
-	"started.date.must.be.enter": "La date de début doit être renseignée"
+	"started.date.must.be.enter": "La date de début doit être renseignée",
+	"add.user.to.sprint": "Ajouter un utilisateur au sprint",
+	"at.least.one.user.must.be.enter": "Au moins un utilisateur doit être présent"
 }

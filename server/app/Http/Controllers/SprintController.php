@@ -91,13 +91,13 @@
             $data = Input::all();
             if (!array_key_exists('data', $data))
             {
-                return Response::internalError('No data');
+                return Response::badRequest('No data');
             }
 
             $data = json_decode($data['data'], true);
             if (!$data || count($data) == 0)
             {
-                return Response::internalError('No data');
+                return Response::badRequest('No data');
             }
             
             $response = SprintRepository::editTask($id, $sprintId, $data);
@@ -244,13 +244,19 @@
             $data = Input::all();
             if (!array_key_exists('data', $data))
             {
-                return Response::internalError('No data');
+                return Response::badRequest('No data');
             }
 
             $data = json_decode($data['data'], true);
             if (!$data || count($data) == 0)
             {
-                return Response::internalError('No data');
+                return Response::badRequest('No data');
+            }
+
+            if (!array_key_exists('name', $data) || !array_key_exists('startedAt', $data) || 
+                !array_key_exists('usersId', $data))
+            {
+                return Response::badRequest('Bad data');
             }
 
             $response = SprintRepository::modifySprintParameters($id, $sprintId, $data);

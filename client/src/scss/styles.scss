@@ -53,6 +53,10 @@ table.table {
     color: $greenColor;
 }
 
+.margin-top-10px {
+    margin-top: 10px;
+}
+
 .margin-top-20px {
     margin-top: 20px;
 }
@@ -81,6 +85,10 @@ table.table {
     background-position: center;
     border-radius:       50%;
     //border:              1px solid $mediumLightColor;
+}
+
+.width-100 {
+    width: 100%;
 }
 
 // ----------------

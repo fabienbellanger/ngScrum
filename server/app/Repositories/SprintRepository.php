@@ -4,6 +4,7 @@
 
     use DB;
     use Exception;
+    use App\Repositories\TeamRepository;
 
     class SprintRepository
     {
@@ -744,6 +745,11 @@
                 ->where('id', $sprintId)
                 ->update($sprintData);
 
+            // Mise à jour des membres de l'équipe
+            // -----------------------------------
+            $usersInDB  = TeamRepository::getUsersIdFromSprint($sprintId);
+            $newUsersId = $data['usersId'];
+dd($usersInDB, $newUsersId);
             return ["id" => $sprintId];
         }
     }

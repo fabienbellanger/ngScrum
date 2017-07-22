@@ -58,10 +58,9 @@
 						<span class="green-color">{{ sprint.teamName }}</span>
 					</div>
 					<div class="panel-body">
-						<div *ngIf="sprint.users.length > 0">
-							<div *ngFor="let user of sprint.users">
-								<div class="SprintParameters-Users-container" 
-								     *ngIf="user.inTeam">
+						<div *ngIf="usersInSprint.length > 0">
+							<div *ngFor="let user of usersInSprint">
+								<div class="SprintParameters-Users-container">
 									<div class="users-avatar SprintParameters-Users-avatar"
 										 [style.background-image]="'url(' + userService.getGravatarUrl2(user.email, 24) + ')'">
 										</div>
@@ -70,13 +69,27 @@
 							</div>
 						</div>
 
-						<div>
-							Users not in the team:
-							<ul *ngFor="let user of sprint.users">
-								<li *ngIf="!user.inTeam">
-									{{ user.name }}
-								</li>
-							</ul>
+						<div class="margin-top-10px" *ngIf="usersNotInSprint.length > 0">
+							<p class="bold" >{{ 'add.user.to.sprint' | translate }}</p>
+							<div class="row">
+								<div class="col-xs-12 col-sm-8">
+									<select class="form-control"
+											placeholder="choose a user">
+										<option *ngFor="let user of usersNotInSprint"
+												[value]="user.id">
+											{{ user.name }}
+										</option>
+									</select>
+								</div>
+								<div class="xs-12 visible-xs margin-top-10px">&nbsp;</div>
+								<div class="col-xs-12 col-sm-4">
+									<button class="btn btn-primary width-100"
+											type="button"
+											(click)="addUser()">
+										{{ 'add' | translate }}
+									</button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
