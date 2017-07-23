@@ -80,7 +80,7 @@
          *
          * @author Fabien Bellanger
          * @param int    $sprintId     ID du sprint
-         * @return array
+         * @return bool
          */
         public static function isSprintValid($sprintId): ?bool
         {
@@ -95,6 +95,28 @@
             }
 
             return true;
+        }
+
+        /**
+         * ID de l'équipe
+         *
+         * @author Fabien Bellanger
+         * @param int    $sprintId     ID du sprint
+         * @return int
+         */
+        public static function getTeamId($sprintId): ?int
+        {
+            $query   = '
+                SELECT sprint.team_id
+                FROM sprint
+                WHERE sprint.id = :sprintId';
+            $results = DB::select($query, ['sprintId' => $sprintId]);
+            if (!$results || count($results) != 1)
+            {
+                return 0;
+            }
+
+            return $results[0]->team_id;
         }
 
         /**
@@ -749,7 +771,54 @@
             // -----------------------------------
             $usersInDB  = TeamRepository::getUsersIdFromSprint($sprintId);
             $newUsersId = $data['usersId'];
-dd($usersInDB, $newUsersId);
+            $teamId     = self::getTeamId($sprintId);
+
+            // Suppression des utilisateurs
+            // ----------------------------
+            $usersToDelete = [];
+            foreach ($usersInDB as $userInDB)
+            {
+                if (!in_array($userInDB->id, $newUsersId))
+                {
+                    $usersToDelete[] = $userInDB->id;
+                }
+            }
+            DB::table('team_member')
+                ->where('team_id', $teamId)
+                ->whereIn('user_id', $usersToDelete)
+                ->delete();
+
+            // Ajout des utilisateurs
+            // ----------------------
+            $usersToAdd  = [];
+            $nbUsersInDB = count($usersInDB);
+            foreach ($newUsersId as $newUserId)
+            {
+                $userPresent = false;
+                $i           = 0;
+                while(!($i == $nbUsersInDB || $userPresent))
+                {
+                    if ($newUserId == $usersInDB[$i]->id)
+                    {
+                        $userPresent = true;
+                    }
+
+                    $i++;
+                }
+
+                if (!$userPresent)
+                {
+                    array_push($usersToAdd, [
+                        'team_id' => $teamId,
+                        'user_id' => $newUserId,
+                    ]);
+                }
+            }
+            DB::table('team_member')
+                ->insert($usersToAdd);
+
+//dd($usersToAdd, $usersToDelete, $usersToAdd);
+
             return ["id" => $sprintId];
         }
     }
