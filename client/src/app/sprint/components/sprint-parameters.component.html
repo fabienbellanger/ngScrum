@@ -59,12 +59,19 @@
 					</div>
 					<div class="panel-body">
 						<div *ngIf="usersInSprint.length > 0">
-							<div *ngFor="let user of usersInSprint">
+							<div *ngFor="let user of usersInSprint; index as index">
 								<div class="SprintParameters-Users-container">
 									<div class="users-avatar SprintParameters-Users-avatar"
 										 [style.background-image]="'url(' + userService.getGravatarUrl2(user.email, 24) + ')'">
 										</div>
 									<div style="display: inline-block">{{ user.name }}</div>
+									<div style="float: right">
+										<button class="btn btn-danger btn-xs"
+												type="button"
+												(click)="deleteUser(index)">
+											<span class="fa fa-trash-o"></span>
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>

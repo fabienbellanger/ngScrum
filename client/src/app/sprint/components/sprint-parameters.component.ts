@@ -157,17 +157,32 @@ export class SprintParametersComponent implements OnInit
     /**
      * Ajouter un utilisateur au sprint
      * 
-     * TODO: Supprimer la valeur dpar défaut
+     * TODO: Supprimer la valeur par défaut
      * 
      * @author Fabien Bellanger
      * @param {integer} index Indice dans le tableau des utilisateurs à ajouter
      */
-    private addUser(index = 0): void
+    private addUser(index: number = 0): void
     {
         // Suppression du tableau des utilisateurs non présents dans le sprint
         const user: any = this.usersNotInSprint.splice(index, 1);
 
         // Ajout au tableau des utilisateurs faisant partie du sprint
         this.usersInSprint.push(user[0]);
+    }
+
+    /**
+     * Suppression un utilisateur au sprint
+     * 
+     * @author Fabien Bellanger
+     * @param {integer} index Indice dans le tableau des utilisateurs à ajouter
+     */
+    private deleteUser(index: number): void
+    {
+        // Suppression du tableau des utilisateurs présents dans le sprint
+        const user: any = this.usersInSprint.splice(index, 1);
+
+        // Ajout au tableau des utilisateurs ne faisant pas partie du sprint
+        this.usersNotInSprint.push(user[0]);
     }
 }

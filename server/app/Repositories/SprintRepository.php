@@ -817,8 +817,6 @@
             DB::table('team_member')
                 ->insert($usersToAdd);
 
-//dd($usersToAdd, $usersToDelete, $usersToAdd);
-
             return ["id" => $sprintId];
         }
     }
