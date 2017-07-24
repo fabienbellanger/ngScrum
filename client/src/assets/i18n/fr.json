@@ -79,5 +79,6 @@
 	"name.must.be.enter": "Le nom doit être renseigné",
 	"started.date.must.be.enter": "La date de début doit être renseignée",
 	"add.user.to.sprint": "Ajouter un utilisateur au sprint",
-	"at.least.one.user.must.be.enter": "Au moins un utilisateur doit être présent"
+	"at.least.one.user.must.be.enter": "Au moins un utilisateur doit être présent",
+	"choose.user": "Choisissez un utilisateur"
 }

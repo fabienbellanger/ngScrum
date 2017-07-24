@@ -357,14 +357,47 @@ a.list-group-item {
 // ----------------------
 .SprintParameters {
     &-Users {
-        &-container {
-            display:     flex; 
-            align-items: center; 
-            padding:     5px 0px;
+        &-Add {
+            &-container {
+                display:         flex; 
+                align-items:     center;
+                justify-content: space-around;
+                flex-wrap:       nowrap;
+                padding:         0px;
+            }
+
+            &-container:nth-child(odd) {
+                background-color: $lightMediumColor;
+            }
+
+            &-container:hover {
+                background-color: $mediumLightColor;
+            }
+
+            &-avatar {
+                flex:       0 0 1;
+                min-width:  34px;
+                min-height: 34px;
+            }
+
+            &-name {
+                flex: 1 1 0;
+            }
+
+            &-delete {
+                flex:   0 0 1;
+                margin: 7px;
+            }
         }
 
-        &-avatar {
-            margin: 5px
+        &-Delete {
+            display:     flex; 
+            align-items: center;
+
+            &-add {
+                width:     100%;
+                max-width: 90px;
+            }
         }
     }
 }

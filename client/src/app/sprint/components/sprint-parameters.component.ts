@@ -17,7 +17,8 @@ export class SprintParametersComponent implements OnInit
     private sprint: any;
     private usersInSprint: any[];
     private usersNotInSprint: any[];
-    private loading: boolean = true;
+    private loading: boolean       = true;
+    private userIndexToAdd: number = -1;
 
     /**
      * Constructeur
@@ -162,13 +163,19 @@ export class SprintParametersComponent implements OnInit
      * @author Fabien Bellanger
      * @param {integer} index Indice dans le tableau des utilisateurs à ajouter
      */
-    private addUser(index: number = 0): void
+    private addUser(index: number): void
     {
-        // Suppression du tableau des utilisateurs non présents dans le sprint
-        const user: any = this.usersNotInSprint.splice(index, 1);
+        if (index >= 0)
+        {
+            // Suppression du tableau des utilisateurs non présents dans le sprint
+            const user: any = this.usersNotInSprint.splice(index, 1);
 
-        // Ajout au tableau des utilisateurs faisant partie du sprint
-        this.usersInSprint.push(user[0]);
+            // Ajout au tableau des utilisateurs faisant partie du sprint
+            this.usersInSprint.push(user[0]);
+
+            // On remet le "placeholder" du select
+            this.userIndexToAdd = -1;
+        }
     }
 
     /**

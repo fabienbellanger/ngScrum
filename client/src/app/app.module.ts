@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+
+import { environment } from '../environments/environment';
 
 import { Routing } from './app.routing';
 import { AppComponent } from './app.component';
@@ -27,7 +29,9 @@ import { LayoutModule } from './layout';
         SprintModule,
         LayoutModule,
     ],
-    providers: [],
+    providers: [
+        { provide: LOCALE_ID, useValue: environment.locale },
+    ],
     bootstrap: [AppComponent]
 })
 
