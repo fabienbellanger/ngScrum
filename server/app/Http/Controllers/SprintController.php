@@ -55,7 +55,7 @@
         }
 
         /**
-         * Liste des information d'un sprint
+         * Information d'un sprint
          *
          * @author Fabien Bellanger
          * @param \Illuminate\Http\Request $request
@@ -66,6 +66,29 @@
         public function getSprintInfo(Request $request, $id, $sprintId)
         {
             $response = SprintRepository::getSprintInfo($id, $sprintId);
+
+            if ($response['code'] == 404)
+            {
+                return Response::notFound($response['message']);
+            }
+            else
+            {
+                return Response::json($response['data'], 200);
+            }
+        }
+
+        /**
+         * Information d'un sprint pour la création des task_user
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @param int $id ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function getSprintManagement(Request $request, $id, $sprintId)
+        {
+            $response = SprintRepository::getSprintManagement($id, $sprintId);
 
             if ($response['code'] == 404)
             {

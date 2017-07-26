@@ -16,6 +16,7 @@ export class SprintTasksManagementComponent implements OnInit
 {
     private loading: boolean = true;
     private sprintId: number;
+    private sprint: any;
  
     /**
      * Constructeur
@@ -62,14 +63,14 @@ export class SprintTasksManagementComponent implements OnInit
     {
         // Remise à zéro du sprint
         // -----------------------
-        this.sprintService.sprint = null;
+        this.sprint = null;
 
         // Initialisation du sprint
         // ------------------------
-        this.apiSprintService.getSprintInformation(this.sprintId)
+        this.apiSprintService.getSprintManagement(this.sprintId)
             .then((sprint: any) =>
             {
-                this.sprintService.init(sprint);
+                this.sprint =sprint;
             })
             .catch(() =>
             {

@@ -1,2 +1,5 @@
-<h1>Tasks management</h1>
-<p>{{ sprintService.sprint | json }}</p>
+<div *ngIf="!sprint"><h2>{{ 'loading' | translate }}...</h2></div>
+<div *ngIf="sprint">
+	<h1>Tasks management - {{ sprint.name }}</h1>
+	<p>{{ sprint | json }}</p>
+</div>

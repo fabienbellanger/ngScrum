@@ -23,6 +23,11 @@
                          'id'       => '[0-9]+',
                          'sprintId' => '[0-9]+',
                      ]);
+        Route::get('/{sprintId}/management', 'SprintController@getSprintManagement')
+             ->where([
+                         'id'       => '[0-9]+',
+                         'sprintId' => '[0-9]+',
+                     ]);
         Route::get('/{sprintId}/parameters', 'SprintController@getSprintParameters')
              ->where([
                          'id'       => '[0-9]+',

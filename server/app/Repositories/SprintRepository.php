@@ -265,7 +265,7 @@
 
             // 1. Récupération du sprint
             // -------------------------
-            $query   = '
+            $query = '
                 SELECT sprint.name, sprint.created_at, sprint.updated_at, sprint.started_at, sprint.finished_at
                 FROM sprint
                 WHERE sprint.id = :sprintId';
@@ -287,7 +287,7 @@
 
             // 2. Récupération des tâches
             // --------------------------
-            $query   = '
+            $query = '
                 SELECT
                     task.id AS taskId,
                     task.name AS taskName,
@@ -337,7 +337,7 @@
             // 3. Récupération des utilisateurs
             // --------------------------------
             $users = [];
-            $query           = '
+            $query = '
                 SELECT DISTINCT 
                     users.id,
                     users.firstname,
@@ -818,6 +818,137 @@
                 ->insert($usersToAdd);
 
             return ["id" => $sprintId];
+        }
+
+        /**
+         * Information d'un sprint pour la création des task_user
+         *
+         * @author Fabien Bellanger
+         * @param int $userId   ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @return array
+         */
+        public static function getSprintManagement($userId, $sprintId): ?array
+        {
+            $sprint = [];
+
+            // 1. Récupération du sprint
+            // -------------------------
+            $query = '
+                SELECT sprint.name, sprint.created_at, sprint.updated_at, sprint.started_at, sprint.finished_at
+                FROM sprint
+                WHERE sprint.id = :sprintId';
+            $results = DB::select($query, ['sprintId' => $sprintId]);
+            if (!$results || count($results) != 1)
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'No sprint found',
+                ];
+            }
+
+            $sprint['id']         = $sprintId;
+            $sprint['name']       = $results[0]->name;
+            $sprint['createdAt']  = $results[0]->created_at;
+            $sprint['updatedAt']  = $results[0]->updated_at;
+            $sprint['startedAt']  = $results[0]->started_at;
+            $sprint['finishedAt'] = $results[0]->finished_at;
+
+            // 2. Récupération des tâches
+            // --------------------------
+            $query = '
+                SELECT
+                    task.id AS taskId,
+                    task.name AS taskName,
+                    task.description AS taskDescription,
+                    task.initial_duration AS taskInitialDuration,
+                    task.remaining_duration AS taskRemainingDuration,
+                    task.user_id AS taskUserId,
+                    task.added_after AS taskAddedAfter,
+                    task_user.id AS taskPartId,
+                    task_user.user_id AS taskPartUserId,
+                    task_user.duration AS taskPartDuration,
+                    task_user.worked_duration AS taskPartWorkedDuration,
+                    task_user.date AS taskPartDate
+                FROM task
+                    LEFT JOIN task_user ON task_user.task_id = task.id
+                WHERE task.sprint_id = :sprintId
+                ORDER BY task.created_at ASC';
+            $results    = DB::select($query, ['sprintId' => $sprintId]);
+            $tasks      = [];
+            $tasksUsers = [];
+            foreach ($results as $task)
+            {
+                $taskId     = $task->taskId;
+                $taskPartId = $task->taskPartId;
+
+                if (!array_key_exists($taskId, $tasks))
+                {
+                    $tasks[$taskId]['id']                = $taskId;
+                    $tasks[$taskId]['name']              = $task->taskName;
+                    $tasks[$taskId]['description']       = $task->taskDescription;
+                    $tasks[$taskId]['initialDuration']   = floatval($task->taskInitialDuration);
+                    $tasks[$taskId]['remainingDuration'] = floatval($task->taskRemainingDuration);
+                    $tasks[$taskId]['userId']            = $task->taskUserId;
+                    $tasks[$taskId]['addedAfter']        = $task->taskAddedAfter;
+                }
+
+                if ($taskPartId && !array_key_exists($taskPartId, $tasksUsers))
+                {
+                    $tasksUsers[$taskPartId]['id']             = $taskPartId;
+                    $tasksUsers[$taskPartId]['userId']         = $task->taskPartUserId;
+                    $tasksUsers[$taskPartId]['duration']       = floatval($task->taskPartDuration);
+                    $tasksUsers[$taskPartId]['workedDuration'] = floatval($task->taskPartWorkedDuration);
+                    $tasksUsers[$taskPartId]['date']           = $task->taskPartDate;
+                }
+            }
+
+            // 3. Récupération des utilisateurs
+            // --------------------------------
+            $users = [];
+            $query = '
+                SELECT DISTINCT 
+                    users.id,
+                    users.firstname,
+                    users.lastname, 
+                    users.email,
+                    users.worked_hours_per_day,
+                    users.group_id
+                FROM task
+                    INNER JOIN task_user ON task_user.task_id = task.id
+                    INNER JOIN users ON users.id = task_user.user_id
+                WHERE task.sprint_id = :sprintId';
+            $results = DB::select($query, ['sprintId' => $sprintId]);
+            if ($results && count($results) > 0)
+            {
+                foreach ($results as $user)
+                {
+                    if (!array_key_exists($user->id, $users))
+                    {
+                        $users[$user->id]['id']                = intval($user->id);
+                        $users[$user->id]['firstname']         = $user->firstname;
+                        $users[$user->id]['lastname']          = $user->lastname;
+                        $users[$user->id]['email']             = $user->email;
+                        $users[$user->id]['groupId']           = intval($user->group_id);
+                        $users[$user->id]['workedHoursPerDay'] = intval($user->worked_hours_per_day);
+                    }
+                }
+            }
+            $sprint['users'] = $users;
+
+            // 4. Objet => tableau
+            // -------------------
+            //$tasks      = array_values($tasks);
+            $tasksUsers = array_values($tasksUsers);
+
+            $sprint['tasks']      = $tasks;
+            $sprint['tasksUsers'] = $tasksUsers;
+
+            return [
+                'code'    => 200,
+                'message' => 'Success',
+                'data'    => $sprint,
+            ];
         }
     }
     
