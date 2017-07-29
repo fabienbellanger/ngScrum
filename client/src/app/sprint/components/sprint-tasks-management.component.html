@@ -1,5 +1,6 @@
-<div *ngIf="!sprint"><h2>{{ 'loading' | translate }}...</h2></div>
-<div *ngIf="sprint">
-	<h1>Tasks management - {{ sprint.name }}</h1>
-	<p>{{ sprint | json }}</p>
+<div *ngIf="!sprintTasksManagementService?.sprint"><h2>{{ 'loading' | translate }}...</h2></div>
+<div *ngIf="sprintTasksManagementService?.sprint">
+	<h1>Tasks management - {{ sprintTasksManagementService.sprint.name }}</h1>
+	<p [innerHtml]="sprintTasksManagementService.sprint | json"></p>
+	<p [innerHtml]="sprintTasksManagementService.users | debug"></p>
 </div>

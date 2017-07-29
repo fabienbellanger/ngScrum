@@ -15,6 +15,7 @@ import { SprintParametersComponent } from './components/sprint-parameters.compon
 import { SprintTasksManagementComponent } from './components/sprint-tasks-management.component';
 
 import { SprintService } from './services/sprint.service';
+import { SprintTasksManagementService } from './services/sprint-tasks-management.service';
 import { SprintChartsService } from './services/sprint-charts.service';
 
 @NgModule({
@@ -38,6 +39,7 @@ import { SprintChartsService } from './services/sprint-charts.service';
 		HttpService,
         SprintService,
         SprintChartsService,
+        SprintTasksManagementService,
     ],
     exports:      [
     ],

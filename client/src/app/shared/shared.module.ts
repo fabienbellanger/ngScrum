@@ -23,6 +23,7 @@ import { NewLinePipe } from './pipes/new-line.pipe';
 import { DurationPipe } from './pipes/duration.pipe';
 import { PercentPipe } from './pipes/percent.pipe';
 import { NumberPipe } from './pipes/number.pipe';
+import { DebugPipe } from './pipes/debug.pipe';
 
 import { InputDirective } from './directives/input.directive';
 
@@ -56,6 +57,7 @@ export function createTranslateLoader(http: Http)
         DurationPipe,
         PercentPipe,
         NumberPipe,
+        DebugPipe,
         InputDirective,
     ],
     providers:    [
@@ -78,6 +80,7 @@ export function createTranslateLoader(http: Http)
         DurationPipe,
         PercentPipe,
         NumberPipe,
+        DebugPipe,
         InputDirective,
     ],
     entryComponents: [

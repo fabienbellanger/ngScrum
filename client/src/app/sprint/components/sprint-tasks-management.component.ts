@@ -5,7 +5,7 @@ import { ToastyService } from 'ng2-toasty';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ApiSprintService } from '../../api';
-import { SprintService } from '../services/sprint.service';
+import { SprintTasksManagementService } from '../services/sprint-tasks-management.service';
 
 @Component({
     selector:    'sa-sprint-tasks-management',
@@ -16,25 +16,24 @@ export class SprintTasksManagementComponent implements OnInit
 {
     private loading: boolean = true;
     private sprintId: number;
-    private sprint: any;
  
     /**
      * Constructeur
      *
      * @author Fabien Bellanger
-     * @param {ApiSprintService}    apiSprintService
-     * @param {ActivatedRoute}      route
-     * @param {Router}              router
-     * @param {ToastyService}       toastyService
-     * @param {TranslateService}    translateService
-     * @param {SprintService}       sprintService
+     * @param {ApiSprintService}                apiSprintService
+     * @param {ActivatedRoute}                  route
+     * @param {Router}                          router
+     * @param {ToastyService}                   toastyService
+     * @param {TranslateService}                translateService
+     * @param {SprintTasksManagementService}    sprintTasksManagementService
      */
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
                 private router: Router,
                 private toastyService: ToastyService,
 				private translateService: TranslateService,
-                private sprintService: SprintService)
+                private sprintTasksManagementService: SprintTasksManagementService)
     {
     }
 
@@ -61,20 +60,17 @@ export class SprintTasksManagementComponent implements OnInit
      */
     private init(): void
     {
-        // Remise à zéro du sprint
-        // -----------------------
-        this.sprint = null;
-
         // Initialisation du sprint
         // ------------------------
         this.apiSprintService.getSprintManagement(this.sprintId)
             .then((sprint: any) =>
             {
-                this.sprint =sprint;
+                this.sprintTasksManagementService.init(sprint);
             })
-            .catch(() =>
+            .catch((error: any) =>
             {
                 console.error('Error sprint information');
+                console.error(error);
             });
     }
 }

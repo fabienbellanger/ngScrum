@@ -835,7 +835,13 @@
             // 1. Récupération du sprint
             // -------------------------
             $query = '
-                SELECT sprint.name, sprint.created_at, sprint.updated_at, sprint.started_at, sprint.finished_at
+                SELECT
+                    sprint.name,
+                    sprint.team_id,
+                    sprint.created_at,
+                    sprint.updated_at,
+                    sprint.started_at,
+                    sprint.finished_at
                 FROM sprint
                 WHERE sprint.id = :sprintId';
             $results = DB::select($query, ['sprintId' => $sprintId]);
@@ -849,6 +855,7 @@
 
             $sprint['id']         = $sprintId;
             $sprint['name']       = $results[0]->name;
+            $sprint['teamId']     = $results[0]->team_id;
             $sprint['createdAt']  = $results[0]->created_at;
             $sprint['updatedAt']  = $results[0]->updated_at;
             $sprint['startedAt']  = $results[0]->started_at;
@@ -896,6 +903,7 @@
                 if ($taskPartId && !array_key_exists($taskPartId, $tasksUsers))
                 {
                     $tasksUsers[$taskPartId]['id']             = $taskPartId;
+                    $tasksUsers[$taskPartId]['taskId']         = $task->taskId;
                     $tasksUsers[$taskPartId]['userId']         = $task->taskPartUserId;
                     $tasksUsers[$taskPartId]['duration']       = floatval($task->taskPartDuration);
                     $tasksUsers[$taskPartId]['workedDuration'] = floatval($task->taskPartWorkedDuration);
@@ -914,11 +922,10 @@
                     users.email,
                     users.worked_hours_per_day,
                     users.group_id
-                FROM task
-                    INNER JOIN task_user ON task_user.task_id = task.id
-                    INNER JOIN users ON users.id = task_user.user_id
-                WHERE task.sprint_id = :sprintId';
-            $results = DB::select($query, ['sprintId' => $sprintId]);
+                FROM users
+                    INNER JOIN team_member ON team_member.user_id=users.id
+					INNER JOIN sprint ON sprint.team_id = :teamId AND team_member.team_id=sprint.team_id';
+            $results = DB::select($query, ['teamId' => $sprint['teamId']]);
             if ($results && count($results) > 0)
             {
                 foreach ($results as $user)
@@ -934,15 +941,10 @@
                     }
                 }
             }
-            $sprint['users'] = $users;
 
-            // 4. Objet => tableau
-            // -------------------
-            //$tasks      = array_values($tasks);
-            $tasksUsers = array_values($tasksUsers);
-
+            $sprint['users']      = array_values($users);
             $sprint['tasks']      = $tasks;
-            $sprint['tasksUsers'] = $tasksUsers;
+            $sprint['tasksUsers'] = array_values($tasksUsers);
 
             return [
                 'code'    => 200,
