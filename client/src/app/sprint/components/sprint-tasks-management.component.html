@@ -1,6 +1,73 @@
 <div *ngIf="!sprintTasksManagementService?.sprint"><h2>{{ 'loading' | translate }}...</h2></div>
 <div *ngIf="sprintTasksManagementService?.sprint">
 	<h1>Tasks management - {{ sprintTasksManagementService.sprint.name }}</h1>
-	<p [innerHtml]="sprintTasksManagementService.sprint | json"></p>
-	<p [innerHtml]="sprintTasksManagementService.users | debug"></p>
+
+    <div class="row margin-bottom-20px">
+        <div class="col-xs-12">
+            <button type="button" 
+                class="btn btn-default"
+                routerLink="/sprints">
+				<span class="fa fa-chevron-left"></span>
+                <span class="hidden-xs">{{ 'sprints.list' | translate }}</span>
+            </button>
+            
+        </div>
+    </div>
+	
+	<p>
+		Date: <b>{{ sprintTasksManagementService.date }}</b>
+	</p>
+	
+	<!--<p [innerHtml]="sprintTasksManagementService.users | debug"></p>-->
+
+	<div *ngFor="let user of sprintTasksManagementService.users">
+		<h3 class="orange-color">{{ user.name }}</h3>
+		<table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+			<thead>
+				<tr>
+					<th width="30%">{{ 'task' | translate }}</th>
+					<th width="10%">{{ 'initital.duration' | translate }}</th>
+					<th width="10%">{{ 'remaining.duration' | translate }}</th>
+					<th width="10%">{{ 'worked.hours' | translate }}</th>
+					<th width="10%">{{ 'decrement.hours' | translate }}</th>
+					<th width="10%">{{ 'difference' | translate }}</th>
+					<th width="10%">{{ 'perf' | translate }}</th>
+					<th width="10%">{{ 'action' | translate }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let task of user.tasks">
+					<td align="left" valign="middle">{{ task.name }}</td>
+					<td align="right" valign="middle">{{ task.initialDuration | duration:'hour' }}</td>
+					<td align="right" valign="middle">{{ task.remainingDuration | duration:'hour' }}</td>
+					<td align="right" valign="middle">{{ task.duration | duration:'hour' }}</td>
+					<td align="right" valign="middle">{{ task.workedDuration | duration:'hour' }}</td>
+					<td align="right" valign="middle">{{ task.difference | duration:'hour' }}</td>
+					<td align="right" valign="middle">{{ task.performance | percentFr:0 }}</td>
+					<td align="center" valign="middle">Edit</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th width="50%" colspan="3">{{ 'total' | translate }}</th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+
+    <div class="row margin-bottom-20px">
+        <div class="col-xs-12">
+            <button type="button" 
+                class="btn btn-default"
+                routerLink="/sprints">
+				<span class="fa fa-chevron-left"></span>
+                <span class="hidden-xs">{{ 'sprints.list' | translate }}</span>
+            </button>
+        </div>
+    </div>
 </div>

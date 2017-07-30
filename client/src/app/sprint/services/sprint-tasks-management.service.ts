@@ -6,6 +6,7 @@ export class SprintTasksManagementService
 {
     public sprint: any;
     public users: any[];
+    public date: string;
 
     /**
      * Constructeur
@@ -25,6 +26,7 @@ export class SprintTasksManagementService
     public init(sprint: any): void
     {
         this.sprint = sprint;
+        this.date   = sprint.date;
 
         // Mise en place des structures de données
         // ---------------------------------------
@@ -75,16 +77,28 @@ export class SprintTasksManagementService
                         this.users[userIndex]['tasks'][taskId]['description']       = task.description;
                         this.users[userIndex]['tasks'][taskId]['initialDuration']   = task.initialDuration;
                         this.users[userIndex]['tasks'][taskId]['remainingDuration'] = task.remainingDuration;
-                        this.users[userIndex]['tasks'][taskId]['duration']          = taskUser.duration;
-                        this.users[userIndex]['tasks'][taskId]['workedDuration']    = taskUser.workedDuration;
+                        if (this.date === taskUser.date)
+                        {
+                            this.users[userIndex]['tasks'][taskId]['duration']       = taskUser.duration;
+                            this.users[userIndex]['tasks'][taskId]['workedDuration'] = taskUser.workedDuration;
+                        }
+                        else
+                        {
+                            this.users[userIndex]['tasks'][taskId]['duration']       = 0;
+                            this.users[userIndex]['tasks'][taskId]['workedDuration'] = 0;
+                        }
                     }
-                    else
+                    else if (this.date === taskUser.date)
                     {
                         // Mise à jour des données
                         // -----------------------
                         this.users[userIndex]['tasks'][taskId]['duration']       += taskUser.duration;
                         this.users[userIndex]['tasks'][taskId]['workedDuration'] += taskUser.workedDuration;
                     }
+                    this.users[userIndex]['tasks'][taskId]['difference']  = this.users[userIndex]['tasks'][taskId]['duration'] - this.users[userIndex]['tasks'][taskId]['workedDuration'];
+                    this.users[userIndex]['tasks'][taskId]['performance'] = (this.users[userIndex]['tasks'][taskId]['workedDuration'] !== 0)
+                        ? (this.users[userIndex]['tasks'][taskId]['workedDuration'] / this.users[userIndex]['tasks'][taskId]['duration']) * 100
+                        : 0;
                 }
             }
 

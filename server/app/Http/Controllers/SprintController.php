@@ -82,13 +82,15 @@
          *
          * @author Fabien Bellanger
          * @param \Illuminate\Http\Request $request
-         * @param int $id ID de l'utilisateur
-         * @param int $sprintId ID du sprint
+         * @param int    $id       ID de l'utilisateur
+         * @param int    $sprintId ID du sprint
+         * @param strint $date     Date
          * @return \Illuminate\Http\JsonResponse
          */
-        public function getSprintManagement(Request $request, $id, $sprintId)
+        public function getSprintManagement(Request $request, $id, $sprintId, $date=null)
         {
-            $response = SprintRepository::getSprintManagement($id, $sprintId);
+            $date     = ($date) ? $date : date('Y-m-d');
+            $response = SprintRepository::getSprintManagement($id, $sprintId, $date);
 
             if ($response['code'] == 404)
             {

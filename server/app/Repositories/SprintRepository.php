@@ -824,11 +824,12 @@
          * Information d'un sprint pour la création des task_user
          *
          * @author Fabien Bellanger
-         * @param int $userId   ID de l'utilisateur
-         * @param int $sprintId ID du sprint
+         * @param int    $userId   ID de l'utilisateur
+         * @param int    $sprintId ID du sprint
+         * @param string $date     Date
          * @return array
          */
-        public static function getSprintManagement($userId, $sprintId): ?array
+        public static function getSprintManagement($userId, $sprintId, $date): ?array
         {
             $sprint = [];
 
@@ -853,6 +854,7 @@
                 ];
             }
 
+            $sprint['date']       = $date;
             $sprint['id']         = $sprintId;
             $sprint['name']       = $results[0]->name;
             $sprint['teamId']     = $results[0]->team_id;

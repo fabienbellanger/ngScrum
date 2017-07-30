@@ -80,5 +80,12 @@
 	"started.date.must.be.enter": "La date de début doit être renseignée",
 	"add.user.to.sprint": "Ajouter un utilisateur au sprint",
 	"at.least.one.user.must.be.enter": "Au moins un utilisateur doit être présent",
-	"choose.user": "Choisissez un utilisateur"
+	"choose.user": "Choisissez un utilisateur",
+	"task": "Tâche",
+	"initital.duration": "Durée initiale",
+	"worked.hours": "Heures travaillées",
+	"decrement.hours": "Heures décrémentées",
+	"difference": "Différence",
+	"perf": "Perf.",
+	"action": "Action"
 }
