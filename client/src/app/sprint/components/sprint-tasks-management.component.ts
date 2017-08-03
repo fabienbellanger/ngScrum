@@ -73,4 +73,14 @@ export class SprintTasksManagementComponent implements OnInit
                 console.error(error);
             });
     }
+
+    /**
+     * Edition d'une tâche
+     * 
+     * @author Fabien Bellanger
+     */
+    private editTask(userId: number, taskId: number): void
+    {
+        alert(userId + ' - ' + taskId);
+    }
 }

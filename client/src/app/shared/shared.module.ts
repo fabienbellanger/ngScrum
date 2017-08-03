@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule, Http } from '@angular/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -27,7 +28,7 @@ import { DebugPipe } from './pipes/debug.pipe';
 
 import { InputDirective } from './directives/input.directive';
 
-export function createTranslateLoader(http: Http)
+export function HttpLoaderFactory(http: HttpClient)
 {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -36,13 +37,14 @@ export function createTranslateLoader(http: Http)
     imports:      [
         CommonModule,
         HttpModule,
+        HttpClientModule,
         FormsModule,
         RouterModule,
         TranslateModule.forRoot({
             loader: {
                 provide:    TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps:       [Http],
+                useFactory: HttpLoaderFactory,
+                deps:       [HttpClient],
             }
         }),
         ToastyModule.forRoot(),
