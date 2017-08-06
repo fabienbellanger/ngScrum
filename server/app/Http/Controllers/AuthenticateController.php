@@ -4,11 +4,11 @@
 
     use App\Helpers\ResponseHelper as Response;
     use App\Http\Requests;
+    use App\Repositories\UserRepository;
     use Auth;
     use Illuminate\Http\Request;
     use JWTAuth;
     use Tymon\JWTAuthExceptions\JWTException;
-    use App\Repositories\UserRepository;
 
     class AuthenticateController extends Controller
     {
@@ -40,6 +40,8 @@
             // On récupère les informations de l'utilisateur
             // ---------------------------------------------
             $user = UserRepository::getInformationAfterAuthentication();
+
+
 
             if (!$user)
             {

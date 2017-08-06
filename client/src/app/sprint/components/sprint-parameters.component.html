@@ -1,131 +1,130 @@
 <div *ngIf="loading"><h2>{{ 'loading' | translate }}...</h2></div>
 <div *ngIf="!loading">
-	<h1>{{ 'parameters' | translate }}</h1>
-	
-	<form class="form-horizontal SprintParameters" #parametersForm="ngForm" (ngSubmit)="saveParameters()">
-		<div class="row margin-bottom-20px">
-			<div class="col-xs-12">
-				<button class="btn btn-default" type="button"
-						[routerLink]="['/sprints', { sprintId: sprintId }]" 
-						[routerLinkActiveOptions]="{exact: false}"
-						routerLinkActive="true">
-					<span class="fa fa-tasks"></span>
-					<span>{{ 'sprints.list' | translate }}</span>
-				</button>
-				&nbsp;&nbsp;
-				<button type="submit" class="btn btn-primary" [disabled]="!parametersForm.valid">
-					{{ 'save' | translate }}
-				</button>
-			</div>
-		</div>
+    <h1>{{ 'parameters' | translate }}</h1>
 
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="form-group">
-					<label for="name" class="col-sm-3 col-md-2 control-label">
-						{{ 'name' | translate }}*
-					</label>
-					<div class="col-sm-9 col-md-6">
-						<input type="text" class="form-control" name="name"
-							[placeholder]="'name' | translate"
-							[(ngModel)]="sprint.name"
-							autofocus
-							required>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-12">
-				<div class="form-group">
-					<label for="startedAt" class="col-sm-3 col-md-2 control-label">
-						{{ 'started.at' | translate }}*
-					</label>
-					<div class="col-sm-9 col-md-6">
-						<input type="date" class="form-control" name="startedAt"
-							[placeholder]="'started.at' | translate"
-							[(ngModel)]="sprint.startedAt"
-							autofocus
-							required>
-					</div>
-				</div>
-			</div>
-		</div>
+    <form class="form-horizontal SprintParameters" #parametersForm="ngForm" (ngSubmit)="saveParameters()">
+        <div class="row margin-bottom-20px">
+            <div class="col-xs-12">
+                <button class="btn btn-default" type="button"
+                        [routerLink]="['/sprints', { sprintId: sprintId }]"
+                        [routerLinkActiveOptions]="{exact: false}"
+                        routerLinkActive="true">
+                    <span class="fa fa-tasks"></span>
+                    <span>{{ 'sprints.list' | translate }}</span>
+                </button>
+                &nbsp;&nbsp;
+                <button type="submit" class="btn btn-primary" [disabled]="!parametersForm.valid">
+                    {{ 'save' | translate }}
+                </button>
+            </div>
+        </div>
 
-		<div class="row SprintParameters-Users">
-			<div class="col-xs-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						{{ 'team' | translate }}
-						<span class="green-color">{{ sprint.teamName }}</span>
-					</div>
-					
-					<div class="panel-body">
-						<div *ngIf="usersInSprint.length > 0" class="SprintParameters-Users-Add">
-							<div *ngFor="let user of usersInSprint; index as index"
-								 class="SprintParameters-Users-Add-container">
-								<div class="users-avatar SprintParameters-Users-Add-avatar"
-									 [style.background-image]="'url(' + userService.getGravatarUrl2(user.email, 24) + ')'">
-									</div>
-								<div class="SprintParameters-Users-Add-name"
-									 [class.bold]="userService.user.id === user.id">
-									{{ user.name }}
-								</div>
-								<div class="SprintParameters-Users-Add-delete">
-									<button class="btn btn-danger btn-xs"
-											type="button"
-											(click)="deleteUser(index)"
-											*ngIf="userService.user.id !== user.id">
-										<span class="fa fa-trash-o"></span>
-									</button>
-								</div>
-							</div>
-						</div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="name" class="col-sm-3 col-md-2 control-label">
+                        {{ 'name' | translate }}*
+                    </label>
+                    <div class="col-sm-9 col-md-6">
+                        <input type="text" class="form-control" name="name"
+                               [placeholder]="'name' | translate"
+                               [(ngModel)]="sprint.name"
+                               autofocus
+                               required>
+                    </div>
+                </div>
 
-						<div class="margin-top-10px" *ngIf="usersNotInSprint.length > 0">
-							<p class="bold" >{{ 'add.user.to.sprint' | translate }}</p>
-							<div class="row SprintParameters-Users-Delete">
-								<div class="col-xs-12 col-sm-8">
-									<select class="form-control"
-											[(ngModel)]="userIndexToAdd"
+                <div class="form-group">
+                    <label for="startedAt" class="col-sm-3 col-md-2 control-label">
+                        {{ 'started.at' | translate }}*
+                    </label>
+                    <div class="col-sm-9 col-md-6">
+                        <input type="date" class="form-control" name="startedAt"
+                               [placeholder]="'started.at' | translate"
+                               [(ngModel)]="sprint.startedAt"
+                               autofocus
+                               required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row SprintParameters-Users">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {{ 'team' | translate }}
+                        <span class="green-color">{{ sprint.teamName }}</span>
+                    </div>
+
+                    <div class="panel-body">
+                        <div *ngIf="usersInSprint.length > 0" class="SprintParameters-Users-Add">
+                            <div *ngFor="let user of usersInSprint; index as index"
+                                 class="SprintParameters-Users-Add-container">
+                                <div class="users-avatar SprintParameters-Users-Add-avatar"
+                                     [style.background-image]="'url(' + userService.getGravatarUrl2(user.email, 24) + ')'">
+                                </div>
+                                <div class="SprintParameters-Users-Add-name"
+                                     [class.bold]="userService.user.id === user.id">
+                                    {{ user.name }}
+                                </div>
+                                <div class="SprintParameters-Users-Add-delete">
+                                    <button class="btn btn-danger btn-xs"
+                                            type="button"
+                                            (click)="deleteUser(index)"
+                                            *ngIf="userService.user.id !== user.id">
+                                        <span class="fa fa-trash-o"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="margin-top-10px" *ngIf="usersNotInSprint.length > 0">
+                            <p class="bold">{{ 'add.user.to.sprint' | translate }}</p>
+                            <div class="row SprintParameters-Users-Delete">
+                                <div class="col-xs-12 col-sm-8">
+                                    <select class="form-control"
+                                            [(ngModel)]="userIndexToAdd"
                                             [ngModelOptions]="{standalone: true}">
-										<option value="-1">
-											{{ 'choose.user' | translate }}
-										</option>
-										<option *ngFor="let user of usersNotInSprint; index as indexAdd"
-												[value]="indexAdd">
-											{{ user.name }}
-										</option>
-									</select>
-								</div>
-								<div class="xs-12 visible-xs margin-top-10px">&nbsp;</div>
-								<div class="col-xs-12 col-sm-4">
-									<button class="btn btn-primary SprintParameters-Users-Delete-add"
-											type="button"
-											(click)="addUser(userIndexToAdd)">
-										<span class="fa fa-plus"></span>
-										{{ 'add' | translate }}
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                                        <option value="-1">
+                                            {{ 'choose.user' | translate }}
+                                        </option>
+                                        <option *ngFor="let user of usersNotInSprint; index as indexAdd"
+                                                [value]="indexAdd">
+                                            {{ user.name }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="xs-12 visible-xs margin-top-10px">&nbsp;</div>
+                                <div class="col-xs-12 col-sm-4">
+                                    <button class="btn btn-primary SprintParameters-Users-Delete-add"
+                                            type="button"
+                                            (click)="addUser(userIndexToAdd)">
+                                        <span class="fa fa-plus"></span>
+                                        {{ 'add' | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<div class="row margin-bottom-20px">
-			<div class="col-xs-12">
-				<button class="btn btn-default" type="button"
-						[routerLink]="['/sprints', { sprintId: sprintId }]" 
-						[routerLinkActiveOptions]="{exact: false}"
-						routerLinkActive="true">
-					<span class="fa fa-tasks"></span>
-					<span>{{ 'sprints.list' | translate }}</span>
-				</button>
-				&nbsp;&nbsp;
-				<button type="submit" class="btn btn-primary" [disabled]="!parametersForm.valid">
-					{{ 'save' | translate }}
-				</button>
-			</div>
-		</div>
-	</form>
+        <div class="row margin-bottom-20px">
+            <div class="col-xs-12">
+                <button class="btn btn-default" type="button"
+                        [routerLink]="['/sprints', { sprintId: sprintId }]"
+                        [routerLinkActiveOptions]="{exact: false}"
+                        routerLinkActive="true">
+                    <span class="fa fa-tasks"></span>
+                    <span>{{ 'sprints.list' | translate }}</span>
+                </button>
+                &nbsp;&nbsp;
+                <button type="submit" class="btn btn-primary" [disabled]="!parametersForm.valid">
+                    {{ 'save' | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
 </div>

@@ -379,13 +379,15 @@ a.list-group-item {
             }
 
             &-container:hover {
-                background-color: $mediumLightColor;
+                background-color: lighten($greenColor, 20%); //$mediumLightColor;
+                color: $veryLightColor;
             }
 
             &-avatar {
                 flex:       0 0 1;
-                min-width:  34px;
-                min-height: 34px;
+                min-width:  28px;
+                min-height: 28px;
+                margin:     3px 5px 3px 3px;
             }
 
             &-name {

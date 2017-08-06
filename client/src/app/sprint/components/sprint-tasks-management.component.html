@@ -36,11 +36,11 @@
 			<thead>
 				<tr>
 					<th width="30%">{{ 'task' | translate }}</th>
-					<th width="10%">{{ 'initital.duration' | translate }}</th>
-					<th width="10%">{{ 'remaining.duration' | translate }}</th>
+					<th width="10%" class="hidden-xs">{{ 'initital.duration' | translate }}</th>
+					<th width="10%" class="hidden-xs">{{ 'remaining.duration' | translate }}</th>
 					<th width="10%">{{ 'worked.hours' | translate }}</th>
 					<th width="10%">{{ 'decrement.hours' | translate }}</th>
-					<th width="10%">{{ 'difference' | translate }}</th>
+					<th width="10%" class="hidden-xs">{{ 'difference' | translate }}</th>
 					<th width="10%">{{ 'perf' | translate }}</th>
 					<th width="10%">{{ 'action' | translate }}</th>
 				</tr>
@@ -48,11 +48,11 @@
 			<tbody>
 				<tr *ngFor="let task of user.tasks">
 					<td align="left" valign="middle">{{ task.name }}</td>
-					<td align="right" valign="middle">{{ task.initialDuration | duration:'hour' }}</td>
-					<td align="right" valign="middle">{{ task.remainingDuration | duration:'hour' }}</td>
+					<td align="right" valign="middle" class="hidden-xs">{{ task.initialDuration | duration:'hour' }}</td>
+					<td align="right" valign="middle" class="hidden-xs">{{ task.remainingDuration | duration:'hour' }}</td>
 					<td align="right" valign="middle">{{ task.duration | duration:'hour' }}</td>
 					<td align="right" valign="middle">{{ task.workedDuration | duration:'hour' }}</td>
-					<td align="right" valign="middle">{{ task.difference | duration:'hour' }}</td>
+					<td align="right" valign="middle" class="hidden-xs">{{ task.difference | duration:'hour' }}</td>
 					<td align="right" valign="middle">{{ task.performance | percentFr:0 }}</td>
 					<td align="center" valign="middle">
 						<button type="button" class="btn btn-warning"
@@ -64,11 +64,12 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<th width="50%" colspan="3">{{ 'total' | translate }}</th>
+					<th width="50%" colspan="3" class="hidden-xs">{{ 'total' | translate }}</th>
+					<th width="50%" class="visible-xs">{{ 'total' | translate }}</th>
 					<th></th>
 					<th></th>
 					<th></th>
-					<th></th>
+					<th class="hidden-xs"></th>
 					<th></th>
 				</tr>
 			</tfoot>
