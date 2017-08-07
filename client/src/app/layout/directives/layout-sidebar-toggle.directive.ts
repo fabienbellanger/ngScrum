@@ -35,7 +35,8 @@ export class LayoutSidebarToggleDirective implements OnChanges
                 private renderer: Renderer,
                 private layoutSidebarService: LayoutSidebarService)
     {
-        if (window.innerWidth < this.responsiveWidth)
+        this.layoutSidebarService.state = 'close';
+        /*if (window.innerWidth < this.responsiveWidth)
         {
             // Mobile
             this.layoutSidebarService.state = 'close';
@@ -44,7 +45,7 @@ export class LayoutSidebarToggleDirective implements OnChanges
         {
             // Desktop
             this.layoutSidebarService.state = 'open';
-        }
+        }*/
     }
 
     /**

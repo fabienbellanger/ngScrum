@@ -111,9 +111,10 @@
                 a, a:visited {
                     @include textEllipsis();
 
-                    display: inline-block;
-                    width:   100%;
-                    color:   $lightColor;
+                    display:   inline-block;
+                    width:     100%;
+                    font-size: 16px;
+                    color:     $lightColor;
                 }
 
                 a:hover, a:active, a:focus {
