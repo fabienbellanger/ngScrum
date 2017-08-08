@@ -56,7 +56,7 @@
 					<td align="right" valign="middle">{{ task.performance | percentFr:0 }}</td>
 					<td align="center" valign="middle">
 						<button type="button" class="btn btn-warning"
-								(click)="editTask(user.id, task.id)">
+                                [routerLink]="['/sprints', sprintId, 'tasks-management', 'edit']">
 							<span class="fa fa-pencil"></span>
 						</button>
 					</td>

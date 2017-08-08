@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
-import { SharedModule, HttpService } from '../shared';
+import { HttpService, SharedModule } from '../shared';
 import { LayoutModule } from '../layout';
 
 import { SprintComponent } from './components/sprint.component';
@@ -12,7 +12,8 @@ import { SprintStatisticsComponent } from './components/sprint-statistics.compon
 import { SprintTasksComponent } from './components/task/sprint-tasks.component';
 import { SprintEditTaskComponent } from './components/task/sprint-edit-task.component';
 import { SprintParametersComponent } from './components/sprint-parameters.component';
-import { SprintTasksManagementComponent } from './components/sprint-tasks-management.component';
+import { SprintTasksManagementComponent } from './components/tasksManagement/sprint-tasks-management.component';
+import { SprintTasksManagementEditComponent } from './components/tasksManagement/sprint-tasks-management-edit.component';
 
 import { SprintService } from './services/sprint.service';
 import { SprintTasksManagementService } from './services/sprint-tasks-management.service';
@@ -27,22 +28,22 @@ import { SprintChartsService } from './services/sprint-charts.service';
         LayoutModule,
     ],
     declarations: [
-		SprintListComponent,
+        SprintListComponent,
         SprintStatisticsComponent,
         SprintTasksComponent,
         SprintEditTaskComponent,
         SprintComponent,
         SprintParametersComponent,
         SprintTasksManagementComponent,
+        SprintTasksManagementEditComponent,
     ],
     providers:    [
-		HttpService,
+        HttpService,
         SprintService,
         SprintChartsService,
         SprintTasksManagementService,
     ],
-    exports:      [
-    ],
+    exports:      [],
 })
 
 export class SprintModule

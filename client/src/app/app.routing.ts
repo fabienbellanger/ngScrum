@@ -9,6 +9,7 @@ import {
     SprintEditTaskComponent,
     SprintParametersComponent,
     SprintTasksManagementComponent,
+    SprintTasksManagementEditComponent,
 } from './sprint';
 import { LayoutComponent } from './layout';
 
@@ -40,24 +41,32 @@ const appRoutes: Routes = [
                         component: SprintListComponent,
                     },
                     {
-                        path:      'parameters',
+                        path:      ':sprintId/parameters',
                         component: SprintParametersComponent,
                     },
                     {
-                        path:      'statistics',
+                        path:      ':sprintId/statistics',
                         component: SprintStatisticsComponent,
                     },
                     {
-                        path:      'tasks',
+                        path:      ':sprintId/tasks',
                         component: SprintTasksComponent,
                     },
                     {
-                        path:      'edit-task',
+                        path:      ':sprintId/tasks/add',
                         component: SprintEditTaskComponent,
                     },
                     {
-                        path:      'tasks-management',
+                        path:      ':sprintId/tasks/edit/:taskId',
+                        component: SprintEditTaskComponent,
+                    },
+                    {
+                        path:      ':sprintId/tasks-management',
                         component: SprintTasksManagementComponent,
+                    },
+                    {
+                        path:      ':sprintId/tasks-management/edit',
+                        component: SprintTasksManagementEditComponent,
                     },
                 ],
             },

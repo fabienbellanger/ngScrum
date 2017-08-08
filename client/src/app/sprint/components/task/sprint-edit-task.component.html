@@ -6,7 +6,7 @@
 		<div class="row margin-bottom-20px">
 			<div class="col-xs-12">
 				<button class="btn btn-default" type="button"
-						[routerLink]="['/sprints/tasks', { sprintId: sprintId }]" 
+						[routerLink]="['/sprints', sprintId, 'tasks']"
 						[routerLinkActiveOptions]="{exact: false}"
 						routerLinkActive="true">
 					<span class="fa fa-tasks"></span>
@@ -96,7 +96,7 @@
 
 			<div class="col-xs-12 AddTaskForm-submit">
 				<button class="btn btn-default"
-						[routerLink]="['/sprints/tasks', { sprintId: sprintId }]"
+                        [routerLink]="['/sprints', sprintId, 'tasks']"
 						[routerLinkActiveOptions]="{exact: false}"
 						routerLinkActive="true">
 					<span class="fa fa-tasks"></span>

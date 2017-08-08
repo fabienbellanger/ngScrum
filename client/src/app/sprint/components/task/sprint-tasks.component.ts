@@ -145,6 +145,6 @@ export class SprintTasksComponent implements OnInit
      */
     private editTask(taskId: number): void
     {
-        this.router.navigate(['/sprints/edit-task', {sprintId: this.sprintId, taskId: taskId}]);
+        this.router.navigate(['/sprints', this.sprintId, 'tasks', 'edit', taskId]);
     }
 }

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { ToastyService } from 'ng2-toasty';
 import { TranslateService } from '@ngx-translate/core';
 
-import { ApiSprintService } from '../../api';
-import { SprintTasksManagementService } from '../services/sprint-tasks-management.service';
+import { ApiSprintService } from '../../../api';
+import { SprintTasksManagementService } from '../../services/sprint-tasks-management.service';
 
 @Component({
     selector:    'sa-sprint-tasks-management',
@@ -44,13 +44,16 @@ export class SprintTasksManagementComponent implements OnInit
      */
     public ngOnInit(): void
     {
-        // Récupération du sprint
-        // ----------------------
-        this.sprintId = +this.route.snapshot.params['sprintId'];
+        this.route.paramMap.subscribe((params: ParamMap) =>
+        {
+            // Récupération du sprint
+            // ----------------------
+            this.sprintId = +params.get('sprintId');
 
-        // Initialisation
-        // --------------
-        this.init();
+            // Initialisation
+            // --------------
+            this.init();
+        });
     }
 
     /**

@@ -1,0 +1,4 @@
+<div *ngIf="!sprintTasksManagementService?.sprint"><h2>{{ 'loading' | translate }}...</h2></div>
+<div *ngIf="sprintTasksManagementService?.sprint">
+	<div [innerHtml]="sprintTasksManagementService?.sprint | debug"></div>
+</div>
