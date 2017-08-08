@@ -46,7 +46,11 @@ export class SprintTasksManagementEditComponent implements OnInit
     {
         // Récupération du sprint
         // ----------------------
-        //this.sprintId = +this.route.snapshot.params['sprintId'];
+        const sprintId: number = +this.route.snapshot.params['sprintId'];
+        const userId: number = +this.route.snapshot.params['userId'];
+        const taskId: number = +this.route.snapshot.params['taskId'];
+
+        console.log(sprintId, userId, taskId);
 
         // Initialisation
         // --------------

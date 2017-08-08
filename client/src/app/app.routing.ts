@@ -65,7 +65,7 @@ const appRoutes: Routes = [
                         component: SprintTasksManagementComponent,
                     },
                     {
-                        path:      ':sprintId/tasks-management/edit',
+                        path:      ':sprintId/tasks-management/edit/:userId/:taskId',
                         component: SprintTasksManagementEditComponent,
                     },
                 ],
