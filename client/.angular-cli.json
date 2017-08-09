@@ -26,7 +26,8 @@
         "scss/variables.scss",
         "scss/styles.scss",
         "scss/auth.scss",
-        "scss/layout.scss"
+        "scss/layout.scss",
+        "scss/material.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",

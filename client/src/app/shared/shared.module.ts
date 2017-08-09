@@ -12,6 +12,7 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { ChartsModule } from 'ng2-charts';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+import { MaterialModule } from '../material';
 
 import { DateService } from './services/date.service';
 import { HttpService } from './services/http.service';
@@ -52,6 +53,7 @@ export function HttpLoaderFactory(http: HttpClient)
         ChartsModule,
         ModalModule.forRoot(),
         BootstrapModalModule,
+        MaterialModule,
     ],
     declarations: [
         MomentPipe,
@@ -84,6 +86,7 @@ export function HttpLoaderFactory(http: HttpClient)
         NumberPipe,
         DebugPipe,
         InputDirective,
+        MaterialModule,
     ],
     entryComponents: [
         // CustomModal,

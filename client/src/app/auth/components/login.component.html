@@ -52,3 +52,39 @@
 		</div>
 	</div>
 </div>
+
+<div style="display: flex; justify-content: center; margin-top: 50px">
+    <md-card style="width: 320px">
+        <md-card-header>
+            <md-card-title>
+                <h2>
+                    <span class="fa fa-lock"></span>
+                    {{ 'authentication' | translate }}
+                </h2>
+            </md-card-title>
+        </md-card-header>
+
+        <md-card-content>
+            <md-input-container style="width: 100%">
+                <input mdInput placeholder="Login" value="">
+            </md-input-container>
+
+            <md-input-container style="width: 100%">
+                <input mdInput type="password" placeholder="Password" value="">
+            </md-input-container>
+        </md-card-content>
+
+        <md-card-actions style="display: flex; justify-content: center">
+            <button md-raised-button color="primary">{{ 'signin' | translate }}</button>
+            <button md-button color="primary">{{ 'forgotten.password' | translate }}</button>
+        </md-card-actions>
+
+        <md-card-footer>
+            <p class="text-center text-muted">
+                {{ 'copyright' | translate }} &copy; {{ currentYear }}
+                <a href="http://www.apitic.com" target="_blank">Apitic</a>
+                - {{ 'all.right.reserved' | translate }}
+            </p>
+        </md-card-footer>
+    </md-card>
+</div>

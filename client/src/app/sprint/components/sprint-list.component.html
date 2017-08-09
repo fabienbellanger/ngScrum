@@ -1,4 +1,11 @@
-<div *ngIf="loading"><h2>{{ 'loading' | translate }}...</h2></div>
+<div *ngIf="loading">
+    <md-progress-spinner
+        [color]="'primary'"
+        [mode]="'indeterminate'"
+        [value]="100">
+    </md-progress-spinner>
+    <h2>{{ 'loading' | translate }}...</h2>
+</div>
 <div *ngIf="!loading" class="SprintsList">
     <h1>{{ 'sprints.list' | translate }}</h1>
 
