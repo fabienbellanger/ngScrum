@@ -12,7 +12,7 @@ body {
     margin-bottom: 35px;
 }
 
-button {
+button, a, a:focus {
     @include noOutline();
 }
 
@@ -243,6 +243,13 @@ label {
 .table > tbody > tr > td {
     font-size: 13px;
 }
+
+// --------
+// Material
+// --------
+
+
+// --------
 
 th, td {
     border-bottom: 1px solid #ddd;

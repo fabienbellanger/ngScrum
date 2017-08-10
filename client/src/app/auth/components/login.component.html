@@ -1,90 +1,67 @@
-<div class="container" id="auth">
-	<div class="row">
-		<div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<form class="form-signin" method="POST" (ngSubmit)="submitForm()">
-						<h2 class="form-signin-heading">
-							<span class="fa fa-lock"></span>
-							{{ 'authentication' | translate }}
-						</h2>
+<div class="container" class="Auth">
+    <div class="Auth-Container">
+        <form class="form-signin" method="POST" (ngSubmit)="submitForm()">
+            <md-card class="Auth-Container-Card">
+                <md-card-header>
+                    <md-card-title>
+                        <h2>
+                            <span class="fa fa-lock"></span>
+                            {{ 'authentication' | translate }}
+                        </h2>
+                    </md-card-title>
+                </md-card-header>
 
-						<div class="form-group">
-							<label for="email">{{ 'email' | translate }}</label>
-							<input type="email"
-                           		   [(ngModel)]="email"
-                                   #inputEmail
-								   name="email"
-								   class="form-control input-sm" 
-								   [placeholder]="'login' | translate" 
-								   required 
-								   autofocus>
-						</div>
+                <md-card-content>
+                    <div class="Auth-Container-Card-Content">
+                        <p>
+                            <md-input-container class="width-100">
+                                <input mdInput type="email"
+                                       [placeholder]="'email' | translate"
+                                       [formControl]="emailFormControl"
+                                       value=""
+                                       autofocus required>
+                                <md-error *ngIf="emailFormControl.hasError('pattern')">
+                                    {{ 'invalid.email' | translate }}
+                                </md-error>
+                                <md-error *ngIf="emailFormControl.hasError('required')">
+                                    {{ 'required.email' | translate }}
+                                </md-error>
+                            </md-input-container>
+                        </p>
 
-						<div class="form-group">
-							<label for="password">{{ 'password' | translate }}</label>
-							<input type="password" 
-                           		   [(ngModel)]="password"
-								   name="password" 
-								   class="form-control input-sm" 
-								   [placeholder]="'password' | translate" 
-								   required>
-						</div>
-						<p class="forgotten-password">
-							<a routerLink="/forgotten-password">{{ 'forgotten.password' | translate }}</a>
-						</p>
-						<p *ngIf="errorMessage" class="alert alert-danger">
-							{{ 'bad.login.password' | translate }}
-						</p>
-						<div class="text-center">
-							<button type="submit" class="btn btn-primary">
-								{{ 'signin' | translate }}
-							</button>
-						</div>
-					</form>
-					<footer class="text-center text-muted">
-						{{ 'copyright' | translate }} &copy; {{ currentYear }} 
-						<a href="http://www.apitic.com" target="_blank">Apitic</a>
-						- {{ 'all.right.reserved' | translate }}
-					</footer>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+                        <p>
+                            <md-input-container class="width-100">
+                                <input mdInput type="password"
+                                       [placeholder]="'password' | translate"
+                                       [formControl]="passwordFormControl"
+                                       value=""
+                                       required>
+                                <md-error *ngIf="passwordFormControl.hasError('minlength')">
+                                    {{ 'too.short.password' | translate }}
+                                </md-error>
+                                <md-error *ngIf="passwordFormControl.hasError('required')">
+                                    {{ 'required.password' | translate }}
+                                </md-error>
+                            </md-input-container>
+                        </p>
+                    </div>
+                </md-card-content>
 
-<div style="display: flex; justify-content: center; margin-top: 50px">
-    <md-card style="width: 320px">
-        <md-card-header>
-            <md-card-title>
-                <h2>
-                    <span class="fa fa-lock"></span>
-                    {{ 'authentication' | translate }}
-                </h2>
-            </md-card-title>
-        </md-card-header>
+                <md-card-actions>
+                    <div class="Auth-Container-Card-Actions">
+                        <button md-raised-button color="primary" type="submit">{{ 'signin' | translate }}</button>
+                        <a md-button color="primary" routerLink=".">{{ 'forgotten.password' | translate }}</a>
+                    </div>
+                </md-card-actions>
 
-        <md-card-content>
-            <md-input-container style="width: 100%">
-                <input mdInput placeholder="Login" value="">
-            </md-input-container>
-
-            <md-input-container style="width: 100%">
-                <input mdInput type="password" placeholder="Password" value="">
-            </md-input-container>
-        </md-card-content>
-
-        <md-card-actions style="display: flex; justify-content: center">
-            <button md-raised-button color="primary">{{ 'signin' | translate }}</button>
-            <button md-button color="primary">{{ 'forgotten.password' | translate }}</button>
-        </md-card-actions>
-
-        <md-card-footer>
-            <p class="text-center text-muted">
-                {{ 'copyright' | translate }} &copy; {{ currentYear }}
-                <a href="http://www.apitic.com" target="_blank">Apitic</a>
-                - {{ 'all.right.reserved' | translate }}
-            </p>
-        </md-card-footer>
-    </md-card>
+                <md-card-footer>
+                    <p class="text-center text-muted Auth-Container-Card-Footer">
+                        {{ 'copyright' | translate }} &copy; {{ currentYear }}
+                        <a href="http://www.apitic.com" target="_blank">Apitic</a>
+                        - {{ 'all.right.reserved' | translate }}
+                    </p>
+                </md-card-footer>
+            </md-card>
+        </form>
+    </div>
 </div>

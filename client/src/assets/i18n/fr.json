@@ -87,5 +87,9 @@
 	"decrement.hours": "Heures décrémentées",
 	"difference": "Différence",
 	"perf": "Perf.",
-	"action": "Action"
+	"action": "Action",
+    "invalid.email": "Email invalide",
+    "required.email": "Email obligatoire",
+    "required.password": "Mot de passe obligatoire",
+    "too.short.password": "Mot de passe doit contenir au moins 4 caractères"
 }

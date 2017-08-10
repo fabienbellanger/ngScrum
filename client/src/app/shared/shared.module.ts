@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule, Http } from '@angular/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -74,6 +74,7 @@ export function HttpLoaderFactory(http: HttpClient)
     exports:      [
         HttpModule,
         FormsModule,
+        ReactiveFormsModule,
         RouterModule,
         TranslateModule,
         ToastyModule,

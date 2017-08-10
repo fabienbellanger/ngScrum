@@ -1,5 +1,6 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormControl, Validators } from '@angular/forms';
 
 import { AuthService } from '../services/auth.service';
 
@@ -15,12 +16,10 @@ import { AuthService } from '../services/auth.service';
  */
 export class LoginComponent implements OnInit
 {
-	private email: string;
-	private password: string;
-	private errorMessage: string;
+    private errorMessage: string;
     private currentYear: string;
-
-    @ViewChild('inputEmail') private inputEmail: any;
+    private emailFormControl: FormControl;
+    private passwordFormControl: FormControl;
 
     /**
      * Constructeur
@@ -41,10 +40,21 @@ export class LoginComponent implements OnInit
      */
     public ngOnInit(): void
     {
-        this.email  	  = '';
-        this.password  	  = '';
-		this.errorMessage = '';
+        const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+        this.errorMessage = '';
         this.currentYear  = '';
+
+        // FormControls
+        // ------------
+        this.emailFormControl = new FormControl('', [
+            Validators.required,
+            Validators.pattern(EMAIL_REGEX),
+        ]);
+        this.passwordFormControl = new FormControl('', [
+            Validators.required,
+            Validators.minLength(4),
+        ]);
 
         // L'utilisateur est-il déjà connecté ?
         // ------------------------------------
@@ -52,31 +62,18 @@ export class LoginComponent implements OnInit
     }
 
     /**
-     * Appelé quand la vue du composant est initialisée
+     * Soumission du formulaire d'authentification
      *
      * @author Fabien Bellanger
      */
-    public ngAfterViewInit(): void
+    private submitForm(): void
     {
-        // Focus
-        this.inputEmail.nativeElement.focus();
-    }
-
-    /**
-     * Soumission du formulaire d'authentification
-     * 
-     * @author Fabien Bellanger
-     */
-	private submitForm(): void
-	{
-        this.authService.login(this.email, this.password)
-            .then(() =>
-            {
+        this.authService.login(this.emailFormControl.value, this.passwordFormControl.value)
+            .then(() => {
                 this.router.navigate(['/']);
             })
-            .catch((error: string) =>
-            {
+            .catch((error: string) => {
                 this.errorMessage = error;
             });
-	}
+    }
 }
