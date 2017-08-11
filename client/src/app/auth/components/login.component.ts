@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit
 
         // FormControls
         // ------------
-        this.emailFormControl = new FormControl('', [
+        this.emailFormControl    = new FormControl('', [
             Validators.required,
             Validators.pattern(EMAIL_REGEX),
         ]);
@@ -69,11 +69,13 @@ export class LoginComponent implements OnInit
     private submitForm(): void
     {
         this.authService.login(this.emailFormControl.value, this.passwordFormControl.value)
-            .then(() => {
+            .then(() =>
+            {
                 this.router.navigate(['/']);
             })
-            .catch((error: string) => {
-                this.errorMessage = error;
+            .catch((error: string) =>
+            {
+                alert(error);
             });
     }
 }

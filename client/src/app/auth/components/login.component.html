@@ -1,16 +1,13 @@
 <div class="container" class="Auth">
     <div class="Auth-Container">
-        <form class="form-signin" method="POST" (ngSubmit)="submitForm()">
+        <form class="form-signin" (ngSubmit)="submitForm()">
+            <md-toolbar color="primary">
+                <h1 class="mat-h1">
+                    <span class="fa fa-lock"></span>
+                    {{ 'authentication' | translate }}
+                </h1>
+            </md-toolbar>
             <md-card class="Auth-Container-Card">
-                <md-card-header>
-                    <md-card-title>
-                        <h2>
-                            <span class="fa fa-lock"></span>
-                            {{ 'authentication' | translate }}
-                        </h2>
-                    </md-card-title>
-                </md-card-header>
-
                 <md-card-content>
                     <div class="Auth-Container-Card-Content">
                         <p>
@@ -51,7 +48,7 @@
                     <div class="Auth-Container-Card-Actions">
                         <button md-raised-button color="primary" type="submit">{{ 'signin' | translate }}</button>
                         <a md-button color="primary" routerLink=".">{{ 'forgotten.password' | translate }}</a>
-                    </div>
+                    </div >
                 </md-card-actions>
 
                 <md-card-footer>
