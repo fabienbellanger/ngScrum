@@ -9,6 +9,7 @@ import {
     MdCardModule,
     MdInputModule,
     MdToolbarModule,
+    MdProgressBarModule,
 } from '@angular/material';
 
 @NgModule({
@@ -21,6 +22,7 @@ import {
         MdCardModule,
         MdInputModule,
         MdToolbarModule,
+        MdProgressBarModule,
     ],
     declarations: [
     ],
@@ -34,6 +36,7 @@ import {
         MdCardModule,
         MdInputModule,
         MdToolbarModule,
+        MdProgressBarModule,
     ],
 })
 

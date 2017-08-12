@@ -20,13 +20,12 @@ table.table {
     margin-top: 0px;
 }
 
-.table > tbody > tr > td, 
+.table > tbody > tr > td,
 .table > tbody > tr > th,
 .table > tfoot > tr > td,
 .table > tfoot > tr > th,
 .table > thead > tr > td,
-.table > thead > tr > th
-{
+.table > thead > tr > th {
     vertical-align: inherit;
 }
 
@@ -54,8 +53,12 @@ input:-webkit-autofill {
     font-weight: 500;
 }
 
+.primary-color {
+    color: $primayColor;
+}
+
 .green-color {
-    color: $greenColor;
+    color: $primayColor;
 }
 
 .orange-color {
@@ -63,7 +66,7 @@ input:-webkit-autofill {
 }
 
 .info-color {
-    color: $infoColor;
+    color: $greenColor;
 }
 
 .margin-top-10px {
@@ -133,7 +136,7 @@ input:-webkit-autofill {
                 height:         1.6em;
                 position:       relative;
                 top:            -0.2em;
-                margin-right:   1em; 
+                margin-right:   1em;
                 vertical-align: top;
                 text-align:     center;
                 transition:     all 250ms ease;
@@ -144,9 +147,9 @@ input:-webkit-autofill {
         &:checked {
             + .radio-checkbox-label {
                 &:before {
-                    background-color: $greenColor;
+                    background-color: $primayColor;
                     box-shadow:       inset 0 0 0 4px $lightColor;
-                    border:           1px solid $greenColor;
+                    border:           1px solid $primayColor;
                 }
             }
         }
@@ -192,13 +195,13 @@ input:-webkit-autofill {
 }
 
 .btn-primary {
-    background-color: $greenColor;
-    border-color:     darken($greenColor, 5%);
+    background-color: $primayColor;
+    border-color:     darken($primayColor, 5%);
 }
 
 .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
-    background-color: darken($greenColor, 5%) !important;
-    border-color:     darken($greenColor, 10%) !important;
+    background-color: darken($primayColor, 5%) !important;
+    border-color:     darken($primayColor, 10%) !important;
     box-shadow:       none !important;
 }
 
@@ -211,7 +214,7 @@ input.form-control:focus, textarea.form-control:focus, select.form-control:focus
 
 input.form-control:hover, textarea.form-control:hover, select.form-control:hover,
 input.form-control:focus, textarea.form-control:focus, select.form-control:focus {
-    border-color: $greenColor;
+    border-color: $primayColor;
 }
 
 label {
@@ -247,7 +250,10 @@ label {
 // --------
 // Material
 // --------
-
+.table-button {
+    min-width: 30px !important;
+    padding:   0px 5px;
+}
 
 // --------
 
@@ -267,12 +273,12 @@ table {
 }
 
 a, a:visited {
-    color:      $greenColor;
+    color:      $primayColor;
     transition: 0.3s;
 }
 
 a:hover, a:active, a:focus {
-    color:           darken($greenColor, 10%);
+    color:           darken($primayColor, 10%);
     text-decoration: none;
 }
 
@@ -309,7 +315,7 @@ a.list-group-item {
     color: $darkColor;
 
     .list-group-item-heading {
-        color: $greenColor;
+        color: $primayColor;
     }
 }
 
@@ -379,7 +385,7 @@ a.list-group-item {
     &-Users {
         &-Add {
             &-container {
-                display:         flex; 
+                display:         flex;
                 align-items:     center;
                 justify-content: space-around;
                 flex-wrap:       nowrap;
@@ -391,8 +397,8 @@ a.list-group-item {
             }
 
             &-container:hover {
-                background-color: lighten($greenColor, 20%); //$mediumLightColor;
-                color: $veryLightColor;
+                background-color: lighten($primayColor, 20%); //$mediumLightColor;
+                color:            $veryLightColor;
             }
 
             &-avatar {
@@ -413,7 +419,7 @@ a.list-group-item {
         }
 
         &-Delete {
-            display:     flex; 
+            display:     flex;
             align-items: center;
 
             &-add {
@@ -430,9 +436,9 @@ a.list-group-item {
 .TasksManagement {
     &-Add {
         &-Container {
-            display:     flex; 
+            display:     flex;
             align-items: center;
-            color:       $greenColor;
+            color:       $primayColor;
             font-size:   20px;
 
             &-Label {

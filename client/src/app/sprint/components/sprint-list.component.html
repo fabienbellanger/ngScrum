@@ -10,13 +10,13 @@
     <h1>{{ 'sprints.list' | translate }}</h1>
 
     <div class="btn-group" role="group">
-        <button type="button" class="btn btn-default" [class.btn-primary]="state === 'inProgress'" (click)="getSprints('inProgress')">
+        <button md-raised-button (click)="getSprints('inProgress')">
             {{ 'sprint.in.progress.list' | translate }}
         </button>
-        <button type="button" class="btn btn-default" [class.btn-primary]="state === 'finished'" (click)="getSprints('finished')">
+        <button md-raised-button (click)="getSprints('finished')">
             {{ 'sprint.finished.list' | translate }}
         </button>
-        <button type="button" class="btn btn-default" [class.btn-primary]="state === 'all'" (click)="getSprints('all')">
+        <button md-raised-button type="button" (click)="getSprints('all')">
             {{ 'sprint.all.list' | translate }}
         </button>
     </div>
@@ -69,42 +69,42 @@
                         </div>
                     </div>
 
-                    <div class="progress" style="margin-top: 10px">
-                        <div class="progress-bar"
-                            role="progressbar"
-                            [attr.aria-valuenow]="sprint.progressPercent"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                            style="min-width: 2em"
-                            [style.width]="sprint.progressPercent + '%'">
-                            {{ sprint.progressPercent | percentFr }}
+                    <div class="row margin-bottom-20px margin-top-10px">
+                        <div class="col-xs-12 text-center small">
+                            <div>{{ sprint.progressPercent | percentFr }}</div>
+                            <md-progress-bar
+                                [color]="primary"
+                                [mode]="determinate"
+                                [value]="sprint.progressPercent"
+                                [bufferValue]="bufferValue">
+                            </md-progress-bar>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-xs-12">
-                            <button class="btn btn-default" type="button"
+                            <button md-raised-button type="button"
                                     [routerLink]="['/sprints', sprint.id, 'statistics']" routerLinkActive="true"
                                     [routerLinkActiveOptions]="{exact: false}">
                                 <span class="fa fa-bar-chart"></span>
                                 <span class="hidden-xs">{{ 'statistics' | translate }}</span>
                             </button>
                             &nbsp;&nbsp;
-                            <button class="btn btn-default" type="button"
+                            <button md-raised-button type="button"
                                     [routerLink]="['/sprints', sprint.id, 'tasks']" routerLinkActive="true"
                                     [routerLinkActiveOptions]="{exact: false}">
                                 <span class="fa fa-tasks"></span>
                                 <span class="hidden-xs">{{ 'tasks.list' | translate }}</span>
                             </button>
                             &nbsp;&nbsp;
-                            <button class="btn btn-default" type="button"
+                            <button md-raised-button type="button"
                                     [routerLink]="['/sprints', sprint.id, 'tasks-management']" routerLinkActive="true"
                                     [routerLinkActiveOptions]="{exact: false}">
                                 <span class="fa fa-tasks"></span>
                                 <span class="hidden-xs">{{ 'tasks.management' | translate }}</span>
                             </button>
                             &nbsp;&nbsp;
-                            <button class="btn btn-default" type="button"
+                            <button md-raised-button type="button"
                                     [routerLink]="['/sprints', sprint.id, 'parameters']" routerLinkActive="true"
                                     [routerLinkActiveOptions]="{exact: false}">
                                 <span class="fa fa-gear"></span>
