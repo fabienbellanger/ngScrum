@@ -21,103 +21,102 @@
         </button>
     </div>
 
-    <div style="margin-top: 30px">
-        <div class="list-group" *ngIf="sprints?.length > 0">
-            <a class="list-group-item SprintsList-Sprint"
-               *ngFor="let sprint of sprints">
-                <h4 class="list-group-item-heading">{{ sprint.name }}</h4>
-                
-                <div class="list-group-item-text">
-                    <div class="row SprintsList-Sprint-info">
-                        <div class="SprintsList-Sprint-label">
-                            {{ 'created.at' | translate }}
-                        </div>
-                        <div class="SprintsList-Sprint-value">
-                            {{ sprint.createdAt | date:"dd/MM/yyyy" }}
-                        </div>
-                    </div>
-                    <div class="row SprintsList-Sprint-info">
-                        <div class="SprintsList-Sprint-label">
-                            {{ 'started.at' | translate }}
-                        </div>
-                        <div class="SprintsList-Sprint-value">
-                            {{ sprint.startedAt | date:"dd/MM/yyyy" }}
-                        </div>
-                    </div>
-                    <div class="row SprintsList-Sprint-info">
-                        <div class="SprintsList-Sprint-label">
-                            {{ 'estimated.end.date' | translate }}
-                        </div>
-                        <div class="SprintsList-Sprint-value">
-                            TODO
-                        </div>
-                    </div>
-                    <div class="row SprintsList-Sprint-info" *ngIf="sprint.finishedAt">
-                        <div class="SprintsList-Sprint-label">
-                            {{ 'finished.at' | translate }}
-                        </div>
-                        <div class="SprintsList-Sprint-value">
-                            {{ sprint.finishedAt | date:"dd/MM/yyyy" }}
-                        </div>
-                    </div>
-                    <div class="row SprintsList-Sprint-info">
-                        <div class="SprintsList-Sprint-label">
-                            {{ 'remaining.hours' | translate }}
-                        </div>
-                        <div class="SprintsList-Sprint-value">
-                            {{ sprint.remainingDuration | duration:'hour' }}
-                        </div>
-                    </div>
+    <md-card *ngFor="let sprint of sprints" class="margin-top-20px">
+        <md-card-header>
+            <md-card-title>
+                <h4 class="primary-color">
+                    {{ sprint.name }}
+                </h4>
+            </md-card-title>
+        </md-card-header>
 
-                    <div class="row margin-bottom-20px margin-top-10px">
-                        <div class="col-xs-12 text-center small">
-                            <div>{{ sprint.progressPercent | percentFr }}</div>
-                            <md-progress-bar
-                                [color]="primary"
-                                [mode]="determinate"
-                                [value]="sprint.progressPercent"
-                                [bufferValue]="bufferValue">
-                            </md-progress-bar>
-                        </div>
+        <md-card-content>
+            <div class="list-group-item-text">
+                <div class="row SprintsList-Sprint-info">
+                    <div class="SprintsList-Sprint-label">
+                        {{ 'created.at' | translate }}
                     </div>
-
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <button md-raised-button type="button"
-                                    [routerLink]="['/sprints', sprint.id, 'statistics']" routerLinkActive="true"
-                                    [routerLinkActiveOptions]="{exact: false}">
-                                <span class="fa fa-bar-chart"></span>
-                                <span class="hidden-xs">{{ 'statistics' | translate }}</span>
-                            </button>
-                            &nbsp;&nbsp;
-                            <button md-raised-button type="button"
-                                    [routerLink]="['/sprints', sprint.id, 'tasks']" routerLinkActive="true"
-                                    [routerLinkActiveOptions]="{exact: false}">
-                                <span class="fa fa-tasks"></span>
-                                <span class="hidden-xs">{{ 'tasks.list' | translate }}</span>
-                            </button>
-                            &nbsp;&nbsp;
-                            <button md-raised-button type="button"
-                                    [routerLink]="['/sprints', sprint.id, 'tasks-management']" routerLinkActive="true"
-                                    [routerLinkActiveOptions]="{exact: false}">
-                                <span class="fa fa-tasks"></span>
-                                <span class="hidden-xs">{{ 'tasks.management' | translate }}</span>
-                            </button>
-                            &nbsp;&nbsp;
-                            <button md-raised-button type="button"
-                                    [routerLink]="['/sprints', sprint.id, 'parameters']" routerLinkActive="true"
-                                    [routerLinkActiveOptions]="{exact: false}">
-                                <span class="fa fa-gear"></span>
-                                <span class="hidden-xs">{{ 'parameters' | translate }}</span>
-                            </button>
-                        </div>
+                    <div class="SprintsList-Sprint-value">
+                        {{ sprint.createdAt | date:"dd/MM/yyyy" }}
                     </div>
                 </div>
-            </a>
-        </div>
+                <div class="row SprintsList-Sprint-info">
+                    <div class="SprintsList-Sprint-label">
+                        {{ 'started.at' | translate }}
+                    </div>
+                    <div class="SprintsList-Sprint-value">
+                        {{ sprint.startedAt | date:"dd/MM/yyyy" }}
+                    </div>
+                </div>
+                <div class="row SprintsList-Sprint-info">
+                    <div class="SprintsList-Sprint-label">
+                        {{ 'estimated.end.date' | translate }}
+                    </div>
+                    <div class="SprintsList-Sprint-value">
+                        TODO
+                    </div>
+                </div>
+                <div class="row SprintsList-Sprint-info" *ngIf="sprint.finishedAt">
+                    <div class="SprintsList-Sprint-label">
+                        {{ 'finished.at' | translate }}
+                    </div>
+                    <div class="SprintsList-Sprint-value">
+                        {{ sprint.finishedAt | date:"dd/MM/yyyy" }}
+                    </div>
+                </div>
+                <div class="row SprintsList-Sprint-info">
+                    <div class="SprintsList-Sprint-label">
+                        {{ 'remaining.hours' | translate }}
+                    </div>
+                    <div class="SprintsList-Sprint-value">
+                        {{ sprint.remainingDuration | duration:'hour' }}
+                    </div>
+                </div>
 
-        <div *ngIf="sprints?.length === 0">
-            {{ 'no.sprint' | translate }}
-        </div>
+                <div class="row margin-bottom-20px margin-top-10px">
+                    <div class="col-xs-12 text-center small">
+                        <div>{{ sprint.progressPercent | percentFr }}</div>
+                        <md-progress-bar [color]="primary" [mode]="determinate" [value]="sprint.progressPercent" [bufferValue]="bufferValue">
+                        </md-progress-bar>
+                    </div>
+                </div>
+            </div>
+        </md-card-content>
+
+        <md-card-actions>
+            <button md-raised-button type="button" class="md-button-small-width"
+                    [routerLink]="['/sprints', sprint.id, 'statistics']"
+                    routerLinkActive="true"
+                    [routerLinkActiveOptions]="{exact: false}">
+                <span class="fa fa-bar-chart"></span>
+                <span class="hidden-xs">{{ 'statistics' | translate }}</span>
+            </button>
+            <button md-raised-button type="button"class="md-button-small-width"
+                    [routerLink]="['/sprints', sprint.id, 'tasks']"
+                    routerLinkActive="true"
+                    [routerLinkActiveOptions]="{exact: false}">
+                <span class="fa fa-tasks"></span>
+                <span class="hidden-xs">{{ 'tasks.list' | translate }}</span>
+            </button>
+            <button md-raised-button type="button"class="md-button-small-width"
+                    [routerLink]="['/sprints', sprint.id, 'tasks-management']"
+                    routerLinkActive="true"
+                    [routerLinkActiveOptions]="{exact: false}">
+                <span class="fa fa-tasks"></span>
+                <span class="hidden-xs">{{ 'tasks.management' | translate }}</span>
+            </button>
+            <button md-raised-button type="button"class="md-button-small-width"
+                    [routerLink]="['/sprints', sprint.id, 'parameters']"
+                    routerLinkActive="true"
+                    [routerLinkActiveOptions]="{exact: false}">
+                <span class="fa fa-gear"></span>
+                <span class="hidden-xs">{{ 'parameters' | translate }}</span>
+            </button>
+        </md-card-actions>
+    </md-card>
+
+    <div class="alert alert-info margin-top-20px" role="alert"
+         *ngIf="sprints?.length === 0">
+         {{ 'no.sprint' | translate }}
     </div>
 </div>

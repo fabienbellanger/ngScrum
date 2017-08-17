@@ -10,8 +10,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToastyModule } from 'ng2-toasty';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { ChartsModule } from 'ng2-charts';
-import { ModalModule } from 'angular2-modal';
-import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+import { ModalModule } from 'ngx-modialog';
+import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
 import { MaterialModule } from '../material';
 
 import { DateService } from './services/date.service';

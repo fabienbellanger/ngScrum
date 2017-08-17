@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Modal } from 'angular2-modal/plugins/bootstrap';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { ToastyService } from 'ng2-toasty';
 import { TranslateService } from '@ngx-translate/core';
 
