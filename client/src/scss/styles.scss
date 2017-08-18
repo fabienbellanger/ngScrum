@@ -6,10 +6,11 @@ html {
 }
 
 body {
-    font-family:   $fontFamily;
-    font-weight:   300;
-    font-size:     13px;
-    margin-bottom: 35px;
+    font-family:      $fontFamily;
+    font-weight:      300;
+    font-size:        13px;
+    margin-bottom:    35px;
+    background-color: #f2f2f2;
 }
 
 button, a, a:focus {
@@ -250,7 +251,7 @@ label {
 // --------
 // Material
 // --------
-.table-button {
+.md-button-small-width {
     min-width: 30px !important;
     padding:   0px 5px;
 }
