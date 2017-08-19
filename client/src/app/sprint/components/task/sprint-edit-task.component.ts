@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ToastyService } from 'ng2-toasty';
 import { TranslateService } from '@ngx-translate/core';
@@ -17,11 +18,9 @@ import { Task } from '../../../models';
 
 export class SprintEditTaskComponent implements OnInit
 {
-	private sprintId: number;
+    private sprintId: number;
     private id: number;
-	private name: string;
-	private description: string;
-    private duration: number;
+    private description: string;
     private remainingDuration: number;
     private applications: any[];
     private applicationsIds: any;
@@ -30,6 +29,10 @@ export class SprintEditTaskComponent implements OnInit
     private buttonTitle: string;
     private task: Task;
     private loading: boolean = true;
+    private taskFormGroup: FormGroup;
+    private nameFormControl: FormControl;
+    private durationFormControl: FormControl;
+    private formSubmitted: boolean = false;
 
     /**
      * Constructeur
@@ -49,7 +52,7 @@ export class SprintEditTaskComponent implements OnInit
                 private storageService: StorageService,
                 private toastyService: ToastyService,
                 private router: Router,
-				private translateService: TranslateService)
+                private translateService: TranslateService)
     {
     }
 
@@ -69,12 +72,12 @@ export class SprintEditTaskComponent implements OnInit
         // Titre
         // -----
         this.translateService.get([
-            'add.task.title', 
+            'add.task.title',
             'edit.task.title',
             'add',
             'modify',
         ]).subscribe((transltationObject: Object) =>
-		{
+        {
             this.title = (this.id === 0)
                 ? transltationObject['add.task.title']
                 : transltationObject['edit.task.title'];
@@ -84,15 +87,27 @@ export class SprintEditTaskComponent implements OnInit
                 : transltationObject['modify'];
         });
 
-		// Initialisation
-		// --------------
+        // Initialisation
+        // --------------
         this.applications = this.storageService.get('session', 'applications', []);
+
+        // FormControls
+        // ------------
+        this.taskFormGroup = new FormGroup({
+            name:     new FormControl('', [
+                Validators.required,
+                Validators.maxLength(100),
+            ]),
+            duration: new FormControl('', [
+                Validators.required,
+                Validators.min(0.5),
+                Validators.max(35),
+            ]),
+        });
 
         if (this.id === 0)
         {
-            this.name            = '';
             this.description     = '';
-            this.duration        = null;
             this.notPlanned      = false;
             this.applicationsIds = {};
 
@@ -102,11 +117,11 @@ export class SprintEditTaskComponent implements OnInit
         {
             this.apiSprintService.getTask(this.sprintId, this.id)
                 .then((response: any) =>
-                {  
-                    this.name            = response.name;
-                    this.description     = response.description;
-                    this.duration        = response.initialDuration;
-                    this.notPlanned      = response.addedAfter;
+                {
+                    this.taskFormGroup.get('name').setValue(response.name);
+                    this.taskFormGroup.get('duration').setValue(response.initialDuration);
+                    this.description = response.description;
+                    this.notPlanned  = response.addedAfter;
 
                     // Construction du tableau des applications
                     // ----------------------------------------
@@ -136,13 +151,13 @@ export class SprintEditTaskComponent implements OnInit
         }
     }
 
-	/**
-	 * Ajout / Modification d'une tâche
-	 * 
-	 * @author Fabien Bellanger
-	 */
-	private editTask(): void
-	{
+    /**
+     * Ajout / Modification d'une tâche
+     *
+     * @author Fabien Bellanger
+     */
+    private editTask(): void
+    {
         // Conversion Object => Array
         // --------------------------
         let applicationsIdsSelected: number[] = Object.keys(this.applicationsIds)
@@ -162,84 +177,116 @@ export class SprintEditTaskComponent implements OnInit
             // ------------
             this.modifyTask(applicationsIdsSelected);
         }
-	}
+    }
 
     /**
-	 * Ajout d'une tâche
-	 * 
-	 * @author Fabien Bellanger
+     * Ajout d'une tâche
+     *
+     * @author Fabien Bellanger
      * @param {number[]} applicationsIdsSelected Tableau d'ID des applications sélectionnées
-	 */
+     */
     private addTask(applicationsIdsSelected: number[]): void
     {
-        this.apiSprintService.addTask(this.sprintId, {
-            name:            this.name,
-            description:     this.description,
-            duration:        this.duration,
-            notPlanned:      +this.notPlanned,
-            applicationsIds: applicationsIdsSelected,
-        }).then((task: any) =>
+        if (!this.formSubmitted)
         {
-            // Notification
-            // ------------
-            this.translateService.get('add.task.success').subscribe((msg: string) =>
-            {
-                this.toastyService.success(msg);
-            });
+            // Jeton pour n'avoir qu'une soumission
+            // ------------------------------------
+            this.formSubmitted = true;
 
-            // Redirection
-            // -----------
-            this.router.navigate(['/sprints/tasks', {sprintId: this.sprintId}]);
-        })
-        .catch((error: any) =>
-        {
-            // Notification
-            // ------------
-            this.translateService.get('add.task.error').subscribe((msg: string) =>
-            {
-                this.toastyService.error(msg);
-            });
-        });
+            this.apiSprintService.addTask(this.sprintId, {
+                name:            this.taskFormGroup.get('name').value,
+                description:     this.description,
+                duration:        +this.taskFormGroup.get('duration').value,
+                notPlanned:      +this.notPlanned,
+                applicationsIds: applicationsIdsSelected,
+            })
+                .then((task: any) =>
+                {
+                    // Notification
+                    // ------------
+                    this.translateService.get('add.task.success').subscribe((msg: string) =>
+                    {
+                        this.toastyService.success(msg);
+                    });
+
+                    // Redirection
+                    // -----------
+                    this.router.navigate(['/sprints/tasks', {sprintId: this.sprintId}]);
+
+                    // Jeton pour n'avoir qu'une soumission
+                    // ------------------------------------
+                    this.formSubmitted = false;
+                })
+                .catch((error: any) =>
+                {
+                    // Notification
+                    // ------------
+                    this.translateService.get('add.task.error').subscribe((msg: string) =>
+                    {
+                        this.toastyService.error(msg);
+                    });
+
+                    // Jeton pour n'avoir qu'une soumission
+                    // ------------------------------------
+                    this.formSubmitted = false;
+                });
+        }
     }
 
     /**
-	 * Modification d'une tâche
-	 * 
-	 * @author Fabien Bellanger
+     * Modification d'une tâche
+     *
+     * @author Fabien Bellanger
      * @param {number[]} applicationsIdsSelected Tableau d'ID des applications sélectionnées
-	 */
+     */
     private modifyTask(applicationsIdsSelected: number[]): void
     {
-        this.apiSprintService.modifyTask(this.sprintId, this.id, {
-            name:            this.name,
-            description:     this.description,
-            duration:        this.duration,
-            notPlanned:      +this.notPlanned,
-            applicationsIds: applicationsIdsSelected,
-        }).then((task: any) =>
+        if (!this.formSubmitted)
         {
-            // Notification
-            // ------------
-            this.translateService.get('modify.task.success').subscribe((msg: string) =>
-            {
-                this.toastyService.success(msg);
-            });
+            // Jeton pour n'avoir qu'une soumission
+            // ------------------------------------
+            this.formSubmitted = true;
 
-            // Redirection
-            // -----------
-            this.router.navigate(['/sprints/tasks', {sprintId: this.sprintId}]);
-        })
-        .catch((error: any) =>
-        {
-            // Notification
-            // ------------
-            this.translateService.get('modify.task.error').subscribe((msg: string) =>
-            {
-                this.toastyService.error(msg);
-            });
-        });
+            this.apiSprintService.modifyTask(this.sprintId, this.id, {
+                name:            this.taskFormGroup.get('name').value,
+                description:     this.description,
+                duration:        +this.taskFormGroup.get('duration').value,
+                notPlanned:      +this.notPlanned,
+                applicationsIds: applicationsIdsSelected,
+            })
+                .then((task: any) =>
+                {
+                    // Notification
+                    // ------------
+                    this.translateService.get('modify.task.success').subscribe((msg: string) =>
+                    {
+                        this.toastyService.success(msg);
+                    });
+
+                    // Redirection
+                    // -----------
+                    this.router.navigate(['/sprints/tasks', {sprintId: this.sprintId}]);
+
+                    // Jeton pour n'avoir qu'une soumission
+                    // ------------------------------------
+                    this.formSubmitted = false;
+                })
+                .catch((error: any) =>
+                {
+                    // Notification
+                    // ------------
+                    this.translateService.get('modify.task.error').subscribe((msg: string) =>
+                    {
+                        this.toastyService.error(msg);
+                    });
+
+                    // Jeton pour n'avoir qu'une soumission
+                    // ------------------------------------
+                    this.formSubmitted = false;
+                });
+        }
     }
-    
+
     /**
      * Sélection ou désélection d'une application
      *
@@ -252,11 +299,11 @@ export class SprintEditTaskComponent implements OnInit
     {
         const isApplicationPresent: boolean = (this.applicationsIds[index] !== undefined);
 
-        if (event.target.checked && !isApplicationPresent)
+        if (event.checked && !isApplicationPresent)
         {
             this.applicationsIds[index] = applicationId;
         }
-        else if (!event.target.checked && isApplicationPresent)
+        else if (!event.checked && isApplicationPresent)
         {
             delete this.applicationsIds[index];
         }

@@ -18,7 +18,7 @@ class CreateTaskTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('sprint_id');
             $table->unsignedInteger('user_id');
-            $table->string('name', 200);
+            $table->string('name', 100);
             $table->text('description')->nullable();
             $table->decimal('initial_duration', 10, 2)->default(0);
             $table->decimal('remaining_duration', 10, 2)->default(0);

@@ -91,5 +91,7 @@
     "invalid.email": "Email invalide",
     "required.email": "Email obligatoire",
     "required.password": "Mot de passe obligatoire",
+    "required.name": "Nom obligatoire",
+    "required.duration": "Durée obligatoire",
     "too.short.password": "Mot de passe doit contenir au moins 4 caractères"
 }
