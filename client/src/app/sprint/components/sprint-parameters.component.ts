@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ToastyService } from 'ng2-toasty';
 import { TranslateService } from '@ngx-translate/core';
@@ -17,8 +18,10 @@ export class SprintParametersComponent implements OnInit
     private sprint: any;
     private usersInSprint: any[];
     private usersNotInSprint: any[];
+    private parametersFormGroup: FormGroup;
     private loading: boolean       = true;
     private userIndexToAdd: number = -1;
+    private formSubmitted: boolean = false;
 
     /**
      * Constructeur
@@ -36,7 +39,7 @@ export class SprintParametersComponent implements OnInit
                 private router: Router,
                 private userService: UserService,
                 private toastyService: ToastyService,
-				private translateService: TranslateService)
+                private translateService: TranslateService)
     {
     }
 
@@ -48,14 +51,30 @@ export class SprintParametersComponent implements OnInit
     public ngOnInit(): void
     {
         const sprintId: number = +this.route.snapshot.params['sprintId'];
-        
+
         this.sprint           = {};
         this.usersInSprint    = [];
         this.usersNotInSprint = [];
+
+        // FormControls
+        // ------------
+        this.parametersFormGroup = new FormGroup({
+            name:      new FormControl('', [
+                Validators.required,
+                Validators.maxLength(50),
+            ]),
+            startedAt: new FormControl('', [
+                Validators.required,
+            ]),
+        });
+
         this.apiSprintService.getSprintParameters(sprintId)
             .then((response: any) =>
             {
                 this.sprint = response;
+
+                this.parametersFormGroup.get('name').setValue(this.sprint.name);
+                this.parametersFormGroup.get('startedAt').setValue(this.sprint.startedAt);
 
                 // Initialisation du tri des utilisateurs (présent ou non dans le sprint)
                 // ----------------------------------------------------------------------
@@ -65,7 +84,7 @@ export class SprintParametersComponent implements OnInit
             })
             .catch(() =>
             {
-                console.log('Error: Get Sprint Parameters');                
+                console.log('Error: Get Sprint Parameters');
 
                 this.loading = false;
             });
@@ -73,32 +92,18 @@ export class SprintParametersComponent implements OnInit
 
     /**
      * Enregistrement des paramètres
-     * 
+     *
      * @author Fabien Bellanger
      */
     private saveParameters(): void
     {
         const data: any = {
-            "name":      this.sprint.name,
-            "startedAt": this.sprint.startedAt,
-            "usersId":   this.usersInSprint.map(element => element.id),  
+            "name":      this.parametersFormGroup.get('name').value,
+            "startedAt": this.parametersFormGroup.get('startedAt').value,
+            "usersId":   this.usersInSprint.map(element => element.id),
         };
 
-        if (data.name === '' || data.name === null || data.name === undefined)
-        {
-            this.translateService.get('name.must.be.enter').subscribe((msg: string) =>
-            {
-                this.toastyService.error(msg);
-            });
-        }
-        else if (data.name === '' || data.name === null || data.name === undefined)
-        {
-            this.translateService.get('started.date.must.be.enter').subscribe((msg: string) =>
-            {
-                this.toastyService.error(msg);
-            });
-        }
-        else if (data.usersId.length === 0)
+        if (data.usersId.length === 0)
         {
             this.translateService.get('at.least.one.user.must.be.enter').subscribe((msg: string) =>
             {
@@ -107,41 +112,56 @@ export class SprintParametersComponent implements OnInit
         }
         else
         {
-            this.apiSprintService.modifySprintParameters(this.sprint.id, data)
-                .then((response: any) =>
-                {
-                    // Notification
-                    // ------------
-                    this.translateService.get('modify.sprint.parameters.success').subscribe((msg: string) =>
-                    {
-                        this.toastyService.success(msg);
-                    });
+            if (!this.formSubmitted)
+            {
+                // Jeton pour n'avoir qu'une soumission
+                // ------------------------------------
+                this.formSubmitted = true;
 
-                    // Redirection
-                    // -----------
-                    this.router.navigate(['/sprints']);
-                })
-                .catch(() =>
-                {
-                    // Notification
-                    // ------------
-                    this.translateService.get('modify.sprint.parameters.error').subscribe((msg: string) =>
+                this.apiSprintService.modifySprintParameters(this.sprint.id, data)
+                    .then((response: any) =>
                     {
-                        this.toastyService.error(msg);
+                        // Notification
+                        // ------------
+                        this.translateService.get('modify.sprint.parameters.success').subscribe((msg: string) =>
+                        {
+                            this.toastyService.success(msg);
+                        });
+
+                        // Redirection
+                        // -----------
+                        this.router.navigate(['/sprints']);
+
+                        // Jeton pour n'avoir qu'une soumission
+                        // ------------------------------------
+                        this.formSubmitted = false;
+                    })
+                    .catch(() =>
+                    {
+                        // Notification
+                        // ------------
+                        this.translateService.get('modify.sprint.parameters.error').subscribe((msg: string) =>
+                        {
+                            this.toastyService.error(msg);
+                        });
+
+                        // Jeton pour n'avoir qu'une soumission
+                        // ------------------------------------
+                        this.formSubmitted = false;
                     });
-                });
+            }
         }
     }
 
     /**
      * Initialisation du tri des utilisateurs (présent ou non dans le sprint)
-     * 
+     *
      * @author Fabien Bellanger
      */
     private initSortUsers(): void
     {
         const users: any[] = this.sprint.users;
-        
+
         for (let user of users)
         {
             if (user.inTeam)
@@ -157,9 +177,7 @@ export class SprintParametersComponent implements OnInit
 
     /**
      * Ajouter un utilisateur au sprint
-     * 
-     * TODO: Supprimer la valeur par défaut
-     * 
+     *
      * @author Fabien Bellanger
      * @param {integer} index Indice dans le tableau des utilisateurs à ajouter
      */
@@ -180,7 +198,7 @@ export class SprintParametersComponent implements OnInit
 
     /**
      * Suppression un utilisateur au sprint
-     * 
+     *
      * @author Fabien Bellanger
      * @param {integer} index Indice dans le tableau des utilisateurs à ajouter
      */

@@ -263,8 +263,8 @@ label {
 // --------
 
 th, td {
-    border-bottom: 1px solid #ddd;
-    margin:        10px;
+    // border-bottom: 1px solid #ddd;
+    // margin:        10px;
 }
 
 table {
@@ -402,7 +402,7 @@ a.list-group-item {
             }
 
             &-container:hover {
-                background-color: lighten($primayColor, 20%); //$mediumLightColor;
+                background-color: lighten($primayColor, 30%); //$mediumLightColor;
                 color:            $veryLightColor;
             }
 

@@ -30,8 +30,6 @@ export class SprintEditTaskComponent implements OnInit
     private task: Task;
     private loading: boolean = true;
     private taskFormGroup: FormGroup;
-    private nameFormControl: FormControl;
-    private durationFormControl: FormControl;
     private formSubmitted: boolean = false;
 
     /**

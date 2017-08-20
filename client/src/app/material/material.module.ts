@@ -10,6 +10,9 @@ import {
     MdInputModule,
     MdToolbarModule,
     MdProgressBarModule,
+    MdDatepickerModule,
+    MdNativeDateModule,
+    MdSelectModule,
 } from '@angular/material';
 
 @NgModule({
@@ -23,6 +26,9 @@ import {
         MdInputModule,
         MdToolbarModule,
         MdProgressBarModule,
+        MdDatepickerModule,
+        MdNativeDateModule,
+        MdSelectModule,
     ],
     declarations: [
     ],
@@ -37,6 +43,9 @@ import {
         MdInputModule,
         MdToolbarModule,
         MdProgressBarModule,
+        MdDatepickerModule,
+        MdNativeDateModule,
+        MdSelectModule,
     ],
 })
 
