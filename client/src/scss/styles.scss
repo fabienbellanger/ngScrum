@@ -439,6 +439,8 @@ a.list-group-item {
 // Gestion des tâches d'un sprint
 // ------------------------------
 .TasksManagement {
+    margin-bottom: 20px;
+
     &-Add {
         &-Container {
             display:     flex;

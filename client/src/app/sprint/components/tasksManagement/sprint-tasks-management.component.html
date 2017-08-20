@@ -18,66 +18,68 @@
         Date: <b>{{ sprintTasksManagementService.date }}</b>
     </p>
 
-    <div *ngFor="let user of sprintTasksManagementService.users" class="TasksManagement">
-        <h3 class="info-color">
-            {{ user.name }}
-            <button type="button" class="btn btn-link TasksManagement-Add">
-				<span class="TasksManagement-Add-Container">
-					<span class="fa fa-plus-circle TasksManagement-Add-Container-Icon"></span>
-					<span class="hidden-xs TasksManagement-Add-Container-Label">
-						{{ 'add.task' | translate }}
-					</span>
-				</span>
-            </button>
-        </h3>
-        <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
-            <thead>
-                <tr>
-                    <th width="30%">{{ 'task' | translate }}</th>
-                    <th width="10%" class="hidden-xs">{{ 'initital.duration' | translate }}</th>
-                    <th width="10%" class="hidden-xs">{{ 'remaining.duration' | translate }}</th>
-                    <th width="10%">{{ 'worked.hours' | translate }}</th>
-                    <th width="10%">{{ 'decrement.hours' | translate }}</th>
-                    <th width="10%" class="hidden-xs">{{ 'difference' | translate }}</th>
-                    <th width="10%">{{ 'perf' | translate }}</th>
-                    <th width="10%">{{ 'action' | translate }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let task of user.tasks">
-                    <td align="left" valign="middle">{{ task.name }}</td>
-                    <td align="right" valign="middle" class="hidden-xs">{{ task.initialDuration | duration:'hour' }}
-                    </td>
-                    <td align="right" valign="middle" class="hidden-xs">{{ task.remainingDuration | duration:'hour' }}
-                    </td>
-                    <td align="right" valign="middle">{{ task.duration | duration:'hour' }}</td>
-                    <td align="right" valign="middle">{{ task.workedDuration | duration:'hour' }}</td>
-                    <td align="right" valign="middle" class="hidden-xs">{{ task.difference | duration:'hour' }}</td>
-                    <td align="right" valign="middle">{{ task.performance | percentFr:0 }}</td>
-                    <td align="center" valign="middle">
-                        <button md-button
-                                color="accent"
-                                class="md-button-small-width"
-                                type="button"
-                                [routerLink]="['/sprints', sprintId, 'tasks-management', 'edit', user.id, task.id]">
-                            <span class="fa fa-pencil"></span>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th width="50%" colspan="3" class="hidden-xs">{{ 'total' | translate }}</th>
-                    <th width="50%" class="visible-xs">{{ 'total' | translate }}</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th class="hidden-xs"></th>
-                    <th></th>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
+    <md-card *ngFor="let user of sprintTasksManagementService.users" class="TasksManagement">
+        <md-card-content>
+            <h3 class="info-color">
+                {{ user.name }}
+                <button md-button type="button" class="btn btn-link TasksManagement-Add">
+                    <span class="TasksManagement-Add-Container">
+                        <span class="fa fa-plus-circle TasksManagement-Add-Container-Icon"></span>
+                        <span class="hidden-xs TasksManagement-Add-Container-Label">
+                            {{ 'add.task' | translate }}
+                        </span>
+                    </span>
+                </button>
+            </h3>
+            <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+                <thead>
+                    <tr>
+                        <th width="30%">{{ 'task' | translate }}</th>
+                        <th width="10%" class="hidden-xs">{{ 'initital.duration' | translate }}</th>
+                        <th width="10%" class="hidden-xs">{{ 'remaining.duration' | translate }}</th>
+                        <th width="10%">{{ 'worked.hours' | translate }}</th>
+                        <th width="10%">{{ 'decrement.hours' | translate }}</th>
+                        <th width="10%" class="hidden-xs">{{ 'difference' | translate }}</th>
+                        <th width="10%">{{ 'perf' | translate }}</th>
+                        <th width="10%">{{ 'action' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let task of user.tasks">
+                        <td align="left" valign="middle">{{ task.name }}</td>
+                        <td align="right" valign="middle" class="hidden-xs">{{ task.initialDuration | duration:'hour' }}
+                        </td>
+                        <td align="right" valign="middle" class="hidden-xs">{{ task.remainingDuration | duration:'hour' }}
+                        </td>
+                        <td align="right" valign="middle">{{ task.duration | duration:'hour' }}</td>
+                        <td align="right" valign="middle">{{ task.workedDuration | duration:'hour' }}</td>
+                        <td align="right" valign="middle" class="hidden-xs">{{ task.difference | duration:'hour' }}</td>
+                        <td align="right" valign="middle">{{ task.performance | percentFr:0 }}</td>
+                        <td align="center" valign="middle">
+                            <button md-button
+                                    color="accent"
+                                    class="md-button-small-width"
+                                    type="button"
+                                    [routerLink]="['/sprints', sprintId, 'tasks-management', 'edit', user.id, task.id]">
+                                <span class="fa fa-pencil"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th width="50%" colspan="3" class="hidden-xs">{{ 'total' | translate }}</th>
+                        <th width="50%" class="visible-xs">{{ 'total' | translate }}</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th class="hidden-xs"></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </md-card-content>
+    </md-card>
 
     <div class="row margin-bottom-20px">
         <div class="col-xs-12">
