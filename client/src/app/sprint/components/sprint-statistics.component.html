@@ -12,8 +12,8 @@
         </div>
     </div>
 
-    <div class="panel panel-default">
-        <div class="panel-body">
+    <md-card class="margin-bottom-20px">
+        <md-card-content>
             <div class="row">
                 <div class="col-xs-12 col-sm-7 col-md-6 col-lg-6">
                     <div class="row">
@@ -100,48 +100,54 @@
                             [options]="{responsive: true}"></canvas>
                 </div>
             </div>
-        </div>
-    </div>
+        </md-card-content>
+    </md-card>
 
-    <div>
-        <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
-            <thead>
-                <tr>
-                    <th>{{ 'name' | translate }}</th>
-                    <th>{{ 'duration' | translate }}</th>
-                    <th>{{ 'worked.duration' | translate }}</th>
-                    <th class="visible-xs">{{ 'coef' | translate }}</th>
-                    <th class="hidden-xs">{{ 'coefficient' | translate }}</th>
-                    <th class="visible-xs">{{ 'perf' | translate }}</th>
-                    <th class="hidden-xs">{{ 'performance' | translate }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let user of sprintService.usersInformation">
-                    <td align="left" valign="middle">{{ user.name }}</td>
-                    <td align="right" valign="middle">{{ user.duration | duration:'hour' }}</td>
-                    <td align="right" valign="middle">{{ user.workedDuration | duration:'hour' }}</td>
-                    <td align="right" valign="middle">{{ user.coefficient | numberFr:'1' }}</td>
-                    <td align="right" valign="middle">{{ user.performance | percentFr:0 }}</td>
-                </tr>
-            </tbody>
-        </table>
+    <md-card class="margin-bottom-20px">
+        <md-card-content>
+            <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+                <thead>
+                    <tr>
+                        <th>{{ 'name' | translate }}</th>
+                        <th>{{ 'duration' | translate }}</th>
+                        <th>{{ 'worked.duration' | translate }}</th>
+                        <th class="visible-xs">{{ 'coef' | translate }}</th>
+                        <th class="hidden-xs">{{ 'coefficient' | translate }}</th>
+                        <th class="visible-xs">{{ 'perf' | translate }}</th>
+                        <th class="hidden-xs">{{ 'performance' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of sprintService.usersInformation">
+                        <td align="left" valign="middle">{{ user.name }}</td>
+                        <td align="right" valign="middle">{{ user.duration | duration:'hour' }}</td>
+                        <td align="right" valign="middle">{{ user.workedDuration | duration:'hour' }}</td>
+                        <td align="right" valign="middle">{{ user.coefficient | numberFr:'1' }}</td>
+                        <td align="right" valign="middle">{{ user.performance | percentFr:0 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-card-content>
+    </md-card>
 
-        <div class="row margin-bottom-20px">
-            <div class="col-xs-12">
-                <canvas baseChart height="80px"
-                    class="hidden-xs"
-                    [datasets]="lineChartUsesCoefficient.datasets"
-                    [labels]="lineChartUsesCoefficient.labels"
-                    [chartType]="lineChartUsesCoefficient.type"
-                    [options]="{responsive: true}"></canvas>
-                <canvas baseChart height="120px"
-                    class="visible-xs"
-                    [datasets]="lineChartUsesCoefficient.datasets"
-                    [labels]="lineChartUsesCoefficient.labels"
-                    [chartType]="lineChartUsesCoefficient.type"
-                    [options]="{responsive: true}"></canvas>
+    <md-card class="margin-bottom-20px">
+        <md-card-content>
+            <div class="row margin-bottom-20px">
+                <div class="col-xs-12">
+                    <canvas baseChart height="80px"
+                        class="hidden-xs"
+                        [datasets]="lineChartUsesCoefficient.datasets"
+                        [labels]="lineChartUsesCoefficient.labels"
+                        [chartType]="lineChartUsesCoefficient.type"
+                        [options]="{responsive: true}"></canvas>
+                    <canvas baseChart height="120px"
+                        class="visible-xs"
+                        [datasets]="lineChartUsesCoefficient.datasets"
+                        [labels]="lineChartUsesCoefficient.labels"
+                        [chartType]="lineChartUsesCoefficient.type"
+                        [options]="{responsive: true}"></canvas>
+                </div>
             </div>
-        </div>
-    </div>
+        </md-card-content>
+    </md-card>
 </div>

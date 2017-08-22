@@ -21,68 +21,67 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-12">
-            <table class="table table-striped table-bordered table-hover table-condensed table-responsive"
-                   *ngIf="sprintService.sprint.tasks?.length > 0">
-                <thead>
-                    <tr>
-                        <th>{{ 'name' | translate }}</th>
-                        <th class="hidden-xs">{{ 'description' | translate }}</th>
-                        <th>{{ 'initial.duration' | translate }}</th>
-                        <th>{{ 'worked.duration' | translate }}</th>
-                        <th>{{ 'remaining.duration' | translate }}</th>
-                        <th>{{ 'planned' | translate }}</th>
-                        <th>{{ 'actions' | translate }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let task of sprintService.sprint.tasks">
-                        <td align="left" valign="middle">{{ task.name }}</td>
-                        <td align="left" valign="middle" class="hidden-xs">{{ task.description }}</td>
-                        <td align="right" valign="middle">{{ task.initialDuration | duration:'hour' }}</td>
-                        <td align="right" valign="middle">{{ task.workedDuration | duration:'hour' }}</td>
-                        <td align="right" valign="middle">{{ task.remainingDuration | duration:'hour' }}</td>
-                        <td align="center" valign="middle">
-                            <span class="fa"
-                                  [ngClass]="{
+    <md-card class="margin-bottom-20px">
+        <md-card-content>
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-striped table-bordered table-hover table-condensed table-responsive"
+                           *ngIf="sprintService.sprint.tasks?.length > 0">
+                        <thead>
+                            <tr>
+                                <th>{{ 'name' | translate }}</th>
+                                <th class="hidden-xs">{{ 'description' | translate }}</th>
+                                <th>{{ 'initial.duration' | translate }}</th>
+                                <th>{{ 'worked.duration' | translate }}</th>
+                                <th>{{ 'remaining.duration' | translate }}</th>
+                                <th>{{ 'planned' | translate }}</th>
+                                <th>{{ 'actions' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let task of sprintService.sprint.tasks">
+                                <td align="left" valign="middle">{{ task.name }}</td>
+                                <td align="left" valign="middle" class="hidden-xs">{{ task.description }}</td>
+                                <td align="right" valign="middle">{{ task.initialDuration | duration:'hour' }}</td>
+                                <td align="right" valign="middle">{{ task.workedDuration | duration:'hour' }}</td>
+                                <td align="right" valign="middle">{{ task.remainingDuration | duration:'hour' }}</td>
+                                <td align="center" valign="middle">
+                                    <span class="fa" [ngClass]="{
                                       'fa-check': !task.addedAfter,
                                       'text-success': !task.addedAfter,
                                       'fa-times': task.addedAfter,
                                       'text-danger': task.addedAfter}"></span>
-                        </td>
-                        <td align="center" valign="middle">
-                            <button md-button
-                                    class="md-button-small-width"
-                                    (click)="editTask(task.id)">
+                                </td>
+                                <td align="center" valign="middle">
+                                    <button md-button class="md-button-small-width" (click)="editTask(task.id)">
                                 <span class="fa fa-pencil"></span>
                             </button>
-                            <button md-button
-                                    color="warn"
-                                    class="md-button-small-width"
-                                    (click)="deleteTask(task.id)">
+                                    <button md-button color="warn" class="md-button-small-width" 
+                                            (click)="deleteTask(task.id)">
                                 <span class="fa fa-trash-o"></span>
                             </button>
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th align="left" valign="middle">{{ 'total' | translate }}</th>
-                        <th class="hidden-xs"></th>
-                        <th class="text-right" valign="middle">
-                            {{ sprintService.totalDuration | duration:'hour' }}
-                        </th>
-                        <th class="text-right" valign="middle">
-                            {{ sprintService.totalTaskUserWorkedDuration | duration:'hour' }}
-                        </th>
-                        <th class="text-right" valign="middle">
-                            {{ sprintService.remainingDuration | duration:'hour' }}
-                        </th>
-                        <th colspan="2"></th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th align="left" valign="middle">{{ 'total' | translate }}</th>
+                                <th class="hidden-xs"></th>
+                                <th class="text-right" valign="middle">
+                                    {{ sprintService.totalDuration | duration:'hour' }}
+                                </th>
+                                <th class="text-right" valign="middle">
+                                    {{ sprintService.totalTaskUserWorkedDuration | duration:'hour' }}
+                                </th>
+                                <th class="text-right" valign="middle">
+                                    {{ sprintService.remainingDuration | duration:'hour' }}
+                                </th>
+                                <th colspan="2"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </md-card-content>
+    </md-card>
 </div>
