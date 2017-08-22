@@ -65,16 +65,7 @@ export class SprintTasksManagementComponent implements OnInit
     {
         // Initialisation du sprint
         // ------------------------
-        this.apiSprintService.getSprintManagement(this.sprintId)
-            .then((sprint: any) =>
-            {
-                this.sprintTasksManagementService.init(sprint);
-            })
-            .catch((error: any) =>
-            {
-                console.error('Error sprint information');
-                console.error(error);
-            });
+        this.sprintTasksManagementService.init(this.sprintId);
     }
 
     /**

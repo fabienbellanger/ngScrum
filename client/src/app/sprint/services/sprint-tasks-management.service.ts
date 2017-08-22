@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { ApiSprintService } from '../../api/services/api-sprint.service';
+
 @Injectable()
 
 export class SprintTasksManagementService
@@ -12,8 +14,9 @@ export class SprintTasksManagementService
      * Constructeur
      *
      * @author Fabien Bellanger
+     * @param {ApiSprintService} apiSprintService
      */
-    constructor()
+    constructor(private apiSprintService: ApiSprintService)
     {
     }
 
@@ -21,16 +24,35 @@ export class SprintTasksManagementService
      * Initialisation
      *
      * @author Fabien Bellanger
-     * @param {Sprint} sprint Sprint
+     * @param {Number} sprintId ID du sprint
+     * @return {Promise}
      */
-    public init(sprint: any): void
+    public init(sprintId: number): any
     {
-        this.sprint = sprint;
-        this.date   = sprint.date;
+        return new Promise((resolve: any, reject: any) =>
+        {
+            // Initialisation du sprint
+            // ------------------------
+            this.apiSprintService.getSprintManagement(sprintId)
+                .then((sprint: any) =>
+                {
+                    this.sprint = sprint;
+                    this.date   = sprint.date;
 
-        // Mise en place des structures de données
-        // ---------------------------------------
-        this.getUsersData();
+                    // Mise en place des structures de données
+                    // ---------------------------------------
+                    this.getUsersData();
+
+                    resolve();
+                })
+                .catch((error: any) =>
+                {
+                    console.error('Error sprint information');
+                    console.error(error);
+
+                    reject(error);
+                });
+        });
     }
 
     /**
@@ -95,7 +117,8 @@ export class SprintTasksManagementService
                         this.users[userIndex]['tasks'][taskId]['duration']       += taskUser.duration;
                         this.users[userIndex]['tasks'][taskId]['workedDuration'] += taskUser.workedDuration;
                     }
-                    this.users[userIndex]['tasks'][taskId]['difference']  = this.users[userIndex]['tasks'][taskId]['duration'] - this.users[userIndex]['tasks'][taskId]['workedDuration'];
+                    this.users[userIndex]['tasks'][taskId]['difference']  = this.users[userIndex]['tasks'][taskId]['duration']
+                        - this.users[userIndex]['tasks'][taskId]['workedDuration'];
                     this.users[userIndex]['tasks'][taskId]['performance'] = (this.users[userIndex]['tasks'][taskId]['workedDuration'] !== 0)
                         ? (this.users[userIndex]['tasks'][taskId]['workedDuration'] / this.users[userIndex]['tasks'][taskId]['duration']) * 100
                         : 0;
