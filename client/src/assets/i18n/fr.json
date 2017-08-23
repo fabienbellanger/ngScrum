@@ -95,5 +95,6 @@
     "required.duration": "Durée obligatoire",
     "required.date.begin": "Date de début obligatoire",
     "too.short.password": "Mot de passe doit contenir au moins 4 caractères",
-    "none": "Aucun"
+	"none": "Aucun",
+	"get.data.error": "Erreur lors du chargement des données"
 }

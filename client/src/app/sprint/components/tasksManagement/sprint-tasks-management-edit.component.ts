@@ -96,16 +96,36 @@ export class SprintTasksManagementEditComponent implements OnInit
 
                 if (this.task === null || this.taskUser === null)
                 {
-                    // TODO : Erreur
+                    this.dataError();
                 }
                 else
                 {
                     // TODO
+                    alert('OK');
                 }
             })
             .catch((error: any) =>
             {
-                console.error(error);
+                this.dataError();
             })
+    }
+
+    /**
+     * Gestion des erreurs concernant les données
+     * 
+     * @author Fabien Bellanger
+     */
+    private dataError(): void
+    {
+        // Notification
+        // ------------
+        this.translateService.get('get.data.error').subscribe((msg: string) =>
+        {
+            this.toastyService.error(msg);
+        });
+
+        // Redirection
+        // -----------
+        this.router.navigate(['/sprints', this.sprintId, 'tasks-management']);
     }
 }

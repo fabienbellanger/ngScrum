@@ -209,7 +209,7 @@ export class SprintEditTaskComponent implements OnInit
 
                     // Redirection
                     // -----------
-                    this.router.navigate(['/sprints/tasks', {sprintId: this.sprintId}]);
+                    this.router.navigate(['/sprints', this.sprintId, 'tasks']);
 
                     // Jeton pour n'avoir qu'une soumission
                     // ------------------------------------
@@ -263,7 +263,7 @@ export class SprintEditTaskComponent implements OnInit
 
                     // Redirection
                     // -----------
-                    this.router.navigate(['/sprints/tasks', {sprintId: this.sprintId}]);
+                    this.router.navigate(['/sprints', this.sprintId, 'tasks']);
 
                     // Jeton pour n'avoir qu'une soumission
                     // ------------------------------------
