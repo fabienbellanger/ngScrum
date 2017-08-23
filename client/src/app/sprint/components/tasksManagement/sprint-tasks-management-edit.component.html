@@ -10,49 +10,57 @@
                 <span class="fa fa-chevron-left"></span>
                 <span class="hidden-xs">{{ 'back' | translate }}</span>
             </button>
-
         </div>
     </div>
 
     <md-card class="margin-bottom-20px">
         <md-card-header>
-            <md-card-title>{{ task.name }}</md-card-title>
+            <md-card-title>
+                <h4>
+                    {{ task.name }}
+                    ({{ task.remainingDuration | duration:'hour' }})
+                </h4>
+            </md-card-title>
             <md-card-subtitle>
-                {{ user.firstname }}
-                {{ user.lastname | uppercase | slice:0:1 }}
+                <h5>
+                    {{ user.firstname + ' ' +  user.lastname }}
+                </h5>
             </md-card-subtitle>
         </md-card-header>
 
         <md-card-content>
-            <p>
-                Heures restantes : {{ task.remainingDuration | duration:'hour' }}
-            </p>
-
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-3">
-                    <md-input-container>
+                    <md-input-container class="width-100">
                         <input mdInput type="number" name="workedHours"
                                min="0" max="35" step="0.5"
-                               [placeholder]="'heures travaillées' | translate"
+                               [placeholder]="'worked.hours' | translate"
                                required>
                         <span mdSuffix>&nbsp;h</span>
                     </md-input-container>
                 </div>
             </div>
 
-            <p>
-                <md-input-container>
-                    <input mdInput type="number" name="remaingHours"
-                           min="0" max="35" step="0.5"
-                           [placeholder]="'heures restantes' | translate"
-                           required>
-                    <span mdSuffix>&nbsp;h</span>
-                </md-input-container>
-            </p>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <md-input-container class="width-100">
+                        <input mdInput type="number" name="remaingHours"
+                               min="0" max="35" step="0.5"
+                               [placeholder]="'remaining.hours' | translate"
+                               required>
+                        <span mdSuffix>&nbsp;h</span>
+                    </md-input-container>
+                </div>
+            </div>
         </md-card-content>
 
         <md-card-actions>
-
+            <button md-button
+                    type="button"
+                    [routerLink]="['/sprints', sprintId, 'tasks-management']">
+                <span class="fa fa-chevron-left"></span>
+                <span class="hidden-xs">{{ 'back' | translate }}</span>
+            </button>
         </md-card-actions>
     </md-card>
 
