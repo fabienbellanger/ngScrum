@@ -21,6 +21,7 @@ export class SprintTasksManagementEditComponent implements OnInit
     private sprint: any;
     private task: any;
     private taskUser: any;
+    private user: any;
 
     /**
      * Constructeur
@@ -57,6 +58,7 @@ export class SprintTasksManagementEditComponent implements OnInit
         this.sprint   = null;
         this.task     = null;
         this.taskUser = null;
+        this.user     = null;
 
         // Initialisation
         // --------------
@@ -91,28 +93,49 @@ export class SprintTasksManagementEditComponent implements OnInit
                     if (taskUser.taskId === this.taskId && taskUser.userId === this.userId)
                     {
                         this.taskUser = taskUser;
+
+                        break;
                     }
                 }
 
-                if (this.task === null || this.taskUser === null)
+                // Récupération de l'utilisateur
+                // -----------------------------
+                for (let user of this.sprint.users)
                 {
+                    if (user.id === this.userId)
+                    {
+                        this.user = user;
+
+                        break;
+                    }
+                }
+
+                if (this.task === null || this.taskUser === null || this.user === null)
+                {
+                    // Erreur : Données non valides
+                    // ----------------------------
                     this.dataError();
                 }
                 else
                 {
                     // TODO
-                    alert('OK');
                 }
+
+                this.loading = false;
             })
             .catch((error: any) =>
             {
+                // Erreur : Données non valides
+                // ----------------------------
                 this.dataError();
+
+                this.loading = false;
             })
     }
 
     /**
      * Gestion des erreurs concernant les données
-     * 
+     *
      * @author Fabien Bellanger
      */
     private dataError(): void

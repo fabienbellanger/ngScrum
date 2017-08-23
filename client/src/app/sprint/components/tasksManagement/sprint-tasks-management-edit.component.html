@@ -1,5 +1,63 @@
-<div *ngIf="!sprintTasksManagementService?.sprint"><h2>{{ 'loading' | translate }}...</h2></div>
-<div *ngIf="sprintTasksManagementService?.sprint">
+<div *ngIf="loading"><h2>{{ 'loading' | translate }}...</h2></div>
+<div *ngIf="!loading">
+    <h1>Tasks management - {{ sprint.name }}</h1>
+
+    <div class="row margin-bottom-20px">
+        <div class="col-xs-12">
+            <button md-button
+                    type="button"
+                    [routerLink]="['/sprints', sprintId, 'tasks-management']">
+                <span class="fa fa-chevron-left"></span>
+                <span class="hidden-xs">{{ 'back' | translate }}</span>
+            </button>
+
+        </div>
+    </div>
+
+    <md-card class="margin-bottom-20px">
+        <md-card-header>
+            <md-card-title>{{ task.name }}</md-card-title>
+            <md-card-subtitle>
+                {{ user.firstname }}
+                {{ user.lastname | uppercase | slice:0:1 }}
+            </md-card-subtitle>
+        </md-card-header>
+
+        <md-card-content>
+            <p>
+                Heures restantes : {{ task.remainingDuration | duration:'hour' }}
+            </p>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <md-input-container>
+                        <input mdInput type="number" name="workedHours"
+                               min="0" max="35" step="0.5"
+                               [placeholder]="'heures travaillées' | translate"
+                               required>
+                        <span mdSuffix>&nbsp;h</span>
+                    </md-input-container>
+                </div>
+            </div>
+
+            <p>
+                <md-input-container>
+                    <input mdInput type="number" name="remaingHours"
+                           min="0" max="35" step="0.5"
+                           [placeholder]="'heures restantes' | translate"
+                           required>
+                    <span mdSuffix>&nbsp;h</span>
+                </md-input-container>
+            </p>
+        </md-card-content>
+
+        <md-card-actions>
+
+        </md-card-actions>
+    </md-card>
+
+	<div [innerHtml]="user | debug"></div>
 	<div [innerHtml]="task | debug"></div>
 	<div [innerHtml]="taskUser | debug"></div>
 </div>
+
