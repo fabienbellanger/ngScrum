@@ -59,7 +59,11 @@ input:-webkit-autofill {
 }
 
 .green-color {
-    color: $primayColor;
+    color: $greenColor;
+}
+
+.red-color {
+    color: $redColor;
 }
 
 .orange-color {
@@ -80,6 +84,10 @@ input:-webkit-autofill {
 
 .margin-bottom-20px {
     margin-bottom: 20px;
+}
+
+.margin-bottom-10px {
+    margin-bottom: 10px;
 }
 
 .margin-bottom-0px {
@@ -316,6 +324,35 @@ h6 {
     font-size: 12px;
 }
 
+// Ecran inférieur ou égal à 640px
+// -------------------------------
+@media screen and (max-width: 640px) {
+    h1 {
+        font-size:     20px;
+        margin-bottom: 25px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    h3 {
+        font-size: 16px;
+    }
+
+    h4 {
+        font-size: 14px;
+    }
+
+    h5 {
+        font-size: 13px;
+    }
+
+    h6 {
+        font-size: 12px;
+    }
+}
+
 a.list-group-item {
     color: $darkColor;
 
@@ -440,6 +477,7 @@ a.list-group-item {
 // ------------------------------
 .TasksManagement {
     margin-bottom: 20px;
+    overflow:      auto;
 
     &-Add {
         &-Container {

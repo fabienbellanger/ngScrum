@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ToastyService } from 'ng2-toasty';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,6 +23,7 @@ export class SprintTasksManagementEditComponent implements OnInit
     private task: any;
     private taskUser: any;
     private user: any;
+    private taskFormGroup: FormGroup;
 
     /**
      * Constructeur
@@ -59,6 +61,17 @@ export class SprintTasksManagementEditComponent implements OnInit
         this.task     = null;
         this.taskUser = null;
         this.user     = null;
+
+        // FormControls
+        // ------------
+        this.taskFormGroup = new FormGroup({
+            workedHours:    new FormControl('', [
+                Validators.required,
+            ]),
+            remainingHours: new FormControl('', [
+                Validators.required,
+            ]),
+        });
 
         // Initialisation
         // --------------

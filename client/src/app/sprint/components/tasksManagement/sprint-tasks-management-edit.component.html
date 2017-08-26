@@ -2,76 +2,96 @@
 <div *ngIf="!loading">
     <h1>Tasks management - {{ sprint.name }}</h1>
 
-    <div class="row margin-bottom-20px">
-        <div class="col-xs-12">
-            <button md-button
-                    type="button"
-                    [routerLink]="['/sprints', sprintId, 'tasks-management']">
-                <span class="fa fa-chevron-left"></span>
-                <span class="hidden-xs">{{ 'back' | translate }}</span>
-            </button>
+    <form [formGroup]="taskFormGroup" (ngSubmit)="saveTask()">
+        <div class="row margin-bottom-20px">
+            <div class="col-xs-12">
+                <button md-button
+                        type="button"
+                        [routerLink]="['/sprints', sprintId, 'tasks-management']">
+                    <span class="fa fa-chevron-left"></span>
+                    <span class="hidden-xs">{{ 'back' | translate }}</span>
+                </button>
+                <button md-raised-button color="primary"
+                        [disabled]="taskFormGroup.invalid"
+                        type="button">
+                    <span class="fa fa-floppy-o"></span>
+                    <span>{{ 'save' | translate }}</span>
+                </button>
+            </div>
         </div>
-    </div>
 
-    <md-card class="margin-bottom-20px">
-        <md-card-header>
-            <md-card-title>
-                <h4>
-                    {{ task.name }}
-                    ({{ task.remainingDuration | duration:'hour' }})
-                </h4>
-            </md-card-title>
-            <md-card-subtitle>
-                <h5>
-                    {{ user.firstname + ' ' +  user.lastname }}
-                </h5>
-            </md-card-subtitle>
-        </md-card-header>
+        <md-card class="margin-bottom-20px">
+            <md-card-header>
+                <md-card-title>
+                    <h4>
+                        {{ task.name }}
+                        ({{ task.remainingDuration | duration:'hour' }})
+                    </h4>
+                </md-card-title>
+                <md-card-subtitle>
+                    <h5>
+                        {{ user.firstname + ' ' +  user.lastname }}
+                    </h5>
+                </md-card-subtitle>
+            </md-card-header>
 
-        <md-card-content>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <md-input-container class="width-100">
-                        <input mdInput type="number" name="workedHours"
-                               min="0" max="35" step="0.5"
-                               [placeholder]="'worked.hours' | translate"
-                               required>
-                        <span mdSuffix>&nbsp;h</span>
-                    </md-input-container>
+            <md-card-content>
+                <div class="row margin-bottom-10px">
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        <md-input-container class="width-100">
+                            <input mdInput type="number" name="workedHours"
+                                   min="0" max="35" step="0.5"
+                                   [placeholder]="'worked.hours' | translate"
+                                   formControlName="workedHours"
+                                   required>
+                            <span mdSuffix>&nbsp;h</span>
+                            <md-error *ngIf="taskFormGroup.get('workedHours').hasError('required')">
+                                {{ 'required.worked.hours' | translate }}
+                            </md-error>
+                        </md-input-container>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <md-input-container class="width-100">
-                        <input mdInput type="number" name="remaingHours"
-                               min="0" max="35" step="0.5"
-                               [placeholder]="'remaining.hours' | translate"
-                               required>
-                        <span mdSuffix>&nbsp;h</span>
-                    </md-input-container>
+                <div class="row margin-bottom-10px">
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        <md-input-container class="width-100">
+                            <input mdInput type="number" name="remaingHours"
+                                   min="0" max="35" step="0.5"
+                                   [placeholder]="'remaining.hours' | translate"
+                                   formControlName="remainingHours"
+                                   required>
+                            <span mdSuffix>&nbsp;h</span>
+                            <md-error *ngIf="taskFormGroup.get('remainingHours').hasError('required')">
+                                {{ 'required.remaining.hours' | translate }}
+                            </md-error>
+                        </md-input-container>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    Heures déplilées
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        Heures dépilées :
+                        <span [class.red-color]="task.remainingDuration < taskFormGroup.get('remainingHours').value">
+                            {{ task.remainingDuration - taskFormGroup.get('remainingHours').value | duration:'hour' }}
+                        </span>
+                    </div>
                 </div>
-            </div>
-        </md-card-content>
+            </md-card-content>
 
-        <md-card-actions>
-            <button md-button
-                    type="button"
-                    [routerLink]="['/sprints', sprintId, 'tasks-management']">
-                <span class="fa fa-chevron-left"></span>
-                <span class="hidden-xs">{{ 'back' | translate }}</span>
-            </button>
-        </md-card-actions>
-    </md-card>
-
-	<div [innerHtml]="user | debug"></div>
-	<div [innerHtml]="task | debug"></div>
-	<div [innerHtml]="taskUser | debug"></div>
+            <md-card-actions>
+                <button md-button
+                        type="button"
+                        [routerLink]="['/sprints', sprintId, 'tasks-management']">
+                    <span class="fa fa-chevron-left"></span>
+                    <span class="hidden-xs">{{ 'back' | translate }}</span>
+                </button>
+                <button md-raised-button color="primary"
+                        [disabled]="taskFormGroup.invalid"
+                        type="button">
+                    <span class="fa fa-floppy-o"></span>
+                    <span>{{ 'save' | translate }}</span>
+                </button>
+            </md-card-actions>
+        </md-card>
+    </form>
 </div>
-
