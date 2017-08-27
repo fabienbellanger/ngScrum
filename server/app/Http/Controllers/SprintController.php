@@ -192,6 +192,7 @@
         public function deleteTask(Request $request, $id, $sprintId, $taskId)
         {
             $response = SprintRepository::deleteTask($id, $sprintId, $taskId);
+
             if ($response['code'] == 404)
             {
                 return Response::notFound($response['message']);
@@ -215,6 +216,7 @@
         public function getTask(Request $request, $id, $sprintId, $taskId)
         {
             $response = SprintRepository::getTaskInfo($id, $sprintId, $taskId);
+
             if ($response['code'] == 404)
             {
                 return Response::notFound($response['message']);
@@ -287,5 +289,52 @@
             $response = SprintRepository::modifySprintParameters($id, $sprintId, $data);
 
             return Response::json($response, 200);
+        }
+
+        /**
+         * Modification d'une taskUser
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @param int $id ID de l'utilisateur
+         * @param int $sprintId ID du sprint
+         * @param int $taskId ID d'une tâche
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function modifyTaskUser(Request $request, $id, $sprintId, $taskId)
+        {
+            $data = Input::all();
+            if (!array_key_exists('data', $data))
+            {
+                return Response::internalError('No data');
+            }
+
+            $data = json_decode($data['data'], true);
+            if (!$data || count($data) == 0)
+            {
+                return Response::internalError('No data');
+            }
+
+            if (!array_key_exists('userId', $data) ||
+                !array_key_exists('workedHours', $data) ||
+                !array_key_exists('remainingHours', $data))
+            {
+                return Response::internalError('Missing data');
+            }
+
+            $response = SprintRepository::modifyTaskUser($id, $sprintId, $taskId, $data);
+
+            /*if ($response['code'] == 404)
+            {
+                return Response::notFound($response['message']);
+            }
+            elseif ($response['code'] == 500)
+            {
+                return Response::internalError($response['message']);
+            }
+            else
+            {
+                return Response::json($response['data'], 200);
+            }*/
         }
     }

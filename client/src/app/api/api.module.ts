@@ -7,6 +7,7 @@ import { SharedModule, HttpService } from '../shared';
 import { ApiAuthService } from './services/api-auth.service';
 import { ApiUserService } from './services/api-user.service';
 import { ApiSprintService } from './services/api-sprint.service';
+import { ApiTaskService } from './services/api-task.service';
 
 @NgModule({
     imports:      [
@@ -22,6 +23,7 @@ import { ApiSprintService } from './services/api-sprint.service';
         ApiAuthService,
         ApiUserService,
         ApiSprintService,
+        ApiTaskService,
     ],
     exports:      [
     ],

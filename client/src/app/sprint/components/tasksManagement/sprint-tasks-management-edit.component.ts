@@ -5,7 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastyService } from 'ng2-toasty';
 import { TranslateService } from '@ngx-translate/core';
 
-import { ApiSprintService } from '../../../api';
+import { ApiSprintService, ApiTaskService } from '../../../api';
 import { SprintTasksManagementService } from '../../services/sprint-tasks-management.service';
 
 @Component({
@@ -35,12 +35,14 @@ export class SprintTasksManagementEditComponent implements OnInit
      * @param {ToastyService}                   toastyService
      * @param {TranslateService}                translateService
      * @param {SprintTasksManagementService}    sprintTasksManagementService
+     * @param {ApiTaskService}                  apiTaskService
      */
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
                 private router: Router,
                 private toastyService: ToastyService,
                 private translateService: TranslateService,
+                private apiTaskService: ApiTaskService,
                 private sprintTasksManagementService: SprintTasksManagementService)
     {
     }
@@ -163,5 +165,23 @@ export class SprintTasksManagementEditComponent implements OnInit
         // Redirection
         // -----------
         this.router.navigate(['/sprints', this.sprintId, 'tasks-management']);
+    }
+
+    /**
+     * Sauvegarde de la tâche
+     *
+     * @author Fabien Bellanger
+     */
+    private saveTask(): void
+    {
+        const data: any = {
+            'userId':         +this.userId,
+            'workedHours':    +this.taskFormGroup.get('workedHours').value,
+            'remainingHours': +this.taskFormGroup.get('remainingHours').value,
+        };
+
+        this.apiTaskService.editTaskUser(this.sprintId, this.taskId, data)
+            .then()
+            .catch();
     }
 }

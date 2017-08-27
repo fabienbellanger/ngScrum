@@ -954,5 +954,20 @@
                 'data'    => $sprint,
             ];
         }
+
+        /**
+         * Modification d'une taskUser
+         *
+         * @author Fabien Bellanger
+         * @param int    $userId   ID de l'utilisateur
+         * @param int    $sprintId ID du sprint
+         * @param int    $taskId   ID de la tâche
+         * @param array  $data     Données
+         * @return array
+         */
+        static public function modifyTaskUser($userId, $sprintId, $taskId, $data)
+        {
+            dd($userId, $sprintId, $taskId, $data);
+        }
     }
     

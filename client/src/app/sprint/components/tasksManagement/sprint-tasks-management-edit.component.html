@@ -11,9 +11,9 @@
                     <span class="fa fa-chevron-left"></span>
                     <span class="hidden-xs">{{ 'back' | translate }}</span>
                 </button>
-                <button md-raised-button color="primary"
+                <button md-raised-button color="primary" type="button"
                         [disabled]="taskFormGroup.invalid"
-                        type="button">
+                        (click)="saveTask()">
                     <span class="fa fa-floppy-o"></span>
                     <span>{{ 'save' | translate }}</span>
                 </button>
@@ -85,9 +85,9 @@
                     <span class="fa fa-chevron-left"></span>
                     <span class="hidden-xs">{{ 'back' | translate }}</span>
                 </button>
-                <button md-raised-button color="primary"
+                <button md-raised-button color="primary" type="button"
                         [disabled]="taskFormGroup.invalid"
-                        type="button">
+                        (click)="saveTask()">
                     <span class="fa fa-floppy-o"></span>
                     <span>{{ 'save' | translate }}</span>
                 </button>
