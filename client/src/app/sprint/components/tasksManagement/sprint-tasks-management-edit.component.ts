@@ -178,6 +178,7 @@ export class SprintTasksManagementEditComponent implements OnInit
             'userId':         +this.userId,
             'workedHours':    +this.taskFormGroup.get('workedHours').value,
             'remainingHours': +this.taskFormGroup.get('remainingHours').value,
+            'date':           this.sprintTasksManagementService.date,
         };
 
         this.apiTaskService.editTaskUser(this.sprintId, this.taskId, data)

@@ -4,7 +4,6 @@
 
     use DB;
     use Exception;
-    use App\Repositories\TeamRepository;
 
     class SprintRepository
     {
@@ -66,7 +65,7 @@
                 FROM task
                 WHERE task.id = :taskId 
                     AND task.sprint_id = :sprintId';
-            $tasks = DB::select($query, ['taskId' => $taskId, 'sprintId' => $sprintId]);
+            $tasks  = DB::select($query, ['taskId' => $taskId, 'sprintId' => $sprintId]);
             if (!$tasks || count($tasks) != 1)
             {
                 return null;
@@ -79,7 +78,7 @@
          * Liste des sprints
          *
          * @author Fabien Bellanger
-         * @param int    $sprintId     ID du sprint
+         * @param int $sprintId ID du sprint
          * @return bool
          */
         public static function isSprintValid($sprintId): ?bool
@@ -101,7 +100,7 @@
          * ID de l'équipe
          *
          * @author Fabien Bellanger
-         * @param int    $sprintId     ID du sprint
+         * @param int $sprintId ID du sprint
          * @return int
          */
         public static function getTeamId($sprintId): ?int
@@ -265,7 +264,7 @@
 
             // 1. Récupération du sprint
             // -------------------------
-            $query = '
+            $query   = '
                 SELECT sprint.name, sprint.created_at, sprint.updated_at, sprint.started_at, sprint.finished_at
                 FROM sprint
                 WHERE sprint.id = :sprintId';
@@ -287,7 +286,7 @@
 
             // 2. Récupération des tâches
             // --------------------------
-            $query = '
+            $query   = '
                 SELECT
                     task.id AS taskId,
                     task.name AS taskName,
@@ -336,8 +335,8 @@
 
             // 3. Récupération des utilisateurs
             // --------------------------------
-            $users = [];
-            $query = '
+            $users   = [];
+            $query   = '
                 SELECT DISTINCT 
                     users.id,
                     users.firstname,
@@ -388,10 +387,10 @@
          * Ajout / Modification d'une tâche
          *
          * @author Fabien Bellanger
-         * @param int $userId   ID de l'utilisateur
-         * @param int $sprintId ID du sprint
-         * @param array $data   POST data
-         * @param int $taskId   ID de la tâche (default 0)
+         * @param int   $userId   ID de l'utilisateur
+         * @param int   $sprintId ID du sprint
+         * @param array $data     POST data
+         * @param int   $taskId   ID de la tâche (default 0)
          * @return array
          */
         public static function editTask($userId, $sprintId, $data, $taskId = 0): ?array
@@ -427,8 +426,7 @@
             // -------------------------
             try
             {
-                DB::transaction(function() use ($userId, $sprintId, $taskId, &$data)
-                {
+                DB::transaction(function() use ($userId, $sprintId, $taskId, &$data) {
                     if ($taskId == 0)
                     {
                         // Création
@@ -443,14 +441,14 @@
                     }
                 });
             }
-            catch(Exception $exception)
+            catch (Exception $exception)
             {
                 return [
                     'code'    => 500,
                     'message' => 'Internal error 1',
                 ];
             }
-            
+
             if (!isset($data['id']))
             {
                 return [
@@ -470,9 +468,9 @@
          * Ajout d'une tâche
          *
          * @author Fabien Bellanger
-         * @param int $userId   ID de l'utilisateur
-         * @param int $sprintId ID du sprint
-         * @param array $data   POST data (Référence)
+         * @param int   $userId   ID de l'utilisateur
+         * @param int   $sprintId ID du sprint
+         * @param array $data     POST data (Référence)
          */
         static private function addTask($userId, $sprintId, &$data)
         {
@@ -489,7 +487,7 @@
                 'created_at'         => date('Y-m-d H:i:s'),
                 'updated_at'         => date('Y-m-d H:i:s'),
             ];
-            $taskId = DB::table('task')->insertGetId($taskData);
+            $taskId   = DB::table('task')->insertGetId($taskData);
 
             // Ajout dans la table task_application
             // ------------------------------------
@@ -513,10 +511,10 @@
          * Modification d'une tâche
          *
          * @author Fabien Bellanger
-         * @param int $userId   ID de l'utilisateur
-         * @param int $sprintId ID du sprint
-         * @param int $taskId   ID de la tâche
-         * @param array $data   POST data (Référence)
+         * @param int   $userId   ID de l'utilisateur
+         * @param int   $sprintId ID du sprint
+         * @param int   $taskId   ID de la tâche
+         * @param array $data     POST data (Référence)
          * @return array
          */
         static private function modifyTask($userId, $sprintId, $taskId, &$data)
@@ -528,21 +526,21 @@
             // Mise à jour dans la table task
             // ------------------------------
             $taskData = [
-                'name'               => $data['name'],
-                'description'        => ($data['description']) ? $data['description'] : null,
+                'name'        => $data['name'],
+                'description' => ($data['description']) ? $data['description'] : null,
                 //'initial_duration'   => floatval($data['duration']),
-                'added_after'        => intval($data['notPlanned']),
-                'updated_at'         => date('Y-m-d H:i:s'),
+                'added_after' => intval($data['notPlanned']),
+                'updated_at'  => date('Y-m-d H:i:s'),
             ];
             DB::table('task')
-                ->where('id', $taskId)
-                ->update($taskData);
+              ->where('id', $taskId)
+              ->update($taskData);
 
             // Suppression des éléments de la table task_application
             // -----------------------------------------------------
             DB::table('task_application')
-                ->where('task_id', $taskId)
-                ->delete();
+              ->where('task_id', $taskId)
+              ->delete();
 
             // Ajout dans la table task_application
             // ------------------------------------
@@ -595,7 +593,7 @@
                 'code'    => 200,
                 'message' => 'Success',
                 'data'    => $taskId,
-            ]; 
+            ];
         }
 
         /**
@@ -653,7 +651,7 @@
 
             // 4. Récupération des applications
             // --------------------------------
-            $query = '
+            $query        = '
                 SELECT application_id AS id
                 FROM task_application
                 WHERE task_id = :taskId';
@@ -736,7 +734,7 @@
                 }
             }
             $sprint['users'] = array_values($users);
-            
+
             return [
                 'code'    => 200,
                 'message' => 'Success',
@@ -748,9 +746,9 @@
          * Modification des paramètres d'un sprint
          *
          * @author Fabien Bellanger
-         * @param int $userId   ID de l'utilisateur
-         * @param int $sprintId ID du sprint
-         * @param array $data   POST data (Référence)
+         * @param int   $userId   ID de l'utilisateur
+         * @param int   $sprintId ID du sprint
+         * @param array $data     POST data (Référence)
          * @return array
          */
         static public function modifySprintParameters($userId, $sprintId, &$data)
@@ -764,8 +762,8 @@
                 'started_at' => $data['startedAt'],
             ];
             DB::table('sprint')
-                ->where('id', $sprintId)
-                ->update($sprintData);
+              ->where('id', $sprintId)
+              ->update($sprintData);
 
             // Mise à jour des membres de l'équipe
             // -----------------------------------
@@ -784,9 +782,9 @@
                 }
             }
             DB::table('team_member')
-                ->where('team_id', $teamId)
-                ->whereIn('user_id', $usersToDelete)
-                ->delete();
+              ->where('team_id', $teamId)
+              ->whereIn('user_id', $usersToDelete)
+              ->delete();
 
             // Ajout des utilisateurs
             // ----------------------
@@ -796,7 +794,7 @@
             {
                 $userPresent = false;
                 $i           = 0;
-                while(!($i == $nbUsersInDB || $userPresent))
+                while (!($i == $nbUsersInDB || $userPresent))
                 {
                     if ($newUserId == $usersInDB[$i]->id)
                     {
@@ -815,7 +813,7 @@
                 }
             }
             DB::table('team_member')
-                ->insert($usersToAdd);
+              ->insert($usersToAdd);
 
             return ["id" => $sprintId];
         }
@@ -835,7 +833,7 @@
 
             // 1. Récupération du sprint
             // -------------------------
-            $query = '
+            $query   = '
                 SELECT
                     sprint.name,
                     sprint.team_id,
@@ -865,7 +863,7 @@
 
             // 2. Récupération des tâches
             // --------------------------
-            $query = '
+            $query      = '
                 SELECT
                     task.id AS taskId,
                     task.name AS taskName,
@@ -915,8 +913,8 @@
 
             // 3. Récupération des utilisateurs
             // --------------------------------
-            $users = [];
-            $query = '
+            $users   = [];
+            $query   = '
                 SELECT DISTINCT 
                     users.id,
                     users.firstname,
@@ -959,15 +957,53 @@
          * Modification d'une taskUser
          *
          * @author Fabien Bellanger
-         * @param int    $userId   ID de l'utilisateur
-         * @param int    $sprintId ID du sprint
-         * @param int    $taskId   ID de la tâche
-         * @param array  $data     Données
+         * @param int   $userId   ID de l'utilisateur
+         * @param int   $sprintId ID du sprint
+         * @param int   $taskId   ID de la tâche
+         * @param array $data     Données
          * @return array
          */
         static public function modifyTaskUser($userId, $sprintId, $taskId, $data)
         {
-            dd($userId, $sprintId, $taskId, $data);
+            // 1. Sprint valide ?
+            // ------------------
+            if (!self::isSprintValid($userId, $sprintId))
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'No sprint found',
+                ];
+            }
+
+            // 2. Recherche la taskUser
+            // ------------------------
+            $query    = '
+                SELECT *
+                FROM task_user 
+                WHERE task_id = :taskId AND user_id = :userId AND date = :date';
+            $results   = DB::select($query, [
+                'taskId' => $taskId,
+                'userId' => $data['userId'],
+                'date'   => $data['date'],
+            ]);
+            $taskUser = null;
+            if ($results && count($results) === 1)
+            {
+                $taskUser = $results[0];
+            }
+
+            if (!$taskUser)
+            {
+                // Création
+                // --------
+            }
+            else
+            {
+                // Modification
+                // ------------
+            }
+
+            dd($userId, $sprintId, $taskId, $data, $taskUser);
         }
     }
     

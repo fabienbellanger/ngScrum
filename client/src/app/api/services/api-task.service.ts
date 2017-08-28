@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Headers } from '@angular/http';
 
 import { HttpService, StorageService } from '../../shared';
@@ -13,8 +12,8 @@ export class ApiTaskService
      * Constructeur
      *
      * @author Fabien Bellanger
-     * @param {HttpService}		httpService
-     * @param {StorageService}	storageService
+     * @param {HttpService}       httpService
+     * @param {StorageService}    storageService
      */
     constructor(private httpService: HttpService,
                 private storageService: StorageService)
@@ -52,7 +51,7 @@ export class ApiTaskService
                     headers.append('Authorization', 'Bearer ' + token);
                     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-                    this.httpService.put(`/users/${user.id}/sprints/${sprintId}/tasks/${taskId}/taskUser`,
+                    this.httpService.put(`/users/${user.id}/sprints/${sprintId}/tasks/${taskId}/task-user`,
                         {data: JSON.stringify(data)},
                         {headers: headers},
                         true,

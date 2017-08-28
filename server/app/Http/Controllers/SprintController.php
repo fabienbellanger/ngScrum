@@ -3,8 +3,8 @@
     namespace App\Http\Controllers;
 
     use App\Helpers\ResponseHelper as Response;
-    use Illuminate\Http\Request;
     use App\Repositories\SprintRepository;
+    use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Input;
 
     class SprintController extends Controller
@@ -14,7 +14,7 @@
          *
          * @author Fabien Bellanger
          * @param \Illuminate\Http\Request $request
-         * @param int $id ID de l'utilisateur
+         * @param int                      $id ID de l'utilisateur
          * @return \Illuminate\Http\JsonResponse
          */
         public function getAllSprints(Request $request, $id)
@@ -36,8 +36,8 @@
          *
          * @author Fabien Bellanger
          * @param \Illuminate\Http\Request $request
-         * @param int $id ID de l'utilisateur
-         * @param string $state Type de recherche {all, inProgress, finished}
+         * @param int                      $id    ID de l'utilisateur
+         * @param string                   $state Type de recherche {all, inProgress, finished}
          * @return \Illuminate\Http\JsonResponse
          */
         public function getSprints(Request $request, $id, $state)
@@ -59,8 +59,8 @@
          *
          * @author Fabien Bellanger
          * @param \Illuminate\Http\Request $request
-         * @param int $id ID de l'utilisateur
-         * @param int $sprintId ID du sprint
+         * @param int                      $id       ID de l'utilisateur
+         * @param int                      $sprintId ID du sprint
          * @return \Illuminate\Http\JsonResponse
          */
         public function getSprintInfo(Request $request, $id, $sprintId)
@@ -82,12 +82,12 @@
          *
          * @author Fabien Bellanger
          * @param \Illuminate\Http\Request $request
-         * @param int    $id       ID de l'utilisateur
-         * @param int    $sprintId ID du sprint
-         * @param strint $date     Date
+         * @param int                      $id       ID de l'utilisateur
+         * @param int                      $sprintId ID du sprint
+         * @param strint                   $date     Date
          * @return \Illuminate\Http\JsonResponse
          */
-        public function getSprintManagement(Request $request, $id, $sprintId, $date=null)
+        public function getSprintManagement(Request $request, $id, $sprintId, $date = null)
         {
             $date     = ($date) ? $date : date('Y-m-d');
             $response = SprintRepository::getSprintManagement($id, $sprintId, $date);
@@ -107,8 +107,8 @@
          *
          * @author Fabien Bellanger
          * @param \Illuminate\Http\Request $request
-         * @param int $id ID de l'utilisateur
-         * @param int $sprintId ID du sprint
+         * @param int                      $id       ID de l'utilisateur
+         * @param int                      $sprintId ID du sprint
          * @return \Illuminate\Http\JsonResponse
          */
         public function addTask(Request $request, $id, $sprintId)
@@ -124,7 +124,7 @@
             {
                 return Response::badRequest('No data');
             }
-            
+
             $response = SprintRepository::editTask($id, $sprintId, $data);
             if ($response['code'] == 404)
             {
@@ -145,9 +145,9 @@
          *
          * @author Fabien Bellanger
          * @param \Illuminate\Http\Request $request
-         * @param int $id ID de l'utilisateur
-         * @param int $sprintId ID du sprint
-         * @param int $taskId ID d'une tâche
+         * @param int                      $id       ID de l'utilisateur
+         * @param int                      $sprintId ID du sprint
+         * @param int                      $taskId   ID d'une tâche
          * @return \Illuminate\Http\JsonResponse
          */
         public function modifyTask(Request $request, $id, $sprintId, $taskId)
@@ -163,7 +163,7 @@
             {
                 return Response::internalError('No data');
             }
-            
+
             $response = SprintRepository::editTask($id, $sprintId, $data, $taskId);
             if ($response['code'] == 404)
             {
@@ -184,9 +184,9 @@
          *
          * @author Fabien Bellanger
          * @param \Illuminate\Http\Request $request
-         * @param int $id ID de l'utilisateur
-         * @param int $sprintId ID du sprint
-         * @param int $taskId ID d'une tâche
+         * @param int                      $id       ID de l'utilisateur
+         * @param int                      $sprintId ID du sprint
+         * @param int                      $taskId   ID d'une tâche
          * @return \Illuminate\Http\JsonResponse
          */
         public function deleteTask(Request $request, $id, $sprintId, $taskId)
@@ -208,9 +208,9 @@
          *
          * @author Fabien Bellanger
          * @param \Illuminate\Http\Request $request
-         * @param int $id ID de l'utilisateur
-         * @param int $sprintId ID du sprint
-         * @param int $taskId ID d'une tâche
+         * @param int                      $id       ID de l'utilisateur
+         * @param int                      $sprintId ID du sprint
+         * @param int                      $taskId   ID d'une tâche
          * @return \Illuminate\Http\JsonResponse
          */
         public function getTask(Request $request, $id, $sprintId, $taskId)
@@ -236,8 +236,8 @@
          *
          * @author Fabien Bellanger
          * @param \Illuminate\Http\Request $request
-         * @param int $id ID de l'utilisateur
-         * @param int $sprintId ID du sprint
+         * @param int                      $id       ID de l'utilisateur
+         * @param int                      $sprintId ID du sprint
          * @return \Illuminate\Http\JsonResponse
          */
         public function getSprintParameters(Request $request, $id, $sprintId)
@@ -262,8 +262,8 @@
          *
          * @author Fabien Bellanger
          * @param \Illuminate\Http\Request $request
-         * @param int $id ID de l'utilisateur
-         * @param int $sprintId ID du sprint
+         * @param int                      $id       ID de l'utilisateur
+         * @param int                      $sprintId ID du sprint
          * @return \Illuminate\Http\JsonResponse
          */
         public function modifySprintParameters(Request $request, $id, $sprintId)
@@ -280,7 +280,7 @@
                 return Response::badRequest('No data');
             }
 
-            if (!array_key_exists('name', $data) || !array_key_exists('startedAt', $data) || 
+            if (!array_key_exists('name', $data) || !array_key_exists('startedAt', $data) ||
                 !array_key_exists('usersId', $data))
             {
                 return Response::badRequest('Bad data');
@@ -296,9 +296,9 @@
          *
          * @author Fabien Bellanger
          * @param \Illuminate\Http\Request $request
-         * @param int $id ID de l'utilisateur
-         * @param int $sprintId ID du sprint
-         * @param int $taskId ID d'une tâche
+         * @param int                      $id       ID de l'utilisateur
+         * @param int                      $sprintId ID du sprint
+         * @param int                      $taskId   ID d'une tâche
          * @return \Illuminate\Http\JsonResponse
          */
         public function modifyTaskUser(Request $request, $id, $sprintId, $taskId)
@@ -316,6 +316,7 @@
             }
 
             if (!array_key_exists('userId', $data) ||
+                !array_key_exists('date', $data) ||
                 !array_key_exists('workedHours', $data) ||
                 !array_key_exists('remainingHours', $data))
             {
