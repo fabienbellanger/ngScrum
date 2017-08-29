@@ -317,15 +317,16 @@
 
             if (!array_key_exists('userId', $data) ||
                 !array_key_exists('date', $data) ||
-                !array_key_exists('workedHours', $data) ||
-                !array_key_exists('remainingHours', $data))
+                !array_key_exists('duration', $data) ||
+                !array_key_exists('workedDuration', $data) ||
+                !array_key_exists('remainingDuration', $data))
             {
                 return Response::internalError('Missing data');
             }
 
             $response = SprintRepository::modifyTaskUser($id, $sprintId, $taskId, $data);
 
-            /*if ($response['code'] == 404)
+            if ($response['code'] == 404)
             {
                 return Response::notFound($response['message']);
             }
@@ -336,6 +337,6 @@
             else
             {
                 return Response::json($response['data'], 200);
-            }*/
+            }
         }
     }

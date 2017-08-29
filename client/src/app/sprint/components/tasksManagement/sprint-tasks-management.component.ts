@@ -44,6 +44,8 @@ export class SprintTasksManagementComponent implements OnInit
      */
     public ngOnInit(): void
     {
+        this.loading = true;
+
         this.route.paramMap.subscribe((params: ParamMap) =>
         {
             // Récupération du sprint
@@ -65,7 +67,15 @@ export class SprintTasksManagementComponent implements OnInit
     {
         // Initialisation du sprint
         // ------------------------
-        this.sprintTasksManagementService.init(this.sprintId);
+        this.sprintTasksManagementService.init(this.sprintId)
+            .then(() =>
+            {
+                this.loading = false;
+            })
+            .catch(() =>
+            {
+                this.loading = false;
+            });
     }
 
     /**

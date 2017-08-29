@@ -120,7 +120,7 @@ export class SprintTasksManagementService
                     this.users[userIndex]['tasks'][taskId]['difference']  = this.users[userIndex]['tasks'][taskId]['duration']
                         - this.users[userIndex]['tasks'][taskId]['workedDuration'];
                     this.users[userIndex]['tasks'][taskId]['performance'] = (this.users[userIndex]['tasks'][taskId]['workedDuration'] !== 0)
-                        ? (this.users[userIndex]['tasks'][taskId]['workedDuration'] / this.users[userIndex]['tasks'][taskId]['duration']) * 100
+                        ? (this.users[userIndex]['tasks'][taskId]['duration'] / this.users[userIndex]['tasks'][taskId]['workedDuration']) * 100
                         : 0;
                 }
             }

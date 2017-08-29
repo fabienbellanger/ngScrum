@@ -15,7 +15,7 @@
         {
             Schema::table('task_user', function (Blueprint $table)
             {
-                $table->integer('worked_duration')->default(0)->after('duration');
+                $table->decimal('worked_duration', 10, 2)->default(0)->after('duration');
             });
         }
 

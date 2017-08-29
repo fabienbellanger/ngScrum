@@ -134,6 +134,7 @@ export class SprintTasksManagementEditComponent implements OnInit
                 else
                 {
                     // TODO
+                    console.log(this.task, this.taskUser, this.user);
                 }
 
                 this.loading = false;
@@ -175,14 +176,35 @@ export class SprintTasksManagementEditComponent implements OnInit
     private saveTask(): void
     {
         const data: any = {
-            'userId':         +this.userId,
-            'workedHours':    +this.taskFormGroup.get('workedHours').value,
-            'remainingHours': +this.taskFormGroup.get('remainingHours').value,
-            'date':           this.sprintTasksManagementService.date,
+            'userId':            +this.userId,
+            'workedDuration':    +this.taskFormGroup.get('workedHours').value,
+            'remainingDuration': +this.taskFormGroup.get('remainingHours').value,
+            'duration':          +this.task.remainingDuration - +this.taskFormGroup.get('remainingHours').value,
+            'date':              this.sprintTasksManagementService.date,
         };
 
         this.apiTaskService.editTaskUser(this.sprintId, this.taskId, data)
-            .then()
-            .catch();
+            .then(() =>
+            {
+                // Notification
+                // ------------
+                this.translateService.get('add.taskuser.success').subscribe((msg: string) =>
+                {
+                    this.toastyService.success(msg);
+                });
+
+                // Redirection
+                // -----------
+                this.router.navigate(['/sprints', this.sprintId, 'tasks-management']);
+            })
+            .catch(() =>
+            {
+                // Notification
+                // ------------
+                this.translateService.get('add.taskuser.success').subscribe((msg: string) =>
+                {
+                    this.toastyService.error(msg);
+                });
+            });
     }
 }

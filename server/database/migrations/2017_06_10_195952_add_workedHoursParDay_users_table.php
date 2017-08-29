@@ -15,7 +15,7 @@
         {
             Schema::table('users', function (Blueprint $table)
             {
-                $table->integer('worked_hours_per_day')->default(7)->after('remember_token');
+                $table->decimal('worked_hours_per_day', 10, 2)->default(7)->after('remember_token');
             });
         }
 

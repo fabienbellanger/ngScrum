@@ -812,8 +812,7 @@
                     ]);
                 }
             }
-            DB::table('team_member')
-              ->insert($usersToAdd);
+            DB::table('team_member')->insert($usersToAdd);
 
             return ["id" => $sprintId];
         }
@@ -978,32 +977,60 @@
             // 2. Recherche la taskUser
             // ------------------------
             $query    = '
-                SELECT *
+                SELECT id
                 FROM task_user 
                 WHERE task_id = :taskId AND user_id = :userId AND date = :date';
-            $results   = DB::select($query, [
+            $results  = DB::select($query, [
                 'taskId' => $taskId,
                 'userId' => $data['userId'],
                 'date'   => $data['date'],
             ]);
-            $taskUser = null;
+            $taskUserId = 0;
             if ($results && count($results) === 1)
             {
-                $taskUser = $results[0];
+                $taskUserId = $results[0]->id;
             }
 
-            if (!$taskUser)
+            if (!$taskUserId)
             {
                 // Création
                 // --------
+                $taskUserData = [
+                    'task_id'         => $taskId,
+                    'user_id'         => $data['userId'],
+                    'date'            => $data['date'],
+                    'duration'        => $data['duration'],
+                    'worked_duration' => $data['workedDuration'],
+                    'created_at'      => date('Y-m-d H:i:s'),
+                    'updated_at'      => date('Y-m-d H:i:s'),
+                ];
+                $taskUserId   = DB::table('task_user')->insertGetId($taskUserData);
             }
             else
             {
                 // Modification
                 // ------------
+                $taskUserData = [
+                    'duration'        => $data['duration'],
+                    'worked_duration' => $data['workedDuration'],
+                    'updated_at'      => date('Y-m-d H:i:s'),
+                ];
+                DB::table('task_user')
+                  ->where('id', $taskUserId)
+                  ->update($taskUserData);
             }
 
-            dd($userId, $sprintId, $taskId, $data, $taskUser);
+            // Modification de la durée restante de la tâche
+            // ---------------------------------------------
+            DB::table('task')
+              ->where('id', $taskId)
+              ->update(['remaining_duration' => $data['remainingDuration']]);
+
+            return [
+                'code'    => 200,
+                'message' => 'Success',
+                'data'    => ['taskUserId' => $taskUserId],
+            ];
         }
     }
     

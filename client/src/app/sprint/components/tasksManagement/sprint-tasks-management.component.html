@@ -1,5 +1,5 @@
-<div *ngIf="!sprintTasksManagementService?.sprint"><h2>{{ 'loading' | translate }}...</h2></div>
-<div *ngIf="sprintTasksManagementService?.sprint">
+<div *ngIf="loading"><h2>{{ 'loading' | translate }}...</h2></div>
+<div *ngIf="!loading">
     <h1>Tasks management - {{ sprintTasksManagementService.sprint.name }}</h1>
 
     <div class="row margin-bottom-20px">
@@ -47,12 +47,14 @@
                 <tbody>
                     <tr *ngFor="let task of user.tasks">
                         <td align="left" valign="middle">{{ task.name }}</td>
-                        <td align="right" valign="middle" class="hidden-xs">{{ task.initialDuration | duration:'hour' }}
+                        <td align="right" valign="middle" class="hidden-xs">
+                            {{ task.initialDuration | duration:'hour' }}
                         </td>
-                        <td align="right" valign="middle" class="hidden-xs">{{ task.remainingDuration | duration:'hour' }}
+                        <td align="right" valign="middle" class="hidden-xs">
+                            {{ task.remainingDuration | duration:'hour' }}
                         </td>
-                        <td align="right" valign="middle">{{ task.duration | duration:'hour' }}</td>
                         <td align="right" valign="middle">{{ task.workedDuration | duration:'hour' }}</td>
+                        <td align="right" valign="middle">{{ task.duration | duration:'hour' }}</td>
                         <td align="right" valign="middle" class="hidden-xs">{{ task.difference | duration:'hour' }}</td>
                         <td align="right" valign="middle">{{ task.performance | percentFr:0 }}</td>
                         <td align="center" valign="middle">
