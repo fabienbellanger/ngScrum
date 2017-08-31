@@ -39,13 +39,13 @@
                 <div class="row margin-bottom-10px">
                     <div class="col-xs-12 col-sm-6 col-md-3">
                         <md-input-container class="width-100">
-                            <input mdInput type="number" name="workedHours"
+                            <input mdInput type="number" name="workedDuration"
                                    min="0" max="35" step="0.5"
                                    [placeholder]="'worked.hours' | translate"
-                                   formControlName="workedHours"
+                                   formControlName="workedDuration"
                                    required>
                             <span mdSuffix>&nbsp;h</span>
-                            <md-error *ngIf="taskFormGroup.get('workedHours').hasError('required')">
+                            <md-error *ngIf="taskFormGroup.get('workedDuration').hasError('required')">
                                 {{ 'required.worked.hours' | translate }}
                             </md-error>
                         </md-input-container>
@@ -55,13 +55,13 @@
                 <div class="row margin-bottom-10px">
                     <div class="col-xs-12 col-sm-6 col-md-3">
                         <md-input-container class="width-100">
-                            <input mdInput type="number" name="remaingHours"
+                            <input mdInput type="number" name="remainingDuration"
                                    min="0" max="35" step="0.5"
                                    [placeholder]="'remaining.hours' | translate"
-                                   formControlName="remainingHours"
+                                   formControlName="remainingDuration"
                                    required>
                             <span mdSuffix>&nbsp;h</span>
-                            <md-error *ngIf="taskFormGroup.get('remainingHours').hasError('required')">
+                            <md-error *ngIf="taskFormGroup.get('remainingDuration').hasError('required')">
                                 {{ 'required.remaining.hours' | translate }}
                             </md-error>
                         </md-input-container>
@@ -71,8 +71,12 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-3">
                         Heures dépilées :
-                        <span [class.red-color]="task.remainingDuration < taskFormGroup.get('remainingHours').value">
-                            {{ task.remainingDuration - taskFormGroup.get('remainingHours').value | duration:'hour' }}
+                        <span [class.red-color]="task.remainingDuration < +taskFormGroup.get('remainingDuration').value"
+                              *ngIf="+taskFormGroup.get('remainingDuration').value > 0">
+                            {{ task.remainingDuration - +taskFormGroup.get('remainingDuration').value | duration:'hour' }}
+                        </span>
+                        <span *ngIf="+taskFormGroup.get('remainingDuration').value <= 0">
+                            {{ 0 | duration:'hour' }}
                         </span>
                     </div>
                 </div>

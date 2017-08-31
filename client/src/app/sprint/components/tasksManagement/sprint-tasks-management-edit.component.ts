@@ -67,10 +67,10 @@ export class SprintTasksManagementEditComponent implements OnInit
         // FormControls
         // ------------
         this.taskFormGroup = new FormGroup({
-            workedHours:    new FormControl('', [
+            workedDuration:    new FormControl('', [
                 Validators.required,
             ]),
-            remainingHours: new FormControl('', [
+            remainingDuration: new FormControl('', [
                 Validators.required,
             ]),
         });
@@ -125,7 +125,7 @@ export class SprintTasksManagementEditComponent implements OnInit
                     }
                 }
 
-                if (this.task === null || this.taskUser === null || this.user === null)
+                if (this.task === null || this.user === null)
                 {
                     // Erreur : Données non valides
                     // ----------------------------
@@ -133,8 +133,14 @@ export class SprintTasksManagementEditComponent implements OnInit
                 }
                 else
                 {
-                    // TODO
-                    console.log(this.task, this.taskUser, this.user);
+                    // Initialisation du formulaire
+                    // ----------------------------
+                    this.taskFormGroup.get('remainingDuration').setValue(this.task.remainingDuration);
+
+                    if (this.taskUser !== null)
+                    {
+                        this.taskFormGroup.get('workedDuration').setValue(this.taskUser.workedDuration);
+                    }
                 }
 
                 this.loading = false;
@@ -175,11 +181,11 @@ export class SprintTasksManagementEditComponent implements OnInit
      */
     private saveTask(): void
     {
-        const data: any = {
-            'userId':            +this.userId,
-            'workedDuration':    +this.taskFormGroup.get('workedHours').value,
-            'remainingDuration': +this.taskFormGroup.get('remainingHours').value,
-            'duration':          +this.task.remainingDuration - +this.taskFormGroup.get('remainingHours').value,
+        const data: any =    {
+            'userId':            +this.userId   ,
+            'workedDuration':    +this.taskFormGroup.get('workedDuration').value,
+            'remainingDuration': +this.taskFormGroup.get('remainingDuration').value,
+            'duration':          +this.task.remainingDuration - +this.taskFormGroup.get('remainingDuration').value,
             'date':              this.sprintTasksManagementService.date,
         };
 
