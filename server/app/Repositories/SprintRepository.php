@@ -976,11 +976,11 @@
 
             // 2. Recherche la taskUser
             // ------------------------
-            $query    = '
+            $query      = '
                 SELECT id
                 FROM task_user 
                 WHERE task_id = :taskId AND user_id = :userId AND date = :date';
-            $results  = DB::select($query, [
+            $results    = DB::select($query, [
                 'taskId' => $taskId,
                 'userId' => $data['userId'],
                 'date'   => $data['date'],
@@ -1010,6 +1010,7 @@
             {
                 // Modification
                 // ------------
+
                 $taskUserData = [
                     'duration'        => $data['duration'],
                     'worked_duration' => $data['workedDuration'],
@@ -1020,8 +1021,8 @@
                   ->update($taskUserData);
             }
 
-            // Modification de la durée restante de la tâche
-            // ---------------------------------------------
+            // 3. Modification de la durée restante de la tâche
+            // ------------------------------------------------
             DB::table('task')
               ->where('id', $taskId)
               ->update(['remaining_duration' => $data['remainingDuration']]);

@@ -44,7 +44,7 @@
                                    min="0" max="35" step="0.5"
                                    [placeholder]="'worked.hours' | translate"
                                    formControlName="workedDuration"
-                                   required>
+                                   autofocus required>
                             <span mdSuffix>&nbsp;h</span>
                             <md-error *ngIf="taskFormGroup.get('workedDuration').hasError('required')">
                                 {{ 'required.worked.hours' | translate }}

@@ -125,4 +125,34 @@ export class ToolboxService
 
         return array;
     }
+
+    /**
+     * Tri d'un tableau sur les clés croissantes
+     *
+     * @author Fabien Bellanger
+     * @param {any[]} arrayToSort Tableau à trier
+     * @return {any[]} Tableau trié
+     */
+    public ksort(arrayToSort: any[]): any[]
+    {
+        let sortedArray: any[] = [];
+        let keysArray: any[]   = [];
+        let n: number          = 0;
+        let key: any;
+
+        for (key in arrayToSort)
+        {
+            keysArray[n++] = key;
+        }
+
+        // Tri croissant
+        keysArray = keysArray.sort();
+        n         = keysArray.length;
+        for (key = 0; key < n; key++)
+        {
+            sortedArray[keysArray[key]] = arrayToSort[keysArray[key]];
+        }
+
+        return sortedArray;
+    }
 }
