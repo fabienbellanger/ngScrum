@@ -5,11 +5,11 @@
     <form class="form-horizontal SprintParameters" [formGroup]="parametersFormGroup" (ngSubmit)="saveParameters()">
         <div class="row margin-bottom-20px">
             <div class="col-xs-12">
-                <button md-raised-button type="button"
+                <button md-button type="button"
                         routerLink="/sprints"
                         [routerLinkActiveOptions]="{exact: false}"
                         routerLinkActive="true">
-                    <span class="fa fa-tasks"></span>
+                    <span class="fa fa-chevron-left"></span>
                     <span>{{ 'sprints.list' | translate }}</span>
                 </button>
                 &nbsp;&nbsp;
@@ -22,31 +22,35 @@
 
         <md-card class="margin-bottom-20px">
             <md-card-content>
-                <p>
-                    <md-input-container class="width-100">
-                        <input mdInput type="text" name="name"
-                               [placeholder]="'name' | translate"
-                               formControlName="name"
-                               maxlength="50"
-                               autofocus required>
-                        <md-hint align="end">{{ parametersFormGroup.get('name').value.length }} / 50</md-hint>
-                        <md-error *ngIf="parametersFormGroup.get('name').hasError('required')">
-                            {{ 'required.name' | translate }}
-                        </md-error>
-                    </md-input-container>
-                </p>
-
-                <p>
-                    <md-input-container class="width-100">
-                        <input mdInput type="date" name="startedAt"
-                               [placeholder]="'started.at' | translate"
-                               formControlName="startedAt"
-                               required>
-                        <md-error *ngIf="parametersFormGroup.get('startedAt').hasError('required')">
-                            {{ 'required.date.begin' | translate }}
-                        </md-error>
-                    </md-input-container>
-                </p>
+                <div class="row">
+                    <p class="col-xs-12 col-sm-6 col-md-4">
+                        <md-input-container class="width-100">
+                            <input mdInput type="text" name="name"
+                                    [placeholder]="'name' | translate"
+                                    formControlName="name"
+                                    maxlength="50"
+                                    autofocus required>
+                            <md-hint align="end">{{ parametersFormGroup.get('name').value.length }} / 50</md-hint>
+                            <md-error *ngIf="parametersFormGroup.get('name').hasError('required')">
+                                {{ 'required.name' | translate }}
+                            </md-error>
+                        </md-input-container>
+                    </p>
+                </div>
+                
+                <div class="row">
+                    <p class="col-xs-12 col-sm-6 col-md-4">
+                        <md-input-container class="width-100">
+                            <input mdInput type="date" name="startedAt"
+                                [placeholder]="'started.at' | translate"
+                                formControlName="startedAt"
+                                required>
+                            <md-error *ngIf="parametersFormGroup.get('startedAt').hasError('required')">
+                                {{ 'required.date.begin' | translate }}
+                            </md-error>
+                        </md-input-container>
+                    </p>
+                </div>
 
                 <div class="row SprintParameters-Users">
                     <div class="col-xs-12">
@@ -118,7 +122,7 @@
                         routerLink="/sprints"
                         [routerLinkActiveOptions]="{exact: false}"
                         routerLinkActive="true">
-                    <span class="fa fa-tasks"></span>
+                    <span class="fa fa-chevron-left"></span>
                     <span>{{ 'sprints.list' | translate }}</span>
                 </button>
                 &nbsp;&nbsp;
