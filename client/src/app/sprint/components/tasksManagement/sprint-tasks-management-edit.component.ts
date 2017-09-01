@@ -100,19 +100,7 @@ export class SprintTasksManagementEditComponent implements OnInit
                 {
                     this.task = this.sprint.tasks[this.taskId];
                 }
-
-                // Récupération de la TaskUser
-                // ---------------------------
-                for (let taskUser of this.sprint.tasksUsers)
-                {
-                    if (taskUser.taskId === this.taskId && taskUser.userId === this.userId)
-                    {
-                        this.taskUser = taskUser;
-
-                        break;
-                    }
-                }
-
+                
                 // Récupération de l'utilisateur
                 // -----------------------------
                 for (let user of this.sprint.users)
@@ -120,6 +108,19 @@ export class SprintTasksManagementEditComponent implements OnInit
                     if (user.id === this.userId)
                     {
                         this.user = user;
+
+                        break;
+                    }
+                }
+                
+                // Récupération de la TaskUser
+                // ---------------------------
+                for (let taskUser of this.sprint.tasksUsers)
+                {
+                    if (taskUser.taskId === this.taskId && taskUser.userId === this.userId
+                        && taskUser.date === this.sprintTasksManagementService.date)
+                    {
+                        this.taskUser = taskUser;
 
                         break;
                     }
