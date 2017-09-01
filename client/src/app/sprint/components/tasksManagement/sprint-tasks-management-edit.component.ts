@@ -134,12 +134,15 @@ export class SprintTasksManagementEditComponent implements OnInit
                 }
                 else
                 {
-                    // Initialisation du formulaire
-                    // ----------------------------
-                    this.taskFormGroup.get('remainingDuration').setValue(this.task.remainingDuration);
-
                     if (this.taskUser !== null)
                     {
+                        // Mise à jour de la durée restante sur la tâche
+                        // ---------------------------------------------
+                        this.task.remainingDuration += this.taskUser.duration;
+
+                        // Initialisation du formulaire
+                        // ----------------------------
+                        this.taskFormGroup.get('remainingDuration').setValue(this.task.remainingDuration - this.taskUser.duration);
                         this.taskFormGroup.get('workedDuration').setValue(this.taskUser.workedDuration);
                     }
                 }
