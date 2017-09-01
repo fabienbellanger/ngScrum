@@ -5,14 +5,14 @@
     <form class="form-horizontal" [formGroup]="taskFormGroup" (ngSubmit)="editTask()">
         <div class="row margin-bottom-20px">
             <div class="col-xs-12">
-                <button md-raised-button type="button"
+                <button md-button type="button"
                         [routerLink]="['/sprints', sprintId, 'tasks']"
                         [routerLinkActiveOptions]="{exact: false}"
                         routerLinkActive="true">
-                    <span class="fa fa-tasks"></span>
+                    <span class="fa fa-chevron-left"></span>
                     <span>{{ 'tasks.list' | translate }}</span>
                 </button>
-
+                &nbsp;&nbsp;
                 <button md-raised-button type="submit"
                         color="primary"
                         [disabled]="taskFormGroup.invalid">
@@ -93,10 +93,10 @@
                         [routerLink]="['/sprints', sprintId, 'tasks']"
                         [routerLinkActiveOptions]="{exact: false}"
                         routerLinkActive="true">
-                    <span class="fa fa-tasks"></span>
+                    <span class="fa fa-chevron-left"></span>
                     <span>{{ 'tasks.list' | translate }}</span>
                 </button>
-
+                &nbsp;&nbsp;
                 <button md-raised-button type="submit"
                         color="primary"
                         [disabled]="taskFormGroup.invalid">
