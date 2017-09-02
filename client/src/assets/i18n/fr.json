@@ -97,5 +97,9 @@
     "too.short.password": "Mot de passe doit contenir au moins 4 caractères",
 	"none": "Aucun",
 	"get.data.error": "Erreur lors du chargement des données",
-    "back": "Retour"
+    "back": "Retour",
+    "new.task": "Nouvelle tâche",
+    "required.worked.hours": "Heures travaillées requises",
+    "required.remaining.hours": "Heures restantes requises",
+    "choose.task": "Choisissez une tâche"
 }

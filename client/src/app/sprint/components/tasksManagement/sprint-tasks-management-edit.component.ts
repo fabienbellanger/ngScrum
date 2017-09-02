@@ -21,9 +21,11 @@ export class SprintTasksManagementEditComponent implements OnInit
     private taskId: number;
     private sprint: any;
     private task: any;
+    private tasks: any[];
     private taskUser: any;
     private user: any;
     private taskFormGroup: FormGroup;
+    private isEdit: boolean;
 
     /**
      * Constructeur
@@ -61,8 +63,10 @@ export class SprintTasksManagementEditComponent implements OnInit
         this.taskId   = +this.route.snapshot.params['taskId'];
         this.sprint   = null;
         this.task     = null;
+        this.tasks    = [];
         this.taskUser = null;
         this.user     = null;
+        this.isEdit   = !isNaN(this.taskId);
 
         // FormControls
         // ------------
@@ -73,6 +77,7 @@ export class SprintTasksManagementEditComponent implements OnInit
             remainingDuration: new FormControl('', [
                 Validators.required,
             ]),
+            taskId:            new FormControl('', []),
         });
 
         // Initialisation
@@ -100,7 +105,29 @@ export class SprintTasksManagementEditComponent implements OnInit
                 {
                     this.task = this.sprint.tasks[this.taskId];
                 }
-                
+
+                // Tableau des tâches si création
+                // ------------------------------
+                if (!this.isEdit)
+                {
+                    let label: string;
+
+                    for (let taskId in this.sprint.tasks)
+                    {
+                        // TODO: Doit-on proposer une tâche terminée ?
+
+                        label = this.sprint.tasks[taskId].name;
+                        label += (this.sprint.tasks[taskId].remainingDuration !== 0)
+                            ? ' (' + this.sprint.tasks[taskId].remainingDuration + ' h)'
+                            : ' (Terminée)';
+
+                        this.tasks.push({
+                            'id':    this.sprint.tasks[taskId].id,
+                            'label': label,
+                        });
+                    }
+                }
+
                 // Récupération de l'utilisateur
                 // -----------------------------
                 for (let user of this.sprint.users)
@@ -112,21 +139,24 @@ export class SprintTasksManagementEditComponent implements OnInit
                         break;
                     }
                 }
-                
+
                 // Récupération de la TaskUser
                 // ---------------------------
-                for (let taskUser of this.sprint.tasksUsers)
+                if (this.isEdit)
                 {
-                    if (taskUser.taskId === this.taskId && taskUser.userId === this.userId
-                        && taskUser.date === this.sprintTasksManagementService.date)
+                    for (let taskUser of this.sprint.tasksUsers)
                     {
-                        this.taskUser = taskUser;
+                        if (taskUser.taskId === this.taskId && taskUser.userId === this.userId
+                            && taskUser.date === this.sprintTasksManagementService.date)
+                        {
+                            this.taskUser = taskUser;
 
-                        break;
+                            break;
+                        }
                     }
                 }
 
-                if (this.task === null || this.user === null)
+                if (this.user === null)
                 {
                     // Erreur : Données non valides
                     // ----------------------------
@@ -134,7 +164,7 @@ export class SprintTasksManagementEditComponent implements OnInit
                 }
                 else
                 {
-                    if (this.taskUser !== null)
+                    if (this.taskUser !== null && this.task !== null)
                     {
                         // Mise à jour de la durée restante sur la tâche
                         // ---------------------------------------------
@@ -185,36 +215,59 @@ export class SprintTasksManagementEditComponent implements OnInit
      */
     private saveTask(): void
     {
-        const data: any =    {
-            'userId':            +this.userId   ,
+        const taskId: number = (this.isEdit) ? this.taskId : +this.taskFormGroup.get('taskId').value;
+
+        const task: any = (!this.isEdit && this.sprint.tasks.hasOwnProperty(taskId))
+            ? this.sprint.tasks[taskId]
+            : this.task;
+
+        let data: any = {
+            'userId':            +this.userId,
             'workedDuration':    +this.taskFormGroup.get('workedDuration').value,
             'remainingDuration': +this.taskFormGroup.get('remainingDuration').value,
-            'duration':          +this.task.remainingDuration - +this.taskFormGroup.get('remainingDuration').value,
             'date':              this.sprintTasksManagementService.date,
         };
 
-        this.apiTaskService.editTaskUser(this.sprintId, this.taskId, data)
-            .then(() =>
-            {
-                // Notification
-                // ------------
-                this.translateService.get('add.taskuser.success').subscribe((msg: string) =>
-                {
-                    this.toastyService.success(msg);
-                });
+        data.duration = (this.isEdit)
+            ? +task.remainingDuration - +this.taskFormGroup.get('remainingDuration').value
+            : +task.initialDuration - +this.taskFormGroup.get('remainingDuration').value;
 
-                // Redirection
-                // -----------
-                this.router.navigate(['/sprints', this.sprintId, 'tasks-management']);
-            })
-            .catch(() =>
-            {
-                // Notification
-                // ------------
-                this.translateService.get('add.taskuser.success').subscribe((msg: string) =>
+        if (this.isEdit)
+        {
+            // Modification
+            // ------------
+
+            this.apiTaskService.editTaskUser(this.sprintId, taskId, data)
+                .then(() =>
                 {
-                    this.toastyService.error(msg);
+                    // Notification
+                    // ------------
+                    this.translateService.get('add.taskuser.success').subscribe((msg: string) =>
+                    {
+                        this.toastyService.success(msg);
+                    });
+
+                    // Redirection
+                    // -----------
+                    this.router.navigate(['/sprints', this.sprintId, 'tasks-management']);
+                })
+                .catch(() =>
+                {
+                    // Notification
+                    // ------------
+                    this.translateService.get('add.taskuser.success').subscribe((msg: string) =>
+                    {
+                        this.toastyService.error(msg);
+                    });
                 });
-            });
+        }
+        else
+        {
+            // Création
+            // --------
+            // TODO
+
+            console.log('TODO', this.sprintId, taskId, data);
+        }
     }
 }

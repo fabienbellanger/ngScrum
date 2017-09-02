@@ -20,7 +20,8 @@
         <md-card-content>
             <h3 class="info-color">
                 {{ user.name }}
-                <button md-button type="button" class="btn btn-link TasksManagement-Add">
+                <button md-button type="button" class="btn btn-link TasksManagement-Add"
+                        [routerLink]="['/sprints', sprintId, 'tasks-management', 'new', user.id]">
                     <span class="TasksManagement-Add-Container">
                         <span class="fa fa-plus-circle TasksManagement-Add-Container-Icon"></span>
                         <span class="hidden-xs TasksManagement-Add-Container-Label">
