@@ -29,7 +29,7 @@ export class ApiTaskService
      * @param {any[]}  data     Données
      * @return {Promise}
      */
-    public editTaskUser(sprintId: number, taskId: number, data: any): any
+    public editTaskUser(sprintId: number, taskId: number, data: any, isEdit: boolean): any
     {
         return new Promise((resolve: any, reject: any) =>
         {
@@ -51,19 +51,44 @@ export class ApiTaskService
                     headers.append('Authorization', 'Bearer ' + token);
                     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-                    this.httpService.put(`/users/${user.id}/sprints/${sprintId}/tasks/${taskId}/task-user`,
-                        {data: JSON.stringify(data)},
-                        {headers: headers},
-                        true,
-                        true)
-                        .then((sprint: any) =>
-                        {
-                            resolve(sprint);
-                        })
-                        .catch(() =>
-                        {
-                            reject();
-                        });
+                    if (isEdit)
+                    {
+                        // Modification
+                        // ------------
+
+                        this.httpService.put(`/users/${user.id}/sprints/${sprintId}/tasks/${taskId}/task-user`,
+                            {data: JSON.stringify(data)},
+                            {headers: headers},
+                            true,
+                            true)
+                            .then((sprint: any) =>
+                            {
+                                resolve(sprint);
+                            })
+                            .catch(() =>
+                            {
+                                reject();
+                            });
+                    }
+                    else
+                    {
+                        // Création
+                        // --------
+
+                        this.httpService.post(`/users/${user.id}/sprints/${sprintId}/tasks/${taskId}/task-user`,
+                            {data: JSON.stringify(data)},
+                            {headers: headers},
+                            true,
+                            true)
+                            .then((sprint: any) =>
+                            {
+                                resolve(sprint);
+                            })
+                            .catch(() =>
+                            {
+                                reject();
+                            });
+                    }
                 }
                 else
                 {

@@ -292,7 +292,7 @@
         }
 
         /**
-         * Modification d'une taskUser
+         * Création / Modification d'une taskUser
          *
          * @author Fabien Bellanger
          * @param \Illuminate\Http\Request $request
@@ -301,7 +301,7 @@
          * @param int                      $taskId   ID d'une tâche
          * @return \Illuminate\Http\JsonResponse
          */
-        public function modifyTaskUser(Request $request, $id, $sprintId, $taskId)
+        public function editTaskUser(Request $request, $id, $sprintId, $taskId)
         {
             $data = Input::all();
             if (!array_key_exists('data', $data))
@@ -324,7 +324,7 @@
                 return Response::internalError('Missing data');
             }
 
-            $response = SprintRepository::modifyTaskUser($id, $sprintId, $taskId, $data);
+            $response = SprintRepository::editTaskUser($id, $sprintId, $taskId, $data);
 
             if ($response['code'] == 404)
             {

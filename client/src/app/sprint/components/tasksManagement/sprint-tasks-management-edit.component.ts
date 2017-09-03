@@ -106,28 +106,6 @@ export class SprintTasksManagementEditComponent implements OnInit
                     this.task = this.sprint.tasks[this.taskId];
                 }
 
-                // Tableau des tâches si création
-                // ------------------------------
-                if (!this.isEdit)
-                {
-                    let label: string;
-
-                    for (let taskId in this.sprint.tasks)
-                    {
-                        // TODO: Doit-on proposer une tâche terminée ?
-
-                        label = this.sprint.tasks[taskId].name;
-                        label += (this.sprint.tasks[taskId].remainingDuration !== 0)
-                            ? ' (' + this.sprint.tasks[taskId].remainingDuration + ' h)'
-                            : ' (Terminée)';
-
-                        this.tasks.push({
-                            'id':    this.sprint.tasks[taskId].id,
-                            'label': label,
-                        });
-                    }
-                }
-
                 // Récupération de l'utilisateur
                 // -----------------------------
                 for (let user of this.sprint.users)
@@ -146,12 +124,55 @@ export class SprintTasksManagementEditComponent implements OnInit
                 {
                     for (let taskUser of this.sprint.tasksUsers)
                     {
-                        if (taskUser.taskId === this.taskId && taskUser.userId === this.userId
-                            && taskUser.date === this.sprintTasksManagementService.date)
+                        if (taskUser.taskId === this.taskId && taskUser.userId === this.userId &&
+                            taskUser.date === this.sprintTasksManagementService.date)
                         {
                             this.taskUser = taskUser;
 
                             break;
+                        }
+                    }
+                }
+
+                // Tableau des tâches si création
+                // ------------------------------
+                if (!this.isEdit)
+                {
+                    let label: string;
+                    let taskUserDone: boolean;
+                    let taskUserIndex: number;
+                    const taskUserLength: number = this.sprint.tasksUsers.length;
+
+                    for (let taskId in this.sprint.tasks)
+                    {
+                        // TODO: Doit-on proposer une tâche terminée ?
+
+                        // On n'ajoute pas les tâches déjà faites par l'utilisateur
+                        // --------------------------------------------------------
+                        taskUserDone  = false;
+                        taskUserIndex = 0;
+                        while (!(taskUserIndex === taskUserLength || taskUserDone))
+                        {
+                            if (this.sprint.tasksUsers[taskUserIndex].userId === this.userId &&
+                                this.sprint.tasksUsers[taskUserIndex].taskId ===  +taskId)
+                            {
+                                taskUserDone = true;
+                            }
+
+                            taskUserIndex++;
+                        }
+
+                        if (!taskUserDone)
+                        {
+                            label = this.sprint.tasks[taskId].name;
+                            label += (this.sprint.tasks[taskId].remainingDuration !== 0)
+                                ? ' (' + this.sprint.tasks[taskId].remainingDuration + ' h)'
+                                : ' (Terminée)';
+
+                            this.tasks.push({
+                                'id':    this.sprint.tasks[taskId].id,
+                                'label': label,
+                            });
                         }
                     }
                 }
@@ -232,42 +253,28 @@ export class SprintTasksManagementEditComponent implements OnInit
             ? +task.remainingDuration - +this.taskFormGroup.get('remainingDuration').value
             : +task.initialDuration - +this.taskFormGroup.get('remainingDuration').value;
 
-        if (this.isEdit)
-        {
-            // Modification
-            // ------------
-
-            this.apiTaskService.editTaskUser(this.sprintId, taskId, data)
-                .then(() =>
+        this.apiTaskService.editTaskUser(this.sprintId, taskId, data, this.isEdit)
+            .then(() =>
+            {
+                // Notification
+                // ------------
+                this.translateService.get('add.taskuser.success').subscribe((msg: string) =>
                 {
-                    // Notification
-                    // ------------
-                    this.translateService.get('add.taskuser.success').subscribe((msg: string) =>
-                    {
-                        this.toastyService.success(msg);
-                    });
-
-                    // Redirection
-                    // -----------
-                    this.router.navigate(['/sprints', this.sprintId, 'tasks-management']);
-                })
-                .catch(() =>
-                {
-                    // Notification
-                    // ------------
-                    this.translateService.get('add.taskuser.success').subscribe((msg: string) =>
-                    {
-                        this.toastyService.error(msg);
-                    });
+                    this.toastyService.success(msg);
                 });
-        }
-        else
-        {
-            // Création
-            // --------
-            // TODO
 
-            console.log('TODO', this.sprintId, taskId, data);
-        }
+                // Redirection
+                // -----------
+                this.router.navigate(['/sprints', this.sprintId, 'tasks-management']);
+            })
+            .catch(() =>
+            {
+                // Notification
+                // ------------
+                this.translateService.get('add.taskuser.success').subscribe((msg: string) =>
+                {
+                    this.toastyService.error(msg);
+                });
+            });
     }
 }

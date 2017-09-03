@@ -265,9 +265,13 @@ label {
 }
 
 .mat-checkbox-label {
-    font-weight: $fontWeightNormal;
+    font-weight: $fontWeightMedium;
 }
 
+.mat-select-trigger {
+    font-size:   14px !important;
+    font-weight: $fontWeightMedium;
+}
 // --------
 
 th, td {

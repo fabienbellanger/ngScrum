@@ -74,7 +74,14 @@
                             'taskId'   => '[0-9]+',
                         ]);
 
-            Route::put('/{taskId}/task-user', 'SprintController@modifyTaskUser')
+            Route::put('/{taskId}/task-user', 'SprintController@editTaskUser')
+                 ->where([
+                             'id'       => '[0-9]+',
+                             'sprintId' => '[0-9]+',
+                             'taskId'   => '[0-9]+',
+                         ]);
+
+            Route::post('/{taskId}/task-user', 'SprintController@editTaskUser')
                  ->where([
                              'id'       => '[0-9]+',
                              'sprintId' => '[0-9]+',

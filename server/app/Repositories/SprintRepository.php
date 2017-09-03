@@ -953,7 +953,7 @@
         }
 
         /**
-         * Modification d'une taskUser
+         * Création / Modification d'une taskUser
          *
          * @author Fabien Bellanger
          * @param int   $userId   ID de l'utilisateur
@@ -962,7 +962,7 @@
          * @param array $data     Données
          * @return array
          */
-        static public function modifyTaskUser($userId, $sprintId, $taskId, $data)
+        static public function editTaskUser($userId, $sprintId, $taskId, $data)
         {
             // 1. Sprint valide ?
             // ------------------
