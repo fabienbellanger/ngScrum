@@ -101,5 +101,6 @@
     "new.task": "Nouvelle tâche",
     "required.worked.hours": "Heures travaillées requises",
     "required.remaining.hours": "Heures restantes requises",
-    "choose.task": "Choisissez une tâche"
+    "choose.task": "Choisissez une tâche",
+    "decrement.duration": "Durée décrémentée"
 }
