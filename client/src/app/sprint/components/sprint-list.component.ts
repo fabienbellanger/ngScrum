@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ApiSprintService } from '../../api';
 
@@ -18,7 +19,8 @@ export class SprintListComponent implements OnInit
      *
      * @author Fabien Bellanger
      */
-    constructor(private apiSprintService: ApiSprintService)
+    constructor(private apiSprintService: ApiSprintService,
+                private router: Router)
     {
     }
 
@@ -59,5 +61,16 @@ export class SprintListComponent implements OnInit
 
                 this.loading = false;
             });
+    }
+
+    /**
+     * Redirection vers la gestion des tâches
+     *
+     * @author Fabien Bellanger
+     * @param {number} sprintId ID du sprint
+     */
+    private redirectToTasksManagement(sprintId: number): void
+    {
+        this.router.navigate(['/sprints', sprintId, 'tasks']);
     }
 }

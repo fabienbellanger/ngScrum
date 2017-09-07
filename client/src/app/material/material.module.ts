@@ -13,6 +13,8 @@ import {
     MdDatepickerModule,
     MdNativeDateModule,
     MdSelectModule,
+    MdIconModule,
+    MdMenuModule,
 } from '@angular/material';
 
 @NgModule({
@@ -29,6 +31,8 @@ import {
         MdDatepickerModule,
         MdNativeDateModule,
         MdSelectModule,
+        MdIconModule,
+        MdMenuModule,
     ],
     declarations: [
     ],
@@ -46,6 +50,8 @@ import {
         MdDatepickerModule,
         MdNativeDateModule,
         MdSelectModule,
+        MdIconModule,
+        MdMenuModule,
     ],
 })
 

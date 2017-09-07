@@ -8,14 +8,14 @@
                 <button md-button
                         type="button"
                         [routerLink]="['/sprints', sprintId, 'tasks-management']">
-                    <span class="fa fa-chevron-left"></span>
+                    <md-icon>keyboard_arrow_left</md-icon>
                     <span class="hidden-xs">{{ 'back' | translate }}</span>
                 </button>
                 &nbsp;&nbsp;
                 <button md-raised-button color="primary" type="button"
                         [disabled]="taskFormGroup.invalid"
                         (click)="saveTask()">
-                    <span class="fa fa-floppy-o"></span>
+                    <md-icon>save</md-icon>
                     <span>{{ 'save' | translate }}</span>
                 </button>
             </div>
@@ -104,14 +104,14 @@
                 <button md-button
                         type="button"
                         [routerLink]="['/sprints', sprintId, 'tasks-management']">
-                    <span class="fa fa-chevron-left"></span>
+                    <md-icon>keyboard_arrow_left</md-icon>
                     <span class="hidden-xs">{{ 'back' | translate }}</span>
                 </button>
                 &nbsp;&nbsp;
                 <button md-button color="primary" type="button"
                         [disabled]="taskFormGroup.invalid"
                         (click)="saveTask()">
-                    <span class="fa fa-floppy-o"></span>
+                    <md-icon>save</md-icon>
                     <span>{{ 'save' | translate }}</span>
                 </button>
             </md-card-actions>

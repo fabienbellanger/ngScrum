@@ -11,3 +11,8 @@
 ## Partie serveur
 
 * Gérer le timezone
+
+## Partie client
+
+* Utiliser les icônes material
+* [BUG] Tableaux dépassent des md-card sur mobile

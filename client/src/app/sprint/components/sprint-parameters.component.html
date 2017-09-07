@@ -9,12 +9,12 @@
                         routerLink="/sprints"
                         [routerLinkActiveOptions]="{exact: false}"
                         routerLinkActive="true">
-                    <span class="fa fa-chevron-left"></span>
+                    <md-icon>keyboard_arrow_left</md-icon>
                     <span>{{ 'sprints.list' | translate }}</span>
                 </button>
                 &nbsp;&nbsp;
                 <button md-raised-button color="primary" [disabled]="parametersFormGroup.invalid">
-                    <span class="fa fa-floppy-o"></span>
+                    <md-icon>save</md-icon>
                     <span>{{ 'save' | translate }}</span>
                 </button>
             </div>
@@ -77,7 +77,7 @@
                                                     type="button"
                                                     (click)="deleteUser(index)"
                                                     [disabled]="userService.user.id === user.id">
-                                                <span class="fa fa-trash-o"></span>
+                                                <md-icon>delete</md-icon>
                                             </button>
                                         </div>
                                     </div>
@@ -122,12 +122,12 @@
                         routerLink="/sprints"
                         [routerLinkActiveOptions]="{exact: false}"
                         routerLinkActive="true">
-                    <span class="fa fa-chevron-left"></span>
+                    <md-icon>keyboard_arrow_left</md-icon>
                     <span>{{ 'sprints.list' | translate }}</span>
                 </button>
                 &nbsp;&nbsp;
                 <button md-button color="primary" [disabled]="parametersFormGroup.invalid">
-                    <span class="fa fa-floppy-o"></span>
+                    <md-icon>save</md-icon>
                     <span>{{ 'save' | translate }}</span>
                 </button>
             </md-card-actions>
