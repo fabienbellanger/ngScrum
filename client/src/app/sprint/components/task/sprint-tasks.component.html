@@ -45,20 +45,17 @@
                                 <td align="right" valign="middle">{{ task.workedDuration | duration:'hour' }}</td>
                                 <td align="right" valign="middle">{{ task.remainingDuration | duration:'hour' }}</td>
                                 <td align="center" valign="middle">
-                                    <span class="fa" [ngClass]="{
-                                      'fa-check': !task.addedAfter,
-                                      'text-success': !task.addedAfter,
-                                      'fa-times': task.addedAfter,
-                                      'text-danger': task.addedAfter}"></span>
+                                      <md-icon *ngIf="!task.addedAfter" class="text-success">done</md-icon>
+                                      <md-icon *ngIf="task.addedAfter" class="text-danger">clear</md-icon>
                                 </td>
                                 <td align="center" valign="middle">
                                     <button md-button class="md-button-small-width" (click)="editTask(task.id)">
-                                <span class="fa fa-pencil"></span>
-                            </button>
+                                        <md-icon>add</md-icon>
+                                    </button>
                                     <button md-button color="warn" class="md-button-small-width" 
                                             (click)="deleteTask(task.id)">
-                                <span class="fa fa-trash-o"></span>
-                            </button>
+                                        <md-icon>remove</md-icon>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>

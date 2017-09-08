@@ -16,7 +16,7 @@
                 <button md-raised-button type="submit"
                         color="primary"
                         [disabled]="taskFormGroup.invalid">
-                    <span class="fa fa-plus"></span>
+                    <md-icon>add</md-icon>
                     <span>{{ buttonTitle }}</span>
                 </button>
             </div>
@@ -24,64 +24,74 @@
 
         <md-card>
             <md-card-content>
-                <p>
-                    <md-input-container class="width-100">
-                        <input mdInput type="text" name="name"
-                               [placeholder]="'name' | translate"
-                               formControlName="name"
-                               maxlength="100"
-                               autofocus required>
-                        <md-hint align="end">{{ taskFormGroup.get('name').value.length }} / 100</md-hint>
-                        <md-error *ngIf="taskFormGroup.get('name').hasError('required')">
-                            {{ 'required.name' | translate }}
-                        </md-error>
-                    </md-input-container>
-                </p>
+                <div class="row">
+                    <p class="col-xs-12 col-sm-6 col-md-4">
+                        <md-input-container class="width-100">
+                            <input mdInput type="text" name="name"
+                                [placeholder]="'name' | translate"
+                                formControlName="name"
+                                maxlength="100"
+                                autofocus required>
+                            <md-hint align="end">{{ taskFormGroup.get('name').value.length }} / 100</md-hint>
+                            <md-error *ngIf="taskFormGroup.get('name').hasError('required')">
+                                {{ 'required.name' | translate }}
+                            </md-error>
+                        </md-input-container>
+                    </p>
+                </div>
 
-                <p>
-                    <md-input-container class="width-100">
-                        <textarea mdInput mdTextareaAutosize name="description"
-                                  [placeholder]="'description' | translate"
-                                  [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
-                    </md-input-container>
-                </p>
+                <div class="row">
+                    <p class="col-xs-12 col-sm-6 col-md-4">
+                        <md-input-container class="width-100">
+                            <textarea mdInput mdTextareaAutosize name="description"
+                                    [placeholder]="'description' | translate"
+                                    [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
+                        </md-input-container>
+                    </p>
+                </div>
 
-                <p>
-                    <md-input-container class="width-100">
-                        <input mdInput type="number" name="duration"
-                               min="0.5" max="35" step="0.5"
-                               [placeholder]="'duration.in.hour' | translate"
-                               formControlName="duration"
-                               [readonly]="id !== 0"
-                               required>
-                        <span mdSuffix>&nbsp;h</span>
-                        <md-error *ngIf="taskFormGroup.get('duration').hasError('required')">
-                            {{ 'required.duration' | translate }}
-                        </md-error>
-                    </md-input-container>
-                </p>
+                <div class="row">
+                    <p class="col-xs-12 col-sm-6 col-md-4">
+                        <md-input-container class="width-100">
+                            <input mdInput type="number" name="duration"
+                                min="0.5" max="35" step="0.5"
+                                [placeholder]="'duration.in.hour' | translate"
+                                formControlName="duration"
+                                [readonly]="id !== 0"
+                                required>
+                            <span mdSuffix>&nbsp;h</span>
+                            <md-error *ngIf="taskFormGroup.get('duration').hasError('required')">
+                                {{ 'required.duration' | translate }}
+                            </md-error>
+                        </md-input-container>
+                    </p>
+                </div>
 
-                <p>
-                    <md-checkbox color="primary" name="notPlanned"
-                                 [(ngModel)]="notPlanned" [ngModelOptions]="{standalone: true}">
-                        {{ 'not.planned' | translate }}
-                    </md-checkbox>
-                </p>
+                <div class="row">
+                    <p class="col-xs-12 col-sm-6 col-md-4">
+                        <md-checkbox color="primary" name="notPlanned"
+                                    [(ngModel)]="notPlanned" [ngModelOptions]="{standalone: true}">
+                            {{ 'not.planned' | translate }}
+                        </md-checkbox>
+                    </p>
+                </div>
 
-                <div>
-                    <div class="bold margin-top-20px">
-                        <h4>{{ 'applications' | translate }}</h4>
-                    </div>
-                    <div class="row margin-bottom-20px">
-                        <div class="col-xs-12 col-sm-6 col-md-4 no-padding"
-                             *ngFor="let application of applications; let index = index">
-                            <div class="radio-checkbox">
-                                <md-checkbox color="primary" [name]="'application_' + index" [id]="'application_' + index"
-                                             (change)="toggleApplication($event, index, application.id)"
-                                             [ngModel]="applicationsIds[index]"
-                                             [ngModelOptions]="{standalone: true}">
-                                    {{ application.name }}
-                                </md-checkbox>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="bold margin-top-20px">
+                            <h4>{{ 'applications' | translate }}</h4>
+                        </div>
+                        <div class="margin-bottom-20px">
+                            <div class="col-xs-12 col-sm-6 col-md-4 no-padding"
+                                *ngFor="let application of applications; let index = index">
+                                <div class="radio-checkbox">
+                                    <md-checkbox color="primary" [name]="'application_' + index" [id]="'application_' + index"
+                                                (change)="toggleApplication($event, index, application.id)"
+                                                [ngModel]="applicationsIds[index]"
+                                                [ngModelOptions]="{standalone: true}">
+                                        {{ application.name }}
+                                    </md-checkbox>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -89,20 +99,22 @@
             </md-card-content>
 
             <md-card-actions>
-                <button md-button type="button"
-                        [routerLink]="['/sprints', sprintId, 'tasks']"
-                        [routerLinkActiveOptions]="{exact: false}"
-                        routerLinkActive="true">
-                    <md-icon>keyboard_arrow_left</md-icon>
-                    <span>{{ 'tasks.list' | translate }}</span>
-                </button>
-                &nbsp;&nbsp;
-                <button md-button type="submit"
-                        color="primary"
-                        [disabled]="taskFormGroup.invalid">
-                    <span class="fa fa-plus"></span>
-                    <span>{{ buttonTitle }}</span>
-                </button>
+                <div>
+                    <button md-button type="button"
+                            [routerLink]="['/sprints', sprintId, 'tasks']"
+                            [routerLinkActiveOptions]="{exact: false}"
+                            routerLinkActive="true">
+                        <md-icon>keyboard_arrow_left</md-icon>
+                        <span>{{ 'tasks.list' | translate }}</span>
+                    </button>
+                    &nbsp;&nbsp;
+                    <button md-button type="submit"
+                            color="primary"
+                            [disabled]="taskFormGroup.invalid">
+                        <md-icon>add</md-icon>
+                        <span>{{ buttonTitle }}</span>
+                    </button>
+                </div>
             </md-card-actions>
         </md-card>
     </form>
