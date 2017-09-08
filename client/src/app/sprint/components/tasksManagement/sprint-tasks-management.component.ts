@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { ToastyService } from 'ng2-toasty';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ApiSprintService } from '../../../api';
 import { SprintTasksManagementService } from '../../services/sprint-tasks-management.service';
+import { DateService } from '../../../shared';
 
 @Component({
     selector:    'sa-sprint-tasks-management',
@@ -16,7 +17,8 @@ export class SprintTasksManagementComponent implements OnInit
 {
     private loading: boolean = true;
     private sprintId: number;
- 
+    private date: Date;
+
     /**
      * Constructeur
      *
@@ -27,17 +29,19 @@ export class SprintTasksManagementComponent implements OnInit
      * @param {ToastyService}                   toastyService
      * @param {TranslateService}                translateService
      * @param {SprintTasksManagementService}    sprintTasksManagementService
+     * @param {DateService}                     dateService
      */
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
                 private router: Router,
                 private toastyService: ToastyService,
-				private translateService: TranslateService,
-                private sprintTasksManagementService: SprintTasksManagementService)
+                private translateService: TranslateService,
+                private sprintTasksManagementService: SprintTasksManagementService,
+                private dateService: DateService)
     {
     }
 
-     /**
+    /**
      * Initialisation du composant
      *
      * @author Fabien Bellanger
@@ -60,7 +64,7 @@ export class SprintTasksManagementComponent implements OnInit
 
     /**
      * Initialisation du sprint
-     * 
+     *
      * @author Fabien Bellanger
      */
     private init(): void
@@ -70,21 +74,37 @@ export class SprintTasksManagementComponent implements OnInit
         this.sprintTasksManagementService.init(this.sprintId)
             .then(() =>
             {
+                this.date = this.dateService.toDate(this.sprintTasksManagementService.date);
+
                 this.loading = false;
             })
             .catch(() =>
             {
+                this.date = new Date();
+
                 this.loading = false;
             });
     }
 
     /**
      * Edition d'une tâche
-     * 
+     *
      * @author Fabien Bellanger
      */
     private editTask(userId: number, taskId: number): void
     {
         alert(userId + ' - ' + taskId);
+    }
+
+    /**
+     * Changement de date
+     *
+     * @author Fabien Bellanger
+     */
+    private changeDate(): void
+    {
+        this.sprintTasksManagementService.date = this.dateService.date(this.date, 'YYYY-MM-DD');
+
+        this.sprintTasksManagementService.getUsersData();
     }
 }

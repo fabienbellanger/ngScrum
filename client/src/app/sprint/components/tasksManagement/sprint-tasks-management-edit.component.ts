@@ -94,9 +94,9 @@ export class SprintTasksManagementEditComponent implements OnInit
     {
         // Initialisation du sprint
         // ------------------------
-        this.sprintTasksManagementService.init(this.sprintId)
-            .then(() =>
-            {
+        //this.sprintTasksManagementService.init(this.sprintId)
+        //    .then(() =>
+        //    {
                 this.sprint = this.sprintTasksManagementService.sprint;
 
                 // Recherche de la tâche
@@ -199,7 +199,7 @@ export class SprintTasksManagementEditComponent implements OnInit
                 }
 
                 this.loading = false;
-            })
+           /* })
             .catch((error: any) =>
             {
                 // Erreur : Données non valides
@@ -207,7 +207,7 @@ export class SprintTasksManagementEditComponent implements OnInit
                 this.dataError();
 
                 this.loading = false;
-            })
+            })*/
     }
 
     /**

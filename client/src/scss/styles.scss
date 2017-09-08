@@ -492,8 +492,14 @@ a.list-group-item {
 // Gestion des tâches d'un sprint
 // ------------------------------
 .TasksManagement {
-    margin-bottom: 20px;
-    overflow:      auto;
+    &-Date {
+        margin: 20px 0px;
+    }
+
+    &-List {
+        margin-bottom: 20px;
+        overflow:      auto;
+    }
 
     &-Add {
         &-Container {

@@ -111,4 +111,16 @@ export class DateService
             return date.add(value, unit).format(format);
         }
     }
+
+    /**
+     * Transforme une date au format YYYY-MM-DD en date JavaScript
+     *
+     * @author Fabien Bellanger
+     * @param {string} date Date au format YYYY-MM-DD
+     * @return {Date} Date au format JavaScript
+     */
+    public toDate(date: string): Date
+    {
+        return moment(date).toDate();
+    }
 }

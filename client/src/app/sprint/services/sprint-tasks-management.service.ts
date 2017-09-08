@@ -60,7 +60,7 @@ export class SprintTasksManagementService
      *
      * @author Fabien Bellanger
      */
-    private getUsersData(): void
+    public getUsersData(): void
     {
         this.users             = [];
         let userIndex: number  = 0;
