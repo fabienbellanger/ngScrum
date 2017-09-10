@@ -102,5 +102,6 @@
     "required.worked.hours": "Heures travaillées requises",
     "required.remaining.hours": "Heures restantes requises",
     "choose.task": "Choisissez une tâche",
-    "decrement.duration": "Durée décrémentée"
+    "decrement.duration": "Durée décrémentée",
+    "valid": "Valider"
 }

@@ -130,10 +130,10 @@ export class ToolboxService
      * Tri d'un tableau sur les clés croissantes
      *
      * @author Fabien Bellanger
-     * @param {any[]} arrayToSort Tableau à trier
-     * @return {any[]} Tableau trié
+     * @param {any} arrayToSort Tableau à trier
+     * @return {any} Tableau trié
      */
-    public ksort(arrayToSort: any[]): any[]
+    public ksort(arrayToSort: any): any
     {
         let sortedArray: any[] = [];
         let keysArray: any[]   = [];
@@ -154,5 +154,17 @@ export class ToolboxService
         }
 
         return sortedArray;
+    }
+
+    /**
+     * Conversion d'un objet en tableau
+     *
+     * @author Fabien Bellanger
+     * @param  {any} object
+     * @return {any[]}
+     */
+    public objectToArray(object: any): any[]
+    {
+        return Object.keys(object).map((k: any) => object[k]);
     }
 }

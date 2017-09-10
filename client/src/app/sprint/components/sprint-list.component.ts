@@ -71,6 +71,6 @@ export class SprintListComponent implements OnInit
      */
     private redirectToTasksManagement(sprintId: number): void
     {
-        this.router.navigate(['/sprints', sprintId, 'tasks-management']);
+        this.router.navigate(['/sprints', sprintId, 'tasks-management-list']);
     }
 }

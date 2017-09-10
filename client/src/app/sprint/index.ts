@@ -16,3 +16,4 @@ export { SprintEditTaskComponent } from './components/task/sprint-edit-task.comp
 export { SprintParametersComponent } from './components/sprint-parameters.component';
 export { SprintTasksManagementComponent } from './components/tasksManagement/sprint-tasks-management.component';
 export { SprintTasksManagementEditComponent } from './components/tasksManagement/sprint-tasks-management-edit.component';
+export { SprintTasksManagementListComponent } from './components/tasksManagement/sprint-tasks-management-list.component';

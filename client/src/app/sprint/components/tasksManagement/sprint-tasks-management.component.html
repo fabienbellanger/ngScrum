@@ -1,6 +1,6 @@
 <div *ngIf="loading"><h2>{{ 'loading' | translate }}...</h2></div>
 <div *ngIf="!loading" class="TasksManagement">
-    <h1>Tasks management - {{ sprintTasksManagementService.sprint.name }}</h1>
+    <h1>{{ sprintTasksManagementService.sprint.name }}</h1>
 
     <div class="row margin-bottom-20px">
         <div class="col-xs-12">
@@ -13,7 +13,7 @@
     </div>
 
     <div class="TasksManagement-Date">
-        <md-form-field>
+        <md-form-field style="margin-right: 20px">
             <input mdInput [mdDatepicker]="picker" placeholder="Date" [(ngModel)]="date">
             <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
             <md-datepicker #picker></md-datepicker>

@@ -14,6 +14,7 @@ import { SprintEditTaskComponent } from './components/task/sprint-edit-task.comp
 import { SprintParametersComponent } from './components/sprint-parameters.component';
 import { SprintTasksManagementComponent } from './components/tasksManagement/sprint-tasks-management.component';
 import { SprintTasksManagementEditComponent } from './components/tasksManagement/sprint-tasks-management-edit.component';
+import { SprintTasksManagementListComponent } from './components/tasksManagement/sprint-tasks-management-list.component';
 
 import { SprintService } from './services/sprint.service';
 import { SprintTasksManagementService } from './services/sprint-tasks-management.service';
@@ -36,6 +37,7 @@ import { SprintChartsService } from './services/sprint-charts.service';
         SprintParametersComponent,
         SprintTasksManagementComponent,
         SprintTasksManagementEditComponent,
+        SprintTasksManagementListComponent,
     ],
     providers:    [
         HttpService,

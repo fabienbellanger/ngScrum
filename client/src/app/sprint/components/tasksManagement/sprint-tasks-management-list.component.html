@@ -1,0 +1,23 @@
+<div *ngIf="loading"><h2>{{ 'loading' | translate }}...</h2></div>
+<div *ngIf="!loading" class="TasksManagementList">
+    <h1>{{ sprintTasksManagementService.sprint.name }}</h1>
+
+    <div class="row margin-bottom-20px">
+        <div class="col-xs-12">
+            <button md-button type="button"
+                    routerLink="/sprints">
+                <md-icon>keyboard_arrow_left</md-icon>
+                <span class="hidden-xs">{{ 'sprints.list' | translate }}</span>
+            </button>
+            &nbsp;&nbsp;
+            <button md-raised-button color="primary" type="button"
+                    [routerLink]="['/sprints', sprintId, 'tasks-management']">
+                <md-icon>save</md-icon>
+                <span class="hidden-xs">{{ 'add.data' | translate }}</span>
+            </button>
+        </div>
+    </div>
+
+    <p [innerHtml]="users | debug"></p>
+    <p [innerHtml]="data | debug"></p>
+</div>
