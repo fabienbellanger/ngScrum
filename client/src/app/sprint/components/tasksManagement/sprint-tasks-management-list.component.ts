@@ -15,9 +15,12 @@ import { SprintTasksManagementService } from '../../services/sprint-tasks-manage
 
 export class SprintTasksManagementListComponent implements OnInit
 {
-    private loading: boolean = true;
-    private data: any[]      = [];
-    private users: any       = {};
+    private loading: boolean   = true;
+    private data: any[]        = [];
+    private users: any         = {};
+    private usersHeader: any[] = [];
+    private usersTotal: any    = {};
+    private total: number      = 0;
     private sprintId: number;
     private sprint: any;
 
@@ -97,6 +100,11 @@ export class SprintTasksManagementListComponent implements OnInit
         for (let user of this.sprint.users)
         {
             this.users[user.id] = user.firstname + ' ' + user.lastname;
+            this.usersHeader.push({
+                id:   user.id,
+                name: user.firstname + ' ' + user.lastname.slice(0, 1) + '.',
+            });
+            this.usersTotal[user.id] = 0;
         }
 
         // TasksUsers
@@ -126,6 +134,11 @@ export class SprintTasksManagementListComponent implements OnInit
 
             data[date].users[taskUser.userId].duration += +taskUser.duration;
             data[date].users[taskUser.userId].workedDuration += +taskUser.workedDuration;
+
+            // Totaux
+            // ------
+            this.usersTotal[taskUser.userId] += +taskUser.duration;
+            this.total                       += +taskUser.duration;
         }
 
         // Tri et conversion de l'objet en tableau

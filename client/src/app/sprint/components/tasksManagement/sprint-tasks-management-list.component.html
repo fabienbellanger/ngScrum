@@ -18,6 +18,45 @@
         </div>
     </div>
 
-    <p [innerHtml]="users | debug"></p>
-    <p [innerHtml]="data | debug"></p>
+    <md-card>
+        <md-card-content class="overflow-auto">
+            <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+                <thead>
+                    <tr>
+                        <th>{{ 'date' | translate }}</th>
+                        <th *ngFor="let user of usersHeader">{{ user.name }}</th>
+                        <th width="50px">{{ 'action' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let line of data">
+                        <td align="center" valign="middle">{{ line.date | moment:'DD/MM/YYYY' }}</td>
+                        <td *ngFor="let user of usersHeader">
+                            <div *ngIf="line.users[user.id] !== undefined" style="display: flex; justify-content: space-around">
+                                {{ line.users[user.id].duration | duration:'hour' }}
+                            </div>
+                        </td>
+                        <td align="center" valign="middle">
+                            <button md-button
+                                    color="accent"
+                                    class="md-button-small-width"
+                                    type="button"
+                                    [routerLink]="['/sprints', sprintId, 'tasks-management']">
+                                <span class="fa fa-pencil"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>{{ 'total' | translate }}</th>
+                        <th class="text-center" *ngFor="let user of usersHeader">
+                            {{ usersTotal[user.id] | duration:'hour' }}
+                        </th>
+                        <th class="text-center">{{ total | duration:'hour' }}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </md-card-content>
+    </md-card>
 </div>

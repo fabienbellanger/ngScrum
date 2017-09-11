@@ -8,7 +8,7 @@ html {
 body {
     font-family:      $fontFamily;
     font-weight:      300;
-    font-size:        13px;
+    font-size:        12px !important;
     margin-bottom:    35px;
     background-color: #f2f2f2;
 }
@@ -100,6 +100,10 @@ input:-webkit-autofill {
 
 .no-padding {
     padding: 0px;
+}
+
+.overflow-auto {
+    overflow: auto;
 }
 
 .users-avatar {
@@ -256,11 +260,18 @@ label {
     font-size: 13px;
 }
 
+// -----------
+// FontAwesome
+// -----------
+.table > tbody > tr > td {
+    font-size: 13px !important;
+}
+
 // --------
 // Material
 // --------
 .mat-button, .mat-fab, .mat-icon-button, .mat-mini-fab, .mat-raised-button {
-    font-size: 15px !important;
+    font-size: 14px !important;
 }
 
 .md-button-small-width {
@@ -275,6 +286,10 @@ label {
 .mat-select-trigger {
     font-size:   14px !important;
     font-weight: $fontWeightMedium;
+}
+
+.mat-card-content, .mat-card-header .mat-card-title, .mat-card-subtitle {
+    font-size: 14px !important;
 }
 
 // --------
