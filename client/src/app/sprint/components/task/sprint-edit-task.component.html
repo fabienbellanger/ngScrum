@@ -5,7 +5,7 @@
     <form class="form-horizontal" [formGroup]="taskFormGroup" (ngSubmit)="editTask()">
         <div class="row margin-bottom-20px">
             <div class="col-xs-12">
-                <button md-button type="button"
+                <button md-raised-button type="button"
                         [routerLink]="['/sprints', sprintId, 'tasks']"
                         [routerLinkActiveOptions]="{exact: false}"
                         routerLinkActive="true">
@@ -100,7 +100,7 @@
 
             <md-card-actions>
                 <div>
-                    <button md-button type="button"
+                    <button md-raised-button type="button"
                             [routerLink]="['/sprints', sprintId, 'tasks']"
                             [routerLinkActiveOptions]="{exact: false}"
                             routerLinkActive="true">

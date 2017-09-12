@@ -5,8 +5,7 @@
     <form [formGroup]="taskFormGroup" (ngSubmit)="saveTask()">
         <div class="row margin-bottom-20px">
             <div class="col-xs-12">
-                <button md-button
-                        type="button"
+                <button md-raised-button type="button"
                         [routerLink]="['/sprints', sprintId, 'tasks-management']">
                     <md-icon>keyboard_arrow_left</md-icon>
                     <span class="hidden-xs">{{ 'back' | translate }}</span>
@@ -101,8 +100,7 @@
             </md-card-content>
 
             <md-card-actions>
-                <button md-button
-                        type="button"
+                <button md-raised-button type="button"
                         [routerLink]="['/sprints', sprintId, 'tasks-management']">
                     <md-icon>keyboard_arrow_left</md-icon>
                     <span class="hidden-xs">{{ 'back' | translate }}</span>

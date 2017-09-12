@@ -106,5 +106,6 @@
     "valid": "Valider",
     "date": "Date",
     "worked": "Travaillées",
-    "decremented": "Décrémentées"
+    "decremented": "Décrémentées",
+    "add.day": "Ajouter une journée"
 }
