@@ -58,8 +58,8 @@
                         <md-input-container class="width-100">
                             <input mdInput type="number" name="workedDuration"
                                    min="0" max="35" step="0.5"
-                                   [placeholder]="'worked.hours' | translate"
                                    formControlName="workedDuration"
+                                   [placeholder]="'worked.hours' | translate"
                                    [autofocus]="task !== null" required>
                             <span mdSuffix>&nbsp;h</span>
                             <md-error *ngIf="taskFormGroup.get('workedDuration').hasError('required')">

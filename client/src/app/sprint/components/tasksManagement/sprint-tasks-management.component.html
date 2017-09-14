@@ -5,7 +5,7 @@
     <div class="row margin-bottom-20px">
         <div class="col-xs-12">
             <button md-raised-button type="button"
-                    routerLink="/sprints">
+                    [routerLink]="['/sprints', sprintId, 'tasks-management-list']">
                 <md-icon>keyboard_arrow_left</md-icon>
                 <span class="hidden-xs">{{ 'sprints.list' | translate }}</span>
             </button>
@@ -13,15 +13,7 @@
     </div>
 
     <div class="TasksManagement-Date">
-        <md-form-field style="margin-right: 20px">
-            <input mdInput [mdDatepicker]="picker" placeholder="Date" [(ngModel)]="date">
-            <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
-            <md-datepicker #picker></md-datepicker>
-        </md-form-field>
-
-        <button md-raised-button (click)="changeDate()">
-            {{ 'valid' | translate }}
-        </button>
+        Date : {{ date }}
     </div>
 
     <md-card *ngFor="let user of sprintTasksManagementService.users" class="TasksManagement-List">
@@ -93,7 +85,7 @@
     <div class="row margin-bottom-20px">
         <div class="col-xs-12">
             <button md-raised-button type="button"
-                    routerLink="/sprints">
+                    [routerLink]="['/sprints', sprintId, 'tasks-management-list']">
                 <md-icon>keyboard_arrow_left</md-icon>
                 <span class="hidden-xs">{{ 'sprints.list' | translate }}</span>
             </button>

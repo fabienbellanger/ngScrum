@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+import { StorageService } from '../../shared/services/storage.service';
 import { ApiSprintService } from '../../api/services/api-sprint.service';
 
 @Injectable()
@@ -15,8 +16,10 @@ export class SprintTasksManagementService
      *
      * @author Fabien Bellanger
      * @param {ApiSprintService} apiSprintService
+     * @param {StorageService}   storageService
      */
-    constructor(private apiSprintService: ApiSprintService)
+    constructor(private apiSprintService: ApiSprintService,
+                private storageService: StorageService)
     {
     }
 
@@ -37,7 +40,7 @@ export class SprintTasksManagementService
                 .then((sprint: any) =>
                 {
                     this.sprint = sprint;
-                    this.date   = sprint.date;
+                    this.date   = this.date || sprint.date;
 
                     // Mise en place des structures de données
                     // ---------------------------------------

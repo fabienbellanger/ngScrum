@@ -145,4 +145,17 @@ export class SprintTasksManagementListComponent implements OnInit
         // ---------------------------------------
         this.data = this.toolboxService.objectToArray(this.toolboxService.ksort(data)).reverse();
     }
+
+    /**
+     * Edition d'une journée
+     *
+     * @author Fabien Bellanger
+     * @param {string} date
+     */
+    private editDay(date: string = undefined): void
+    {
+        this.sprintTasksManagementService.date = date;
+
+        this.router.navigate(['/sprints', this.sprintId, 'tasks-management']);
+    }
 }
