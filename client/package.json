@@ -24,7 +24,7 @@
     "@angular/platform-browser-dynamic": "^4.3.6",
     "@angular/router": "^4.3.6",
     "@ngx-translate/core": "^8.0.0",
-    "@ngx-translate/http-loader": "^1.1.0",
+    "@ngx-translate/http-loader": "^2.0.0",
     "ngx-modialog": "^3.0.3",
     "bootstrap": "^3.3.7",
     "chart.js": "^2.7.0",
@@ -43,9 +43,9 @@
     "zone.js": "^0.8.17"
   },
   "devDependencies": {
-    "@angular/cli": "^1.4.1",
+    "@angular/cli": "^1.4.2",
     "@angular/compiler-cli": "^4.3.6",
-    "@types/jasmine": "2.5.51",
+    "@types/jasmine": "^2.6.0",
     "@types/node": "~8.0.28",
     "codelyzer": "~2.0.1",
     "jasmine-core": "~2.5.2",

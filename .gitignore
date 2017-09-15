@@ -5,3 +5,4 @@ docker/logs
 
 .idea
 *.sublime-*
+.vscode
