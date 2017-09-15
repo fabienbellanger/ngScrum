@@ -15,17 +15,17 @@ import { SprintTasksManagementService } from '../../services/sprint-tasks-manage
 
 export class SprintTasksManagementEditComponent implements OnInit
 {
-    private loading: boolean = true;
-    private sprintId: number;
-    private userId: number;
-    private taskId: number;
-    private sprint: any;
-    private task: any;
-    private tasks: any[];
-    private taskUser: any;
-    private user: any;
-    private taskFormGroup: FormGroup;
-    private isEdit: boolean;
+    public loading: boolean;
+    public sprintId: number;
+    public userId: number;
+    public taskId: number;
+    public sprint: any;
+    public task: any;
+    public tasks: any[];
+    public taskUser: any;
+    public user: any;
+    public taskFormGroup: FormGroup;
+    public isEdit: boolean;
 
     /**
      * Constructeur
@@ -67,6 +67,7 @@ export class SprintTasksManagementEditComponent implements OnInit
         this.taskUser = null;
         this.user     = null;
         this.isEdit   = !isNaN(this.taskId);
+        this.loading  = true;
 
         // FormControls
         // ------------
@@ -108,7 +109,7 @@ export class SprintTasksManagementEditComponent implements OnInit
 
                 // Récupération de l'utilisateur
                 // -----------------------------
-                for (let user of this.sprint.users)
+                for (const user of this.sprint.users)
                 {
                     if (user.id === this.userId)
                     {
@@ -122,7 +123,7 @@ export class SprintTasksManagementEditComponent implements OnInit
                 // ---------------------------
                 if (this.isEdit)
                 {
-                    for (let taskUser of this.sprint.tasksUsers)
+                    for (const taskUser of this.sprint.tasksUsers)
                     {
                         if (taskUser.taskId === this.taskId && taskUser.userId === this.userId &&
                             taskUser.date === this.sprintTasksManagementService.date)
@@ -143,7 +144,7 @@ export class SprintTasksManagementEditComponent implements OnInit
                     let taskUserIndex: number;
                     const taskUserLength: number = this.sprint.tasksUsers.length;
 
-                    for (let taskId in this.sprint.tasks)
+                    for (const taskId in this.sprint.tasks)
                     {
                         // TODO: Doit-on proposer une tâche terminée ?
 
@@ -234,7 +235,7 @@ export class SprintTasksManagementEditComponent implements OnInit
      *
      * @author Fabien Bellanger
      */
-    private saveTask(): void
+    public saveTask(): void
     {
         const taskId: number = (this.isEdit) ? this.taskId : +this.taskFormGroup.get('taskId').value;
 

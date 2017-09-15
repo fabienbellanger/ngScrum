@@ -25,6 +25,7 @@
                     <tr>
                         <th width="100px">{{ 'date' | translate }}</th>
                         <th *ngFor="let user of usersHeader">{{ user.name }}</th>
+                        <th width="100px">{{ 'total' | translate }}</th>
                         <th width="80px">{{ 'action' | translate }}</th>
                     </tr>
                 </thead>
@@ -34,8 +35,11 @@
                         <td *ngFor="let user of usersHeader">
                             <div *ngIf="line.users[user.id] !== undefined"
                                  style="display: flex; justify-content: space-around">
-                                {{ line.users[user.id].duration | duration:'hour' }}
+                                {{ line.users[user.id].duration | duration:'hour' }} / {{ line.users[user.id].workedDuration | duration:'hour' }}
                             </div>
+                        </td>
+                        <td align="center" valign="middle">
+                            {{ line.duration | duration:'hour' }} / {{ line.workedDuration | duration:'hour' }} / {{ line.performance | percentFr:0 }}
                         </td>
                         <td align="center" valign="middle">
                             <button md-button type="button"
@@ -48,11 +52,22 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>{{ 'total' | translate }}</th>
+                        <th>{{ 'duration.total' | translate }}</th>
                         <th class="text-center" *ngFor="let user of usersHeader">
-                            {{ usersTotal[user.id] | duration:'hour' }}
+                            {{ usersTotal[user.id].duration | duration:'hour' }} / {{ usersTotal[user.id].workedDuration | duration:'hour' }}
                         </th>
-                        <th class="text-center">{{ total | duration:'hour' }}</th>
+                        <th class="text-center">
+                            {{ totalDuration | duration:'hour' }} / {{ totalWorkedDuration | duration:'hour' }}
+                        </th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>{{ 'performance' | translate }}</th>
+                        <th class="text-center" *ngFor="let user of usersHeader">
+                            {{ usersTotal[user.id].performance | percentFr:0 }}
+                        </th>
+                        <th class="text-center">{{ totalPerformance | percentFr:0 }}</th>
+                        <th></th>
                     </tr>
                 </tfoot>
             </table>

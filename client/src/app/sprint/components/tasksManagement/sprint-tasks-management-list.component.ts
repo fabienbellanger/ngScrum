@@ -15,14 +15,16 @@ import { SprintTasksManagementService } from '../../services/sprint-tasks-manage
 
 export class SprintTasksManagementListComponent implements OnInit
 {
-    private loading: boolean           = true;
-    private data: any[]                = [];
-    private users: any                 = {};
-    private usersHeader: any[]         = [];
-    private usersTotal: any            = {};
-    private total: number              = 0;
-    private sprintId: number;
-    private sprint: any;
+    public data: any[]                = [];
+    public users: any                 = {};
+    public usersHeader: any[]         = [];
+    public usersTotal: any            = {};
+    public loading: boolean;
+    public totalDuration: number;
+    public totalWorkedDuration: number;
+    public totalPerformance: number;
+    public sprintId: number;
+    public sprint: any;
 
     /**
      * Constructeur
@@ -69,6 +71,11 @@ export class SprintTasksManagementListComponent implements OnInit
      */
     private init(): void
     {
+        this.loading             = true;
+        this.totalDuration       = 0;
+        this.totalWorkedDuration = 0;
+        this.totalPerformance    = 0;
+
         // Initialisation du sprint
         // ------------------------
         this.sprintTasksManagementService.init(this.sprintId)
@@ -97,14 +104,17 @@ export class SprintTasksManagementListComponent implements OnInit
     {
         // Users
         // -----
-        for (let user of this.sprint.users)
+        for (const user of this.sprint.users)
         {
             this.users[user.id] = user.firstname + ' ' + user.lastname.slice(0, 1) + '.';
             this.usersHeader.push({
                 id:   user.id,
                 name: this.users[user.id],
             });
-            this.usersTotal[user.id] = 0;
+            this.usersTotal[user.id] = {
+                duration:       0,
+                workedDuration: 0,
+            };
         }
 
         // TasksUsers
@@ -112,15 +122,18 @@ export class SprintTasksManagementListComponent implements OnInit
         let date: string;
         let data: any = {};
 
-        for (let taskUser of this.sprint.tasksUsers)
+        for (const taskUser of this.sprint.tasksUsers)
         {
             date = taskUser.date;
 
             if (!data.hasOwnProperty(date))
             {
                 data[date] = {
-                    date:  date,
-                    users: {},
+                    date:           date,
+                    users:          {},
+                    duration:       0,
+                    workedDuration: 0,
+                    performance:    0,
                 };
             }
 
@@ -132,13 +145,39 @@ export class SprintTasksManagementListComponent implements OnInit
                 };
             }
 
-            data[date].users[taskUser.userId].duration += +taskUser.duration;
+            data[date].duration                              += +taskUser.duration;
+            data[date].workedDuration                        += +taskUser.workedDuration;
+            data[date].users[taskUser.userId].duration       += +taskUser.duration;
             data[date].users[taskUser.userId].workedDuration += +taskUser.workedDuration;
 
             // Totaux
             // ------
-            this.usersTotal[taskUser.userId] += +taskUser.duration;
-            this.total += +taskUser.duration;
+            this.usersTotal[taskUser.userId].duration       += +taskUser.duration;
+            this.usersTotal[taskUser.userId].workedDuration += +taskUser.workedDuration;
+            this.totalDuration                              += +taskUser.duration;
+            this.totalWorkedDuration                        += +taskUser.workedDuration;
+        }
+
+        // Calcul des performances totales
+        // -------------------------------
+
+        // 1. Total
+        // --------
+        this.totalPerformance = (this.totalDuration / this.totalWorkedDuration) * 100;
+
+        // 2. Performance par date
+        // -----------------------
+        for (const date in data)
+        {
+           data[date].performance = (data[date].duration / data[date].workedDuration) * 100;
+        }
+
+        // 3. Performance par utilisateur
+        // ------------------------------
+        for (const userId in this.usersTotal)
+        {
+            this.usersTotal[userId].performance  =
+                (this.usersTotal[userId].duration / this.usersTotal[userId].workedDuration) * 100;
         }
 
         // Tri et conversion de l'objet en tableau
@@ -152,7 +191,7 @@ export class SprintTasksManagementListComponent implements OnInit
      * @author Fabien Bellanger
      * @param {string} date
      */
-    private editDay(date: string = undefined): void
+    public editDay(date: string = undefined): void
     {
         this.sprintTasksManagementService.date = date;
 

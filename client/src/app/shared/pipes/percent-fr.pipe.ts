@@ -7,7 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
  */
 @Pipe({name: 'percentFr'})
 
-export class PercentPipe implements PipeTransform
+export class PercentFrPipe implements PipeTransform
 {
     /**
      * Transformation
@@ -32,7 +32,7 @@ export class PercentPipe implements PipeTransform
         }
 
         const digit: number  = Math.pow(10, digits);
-        let newValue: number = Math.floor(value * digit) / digit;
+        let newValue: number = Math.round(value * digit) / digit;
 
         return newValue.toLocaleString() + ' %';
     }

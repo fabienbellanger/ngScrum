@@ -107,5 +107,6 @@
     "date": "Date",
     "worked": "Travaillées",
     "decremented": "Décrémentées",
-    "add.day": "Ajouter une journée"
+	"add.day": "Ajouter une journée",
+	"duration.total": "Durée totale"
 }

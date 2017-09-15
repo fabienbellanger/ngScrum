@@ -23,7 +23,7 @@ import { ToolboxService } from './services/toolbox.service';
 import { MomentPipe } from './pipes/moment.pipe';
 import { NewLinePipe } from './pipes/new-line.pipe';
 import { DurationPipe } from './pipes/duration.pipe';
-import { PercentPipe } from './pipes/percent.pipe';
+import { PercentFrPipe } from './pipes/percent-fr.pipe';
 import { NumberPipe } from './pipes/number.pipe';
 import { DebugPipe } from './pipes/debug.pipe';
 
@@ -59,7 +59,7 @@ export function HttpLoaderFactory(http: HttpClient)
         MomentPipe,
         NewLinePipe,
         DurationPipe,
-        PercentPipe,
+        PercentFrPipe,
         NumberPipe,
         DebugPipe,
         InputDirective,
@@ -83,7 +83,7 @@ export function HttpLoaderFactory(http: HttpClient)
         MomentPipe,
         NewLinePipe,
         DurationPipe,
-        PercentPipe,
+        PercentFrPipe,
         NumberPipe,
         DebugPipe,
         InputDirective,

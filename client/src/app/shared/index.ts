@@ -13,7 +13,7 @@ export { ToolboxService } from './services/toolbox.service';
 export { MomentPipe } from './pipes/moment.pipe';
 export { NewLinePipe } from './pipes/new-line.pipe';
 export { DurationPipe } from './pipes/duration.pipe';
-export { PercentPipe } from './pipes/percent.pipe';
+export { PercentFrPipe } from './pipes/percent-fr.pipe';
 export { NumberPipe } from './pipes/number.pipe';
 export { DebugPipe } from './pipes/debug.pipe';
 
