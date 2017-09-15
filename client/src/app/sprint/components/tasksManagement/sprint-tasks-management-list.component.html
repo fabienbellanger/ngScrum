@@ -23,23 +23,59 @@
             <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
                 <thead>
                     <tr>
-                        <th width="100px">{{ 'date' | translate }}</th>
-                        <th *ngFor="let user of usersHeader">{{ user.name }}</th>
-                        <th width="100px">{{ 'total' | translate }}</th>
-                        <th width="80px">{{ 'action' | translate }}</th>
+                        <th class="text-center" width="100px" rowspan="2">{{ 'date' | translate }}</th>
+                        <th *ngFor="let user of usersHeader" class="text-center" colspan="3">{{ user.name }}</th>
+                        <th class="text-center" width="100px" colspan="3">{{ 'total' | translate }}</th>
+                        <th class="text-center" width="80px" rowspan="2">{{ 'action' | translate }}</th>
+                    </tr>
+                    <tr>
+                        <ng-template ngFor let-user [ngForOf]="usersHeader">
+                            <th class="text-center"><md-icon>trending_down</md-icon></th>
+                            <th class="text-center"><md-icon>business_center</md-icon></th>
+                            <th class="text-center"><md-icon>mood</md-icon></th>
+                        </ng-template>
+                        <th class="text-center" width="70px"><md-icon>trending_down</md-icon></th>
+                        <th class="text-center" width="70px"><md-icon>business_center</md-icon></th>
+                        <th class="text-center" width="70px"><md-icon>mood</md-icon></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let line of data">
                         <td align="center" valign="middle">{{ line.date | moment:'DD/MM/YYYY' }}</td>
-                        <td *ngFor="let user of usersHeader">
-                            <div *ngIf="line.users[user.id] !== undefined"
-                                 style="display: flex; justify-content: space-around">
-                                {{ line.users[user.id].duration | duration:'hour' }} / {{ line.users[user.id].workedDuration | duration:'hour' }}
-                            </div>
+                        <ng-template ngFor let-user [ngForOf]="usersHeader">
+                            <td align="center">
+                                <div *ngIf="line.users[user.id] !== undefined">
+                                    {{ line.users[user.id].duration | duration:'hour' }}
+                                </div>
+                                <div *ngIf="line.users[user.id] === undefined">-</div>
+                            </td>
+                            <td align="center">
+                                <div *ngIf="line.users[user.id] !== undefined">
+                                    {{ line.users[user.id].workedDuration | duration:'hour' }}
+                                </div>
+                                <div *ngIf="line.users[user.id] === undefined">-</div>
+                            </td>
+                            <td align="center">
+                                <div *ngIf="line.users[user.id] !== undefined">
+                                    <span [class.red-color]="line.users[user.id].performance < 50"
+                                          [class.green-color]="line.users[user.id].performance >= 100">
+                                        {{ line.users[user.id].performance | percentFr:0 }}
+                                    </span>
+                                </div>
+                                <div *ngIf="line.users[user.id] === undefined">-</div>
+                            </td>
+                        </ng-template>
+                        <td align="center" valign="middle">
+                            {{ line.duration | duration:'hour' }}
                         </td>
                         <td align="center" valign="middle">
-                            {{ line.duration | duration:'hour' }} / {{ line.workedDuration | duration:'hour' }} / {{ line.performance | percentFr:0 }}
+                            {{ line.workedDuration | duration:'hour' }}
+                        </td>
+                        <td align="center" valign="middle">
+                            <span [ngClass]="{'red-color': line.performance < 50,
+                                              'green-color': line.performance >= 100}">
+                                {{ line.performance | percentFr:0 }}
+                            </span>
                         </td>
                         <td align="center" valign="middle">
                             <button md-button type="button"
@@ -52,21 +88,40 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>{{ 'duration.total' | translate }}</th>
-                        <th class="text-center" *ngFor="let user of usersHeader">
-                            {{ usersTotal[user.id].duration | duration:'hour' }} / {{ usersTotal[user.id].workedDuration | duration:'hour' }}
+                        <th>{{ 'total' | translate }}</th>
+                        <ng-template ngFor let-user [ngForOf]="usersHeader">
+                            <ng-container *ngIf="usersTotal[user.id].show">
+                                <th class="text-center">
+                                    {{ usersTotal[user.id].duration | duration:'hour' }}
+                                </th>
+                                <th class="text-center">
+                                    {{ usersTotal[user.id].workedDuration | duration:'hour' }}
+                                </th>
+                                <th class="text-center">
+                                    <span [ngClass]="{'red-color': usersTotal[user.id].performance < 50,
+                                                      'green-color': usersTotal[user.id].performance >= 100}">
+                                        {{ usersTotal[user.id].performance | percentFr:0 }}
+                                    </span>
+                                </th>
+                            </ng-container>
+                            <ng-container *ngIf="!usersTotal[user.id].show">
+                                <th class="text-center">-</th>
+                                <th class="text-center">-</th>
+                                <th class="text-center">-</th>
+                            </ng-container>
+                        </ng-template>
+                        <th class="text-center">
+                            {{ totalDuration | duration:'hour' }}
                         </th>
                         <th class="text-center">
-                            {{ totalDuration | duration:'hour' }} / {{ totalWorkedDuration | duration:'hour' }}
+                            {{ totalWorkedDuration | duration:'hour' }}
                         </th>
-                        <th></th>
-                    </tr>
-                    <tr>
-                        <th>{{ 'performance' | translate }}</th>
-                        <th class="text-center" *ngFor="let user of usersHeader">
-                            {{ usersTotal[user.id].performance | percentFr:0 }}
+                        <th class="text-center">
+                            <span [ngClass]="{'red-color': totalPerformance < 50,
+                                              'green-color': totalPerformance >= 100}">
+                                {{ totalPerformance | percentFr:0 }}
+                            </span>
                         </th>
-                        <th class="text-center">{{ totalPerformance | percentFr:0 }}</th>
                         <th></th>
                     </tr>
                 </tfoot>

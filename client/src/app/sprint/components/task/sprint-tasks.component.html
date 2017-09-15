@@ -41,12 +41,12 @@
                             <tr *ngFor="let task of sprintService.sprint.tasks">
                                 <td align="left" valign="middle">{{ task.name }}</td>
                                 <td align="left" valign="middle" class="hidden-xs">{{ task.description }}</td>
-                                <td align="right" valign="middle">{{ task.initialDuration | duration:'hour' }}</td>
-                                <td align="right" valign="middle">{{ task.workedDuration | duration:'hour' }}</td>
-                                <td align="right" valign="middle">{{ task.remainingDuration | duration:'hour' }}</td>
+                                <td class="text-center" valign="middle">{{ task.initialDuration | duration:'hour' }}</td>
+                                <td class="text-center" valign="middle">{{ task.workedDuration | duration:'hour' }}</td>
+                                <td class="text-center" valign="middle">{{ task.remainingDuration | duration:'hour' }}</td>
                                 <td align="center" valign="middle">
-                                      <md-icon *ngIf="!task.addedAfter" class="text-success">done</md-icon>
-                                      <md-icon *ngIf="task.addedAfter" class="text-danger">clear</md-icon>
+                                      <md-icon *ngIf="!task.addedAfter" class="green-color">done</md-icon>
+                                      <md-icon *ngIf="task.addedAfter" class="red-color">clear</md-icon>
                                 </td>
                                 <td align="center" valign="middle">
                                     <button md-button class="md-button-small-width"
@@ -64,13 +64,13 @@
                             <tr>
                                 <th align="left" valign="middle">{{ 'total' | translate }}</th>
                                 <th class="hidden-xs"></th>
-                                <th class="text-right" valign="middle">
+                                <th class="text-center" valign="middle">
                                     {{ sprintService.totalDuration | duration:'hour' }}
                                 </th>
-                                <th class="text-right" valign="middle">
+                                <th class="text-center" valign="middle">
                                     {{ sprintService.totalTaskUserWorkedDuration | duration:'hour' }}
                                 </th>
-                                <th class="text-right" valign="middle">
+                                <th class="text-center" valign="middle">
                                     {{ sprintService.remainingDuration | duration:'hour' }}
                                 </th>
                                 <th colspan="2"></th>

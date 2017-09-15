@@ -114,6 +114,8 @@ export class SprintTasksManagementListComponent implements OnInit
             this.usersTotal[user.id] = {
                 duration:       0,
                 workedDuration: 0,
+                performance:    0,
+                show:           false,
             };
         }
 
@@ -142,6 +144,7 @@ export class SprintTasksManagementListComponent implements OnInit
                 data[date].users[taskUser.userId] = {
                     duration:       0,
                     workedDuration: 0,
+                    performance:    0,
                 };
             }
 
@@ -149,9 +152,13 @@ export class SprintTasksManagementListComponent implements OnInit
             data[date].workedDuration                        += +taskUser.workedDuration;
             data[date].users[taskUser.userId].duration       += +taskUser.duration;
             data[date].users[taskUser.userId].workedDuration += +taskUser.workedDuration;
+            data[date].users[taskUser.userId].performance     = (data[date].users[taskUser.userId].workedDuration !== 0)
+                ? (data[date].users[taskUser.userId].duration / data[date].users[taskUser.userId].workedDuration) * 100
+                : 0;
 
             // Totaux
             // ------
+            this.usersTotal[taskUser.userId].show           = true;
             this.usersTotal[taskUser.userId].duration       += +taskUser.duration;
             this.usersTotal[taskUser.userId].workedDuration += +taskUser.workedDuration;
             this.totalDuration                              += +taskUser.duration;
@@ -163,21 +170,26 @@ export class SprintTasksManagementListComponent implements OnInit
 
         // 1. Total
         // --------
-        this.totalPerformance = (this.totalDuration / this.totalWorkedDuration) * 100;
+        this.totalPerformance = (this.totalWorkedDuration !== 0)
+            ? (this.totalDuration / this.totalWorkedDuration) * 100
+            : 0;
 
         // 2. Performance par date
         // -----------------------
         for (const date in data)
         {
-           data[date].performance = (data[date].duration / data[date].workedDuration) * 100;
+            data[date].performance = (data[date].workedDuration !== 0)
+                ? (data[date].duration / data[date].workedDuration) * 100
+                : 0;
         }
 
         // 3. Performance par utilisateur
         // ------------------------------
         for (const userId in this.usersTotal)
         {
-            this.usersTotal[userId].performance  =
-                (this.usersTotal[userId].duration / this.usersTotal[userId].workedDuration) * 100;
+            this.usersTotal[userId].performance  = (this.usersTotal[userId].workedDuration !== 0)
+                ? (this.usersTotal[userId].duration / this.usersTotal[userId].workedDuration) * 100
+                : 0;
         }
 
         // Tri et conversion de l'objet en tableau

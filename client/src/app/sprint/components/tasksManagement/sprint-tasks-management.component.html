@@ -13,7 +13,7 @@
     </div>
 
     <div class="TasksManagement-Date">
-        Date : {{ date }}
+        <h4>Date : {{ date | moment:'DD/MM/YYYY' }}</h4>
     </div>
 
     <md-card *ngFor="let user of sprintTasksManagementService.users" class="TasksManagement-List">
