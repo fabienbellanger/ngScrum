@@ -15,10 +15,12 @@
                 [color]="(state === 'inProgress') ? 'primary' : ''">
             {{ 'sprint.in.progress.list' | translate }}
         </button>
+        &nbsp;&nbsp;
         <button md-raised-button (click)="getSprints('finished')"
                 [color]="(state === 'finished') ? 'primary' : ''">
             {{ 'sprint.finished.list' | translate }}
         </button>
+        &nbsp;&nbsp;
         <button md-raised-button type="button" (click)="getSprints('all')"
                 [color]="(state === 'all') ? 'primary' : ''">
             {{ 'sprint.all.list' | translate }}

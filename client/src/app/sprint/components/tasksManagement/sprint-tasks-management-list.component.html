@@ -65,13 +65,13 @@
                                 <div *ngIf="line.users[user.id] === undefined">-</div>
                             </td>
                         </ng-template>
-                        <td align="center" valign="middle">
+                        <td align="center" valign="middle" class="bold">
                             {{ line.duration | duration:'hour' }}
                         </td>
-                        <td align="center" valign="middle">
+                        <td align="center" valign="middle" class="bold">
                             {{ line.workedDuration | duration:'hour' }}
                         </td>
-                        <td align="center" valign="middle">
+                        <td align="center" valign="middle" class="bold">
                             <span [ngClass]="{'red-color': line.performance < 50,
                                               'green-color': line.performance >= 100}">
                                 {{ line.performance | percentFr:0 }}
