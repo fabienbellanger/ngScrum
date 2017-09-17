@@ -30,32 +30,38 @@
                     </tr>
                     <tr>
                         <ng-template ngFor let-user [ngForOf]="usersHeader">
-                            <th class="text-center"><md-icon>trending_down</md-icon></th>
-                            <th class="text-center"><md-icon>business_center</md-icon></th>
-                            <th class="text-center"><md-icon>mood</md-icon></th>
+                            <th class="text-center"><md-icon class="mat-icon-18px">trending_down</md-icon></th>
+                            <th class="text-center"><md-icon class="mat-icon-18px">business_center</md-icon></th>
+                            <th class="text-center"><md-icon class="mat-icon-18px">mood</md-icon></th>
                         </ng-template>
-                        <th class="text-center" width="70px"><md-icon>trending_down</md-icon></th>
-                        <th class="text-center" width="70px"><md-icon>business_center</md-icon></th>
-                        <th class="text-center" width="70px"><md-icon>mood</md-icon></th>
+                        <th class="text-center" width="70px">
+                            <md-icon class="mat-icon-18px">trending_down</md-icon>
+                        </th>
+                        <th class="text-center" width="70px">
+                            <md-icon class="mat-icon-18px">business_center</md-icon>
+                        </th>
+                        <th class="text-center" width="70px">
+                            <md-icon class="mat-icon-18px">mood</md-icon>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let line of data">
                         <td align="center" valign="middle">{{ line.date | moment:'DD/MM/YYYY' }}</td>
                         <ng-template ngFor let-user [ngForOf]="usersHeader">
-                            <td align="center">
+                            <td align="center" class="no-wrap">
                                 <div *ngIf="line.users[user.id] !== undefined">
                                     {{ line.users[user.id].duration | duration:'hour' }}
                                 </div>
                                 <div *ngIf="line.users[user.id] === undefined">-</div>
                             </td>
-                            <td align="center">
+                            <td align="center" class="no-wrap">
                                 <div *ngIf="line.users[user.id] !== undefined">
                                     {{ line.users[user.id].workedDuration | duration:'hour' }}
                                 </div>
                                 <div *ngIf="line.users[user.id] === undefined">-</div>
                             </td>
-                            <td align="center">
+                            <td align="center" class="no-wrap">
                                 <div *ngIf="line.users[user.id] !== undefined">
                                     <span [class.red-color]="line.users[user.id].performance < 50"
                                           [class.green-color]="line.users[user.id].performance >= 100">
@@ -65,23 +71,22 @@
                                 <div *ngIf="line.users[user.id] === undefined">-</div>
                             </td>
                         </ng-template>
-                        <td align="center" valign="middle" class="bold">
+                        <td align="center" valign="middle" class="bold no-wrap">
                             {{ line.duration | duration:'hour' }}
                         </td>
-                        <td align="center" valign="middle" class="bold">
+                        <td align="center" valign="middle" class="bold no-wrap">
                             {{ line.workedDuration | duration:'hour' }}
                         </td>
-                        <td align="center" valign="middle" class="bold">
+                        <td align="center" valign="middle" class="bold no-wrap">
                             <span [ngClass]="{'red-color': line.performance < 50,
                                               'green-color': line.performance >= 100}">
                                 {{ line.performance | percentFr:0 }}
                             </span>
                         </td>
                         <td align="center" valign="middle">
-                            <button md-button type="button"
-                                    color="accent" class="md-button-small-width"
+                            <button md-button type="button" class="md-button-small-width"
                                     (click)="editDay(line.date)">
-                                <span class="fa fa-pencil"></span>
+                                <md-icon class="mat-icon-20px">mode_edit</md-icon>
                             </button>
                         </td>
                     </tr>
@@ -91,13 +96,13 @@
                         <th>{{ 'total' | translate }}</th>
                         <ng-template ngFor let-user [ngForOf]="usersHeader">
                             <ng-container *ngIf="usersTotal[user.id].show">
-                                <th class="text-center">
+                                <th class="text-center no-wrap">
                                     {{ usersTotal[user.id].duration | duration:'hour' }}
                                 </th>
-                                <th class="text-center">
+                                <th class="text-center no-wrap">
                                     {{ usersTotal[user.id].workedDuration | duration:'hour' }}
                                 </th>
-                                <th class="text-center">
+                                <th class="text-center no-wrap">
                                     <span [ngClass]="{'red-color': usersTotal[user.id].performance < 50,
                                                       'green-color': usersTotal[user.id].performance >= 100}">
                                         {{ usersTotal[user.id].performance | percentFr:0 }}
@@ -110,13 +115,13 @@
                                 <th class="text-center">-</th>
                             </ng-container>
                         </ng-template>
-                        <th class="text-center">
+                        <th class="text-center no-wrap">
                             {{ totalDuration | duration:'hour' }}
                         </th>
-                        <th class="text-center">
+                        <th class="text-center no-wrap">
                             {{ totalWorkedDuration | duration:'hour' }}
                         </th>
-                        <th class="text-center">
+                        <th class="text-center no-wrap">
                             <span [ngClass]="{'red-color': totalPerformance < 50,
                                               'green-color': totalPerformance >= 100}">
                                 {{ totalPerformance | percentFr:0 }}

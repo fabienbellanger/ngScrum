@@ -65,15 +65,17 @@ export class SprintTasksManagementService
      */
     public getUsersData(): void
     {
-        this.users             = [];
-        let userIndex: number  = 0;
+        let userIndex: number;
         let tasksIndex: number;
         let taskId: number;
         let task: any;
 
+        this.users = [];
+        userIndex  = 0;
+
         // Utilisateurs
         // ------------
-        for (let user of this.sprint.users)
+        for (const user of this.sprint.users)
         {
             this.users[userIndex]          = {};
             this.users[userIndex]['id']    = user.id;
@@ -83,7 +85,7 @@ export class SprintTasksManagementService
             // Tâches
             // ------
             tasksIndex = 0;
-            for (let taskUser of this.sprint.tasksUsers)
+            for (const taskUser of this.sprint.tasksUsers)
             {
                 taskId = taskUser.taskId;
                 task   = this.sprint.tasks[taskId];

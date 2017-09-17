@@ -15,9 +15,9 @@ import { DateService } from '../../../shared';
 
 export class SprintTasksManagementComponent implements OnInit
 {
-    private loading: boolean = true;
-    private sprintId: number;
-    private date: Date;
+    public loading: boolean;
+    public sprintId: number;
+    public date: Date;
 
     /**
      * Constructeur
@@ -91,20 +91,8 @@ export class SprintTasksManagementComponent implements OnInit
      *
      * @author Fabien Bellanger
      */
-    private editTask(userId: number, taskId: number): void
+    public editTask(userId: number, taskId: number): void
     {
         alert(userId + ' - ' + taskId);
-    }
-
-    /**
-     * Changement de date
-     *
-     * @author Fabien Bellanger
-     */
-    private changeDate(): void
-    {
-        this.sprintTasksManagementService.date = this.dateService.date(this.date, 'YYYY-MM-DD');
-
-        this.sprintTasksManagementService.getUsersData();
     }
 }
