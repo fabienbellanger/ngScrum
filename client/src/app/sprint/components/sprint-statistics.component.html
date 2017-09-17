@@ -104,7 +104,7 @@
     </md-card>
 
     <md-card class="margin-bottom-20px">
-        <md-card-content>
+        <md-card-content class="no-wrap">
             <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
                 <thead>
                     <tr>
@@ -120,12 +120,37 @@
                 <tbody>
                     <tr *ngFor="let user of sprintService.usersInformation">
                         <td align="left" valign="middle">{{ user.name }}</td>
-                        <td align="right" valign="middle">{{ user.duration | duration:'hour' }}</td>
-                        <td align="right" valign="middle">{{ user.workedDuration | duration:'hour' }}</td>
-                        <td align="right" valign="middle">{{ user.coefficient | numberFr:'1' }}</td>
-                        <td align="right" valign="middle">{{ user.performance | percentFr:0 }}</td>
+                        <td class="text-center" valign="middle">{{ user.duration | duration:'hour' }}</td>
+                        <td class="text-center" valign="middle">{{ user.workedDuration | duration:'hour' }}</td>
+                        <td class="text-center" valign="middle">{{ user.coefficient | numberFr:'1' }}</td>
+                        <td class="text-center" valign="middle">{{ user.performance | percentFr:0 }}</td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th align="left" valign="middle">
+                            {{ 'total' | translate }}
+                        </th>
+                        <th class="text-center" valign="middle">
+                            {{ sprintService.usersTotalInformation.duration | duration:'hour' }}
+                        </th>
+                        <th class="text-center" valign="middle">
+                            {{ sprintService.usersTotalInformation.workedDuration | duration:'hour' }}
+                        </th>
+                        <th class="visible-xs text-center">
+                            {{ sprintService.usersTotalInformation.coefficient | numberFr:'1' }}
+                        </th>
+                        <th class="hidden-xs text-center">
+                            {{ sprintService.usersTotalInformation.coefficient | numberFr:'1' }}
+                        </th>
+                        <th class="visible-xs text-center">
+                            {{ sprintService.usersTotalInformation.performance | percentFr:0 }}
+                        </th>
+                        <th class="hidden-xs text-center">
+                            {{ sprintService.usersTotalInformation.performance | percentFr:0 }}
+                        </th>
+                    </tr>
+                </tfoot>
             </table>
         </md-card-content>
     </md-card>

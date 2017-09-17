@@ -16,6 +16,7 @@ export class SprintService
     public totalTaskUserDuration: number;
     public averageWorkedHoursPerDay: number;
     public usersInformation: any;
+    public usersTotalInformation: any;
 
     /**
      * Constructeur
@@ -34,6 +35,7 @@ export class SprintService
         this.totalTaskUserDuration       = 0;
         this.averageWorkedHoursPerDay    = 7;
         this.usersInformation            = {};
+        this.usersTotalInformation       = {};
     }
 
     /**
@@ -53,6 +55,7 @@ export class SprintService
         this.totalTaskUserDuration       = this.getTotalTaskUserDuration(false);
         this.averageWorkedHoursPerDay    = this.getAverageWorkedHoursPerDay();
         this.usersInformation            = this.getUsersInformation();
+        this.usersTotalInformation       = this.getUsersTotalInformation();
 
         // Calcul de la durée travaillée des tâches
         // ----------------------------------------
@@ -68,11 +71,13 @@ export class SprintService
      */
     private getDuration(added: boolean): number
     {
-        let duration: number = 0;
+        let duration: number;
+
+        duration = 0;
 
         if (this.sprint !== null)
         {
-            for (let task of this.sprint.tasks)
+            for (const task of this.sprint.tasks)
             {
                 if (task.addedAfter == added)
                 {
@@ -92,11 +97,13 @@ export class SprintService
      */
     private getRemainigDuration(): number
     {
-        let duration: number = 0;
+        let duration: number;
+
+        duration = 0;
 
         if (this.sprint !== null)
         {
-            for (let task of this.sprint.tasks)
+            for (const task of this.sprint.tasks)
             {
                 duration += +task.remainingDuration;
             }
@@ -114,15 +121,17 @@ export class SprintService
      */
     private getTotalTaskUserDuration(worked: boolean = false): number
     {
-        let duration: number = 0;
+        let duration: number;
+
+        duration = 0;
 
         if (this.sprint !== null)
         {
-            for (let task of this.sprint.tasks)
+            for (const task of this.sprint.tasks)
             {
                 if (task.list.length > 0)
                 {
-                    for (let taskUser of task.list)
+                    for (const taskUser of task.list)
                     {
                         if (worked)
                         {
@@ -148,11 +157,13 @@ export class SprintService
      */
     private getAverageWorkedHoursPerDay(): number
     {
-        let taskUserLength: number = 0;
+        let taskUserLength: number;
+
+        taskUserLength = 0;
 
         if (this.sprint !== null)
         {
-            for (let task of this.sprint.tasks)
+            for (const task of this.sprint.tasks)
             {
                 taskUserLength += task.list.length;
             }
@@ -177,11 +188,11 @@ export class SprintService
         // ------------------------
         if (this.sprint !== null)
         {
-            for (let task of this.sprint.tasks)
+            for (const task of this.sprint.tasks)
             {
                 if (task.list.length > 0)
                 {
-                    for (let taskUser of task.list)
+                    for (const taskUser of task.list)
                     {
                         // 1. Initialisation
                         // -----------------
@@ -209,7 +220,7 @@ export class SprintService
 
         // Calcul des coéfficiants et des performances
         // -------------------------------------------
-        for (let userId in informations)
+        for (const userId in informations)
         {
             if (this.sprint.users.hasOwnProperty(userId))
             {
@@ -222,9 +233,31 @@ export class SprintService
 
         // Conversion Object => Array
         // --------------------------
-        let result: any[] = Object.keys(informations).map((k: any) => informations[k]);
+        const result: any[] = Object.keys(informations).map((k: any) => informations[k]);
 
         return result;
+    }
+
+
+    private getUsersTotalInformation(): any
+    {
+        let total: any = {
+            duration:       0,
+            workedDuration: 0,
+            coefficient:    0,
+            performance:    0,
+        };
+
+        for (const user of this.usersInformation)
+        {
+            total.duration       += +user.duration;
+            total.workedDuration += +user.workedDuration;
+        }
+
+        total.coefficient = total.duration / total.workedDuration;
+        total.performance = total.coefficient * 100;
+
+        return total;
     }
 
     /**
@@ -239,14 +272,14 @@ export class SprintService
 
         if (this.sprint !== null)
         {
-            for (let taskIndex in this.sprint.tasks)
+            for (const taskIndex in this.sprint.tasks)
             {
                 task     = this.sprint.tasks[taskIndex];
                 duration = 0;
 
                 if (task.list.length > 0)
                 {
-                    for (let taskUser of task.list)
+                    for (const taskUser of task.list)
                     {
                         duration += +taskUser.workedDuration;
                     }
