@@ -1,0 +1,92 @@
+<div class="margin-bottom-20px">
+	<h1>{{ 'new.sprint' | translate }}</h1>
+	
+	<form class="form-horizontal" [formGroup]="sprintFormGroup" (ngSubmit)="newSprint()">
+		<md-card>
+			<md-card-content>
+				<div class="row margin-bottom-20px">
+					<div class="col-xs-12">
+						<button md-raised-button type="button"
+								[routerLink]="['/sprints']"
+								[routerLinkActiveOptions]="{exact: false}"
+								routerLinkActive="true">
+							<md-icon>keyboard_arrow_left</md-icon>
+							<span>{{ 'sprints.list' | translate }}</span>
+						</button>
+						&nbsp;&nbsp;
+						<button md-raised-button type="submit"
+								color="primary"
+								[disabled]="sprintFormGroup.invalid">
+							<md-icon>add</md-icon>
+							<span>{{ 'create' | translate }}</span>
+						</button>
+					</div>
+				</div>
+
+				<div class="row">
+					<p class="col-xs-12 col-sm-6 col-md-4">
+						<md-input-container class="width-100">
+							<input mdInput type="text" name="name"
+								   [placeholder]="'name' | translate"
+								   formControlName="name"
+								   maxlength="50"
+								   autofocus required>
+							<md-hint align="end">{{ sprintFormGroup.get('name').value.length }} / 50</md-hint>
+							<md-error *ngIf="sprintFormGroup.get('name').hasError('required')">
+								{{ 'required.name' | translate }}
+							</md-error>
+						</md-input-container>
+					</p>
+				</div>
+
+				<div class="row">
+					<p class="col-xs-12 col-sm-6 col-md-4">
+						<md-select class="width-100"
+								   [placeholder]="'team' | translate"
+								   formControlName="team"
+								   required>
+							<md-option>{{ 'none' | translate }}</md-option>
+							<md-option *ngFor="let team of userService.user.teams" [value]="team.id">
+								{{ team.name }}
+							</md-option>
+						</md-select>
+					</p>
+				</div>
+
+				<div class="row margin-top-10px">
+					<p class="col-xs-12 col-sm-6 col-md-4">
+						<md-form-field class="width-100">
+							<input mdInput [mdDatepicker]="picker" [placeholder]="'started.at' | translate"
+								   formControlName="startedAt"
+								   required>
+							<md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+							<md-datepicker #picker></md-datepicker>
+							<md-error *ngIf="sprintFormGroup.get('startedAt').hasError('required')">
+								{{ 'required.date' | translate }}
+							</md-error>
+						</md-form-field>
+					</p>
+				</div>
+
+				<div class="row margin-top-20px margin-bottom-20px">
+					<div class="col-xs-12">
+						<button md-raised-button type="button"
+								[routerLink]="['/sprints']"
+								[routerLinkActiveOptions]="{exact: false}"
+								routerLinkActive="true">
+							<md-icon>keyboard_arrow_left</md-icon>
+							<span>{{ 'sprints.list' | translate }}</span>
+						</button>
+						&nbsp;&nbsp;
+						<button md-raised-button type="submit"
+								color="primary"
+								[disabled]="sprintFormGroup.invalid">
+							<md-icon>add</md-icon>
+							<span>{{ 'create' | translate }}</span>
+						</button>
+					</div>
+				</div>
+			</md-card-content>
+		</md-card>
+	</form>	
+</div>

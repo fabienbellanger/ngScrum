@@ -8,7 +8,7 @@ import { User } from '../../models';
 
 export class UserService
 {
-	public user: User;
+    public user: User;
 
     /**
      * Constructeur
@@ -18,7 +18,7 @@ export class UserService
      */
     constructor(private storageService: StorageService)
     {
-		this.user = this.storageService.get('session', 'user', null);
+        this.user = this.storageService.get('session', 'user', null);
     }
 
 	/**
@@ -27,18 +27,18 @@ export class UserService
 	 * @author Fabien Bellanger
 	 * @param {User} user Utilisateur
 	 */
-	public init(user: User): void
-	{
-		this.user = user;
+    public init(user: User): void
+    {
+        this.user = user;
 
 		// Enregistrement en session
 		// -------------------------
-		this.storageService.set('session', 'user', user);
-	}
+        this.storageService.set('session', 'user', user);
+    }
 
     /**
      * Retourne le nom complet
-     * 
+     *
      * @author Fabien Bellanger
      * @return {string} Nom complet
      */
@@ -49,7 +49,7 @@ export class UserService
 
     /**
      * Retourne l'URL Gravatar'
-     * 
+     *
      * @author Fabien Bellanger
      * @param {number} size Taille de l'image en px (default 32)
      * @return {string} URL Gravatar
@@ -60,7 +60,7 @@ export class UserService
 
         if (this.user !== null && this.user.email !== null && this.user.email !== '' && this.user.email !== undefined)
         {
-            let md5: Md5 = new Md5();
+            const md5: Md5 = new Md5();
 
             url = 'https://www.gravatar.com/avatar/' + Md5.hashStr(this.user.email) + '?s=' + size;
         }
@@ -82,7 +82,7 @@ export class UserService
 
         if (email !== null && email !== '' && email !== undefined)
         {
-            let md5: Md5 = new Md5();
+            const md5: Md5 = new Md5();
 
             url = 'https://www.gravatar.com/avatar/' + Md5.hashStr(email) + '?s=' + size;
         }

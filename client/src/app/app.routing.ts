@@ -4,6 +4,7 @@ import { AuthGuardService, LoginComponent, LogoutComponent } from './auth';
 import { 
     SprintComponent,
     SprintListComponent,
+    SprintNewComponent,
     SprintStatisticsComponent,
     SprintTasksComponent,
     SprintEditTaskComponent,
@@ -40,6 +41,10 @@ const appRoutes: Routes = [
                     {
                         path:      '',
                         component: SprintListComponent,
+                    },
+                    {
+                        path:      'new',
+                        component: SprintNewComponent,
                     },
                     {
                         path:      ':sprintId/parameters',

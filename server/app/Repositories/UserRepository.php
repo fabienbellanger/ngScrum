@@ -29,6 +29,7 @@
                 'email'             => $user->email,
                 'groupId'           => $user->group_id,
                 'workedHoursPerDay' => $user->worked_hours_per_day,
+                'teams'             => self::getTeamsIdName($user->id),
             ];
 
             // Récupération des applications
@@ -63,7 +64,40 @@
         }
 
         /**
-         * Liste des équipes
+         * Liste des équipes (ID <=> Nom)
+         *
+         * @author Fabien Bellanger
+         * @param int $id ID de l'utilisateur
+         * @return array
+         */
+        public static function getTeamsIdName($id): ?array
+        {
+            $result = [];
+            
+            // L'utilisateur est-il valide ?
+            // -----------------------------
+            $isUserValid = self::isUserValid($id);
+            if (!$isUserValid)
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'User Not Found',
+                ];
+            }
+
+            // Liste des équipes
+            // -----------------
+            $teams = DB::select('
+                SELECT id, name
+                FROM team
+                    INNER JOIN team_member ON team_id=id
+                WHERE user_id = :id', ['id' => $id]);
+
+            return $teams;
+        }
+
+        /**
+         * Liste des équipes (réponse JSON)
          *
          * @author Fabien Bellanger
          * @param int $id ID de l'utilisateur
@@ -72,7 +106,7 @@
         public static function getTeams($id): ?array
         {
             $result = [];
-
+            
             // L'utilisateur est-il valide ?
             // -----------------------------
             $isUserValid = self::isUserValid($id);

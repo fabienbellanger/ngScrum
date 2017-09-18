@@ -92,6 +92,7 @@ export class AuthService
                         data.user.email,
                         data.user.groupId,
                         data.user.workedHoursPerDay,
+                        data.user.teams,
                     );
                     this.userService.init(user);
 

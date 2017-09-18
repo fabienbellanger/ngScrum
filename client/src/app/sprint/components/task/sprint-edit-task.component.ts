@@ -18,19 +18,19 @@ import { Task } from '../../../models';
 
 export class SprintEditTaskComponent implements OnInit
 {
-    private sprintId: number;
-    private id: number;
-    private description: string;
-    private remainingDuration: number;
-    private applications: any[];
-    private applicationsIds: any;
-    private notPlanned: boolean;
-    private title: string;
-    private buttonTitle: string;
-    private task: Task;
-    private loading: boolean = true;
-    private taskFormGroup: FormGroup;
-    private formSubmitted: boolean = false;
+    public sprintId: number;
+    public id: number;
+    public description: string;
+    public remainingDuration: number;
+    public applications: any[];
+    public applicationsIds: any;
+    public notPlanned: boolean;
+    public title: string;
+    public buttonTitle: string;
+    public task: Task;
+    public loading: boolean;
+    public taskFormGroup: FormGroup;
+    public formSubmitted: boolean;
 
     /**
      * Constructeur
@@ -61,6 +61,9 @@ export class SprintEditTaskComponent implements OnInit
      */
     public ngOnInit(): void
     {
+        this.loading       = true;
+        this.formSubmitted =  false;
+
         // Récupération de l'ID du sprint et de la tâche
         // ---------------------------------------------
         this.sprintId = +this.route.snapshot.params['sprintId'];
@@ -154,7 +157,7 @@ export class SprintEditTaskComponent implements OnInit
      *
      * @author Fabien Bellanger
      */
-    private editTask(): void
+    public editTask(): void
     {
         // Conversion Object => Array
         // --------------------------

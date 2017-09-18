@@ -8,6 +8,7 @@ import { LayoutModule } from '../layout';
 
 import { SprintComponent } from './components/sprint.component';
 import { SprintListComponent } from './components/sprint-list.component';
+import { SprintNewComponent } from './components/sprint-new.component';
 import { SprintStatisticsComponent } from './components/sprint-statistics.component';
 import { SprintTasksComponent } from './components/task/sprint-tasks.component';
 import { SprintEditTaskComponent } from './components/task/sprint-edit-task.component';
@@ -38,6 +39,7 @@ import { SprintChartsService } from './services/sprint-charts.service';
         SprintTasksManagementComponent,
         SprintTasksManagementEditComponent,
         SprintTasksManagementListComponent,
+        SprintNewComponent,
     ],
     providers:    [
         HttpService,

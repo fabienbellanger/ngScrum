@@ -109,5 +109,8 @@
     "decremented": "Décrémentées",
 	"add.day": "Ajouter une journée",
 	"duration.total": "Durée totale",
-	"date:": "Date :"
+	"date:": "Date :",
+	"new.sprint": "Nouveau sprint",
+	"required.date": "Date obligatoire",
+	"create": "Créer"
 }
