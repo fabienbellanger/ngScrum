@@ -13,6 +13,7 @@
              ->where([
                          'id' => '[0-9]+',
                      ]);
+        Route::post('/', 'SprintController@newSprint');
         Route::get('/{state}', 'SprintController@getSprints')
              ->where([
                          'id'    => '[0-9]+',

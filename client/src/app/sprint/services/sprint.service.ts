@@ -79,7 +79,7 @@ export class SprintService
         {
             for (const task of this.sprint.tasks)
             {
-                if (task.addedAfter == added)
+                if (task.addedAfter === added)
                 {
                     duration += +task.initialDuration;
                 }

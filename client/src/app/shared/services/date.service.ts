@@ -123,4 +123,16 @@ export class DateService
     {
         return moment(date).toDate();
     }
+
+    /**
+     * Transforme une date JavaScript au format YYYY-MM-DD
+     *
+     * @author Fabien Bellanger
+     * @param {string} date Date au format YYYY-MM-DD
+     * @return {Date} Date au format JavaScript
+     */
+    public toSqlDate(date: Date): string
+    {
+        return this.date(date, 'YYYY-MM-DD');
+    }
 }

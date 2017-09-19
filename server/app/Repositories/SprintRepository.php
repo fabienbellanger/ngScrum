@@ -143,7 +143,7 @@
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
                     INNER JOIN team_member ON team.id = team_member.team_id AND team_member.user_id = :userId
-                    INNER JOIN task ON sprint.id = task.sprint_id';
+                    LEFT JOIN task ON sprint.id = task.sprint_id';
             if ($filter == 'inProgress')
             {
                 $query .= ' WHERE sprint.finished_at IS NULL';
@@ -177,7 +177,9 @@
                         $sprints[$sprintId]['startedAt']         = $line->sprintStartedAt;
                         $sprints[$sprintId]['initialDuration']   = $line->initialDuration;
                         $sprints[$sprintId]['remainingDuration'] = $line->remainingDuration;
-                        $sprints[$sprintId]['progressPercent']   = round((($line->initialDuration - $line->remainingDuration) / $line->initialDuration) * 100, 0);
+                        $sprints[$sprintId]['progressPercent']   = ($line->initialDuration != 0)
+                            ? round((($line->initialDuration - $line->remainingDuration) / $line->initialDuration) * 100, 0)
+                            : 0;
                     }
                 }
             }
@@ -1031,6 +1033,38 @@
                 'code'    => 200,
                 'message' => 'Success',
                 'data'    => ['taskUserId' => $taskUserId],
+            ];
+        }
+
+        /**
+         * Ajout d'un sprint
+         *
+         * @author Fabien Bellanger
+         * @param int   $userId   ID de l'utilisateur
+         * @param array $data     Données
+         * @return array
+         */
+        static public function newSprint($userId, $data)
+        {
+            // 1. Verification de la validité de l'équipe
+            // ------------------------------------------
+
+            // 2. Ajout en base de données
+            // ---------------------------
+            $sprintData = [
+                'name'        => $data['name'],
+                'team_id'     => $data['teamId'],
+                'created_at'  => date('Y-m-d H:i:s'),
+                'updated_at'  => date('Y-m-d H:i:s'),
+                'started_at'  => $data['startedAt'],
+                'finished_at' => null,
+            ];
+            $sprintId = DB::table('sprint')->insertGetId($sprintData);
+
+            return [
+                'code'    => 200,
+                'message' => 'Success',
+                'data'    => ['sprintId' => $sprintId],
             ];
         }
     }

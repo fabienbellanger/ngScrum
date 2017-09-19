@@ -62,7 +62,7 @@ export class SprintEditTaskComponent implements OnInit
     public ngOnInit(): void
     {
         this.loading       = true;
-        this.formSubmitted =  false;
+        this.formSubmitted = false;
 
         // Récupération de l'ID du sprint et de la tâche
         // ---------------------------------------------

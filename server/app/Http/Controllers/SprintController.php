@@ -339,4 +339,49 @@
                 return Response::json($response['data'], 200);
             }
         }
+
+        /**
+         * Ajout d'un sprint
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @param int                      $id       ID de l'utilisateur
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function newSprint(Request $request, $id)
+        {
+            $data = Input::all();
+            if (!array_key_exists('data', $data))
+            {
+                return Response::internalError('No data');
+            }
+
+            $data = json_decode($data['data'], true);
+            if (!$data || count($data) == 0)
+            {
+                return Response::internalError('No data');
+            }
+
+            if (!array_key_exists('name', $data) ||
+                !array_key_exists('teamId', $data) ||
+                !array_key_exists('startedAt', $data))
+            {
+                return Response::internalError('Missing data');
+            }
+
+            $response = SprintRepository::newSprint($id, $data);
+            
+            if ($response['code'] == 404)
+            {
+                return Response::notFound($response['message']);
+            }
+            elseif ($response['code'] == 500)
+            {
+                return Response::internalError($response['message']);
+            }
+            else
+            {
+                return Response::json($response['data'], 200);
+            }
+        }
     }
