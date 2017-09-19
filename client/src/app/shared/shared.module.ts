@@ -27,7 +27,7 @@ import { PercentFrPipe } from './pipes/percent-fr.pipe';
 import { NumberPipe } from './pipes/number.pipe';
 import { DebugPipe } from './pipes/debug.pipe';
 
-import { InputDirective } from './directives/input.directive';
+import { LoadingComponent } from './components/loading.component';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -62,7 +62,7 @@ export function HttpLoaderFactory(http: HttpClient)
         PercentFrPipe,
         NumberPipe,
         DebugPipe,
-        InputDirective,
+        LoadingComponent,
     ],
     providers:    [
         DateService,
@@ -80,14 +80,14 @@ export function HttpLoaderFactory(http: HttpClient)
         ToastyModule,
         SlimLoadingBarModule,
         ChartsModule,
+        MaterialModule,
         MomentPipe,
         NewLinePipe,
         DurationPipe,
         PercentFrPipe,
         NumberPipe,
         DebugPipe,
-        InputDirective,
-        MaterialModule,
+        LoadingComponent,
     ],
     entryComponents: [
         // CustomModal,

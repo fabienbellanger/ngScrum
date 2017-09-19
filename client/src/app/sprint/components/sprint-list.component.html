@@ -1,12 +1,4 @@
-<div *ngIf="loading">
-    <md-progress-spinner
-        [color]="'primary'"
-        [mode]="'indeterminate'"
-        [value]="100"
-        style="height: 30px; width: 30px">
-    </md-progress-spinner>
-    <h2>{{ 'loading' | translate }}...</h2>
-</div>
+<sa-loading *ngIf="loading"></sa-loading>
 <div *ngIf="!loading" class="SprintsList">
     <h1>{{ 'sprints.list' | translate }}</h1>
 

@@ -17,6 +17,6 @@ export { PercentFrPipe } from './pipes/percent-fr.pipe';
 export { NumberPipe } from './pipes/number.pipe';
 export { DebugPipe } from './pipes/debug.pipe';
 
-// Directives
+// Components
 // ----------
-export { InputDirective } from './directives/input.directive';
+export { LoadingComponent } from './components/loading.component';

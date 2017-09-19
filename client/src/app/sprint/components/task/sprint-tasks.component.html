@@ -1,4 +1,4 @@
-<div *ngIf="!sprintService.sprint"><h2>{{ 'loading' | translate }}...</h2></div>
+<sa-loading *ngIf="!sprintService.sprint"></sa-loading>
 <div *ngIf="sprintService.sprint">
     <h1>{{ sprintService.sprint.name }} - {{ 'tasks.list' | translate }}</h1>
 
