@@ -159,7 +159,7 @@ export class SprintChartsService
 
         // Conversion Object => Array
         // --------------------------
-        let datasets: any[] = Object.keys(datasetsObject).map((k: any) => datasetsObject[k]);
+        const datasets: any[] = Object.keys(datasetsObject).map((k: any) => datasetsObject[k]);
 
         return {
             type:     'line',

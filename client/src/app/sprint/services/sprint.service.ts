@@ -227,7 +227,9 @@ export class SprintService
                 informations[userId].name  = this.sprint.users[userId].firstname + ' ';
                 informations[userId].name += this.sprint.users[userId].lastname;
             }
-            informations[userId].coefficient = informations[userId].duration / informations[userId].workedDuration;
+            informations[userId].coefficient = (informations[userId].workedDuration !== 0)
+                ? informations[userId].duration / informations[userId].workedDuration
+                : 0;
             informations[userId].performance = informations[userId].coefficient * 100;
         }
 
@@ -254,7 +256,7 @@ export class SprintService
             total.workedDuration += +user.workedDuration;
         }
 
-        total.coefficient = total.duration / total.workedDuration;
+        total.coefficient = (total.workedDuration !== 0) ? total.duration / total.workedDuration : 0;
         total.performance = total.coefficient * 100;
 
         return total;
