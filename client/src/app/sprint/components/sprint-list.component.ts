@@ -67,10 +67,13 @@ export class SprintListComponent implements OnInit
      * Redirection vers la gestion des tâches
      *
      * @author Fabien Bellanger
-     * @param {number} sprintId ID du sprint
+     * @param {any} sprint Sprint
      */
-    private redirectToTasksManagement(sprintId: number): void
+    private redirectToTasksManagement(sprint: any): void
     {
-        this.router.navigate(['/sprints', sprintId, 'tasks-management-list']);
+        if (sprint.initialDuration !== null)
+        {
+            this.router.navigate(['/sprints', sprint.id, 'tasks-management-list']);
+        }
     }
 }

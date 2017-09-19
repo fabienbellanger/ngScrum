@@ -71,15 +71,13 @@ export class SprintService
      */
     private getDuration(added: boolean): number
     {
-        let duration: number;
-
-        duration = 0;
+        let duration: number = 0;
 
         if (this.sprint !== null)
         {
             for (const task of this.sprint.tasks)
             {
-                if (task.addedAfter === added)
+                if (!!task.addedAfter === added)
                 {
                     duration += +task.initialDuration;
                 }

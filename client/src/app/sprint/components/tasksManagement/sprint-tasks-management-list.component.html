@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <md-card class="margin-bottom-20px">
+    <md-card class="margin-bottom-20px" *ngIf="data.length > 0">
         <md-card-content class="overflow-auto">
             <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
                 <thead>
@@ -134,7 +134,7 @@
         </md-card-content>
     </md-card>
 
-    <div class="row margin-bottom-20px">
+    <div class="row margin-bottom-20px" *ngIf="data.length > 0">
         <div class="col-xs-12">
             <button md-raised-button type="button"
                     routerLink="/sprints">

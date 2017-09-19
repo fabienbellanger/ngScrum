@@ -24,7 +24,7 @@
 
     <div class="margin-bottom-20px">
         <md-card *ngFor="let sprint of sprints" class="margin-top-20px pointer"
-                (click)="redirectToTasksManagement(sprint.id)">
+                (click)="redirectToTasksManagement(sprint)">
             <md-card-header>
                 <md-card-title>
                     <h4 class="primary-color">
@@ -37,18 +37,18 @@
                     </button>
                     <md-menu #menu="mdMenu">
                         <button md-menu-item
-                                [routerLink]="['/sprints', sprint.id, 'statistics']"
-                                routerLinkActive="true"
-                                [routerLinkActiveOptions]="{exact: false}">
-                            <md-icon>show_chart</md-icon>
-                            <span>{{ 'statistics' | translate }}</span>
-                        </button>
-                        <button md-menu-item
                                 [routerLink]="['/sprints', sprint.id, 'tasks']"
                                 routerLinkActive="true"
                                 [routerLinkActiveOptions]="{exact: false}">
                             <md-icon>list</md-icon>
                             <span>{{ 'tasks.list' | translate }}</span>
+                        </button>
+                        <button md-menu-item
+                                [routerLink]="['/sprints', sprint.id, 'statistics']"
+                                routerLinkActive="true"
+                                [routerLinkActiveOptions]="{exact: false}">
+                            <md-icon>show_chart</md-icon>
+                            <span>{{ 'statistics' | translate }}</span>
                         </button>
                         <button md-menu-item
                                 [routerLink]="['/sprints', sprint.id, 'parameters']"
