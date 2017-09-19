@@ -108,25 +108,27 @@
 
         ul {
             padding:    10px;
-            margin-top: 10px;
+            //margin-top: 10px;
 
             li {
                 a, a:visited {
                     @include textEllipsis();
 
-                    display:   inline-block;
-                    width:     100%;
-                    font-size: 16px;
-                    color:     $lightColor;
+                    display:     flex;
+                    align-items: center;
+                    width:       100%;
+                    margin:      10px 0px;
+                    font-size:   15px;
+                    color:       $lightColor;
                 }
 
                 a:hover, a:active, a:focus {
-                    color:           $primayLightColor;
+                    color:           $accentColor;
                     text-decoration: none;
                 }
 
                 a.active {
-                    color: $primayLightColor;
+                    color: $accentColor;
                 }
             }
         }

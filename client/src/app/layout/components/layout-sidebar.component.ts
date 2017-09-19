@@ -26,6 +26,5 @@ export class LayoutSidebarComponent implements OnInit
      */
     public ngOnInit(): void
     {
-		
     }
 }

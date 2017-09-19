@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { TranslateService } from '@ngx-translate/core';
+
 /**
  * Service gérant la sidebar
  *
@@ -8,35 +10,50 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class LayoutSidebarService
 {
-	public state: string;
-	public items: Array<any>;
+    public state: string;
+    public items: any[] = [];
 
-	/**
-	 * Constructeur
-	 * 
-	 * @author Fabien Bellanger
-	 */
-	constructor()
-	{
-		this.state = '';
-		this.items = [
-			{
-				'label': 'Sprints',
-				'route': 'sprints',
-				'picto': 'fa fa-list',
-			}
-		];
-	}
+    /**
+     * Constructeur
+     *
+     * @author Fabien Bellanger
+     * @param {TranslateService} translateService
+     */
+    constructor(private translateService: TranslateService)
+    {
+        this.state = '';
 
-	/**
-	 * Toggle
-	 * 
-	 * @author Fabien Bellanger
-	 */
-	public toogle(): void
-	{
-		this.state = (this.state === 'open') ? 'close' : 'open';
-	}
+        this.translateService.get([
+            'sprints.list',
+            'new.sprint.sidebar',
+        ]).subscribe((transltationObject: Object) =>
+		{
+            this.items = [
+                {
+                    'label':      transltationObject['sprints.list'],
+                    'route':      ['/sprints'],
+                    'routeExact': true,
+                    'picto':      'list',
+                },
+                {
+                    'label':      transltationObject['new.sprint.sidebar'],
+                    'route':      ['/sprints/new'],
+                    'routeExact': true,
+                    'picto':      'add',
+                }
+            ];
+        });
+    }
+
+    /**
+     * Toggle
+     * 
+     * @author Fabien Bellanger
+     */
+    public toogle(): void
+    {
+        this.state = (this.state === 'open') ? 'close' : 'open';
+    }
 
     /**
      * Referme la sidebar en mode mobile
