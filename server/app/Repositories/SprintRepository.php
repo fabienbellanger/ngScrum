@@ -77,17 +77,21 @@
         /**
          * Liste des sprints
          *
+         * TODO: Utiliser la variable $userId
+         *
          * @author Fabien Bellanger
+         * @param int $userId   ID de l'utilisateur
          * @param int $sprintId ID du sprint
          * @return bool
          */
-        public static function isSprintValid($sprintId): ?bool
+        public static function isSprintValid($userId, $sprintId): ?bool
         {
             $query   = '
                 SELECT sprint.id
                 FROM sprint
                 WHERE sprint.id = :sprintId';
             $results = DB::select($query, ['sprintId' => $sprintId]);
+
             if (!$results || count($results) != 1)
             {
                 return false;
@@ -1048,6 +1052,7 @@
         {
             // 1. Verification de la validité de l'équipe
             // ------------------------------------------
+            // TODO
 
             // 2. Ajout en base de données
             // ---------------------------
@@ -1065,6 +1070,38 @@
                 'code'    => 200,
                 'message' => 'Success',
                 'data'    => ['sprintId' => $sprintId],
+            ];
+        }
+
+        /**
+         * Suppression d'un sprint
+         *
+         * @author Fabien Bellanger
+         * @param int   $userId   ID de l'utilisateur
+         * @param int   $sprintId ID du sprint
+         * @return array
+         */
+        static public function deleteSprint($userId, $sprintId)
+        {
+            // 1. Sprint valide ?
+            // ------------------
+            if (!self::isSprintValid($userId, $sprintId))
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'No sprint found',
+                ];
+            }
+
+            // 2. Suppression du sprint
+            // ------------------------
+            DB::table('sprint')
+                ->where('id', $sprintId)
+                ->delete();
+
+            return [
+                'code'    => 200,
+                'message' => 'Sprint successful deleted',
             ];
         }
     }

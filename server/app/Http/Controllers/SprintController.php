@@ -384,4 +384,27 @@
                 return Response::json($response['data'], 200);
             }
         }
+        
+        /**
+         * Suppression d'un sprint
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @param int                      $id       ID de l'utilisateur
+         * @param int                      $sprintId ID du sprint
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function deleteSprint(Request $request, $id, $sprintId)
+        {
+            $response = SprintRepository::deleteSprint($id, $sprintId);
+      
+            if ($response['code'] == 404)
+            {
+                return Response::notFound($response['message']);
+            }
+            else
+            {
+                return Response::json(null, 200);
+            }
+        }
     }

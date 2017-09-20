@@ -16,6 +16,7 @@ import { SprintParametersComponent } from './components/sprint-parameters.compon
 import { SprintTasksManagementComponent } from './components/tasksManagement/sprint-tasks-management.component';
 import { SprintTasksManagementEditComponent } from './components/tasksManagement/sprint-tasks-management-edit.component';
 import { SprintTasksManagementListComponent } from './components/tasksManagement/sprint-tasks-management-list.component';
+import { SprintDeleteDialogComponent } from './components/dialogs/sprint-delete-dialog.component';
 
 import { SprintService } from './services/sprint.service';
 import { SprintTasksManagementService } from './services/sprint-tasks-management.service';
@@ -40,6 +41,7 @@ import { SprintChartsService } from './services/sprint-charts.service';
         SprintTasksManagementEditComponent,
         SprintTasksManagementListComponent,
         SprintNewComponent,
+        SprintDeleteDialogComponent,
     ],
     providers:    [
         HttpService,
@@ -47,7 +49,9 @@ import { SprintChartsService } from './services/sprint-charts.service';
         SprintChartsService,
         SprintTasksManagementService,
     ],
-    exports:      [],
+    entryComponents:      [
+        SprintDeleteDialogComponent,
+    ],
 })
 
 export class SprintModule

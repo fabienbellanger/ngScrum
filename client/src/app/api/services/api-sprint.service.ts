@@ -240,7 +240,7 @@ export class ApiSprintService
 
     /**
      * Suppression d'une tâche
-     * 
+     *
      * @author Fabien Bellanger
      * @param {number} sprintId ID du sprint
      * @param {number} taskId   ID de la tâche
@@ -296,7 +296,7 @@ export class ApiSprintService
 
     /**
      * Récupération d'une tâche
-     * 
+     *
      * @author Fabien Bellanger
      * @param {number} sprintId ID du sprint
      * @param {number} taskId   ID de la tâche
@@ -568,6 +568,61 @@ export class ApiSprintService
             else
             {
                 reject();
+            }
+        });
+    }
+
+    /**
+     * Suppression d'un sprint
+     *
+     * @author Fabien Bellanger
+     * @param {number} sprintId ID du sprint
+     * @return {Promise}
+     */
+    public deleteSprint(sprintId: number): Promise<any>
+    {
+        return new Promise((resolve: any, reject: any) =>
+        {
+            // 1. Récupération du token
+            // ------------------------
+            const token: string = this.storageService.get('session', 'token', null);
+
+            if (token != null)
+            {
+                // 2. Utilisateur
+                // --------------
+                const user: User = this.storageService.get('session', 'user', null);
+
+                if (user != null)
+                {
+                    // 3. Requête
+                    // ----------
+                    const headers: any = new Headers();
+                    headers.append('Authorization', 'Bearer ' + token);
+                    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+                    this.httpService.delete(
+                        `/users/${user.id}/sprints/${sprintId}`,
+                        {headers: headers},
+                        true,
+                        true)
+                        .then(() =>
+                        {
+                            resolve();
+                        })
+                        .catch(() =>
+                        {
+                            reject('delete.sprint.error');
+                        });
+                }
+                else
+                {
+                    reject('no.user');
+                }
+            }
+            else
+            {
+                reject('token.error');
             }
         });
     }

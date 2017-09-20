@@ -13,7 +13,10 @@
              ->where([
                          'id' => '[0-9]+',
                      ]);
-        Route::post('/', 'SprintController@newSprint');
+        Route::post('/', 'SprintController@newSprint')
+             ->where([
+                         'id' => '[0-9]+',
+                     ]);
         Route::get('/{state}', 'SprintController@getSprints')
              ->where([
                          'id'    => '[0-9]+',
@@ -35,6 +38,11 @@
                          'sprintId' => '[0-9]+',
                      ]);
         Route::put('/{sprintId}/parameters', 'SprintController@modifySprintParameters')
+             ->where([
+                         'id'       => '[0-9]+',
+                         'sprintId' => '[0-9]+',
+                     ]);
+        Route::delete('/{sprintId}', 'SprintController@deleteSprint')
              ->where([
                          'id'       => '[0-9]+',
                          'sprintId' => '[0-9]+',
