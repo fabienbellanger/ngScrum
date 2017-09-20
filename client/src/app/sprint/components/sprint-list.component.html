@@ -57,6 +57,11 @@
                             <md-icon>settings</md-icon>
                             <span>{{ 'parameters' | translate }}</span>
                         </button>
+                        <button md-menu-item
+                                (click)="deleteSprint(sprint)">
+                            <md-icon>delete</md-icon>
+                            <span>{{ 'delete' | translate }}</span>
+                        </button>
                     </md-menu>
                 </md-card-title>
             </md-card-header>

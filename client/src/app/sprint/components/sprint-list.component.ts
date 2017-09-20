@@ -10,9 +10,9 @@ import { ApiSprintService } from '../../api';
 
 export class SprintListComponent implements OnInit
 {
-    private sprints: any[]   = [];
-    private loading: boolean = true;
-    private state: string;
+    public sprints: any[]   = [];
+    public loading: boolean = true;
+    public state: string;
 
     /**
      * Constructeur
@@ -40,7 +40,7 @@ export class SprintListComponent implements OnInit
      * @author Fabien Bellanger
      * @param {string} state Etat {all, inProgress, finished}
      */
-    private getSprints(state: string): void
+    public getSprints(state: string): void
     {
         if (state !== 'all' && state !== 'inProgress' && state !== 'finished')
         {
@@ -69,11 +69,22 @@ export class SprintListComponent implements OnInit
      * @author Fabien Bellanger
      * @param {any} sprint Sprint
      */
-    private redirectToTasksManagement(sprint: any): void
+    public redirectToTasksManagement(sprint: any): void
     {
         if (sprint.initialDuration !== null)
         {
             this.router.navigate(['/sprints', sprint.id, 'tasks-management-list']);
         }
+    }
+
+    /**
+     * Suppression d'un sprint
+     *
+     * @author Fabien Bellanger
+     * @param {any} sprint Sprint
+     */
+    public deleteSprint(sprint: any): void
+    {
+        alert('Delete sprint ' + sprint.name);
     }
 }

@@ -116,5 +116,6 @@
 	"required.team": "Equipe obligatoire",
 	"create": "Créer",
 	"new.sprint.success": "Ajout du sprint avec succès",
-	"new.sprint.error": "Erreur lors de l'ajout du sprint"
+	"new.sprint.error": "Erreur lors de l'ajout du sprint",
+	"delete": "Supprimer"
 }

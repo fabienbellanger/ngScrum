@@ -2,8 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { environment } from '../environments/environment';
 
@@ -26,7 +25,7 @@ import { MaterialModule } from './material';
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
-        NoopAnimationsModule,
+        BrowserAnimationsModule,
         MaterialModule,
         Routing,
         SharedModule,

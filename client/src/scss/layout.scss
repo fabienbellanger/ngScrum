@@ -123,12 +123,12 @@
                 }
 
                 a:hover, a:active, a:focus {
-                    color:           $accentColor;
+                    color:           $primayLightColor;
                     text-decoration: none;
                 }
 
                 a.active {
-                    color: $accentColor;
+                    color: $primayLightColor;
                 }
             }
         }
