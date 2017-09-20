@@ -12,6 +12,15 @@
         justify-content: center;
         margin-top:      50px;
 
+        &-Header {
+            display:     flex;
+            align-items: center;
+
+            &-title {
+                margin-left: 10px;
+            }
+        }
+
         @media screen and (min-width: 600px) {
             &-Card {
                 width: 400px;

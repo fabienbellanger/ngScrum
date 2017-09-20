@@ -2,9 +2,9 @@
     <div class="Auth-Container">
         <form class="form-signin" (ngSubmit)="submitForm()">
             <md-toolbar color="primary">
-                <h1 class="mat-h1">
-                    <span class="fa fa-lock"></span>
-                    {{ 'authentication' | translate }}
+                <h1 class="Auth-Container-Header mat-h1">
+                    <md-icon>lock_outline</md-icon>
+                    <span class="Auth-Container-Header-title">{{ 'authentication' | translate }}</span>
                 </h1>
             </md-toolbar>
             <md-card class="Auth-Container-Card">

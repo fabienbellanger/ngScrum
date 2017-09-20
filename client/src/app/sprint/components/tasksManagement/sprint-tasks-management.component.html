@@ -18,13 +18,13 @@
 
     <md-card *ngFor="let user of sprintTasksManagementService.users" class="TasksManagement-List">
         <md-card-content class="overflow-auto">
-            <h3 class="info-color">
-                {{ user.name }}
-                <button md-button type="button" class="btn btn-link TasksManagement-Add"
+            <h3 class="info-color TasksManagement-List-Header">
+                <span>{{ user.name }}</span>
+                <button md-button type="button" class="btn btn-link TasksManagement-List-Add"
                         [routerLink]="['/sprints', sprintId, 'tasks-management', 'new', user.id]">
-                    <span class="TasksManagement-Add-Container">
-                        <span class="fa fa-plus-circle TasksManagement-Add-Container-Icon"></span>
-                        <span class="hidden-xs TasksManagement-Add-Container-Label">
+                    <span class="TasksManagement-List-Add-Container">
+                        <md-icon class="TasksManagement-List-Add-Container-Icon">add_circle_outline</md-icon>
+                        <span class="hidden-xs TasksManagement-List-Add-Container-Label">
                             {{ 'add.task' | translate }}
                         </span>
                     </span>

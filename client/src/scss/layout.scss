@@ -25,11 +25,15 @@
         .navbar-left {
             flex:        1 auto;
             margin-left: 15px;
+            display:     flex;
+            align-items: center;
 
             a {
-                font-size:  20px;
-                color:      $lightColor;
-                transition: 0.3s;
+                font-size:   20px;
+                color:       $lightColor;
+                transition:  0.3s;
+                display:     flex;
+                align-items: center;
             }
 
             a:hover {

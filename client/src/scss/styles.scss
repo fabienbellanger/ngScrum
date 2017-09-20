@@ -522,7 +522,7 @@ a.list-group-item {
 
             &-add {
                 width:     100%;
-                max-width: 90px;
+                max-width: 120px;
             }
         }
     }
@@ -539,23 +539,28 @@ a.list-group-item {
     &-List {
         margin-bottom: 20px;
         overflow:      auto;
-    }
-
-    &-Add {
-        &-Container {
+        
+        &-Header {
             display:     flex;
             align-items: center;
-            color:       $primayColor;
-            font-size:   20px;
-
-            &-Label {
-                padding-left: 5px;
-                font-size:    14px;
+        }
+        
+        &-Add {
+            &-Container {
+                display:     flex;
+                align-items: center;
+                color:       $primayColor;
+                font-size:   20px;
+    
+                &-Label {
+                    padding-left: 5px;
+                    font-size:    14px;
+                }
             }
         }
-    }
-
-    &-Add:hover {
-        text-decoration: none;
+    
+        &-Add:hover {
+            text-decoration: none;
+        }
     }
 }
