@@ -5,13 +5,13 @@ import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 @Component({
     selector: 'sa-sprint-delete-dialog',
     template: `
-		<h1 md-dialog-title>Warning!</h1>
+        <h1 md-dialog-title> {{ 'warning' | translate }}</h1>
 		<div md-dialog-content>
-			<p>Do you really want to delete this sprint?</p>
+			<p>{{ 'want.to.delete.sprint' | translate }}</p>
 		</div>
 		<div md-dialog-actions>
-			<button md-button [md-dialog-close]="data.confirm" tabindex="2">Yes</button>
-			<button md-button (click)="onNoClick()" tabindex="-1">No</button>
+			<button md-button color="primary" [md-dialog-close]="data.confirm" tabindex="2">{{ 'yes' | translate }}</button>
+			<button md-button (click)="onNoClick()" tabindex="-1">{{ 'no' | translate }}</button>
 		</div>
 	`,
 })
@@ -26,9 +26,14 @@ export class SprintDeleteDialogComponent
      * @param {any}                                      data       Données transmises
      */
     constructor(private dialogRef: MdDialogRef<SprintDeleteDialogComponent>,
-                @Inject(MD_DIALOG_DATA) public data: any)
+                @Inject(MD_DIALOG_DATA) private data: any)
     {}
 
+    /**
+     * Clique sur "Non"
+     *
+     * @author Fabien Bellanger
+     */
     public onNoClick(): void
     {
         this.dialogRef.close();

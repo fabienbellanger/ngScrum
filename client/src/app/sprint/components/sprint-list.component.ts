@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MdDialog, MD_DIALOG_DATA, MdSnackBar } from '@angular/material';
 
-import { SprintDeleteDialogComponent } from './dialogs/sprint-delete-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 
+import { SprintDeleteDialogComponent } from './dialogs/sprint-delete-dialog.component';
 import { ApiSprintService } from '../../api';
 
 @Component({
@@ -21,8 +22,14 @@ export class SprintListComponent implements OnInit
      * Constructeur
      *
      * @author Fabien Bellanger
+     * @param {ApiSprintService} apiSprintService
+     * @param {TranslateService} translateService
+     * @param {Router}           router
+     * @param {MdDialog}         dialog
+     * @param {MdSnackBar}       snackBar
      */
     constructor(private apiSprintService: ApiSprintService,
+                private translateService: TranslateService,
                 private router: Router,
                 private dialog: MdDialog,
                 private snackBar: MdSnackBar)
@@ -51,13 +58,13 @@ export class SprintListComponent implements OnInit
         {
             state = 'inProgress';
         }
-        this.state = state;
+        this.state   = state;
+        this.loading = true;
 
         this.apiSprintService.getList(state)
             .then((sprints: any) =>
             {
                 this.sprints = sprints;
-
                 this.loading = false;
             })
             .catch(() =>
@@ -99,25 +106,42 @@ export class SprintListComponent implements OnInit
 
         dialog.afterClosed().subscribe((result: any) =>
         {
-            if (result === undefined || result !== true)
+            this.translateService.get([
+                'delete.sprint.success',
+                'delete.sprint.error',
+                'error',
+                'success',
+            ]).subscribe((translationObject: Object) =>
             {
-                this.snackBar.open('Dommage', 'Delete sprint', {
-                    duration: 3000,
-                });
-            }
-            else
-            {
-                console.log(sprint, result);
-                /*this.apiSprintService.deleteSprint(sprint.id)
-                    .then(() =>
-                    {
-                        
-                    })
-                    .catch(() =>
-                    {
-        
-                    });*/
-            }
+                if (result === true)
+                {
+                    this.apiSprintService.deleteSprint(sprint.id)
+                        .then(() =>
+                        {
+                            // Rechargement des données
+                            // ------------------------
+                            this.getSprints(this.state);
+
+                            // Notification
+                            // ------------
+                            this.snackBar.open(
+                                translationObject['delete.sprint.success'],
+                                translationObject['success'],
+                                {
+                                    duration: 3000,
+                                });
+                        })
+                        .catch(() =>
+                        {
+                            this.snackBar.open(
+                                translationObject['delete.sprint.error'],
+                                translationObject['error'],
+                                {
+                                    duration: 3000,
+                                });
+                        });
+                }
+            });
         });
     }
 }
