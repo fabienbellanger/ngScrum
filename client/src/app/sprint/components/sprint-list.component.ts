@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog, MD_DIALOG_DATA } from '@angular/material';
+import { MdDialog, MD_DIALOG_DATA, MdSnackBar } from '@angular/material';
 
 import { SprintDeleteDialogComponent } from './dialogs/sprint-delete-dialog.component';
 
@@ -9,9 +9,6 @@ import { ApiSprintService } from '../../api';
 @Component({
     selector:    'sa-sprint-list',
     templateUrl: './sprint-list.component.html',
-    providers: [
-        SprintDeleteDialogComponent,
-    ]
 })
 
 export class SprintListComponent implements OnInit
@@ -27,7 +24,8 @@ export class SprintListComponent implements OnInit
      */
     constructor(private apiSprintService: ApiSprintService,
                 private router: Router,
-                private dialog: MdDialog)
+                private dialog: MdDialog,
+                private snackBar: MdSnackBar)
     {
     }
 
@@ -92,22 +90,34 @@ export class SprintListComponent implements OnInit
      */
     public deleteSprint(sprint: any): void
     {
-        this.dialog.open(SprintDeleteDialogComponent, {
+        const dialog = this.dialog.open(SprintDeleteDialogComponent, {
             data: {
-              animal: 'panda'
+                confirm: true,
             },
-            disableClose: true,
-          });
-        console.log(sprint);
-        //alert('Delete sprint ' + sprint.name);
-        /*this.apiSprintService.deleteSprint(sprint.id)
-            .then(() =>
-            {
-                
-            })
-            .catch(() =>
-            {
+            disableClose: false,
+        });
 
-            });*/
+        dialog.afterClosed().subscribe((result: any) =>
+        {
+            if (result === undefined || result !== true)
+            {
+                this.snackBar.open('Dommage', 'Delete sprint', {
+                    duration: 3000,
+                });
+            }
+            else
+            {
+                console.log(sprint, result);
+                /*this.apiSprintService.deleteSprint(sprint.id)
+                    .then(() =>
+                    {
+                        
+                    })
+                    .catch(() =>
+                    {
+        
+                    });*/
+            }
+        });
     }
 }

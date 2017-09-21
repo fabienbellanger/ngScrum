@@ -15,6 +15,7 @@ import {
     MdSelectModule,
     MdIconModule,
     MdMenuModule,
+    MdSnackBarModule,
 } from '@angular/material';
 
 @NgModule({
@@ -33,6 +34,7 @@ import {
         MdSelectModule,
         MdIconModule,
         MdMenuModule,
+        MdSnackBarModule,
     ],
     declarations: [
     ],
@@ -52,6 +54,7 @@ import {
         MdSelectModule,
         MdIconModule,
         MdMenuModule,
+        MdSnackBarModule,
     ],
 })
 
