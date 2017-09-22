@@ -59,7 +59,7 @@ export class SprintTasksComponent implements OnInit
 
     /**
      * Initialisation du sprint
-     * 
+     *
      * @author Fabien Bellanger
      */
     private init(): void
@@ -90,7 +90,7 @@ export class SprintTasksComponent implements OnInit
     private deleteTask(taskId: number): void
     {
         this.translateService.get([
-            'delete.task.confirm.title', 
+            'delete.task.confirm.title',
             'delete.task.confirm.body',
             'delete.task.success',
             'delete.task.error',
@@ -109,7 +109,7 @@ export class SprintTasksComponent implements OnInit
                 .body(translationObject['delete.task.confirm.body'])
                 .open()
                 .catch((error: any) => console.error('ERROR: ' + error))
-                .then((dialog: any) => 
+                .then((dialog: any) =>
                 {
                     return dialog.result;
                 })
@@ -139,7 +139,7 @@ export class SprintTasksComponent implements OnInit
 
     /**
      * Edition d'une tâche
-     * 
+     *
      * @author Fabien Bellanger
      * @param {number} taskId ID de la tâche
      */

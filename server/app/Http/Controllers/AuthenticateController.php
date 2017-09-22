@@ -40,9 +40,7 @@
             // On récupère les informations de l'utilisateur
             // ---------------------------------------------
             $user = UserRepository::getInformationAfterAuthentication();
-
-
-
+            
             if (!$user)
             {
                 return Response::internalError('User not found');
