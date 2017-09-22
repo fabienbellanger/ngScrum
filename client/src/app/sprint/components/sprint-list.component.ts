@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog, MD_DIALOG_DATA } from '@angular/material';
+import { MdDialog, MD_DIALOG_DATA, MdSnackBar } from '@angular/material';
+
+import { TranslateService } from '@ngx-translate/core';
 
 import { SprintDeleteDialogComponent } from './dialogs/sprint-delete-dialog.component';
-
 import { ApiSprintService } from '../../api';
 
 @Component({
     selector:    'sa-sprint-list',
     templateUrl: './sprint-list.component.html',
-    providers: [
-        SprintDeleteDialogComponent,
-    ]
 })
 
 export class SprintListComponent implements OnInit
@@ -24,10 +22,17 @@ export class SprintListComponent implements OnInit
      * Constructeur
      *
      * @author Fabien Bellanger
+     * @param {ApiSprintService} apiSprintService
+     * @param {TranslateService} translateService
+     * @param {Router}           router
+     * @param {MdDialog}         dialog
+     * @param {MdSnackBar}       snackBar
      */
     constructor(private apiSprintService: ApiSprintService,
+                private translateService: TranslateService,
                 private router: Router,
-                private dialog: MdDialog)
+                private dialog: MdDialog,
+                private snackBar: MdSnackBar)
     {
     }
 
@@ -53,13 +58,13 @@ export class SprintListComponent implements OnInit
         {
             state = 'inProgress';
         }
-        this.state = state;
+        this.state   = state;
+        this.loading = true;
 
         this.apiSprintService.getList(state)
             .then((sprints: any) =>
             {
                 this.sprints = sprints;
-
                 this.loading = false;
             })
             .catch(() =>
@@ -92,22 +97,51 @@ export class SprintListComponent implements OnInit
      */
     public deleteSprint(sprint: any): void
     {
-        this.dialog.open(SprintDeleteDialogComponent, {
+        const dialog = this.dialog.open(SprintDeleteDialogComponent, {
             data: {
-              animal: 'panda'
+                confirm: true,
             },
-            disableClose: true,
-          });
-        console.log(sprint);
-        //alert('Delete sprint ' + sprint.name);
-        /*this.apiSprintService.deleteSprint(sprint.id)
-            .then(() =>
-            {
-                
-            })
-            .catch(() =>
-            {
+            disableClose: false,
+        });
 
-            });*/
+        dialog.afterClosed().subscribe((result: any) =>
+        {
+            this.translateService.get([
+                'delete.sprint.success',
+                'delete.sprint.error',
+                'error',
+                'success',
+            ]).subscribe((translationObject: Object) =>
+            {
+                if (result === true)
+                {
+                    this.apiSprintService.deleteSprint(sprint.id)
+                        .then(() =>
+                        {
+                            // Rechargement des données
+                            // ------------------------
+                            this.getSprints(this.state);
+
+                            // Notification
+                            // ------------
+                            this.snackBar.open(
+                                translationObject['delete.sprint.success'],
+                                translationObject['success'],
+                                {
+                                    duration: 3000,
+                                });
+                        })
+                        .catch(() =>
+                        {
+                            this.snackBar.open(
+                                translationObject['delete.sprint.error'],
+                                translationObject['error'],
+                                {
+                                    duration: 3000,
+                                });
+                        });
+                }
+            });
+        });
     }
 }

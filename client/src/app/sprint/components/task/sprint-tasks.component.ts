@@ -36,7 +36,7 @@ export class SprintTasksComponent implements OnInit
                 private sprintChartsService: SprintChartsService,
                 private toastyService: ToastyService,
                 private router: Router,
-				private translateService: TranslateService,
+                private translateService: TranslateService,
                 private modal: Modal)
     {
     }
@@ -59,7 +59,7 @@ export class SprintTasksComponent implements OnInit
 
     /**
      * Initialisation du sprint
-     * 
+     *
      * @author Fabien Bellanger
      */
     private init(): void
@@ -83,33 +83,33 @@ export class SprintTasksComponent implements OnInit
 
     /**
      * Suppression d'une tâche
-     * 
+     *
      * @author Fabien Bellanger
      * @param {number} taskId ID de la tâche
      */
     private deleteTask(taskId: number): void
     {
         this.translateService.get([
-            'delete.task.confirm.title', 
+            'delete.task.confirm.title',
             'delete.task.confirm.body',
             'delete.task.success',
             'delete.task.error',
             'ok',
             'cancel',
-        ]).subscribe((transltationObject: Object) =>
-		{
+        ]).subscribe((translationObject: Object) =>
+        {
             this.modal.confirm()
                 .size('sm')
                 .isBlocking(true)
                 .showClose(true)
                 .keyboard(27)
-                .okBtn(transltationObject['ok'])
-                .cancelBtn(transltationObject['cancel'])
-                .title(transltationObject['delete.task.confirm.title'])
-                .body(transltationObject['delete.task.confirm.body'])
+                .okBtn(translationObject['ok'])
+                .cancelBtn(translationObject['cancel'])
+                .title(translationObject['delete.task.confirm.title'])
+                .body(translationObject['delete.task.confirm.body'])
                 .open()
                 .catch((error: any) => console.error('ERROR: ' + error))
-                .then((dialog: any) => 
+                .then((dialog: any) =>
                 {
                     return dialog.result;
                 })
@@ -120,7 +120,7 @@ export class SprintTasksComponent implements OnInit
                         {
                             // Notification
                             // ------------
-                            this.toastyService.success(transltationObject['delete.task.success']);
+                            this.toastyService.success(translationObject['delete.task.success']);
 
                             // Rechargement de la vue
                             // ----------------------
@@ -130,7 +130,7 @@ export class SprintTasksComponent implements OnInit
                         {
                             // Notification
                             // ------------
-                            this.toastyService.error(transltationObject['delete.task.error']);
+                            this.toastyService.error(translationObject['delete.task.error']);
                         });
                 })
                 .catch((cancel: any) => {});
@@ -139,7 +139,7 @@ export class SprintTasksComponent implements OnInit
 
     /**
      * Edition d'une tâche
-     * 
+     *
      * @author Fabien Bellanger
      * @param {number} taskId ID de la tâche
      */

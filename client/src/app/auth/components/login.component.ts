@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit
             })
             .catch((error: string) =>
             {
-                alert(error);
+                console.error(error);
             });
     }
 }

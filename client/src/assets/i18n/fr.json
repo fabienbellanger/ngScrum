@@ -117,5 +117,13 @@
 	"create": "Créer",
 	"new.sprint.success": "Ajout du sprint avec succès",
 	"new.sprint.error": "Erreur lors de l'ajout du sprint",
-	"delete": "Supprimer"
+	"delete.sprint.success": "Suppression du sprint avec succès",
+	"delete.sprint.error": "Erreur lors de la suppression du sprint",
+	"delete": "Supprimer",
+	"error": "Erreur",
+	"success": "Succès",
+	"warning": "Attention",
+	"yes": "Oui",
+	"no": "Non",
+	"want.to.delete.sprint": "Êtes-vous sûr de vouloir supprimer ce sprint ?"
 }
