@@ -547,11 +547,12 @@ a.list-group-item {
         
         &-Add {
             &-Container {
-                display:     flex;
-                align-items: center;
-                color:       $primayColor;
-                font-size:   20px;
-    
+                display:         flex;
+                align-items:     center;
+                justify-content: space-between;
+                color:           $primayColor;
+                font-size:       20px;
+
                 &-Label {
                     padding-left: 5px;
                     font-size:    14px;
