@@ -26,10 +26,10 @@
                     <p class="col-xs-12 col-sm-6 col-md-4">
                         <md-input-container class="width-100">
                             <input mdInput type="text" name="name"
-                                    [placeholder]="'name' | translate"
-                                    formControlName="name"
-                                    maxlength="50"
-                                    autofocus required>
+                                   [placeholder]="'name' | translate"
+                                   formControlName="name"
+                                   maxlength="50"
+                                   autofocus required>
                             <md-hint align="end">{{ parametersFormGroup.get('name').value.length }} / 50</md-hint>
                             <md-error *ngIf="parametersFormGroup.get('name').hasError('required')">
                                 {{ 'required.name' | translate }}
@@ -40,15 +40,15 @@
                 
                 <div class="row">
                     <p class="col-xs-12 col-sm-6 col-md-4">
-                        <md-input-container class="width-100">
-                            <input mdInput type="date" name="startedAt"
-                                [placeholder]="'started.at' | translate"
-                                formControlName="startedAt"
-                                required>
+                        <md-form-field class="width-100">
+                            <input mdInput [mdDatepicker]="picker" [placeholder]="'started.at' | translate"
+                                   formControlName="startedAt" required>
+                            <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+                            <md-datepicker #picker></md-datepicker>
                             <md-error *ngIf="parametersFormGroup.get('startedAt').hasError('required')">
                                 {{ 'required.date.begin' | translate }}
                             </md-error>
-                        </md-input-container>
+                        </md-form-field>
                     </p>
                 </div>
 

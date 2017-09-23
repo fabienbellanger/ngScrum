@@ -28,10 +28,10 @@
                     <p class="col-xs-12 col-sm-6 col-md-4">
                         <md-input-container class="width-100">
                             <input mdInput type="text" name="name"
-                                [placeholder]="'name' | translate"
-                                formControlName="name"
-                                maxlength="100"
-                                autofocus required>
+                                   [placeholder]="'name' | translate"
+                                   formControlName="name"
+                                   maxlength="100"
+                                   autofocus required>
                             <md-hint align="end">{{ taskFormGroup.get('name').value.length }} / 100</md-hint>
                             <md-error *ngIf="taskFormGroup.get('name').hasError('required')">
                                 {{ 'required.name' | translate }}
@@ -44,8 +44,8 @@
                     <p class="col-xs-12 col-sm-6 col-md-4">
                         <md-input-container class="width-100">
                             <textarea mdInput mdTextareaAutosize name="description"
-                                    [placeholder]="'description' | translate"
-                                    [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
+                                      [placeholder]="'description' | translate"
+                                      [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
                         </md-input-container>
                     </p>
                 </div>
@@ -54,11 +54,11 @@
                     <p class="col-xs-12 col-sm-6 col-md-4">
                         <md-input-container class="width-100">
                             <input mdInput type="number" name="duration"
-                                min="0.5" max="35" step="0.5"
-                                [placeholder]="'duration.in.hour' | translate"
-                                formControlName="duration"
-                                [readonly]="id !== 0"
-                                required>
+                                   min="0.5" max="35" step="0.5"
+                                   [placeholder]="'duration.in.hour' | translate"
+                                   formControlName="duration"
+                                   [readonly]="id !== 0"
+                                   required>
                             <span mdSuffix>&nbsp;h</span>
                             <md-error *ngIf="taskFormGroup.get('duration').hasError('required')">
                                 {{ 'required.duration' | translate }}
@@ -70,7 +70,7 @@
                 <div class="row">
                     <p class="col-xs-12 col-sm-6 col-md-4">
                         <md-checkbox color="primary" name="notPlanned"
-                                    [(ngModel)]="notPlanned" [ngModelOptions]="{standalone: true}">
+                                     [(ngModel)]="notPlanned" [ngModelOptions]="{standalone: true}">
                             {{ 'not.planned' | translate }}
                         </md-checkbox>
                     </p>
@@ -86,9 +86,9 @@
                                 *ngFor="let application of applications; let index = index">
                                 <div class="radio-checkbox">
                                     <md-checkbox color="primary" [name]="'application_' + index" [id]="'application_' + index"
-                                                (change)="toggleApplication($event, index, application.id)"
-                                                [ngModel]="applicationsIds[index]"
-                                                [ngModelOptions]="{standalone: true}">
+                                                 (change)="toggleApplication($event, index, application.id)"
+                                                 [ngModel]="applicationsIds[index]"
+                                                 [ngModelOptions]="{standalone: true}">
                                         {{ application.name }}
                                     </md-checkbox>
                                 </div>

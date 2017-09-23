@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { ApiSprintService } from '../../api';
 import { UserService } from '../../auth';
+import { DateService } from '../../shared';
 
 @Component({
     selector:    'sa-sprint-parameters',
@@ -33,13 +34,15 @@ export class SprintParametersComponent implements OnInit
      * @param {UserService}         userService
      * @param {ToastyService}       toastyService
      * @param {TranslateService}    translateService
+     * @param {DateService}         dateService
      */
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
                 private router: Router,
                 private userService: UserService,
                 private toastyService: ToastyService,
-                private translateService: TranslateService)
+                private translateService: TranslateService,
+                private dateService: DateService)
     {
     }
 
@@ -99,7 +102,7 @@ export class SprintParametersComponent implements OnInit
     {
         const data: any = {
             "name":      this.parametersFormGroup.get('name').value,
-            "startedAt": this.parametersFormGroup.get('startedAt').value,
+            "startedAt": this.dateService.toSqlDate(this.parametersFormGroup.get('startedAt').value),
             "usersId":   this.usersInSprint.map(element => element.id),
         };
 
@@ -117,6 +120,8 @@ export class SprintParametersComponent implements OnInit
                 // Jeton pour n'avoir qu'une soumission
                 // ------------------------------------
                 this.formSubmitted = true;
+
+                console.log(data);
 
                 this.apiSprintService.modifySprintParameters(this.sprint.id, data)
                     .then((response: any) =>
