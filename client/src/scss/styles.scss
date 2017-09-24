@@ -121,7 +121,6 @@ input:-webkit-autofill {
     background-size:     cover;
     background-position: center;
     border-radius:       50%;
-    //border:              1px solid $mediumLightColor;
 }
 
 .width-100 {
@@ -143,7 +142,6 @@ input:-webkit-autofill {
         opacity:  0;
 
         + .radio-checkbox-label {
-            //line-height: 1.2;
             cursor:      pointer;
             font-weight: $fontWeightNormal;
 
@@ -312,14 +310,12 @@ label {
     height:      20px !important;
     width:       20px !important;
     font-size:   20px !important;
-    //line-height: inherit !important;
 }
 
 .mat-icon-18px {
     height:      18px !important;
     width:       18px !important;
     font-size:   18px !important;
-    //line-height: inherit !important;
 }
 
 // --------
