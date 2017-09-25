@@ -288,7 +288,7 @@ label {
     font-size: 14px !important;
 }
 
-.md-button-small-width {
+.mat-button-small-width {
     min-width: 30px !important;
     padding:   0px 5px;
 }
@@ -417,13 +417,6 @@ a.list-group-item {
         line-height: 16px;
         font-size:   11px;
     }
-}
-
-// ----------
-// ng2-toasty
-// -----------
-#toasty .toast.toasty-theme-material .toast-text .toast-title {
-    text-transform: none;
 }
 
 // ----------------------
