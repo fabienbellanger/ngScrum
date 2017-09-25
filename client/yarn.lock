@@ -3583,10 +3583,6 @@ ng2-slim-loading-bar@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/ng2-slim-loading-bar/-/ng2-slim-loading-bar-4.0.0.tgz#7256fdde7c058f14955a3ef2e65afafb5b664603"
 
-ngx-modialog@^3.0.3:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/ngx-modialog/-/ngx-modialog-3.0.4.tgz#ea4ada50decd26b491674e128525a353360f8a67"
-
 no-case@^2.2.0:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/no-case/-/no-case-2.3.2.tgz#60b813396be39b3f1288a4c1ed5d1e7d28b464ac"

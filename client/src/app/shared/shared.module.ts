@@ -9,8 +9,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { ChartsModule } from 'ng2-charts';
-import { ModalModule } from 'ngx-modialog';
-import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
 import { MaterialModule } from '../material';
 
 import { DateService } from './services/date.service';
@@ -49,8 +47,6 @@ export function HttpLoaderFactory(http: HttpClient)
         }),
         SlimLoadingBarModule.forRoot(),
         ChartsModule,
-        ModalModule.forRoot(),
-        BootstrapModalModule,
         MaterialModule,
     ],
     declarations: [

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MdSnackBar } from '@angular/material';
+import { MdDialog, MD_DIALOG_DATA, MdSnackBar } from '@angular/material';
 
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { TranslateService } from '@ngx-translate/core';
+
+import { SprintTaskDeleteDialogComponent } from '../dialogs/sprint-task-delete-dialog.component';
 
 import { ApiSprintService } from '../../../api';
 import { SprintService } from '../../services/sprint.service';
@@ -27,6 +28,7 @@ export class SprintTasksComponent implements OnInit
      * @param {SprintService}       sprintService
      * @param {SprintChartsService} sprintChartsService
      * @param {MdSnackBar}          snackBar
+     * @param {MdDialog}            dialog
      * @param {Router}              router
      * @param {TranslateService}    translateService
      */
@@ -35,9 +37,9 @@ export class SprintTasksComponent implements OnInit
                 private sprintService: SprintService,
                 private sprintChartsService: SprintChartsService,
                 private snackBar: MdSnackBar,
+                private dialog: MdDialog,
                 private router: Router,
-                private translateService: TranslateService,
-                private modal: Modal)
+                private translateService: TranslateService)
     {
     }
 
@@ -89,31 +91,25 @@ export class SprintTasksComponent implements OnInit
      */
     private deleteTask(taskId: number): void
     {
-        this.translateService.get([
-            'delete.task.confirm.title',
-            'delete.task.confirm.body',
-            'delete.task.success',
-            'delete.task.error',
-            'ok',
-            'cancel',
-        ]).subscribe((translationObject: Object) =>
+        const dialog = this.dialog.open(SprintTaskDeleteDialogComponent, {
+            data: {
+                confirm: true,
+            },
+            disableClose: false,
+        });
+
+        dialog.afterClosed().subscribe((result: any) =>
         {
-            this.modal.confirm()
-                .size('sm')
-                .isBlocking(true)
-                .showClose(true)
-                .keyboard(27)
-                .okBtn(translationObject['ok'])
-                .cancelBtn(translationObject['cancel'])
-                .title(translationObject['delete.task.confirm.title'])
-                .body(translationObject['delete.task.confirm.body'])
-                .open()
-                .catch((error: any) => console.error('ERROR: ' + error))
-                .then((dialog: any) =>
-                {
-                    return dialog.result;
-                })
-                .then((result: any) =>
+            this.translateService.get([
+                'delete.task.confirm.title',
+                'delete.task.confirm.body',
+                'delete.task.success',
+                'delete.task.error',
+                'ok',
+                'cancel',
+            ]).subscribe((translationObject: Object) =>
+            {
+                if (result === true)
                 {
                     this.apiSprintService.deleteTask(this.sprintId, taskId)
                         .then(() =>
@@ -142,8 +138,8 @@ export class SprintTasksComponent implements OnInit
                                     duration: 3000,
                                 });
                         });
-                })
-                .catch((cancel: any) => {});
+                }
+            });
         });
     }
 

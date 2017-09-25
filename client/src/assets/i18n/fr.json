@@ -125,5 +125,6 @@
 	"warning": "Attention",
 	"yes": "Oui",
 	"no": "Non",
-	"want.to.delete.sprint": "Êtes-vous sûr de vouloir supprimer ce sprint ?"
+	"want.to.delete.sprint": "Êtes-vous sûr de vouloir supprimer ce sprint ?",
+	"want.to.delete.task": "Êtes-vous sûr de vouloir supprimer cette tâche ?"
 }

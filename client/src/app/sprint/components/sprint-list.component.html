@@ -17,13 +17,12 @@
                 [routerLink]="['/sprints/new']"
                 routerLinkActive="true"
                 [routerLinkActiveOptions]="{exact: false}">
-            <!--<md-icon>add</md-icon>-->
             {{ 'new.sprint' | translate }}
         </button>
     </div>
 
     <div class="margin-bottom-20px">
-        <md-card *ngFor="let sprint of sprints" class="margin-top-20px pointer"
+        <md-card *ngFor="let sprint of sprints" class="SprintsList-Sprint"
                 (click)="redirectToTasksManagement(sprint)">
             <md-card-header>
                 <md-card-title>
@@ -31,7 +30,7 @@
                         {{ sprint.name }}
                     </h4>
 
-                    <button md-mini-fab [mdMenuTriggerFor]="menu" class="SprintsList-Menu"
+                    <button md-mini-fab [mdMenuTriggerFor]="menu" class="SprintsList-Sprint-Menu"
                             (click)="$event.stopPropagation()">
                         <md-icon>more_vert</md-icon>
                     </button>
