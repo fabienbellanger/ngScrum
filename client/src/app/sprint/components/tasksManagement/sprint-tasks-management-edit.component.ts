@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MdSnackBar } from '@angular/material';
 
-import { ToastyService } from 'ng2-toasty';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ApiSprintService, ApiTaskService } from '../../../api';
@@ -34,7 +34,7 @@ export class SprintTasksManagementEditComponent implements OnInit
      * @param {ApiSprintService}                apiSprintService
      * @param {ActivatedRoute}                  route
      * @param {Router}                          router
-     * @param {ToastyService}                   toastyService
+     * @param {MdSnackBar}                      snackBar
      * @param {TranslateService}                translateService
      * @param {SprintTasksManagementService}    sprintTasksManagementService
      * @param {ApiTaskService}                  apiTaskService
@@ -42,7 +42,7 @@ export class SprintTasksManagementEditComponent implements OnInit
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
                 private router: Router,
-                private toastyService: ToastyService,
+                private snackBar: MdSnackBar,
                 private translateService: TranslateService,
                 private apiTaskService: ApiTaskService,
                 private sprintTasksManagementService: SprintTasksManagementService)
@@ -146,34 +146,37 @@ export class SprintTasksManagementEditComponent implements OnInit
 
                     for (const taskId in this.sprint.tasks)
                     {
-                        // TODO: Doit-on proposer une tâche terminée ?
-
-                        // On n'ajoute pas les tâches déjà faites par l'utilisateur
-                        // --------------------------------------------------------
-                        taskUserDone  = false;
-                        taskUserIndex = 0;
-                        while (!(taskUserIndex === taskUserLength || taskUserDone))
+                        if (this.sprint.tasks.hasOwnProperty(taskId))
                         {
-                            if (this.sprint.tasksUsers[taskUserIndex].userId === this.userId &&
-                                this.sprint.tasksUsers[taskUserIndex].taskId ===  +taskId)
+                            // TODO: Doit-on proposer une tâche terminée ?
+
+                            // On n'ajoute pas les tâches déjà faites par l'utilisateur
+                            // --------------------------------------------------------
+                            taskUserDone  = false;
+                            taskUserIndex = 0;
+                            while (!(taskUserIndex === taskUserLength || taskUserDone))
                             {
-                                taskUserDone = true;
+                                if (this.sprint.tasksUsers[taskUserIndex].userId === this.userId &&
+                                    this.sprint.tasksUsers[taskUserIndex].taskId ===  +taskId)
+                                {
+                                    taskUserDone = true;
+                                }
+
+                                taskUserIndex++;
                             }
 
-                            taskUserIndex++;
-                        }
+                            if (!taskUserDone)
+                            {
+                                label = this.sprint.tasks[taskId].name;
+                                label += (this.sprint.tasks[taskId].remainingDuration !== 0)
+                                    ? ' (' + this.sprint.tasks[taskId].remainingDuration + ' h)'
+                                    : ' (Terminée)';
 
-                        if (!taskUserDone)
-                        {
-                            label = this.sprint.tasks[taskId].name;
-                            label += (this.sprint.tasks[taskId].remainingDuration !== 0)
-                                ? ' (' + this.sprint.tasks[taskId].remainingDuration + ' h)'
-                                : ' (Terminée)';
-
-                            this.tasks.push({
-                                'id':    this.sprint.tasks[taskId].id,
-                                'label': label,
-                            });
+                                this.tasks.push({
+                                    'id':    this.sprint.tasks[taskId].id,
+                                    'label': label,
+                                });
+                            }
                         }
                     }
                 }
@@ -220,10 +223,16 @@ export class SprintTasksManagementEditComponent implements OnInit
     {
         // Notification
         // ------------
-        this.translateService.get('get.data.error').subscribe((msg: string) =>
-        {
-            this.toastyService.error(msg);
-        });
+        this.translateService.get(['get.data.error', 'error'])
+            .subscribe((translationObject: Object) =>
+            {
+                this.snackBar.open(
+                    translationObject['get.data.error'],
+                    translationObject['error'],
+                    {
+                        duration: 3000,
+                    });
+            });
 
         // Redirection
         // -----------
@@ -259,10 +268,16 @@ export class SprintTasksManagementEditComponent implements OnInit
             {
                 // Notification
                 // ------------
-                this.translateService.get('add.taskuser.success').subscribe((msg: string) =>
-                {
-                    this.toastyService.success(msg);
-                });
+                this.translateService.get(['add.taskuser.success', 'success'])
+                    .subscribe((translationObject: Object) =>
+                    {
+                        this.snackBar.open(
+                            translationObject['add.taskuser.success'],
+                            translationObject['success'],
+                            {
+                                duration: 3000,
+                            });
+                    });
 
                 // Redirection
                 // -----------
@@ -272,10 +287,16 @@ export class SprintTasksManagementEditComponent implements OnInit
             {
                 // Notification
                 // ------------
-                this.translateService.get('add.taskuser.success').subscribe((msg: string) =>
-                {
-                    this.toastyService.error(msg);
-                });
+                this.translateService.get(['add.taskuser.error', 'error'])
+                    .subscribe((translationObject: Object) =>
+                    {
+                        this.snackBar.open(
+                            translationObject['add.taskuser.error'],
+                            translationObject['error'],
+                            {
+                                duration: 3000,
+                            });
+                    });
             });
     }
 }

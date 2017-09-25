@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MdSnackBar } from '@angular/material';
 
-import { ToastyService } from 'ng2-toasty';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ApiSprintService } from '../../api';
@@ -27,15 +27,15 @@ export class SprintNewComponent implements OnInit
      * @param {Router}              router
      * @param {UserService}         userService
      * @param {DateService}         dateService
-     * @param {ToastyService}       toastyService
      * @param {TranslateService}    translateService
+     * @param {MdSnackBar}          snackBar
      */
     constructor(private apiSprintService: ApiSprintService,
                 private router: Router,
                 private userService: UserService,
                 private dateService: DateService,
-                private toastyService: ToastyService,
-                private translateService: TranslateService)
+                private translateService: TranslateService,
+                private snackBar: MdSnackBar)
     {
     }
 
@@ -88,10 +88,16 @@ export class SprintNewComponent implements OnInit
                 {
                     // Notification
                     // ------------
-                    this.translateService.get('new.sprint.success').subscribe((msg: string) =>
-                    {
-                        this.toastyService.success(msg);
-                    });
+                    this.translateService.get(['new.sprint.success', 'success'])
+                        .subscribe((translationObject: Object) =>
+                        {
+                            this.snackBar.open(
+                                translationObject['new.sprint.success'],
+                                translationObject['success'],
+                                {
+                                    duration: 3000,
+                                });
+                        });
 
                     // Redirection
                     // -----------
@@ -105,10 +111,16 @@ export class SprintNewComponent implements OnInit
                 {
                     // Notification
                     // ------------
-                    this.translateService.get('new.sprint.error').subscribe((msg: string) =>
-                    {
-                        this.toastyService.error(msg);
-                    });
+                    this.translateService.get(['new.sprint.error', 'error'])
+                        .subscribe((translationObject: Object) =>
+                        {
+                            this.snackBar.open(
+                                translationObject['new.sprint.error'],
+                                translationObject['error'],
+                                {
+                                    duration: 3000,
+                                });
+                        });
 
                     // Jeton pour n'avoir qu'une soumission
                     // ------------------------------------

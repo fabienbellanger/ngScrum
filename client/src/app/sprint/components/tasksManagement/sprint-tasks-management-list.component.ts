@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ToastyService } from 'ng2-toasty';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ApiSprintService } from '../../../api';
@@ -33,7 +32,6 @@ export class SprintTasksManagementListComponent implements OnInit
      * @param {ApiSprintService}                apiSprintService
      * @param {ActivatedRoute}                  route
      * @param {Router}                          router
-     * @param {ToastyService}                   toastyService
      * @param {TranslateService}                translateService
      * @param {SprintTasksManagementService}    sprintTasksManagementService
      * @param {ToolboxService}                  toolboxService
@@ -41,7 +39,6 @@ export class SprintTasksManagementListComponent implements OnInit
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
                 private router: Router,
-                private toastyService: ToastyService,
                 private translateService: TranslateService,
                 private sprintTasksManagementService: SprintTasksManagementService,
                 private toolboxService: ToolboxService)

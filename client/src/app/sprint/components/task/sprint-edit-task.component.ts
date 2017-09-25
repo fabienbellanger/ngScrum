@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MdSnackBar } from '@angular/material';
 
-import { ToastyService } from 'ng2-toasty';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ApiSprintService } from '../../../api';
@@ -40,7 +40,7 @@ export class SprintEditTaskComponent implements OnInit
      * @param {ActivatedRoute}      route
      * @param {SprintService}       sprintService
      * @param {StorageService}      storageService
-     * @param {ToastyService}       toastyService
+     * @param {MdSnackBar}          snackBar
      * @param {Router}              router
      * @param {TranslateService}    translateService
      */
@@ -48,7 +48,7 @@ export class SprintEditTaskComponent implements OnInit
                 private route: ActivatedRoute,
                 private sprintService: SprintService,
                 private storageService: StorageService,
-                private toastyService: ToastyService,
+                private snackBar: MdSnackBar,
                 private router: Router,
                 private translateService: TranslateService)
     {
@@ -144,10 +144,16 @@ export class SprintEditTaskComponent implements OnInit
 
                     // Notification
                     // ------------
-                    this.translateService.get('get.task.error').subscribe((msg: string) =>
-                    {
-                        this.toastyService.error(msg);
-                    });
+                    this.translateService.get(['get.task.error', 'error'])
+                        .subscribe((translationObject: Object) =>
+                        {
+                            this.snackBar.open(
+                                translationObject['get.task.error'],
+                                translationObject['error'],
+                                {
+                                    duration: 3000,
+                                });
+                        });
                 });
         }
     }
@@ -205,10 +211,16 @@ export class SprintEditTaskComponent implements OnInit
                 {
                     // Notification
                     // ------------
-                    this.translateService.get('add.task.success').subscribe((msg: string) =>
-                    {
-                        this.toastyService.success(msg);
-                    });
+                    this.translateService.get(['add.task.success', 'success'])
+                        .subscribe((translationObject: Object) =>
+                        {
+                            this.snackBar.open(
+                                translationObject['add.task.success'],
+                                translationObject['success'],
+                                {
+                                    duration: 3000,
+                                });
+                        });
 
                     // Redirection
                     // -----------
@@ -222,10 +234,16 @@ export class SprintEditTaskComponent implements OnInit
                 {
                     // Notification
                     // ------------
-                    this.translateService.get('add.task.error').subscribe((msg: string) =>
-                    {
-                        this.toastyService.error(msg);
-                    });
+                    this.translateService.get(['add.task.error', 'error'])
+                        .subscribe((translationObject: Object) =>
+                        {
+                            this.snackBar.open(
+                                translationObject['add.task.error'],
+                                translationObject['error'],
+                                {
+                                    duration: 3000,
+                                });
+                        });
 
                     // Jeton pour n'avoir qu'une soumission
                     // ------------------------------------
@@ -259,10 +277,16 @@ export class SprintEditTaskComponent implements OnInit
                 {
                     // Notification
                     // ------------
-                    this.translateService.get('modify.task.success').subscribe((msg: string) =>
-                    {
-                        this.toastyService.success(msg);
-                    });
+                    this.translateService.get(['modify.task.success', 'success'])
+                        .subscribe((translationObject: Object) =>
+                        {
+                            this.snackBar.open(
+                                translationObject['modify.task.success'],
+                                translationObject['success'],
+                                {
+                                    duration: 3000,
+                                });
+                        });
 
                     // Redirection
                     // -----------
@@ -276,10 +300,16 @@ export class SprintEditTaskComponent implements OnInit
                 {
                     // Notification
                     // ------------
-                    this.translateService.get('modify.task.error').subscribe((msg: string) =>
-                    {
-                        this.toastyService.error(msg);
-                    });
+                    this.translateService.get(['modify.task.error', 'error'])
+                        .subscribe((translationObject: Object) =>
+                        {
+                            this.snackBar.open(
+                                translationObject['modify.task.error'],
+                                translationObject['error'],
+                                {
+                                    duration: 3000,
+                                });
+                        });
 
                     // Jeton pour n'avoir qu'une soumission
                     // ------------------------------------

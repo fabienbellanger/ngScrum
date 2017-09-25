@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MdSnackBar } from '@angular/material';
 
-import { ToastyService } from 'ng2-toasty';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ApiSprintService } from '../../api';
@@ -32,7 +32,7 @@ export class SprintParametersComponent implements OnInit
      * @param {ActivatedRoute}      route
      * @param {Router}              router
      * @param {UserService}         userService
-     * @param {ToastyService}       toastyService
+     * @param {MdSnackBar}          snackBar
      * @param {TranslateService}    translateService
      * @param {DateService}         dateService
      */
@@ -40,7 +40,7 @@ export class SprintParametersComponent implements OnInit
                 private route: ActivatedRoute,
                 private router: Router,
                 private userService: UserService,
-                private toastyService: ToastyService,
+                private snackBar: MdSnackBar,
                 private translateService: TranslateService,
                 private dateService: DateService)
     {
@@ -108,10 +108,16 @@ export class SprintParametersComponent implements OnInit
 
         if (data.usersId.length === 0)
         {
-            this.translateService.get('at.least.one.user.must.be.enter').subscribe((msg: string) =>
-            {
-                this.toastyService.error(msg);
-            });
+            this.translateService.get(['at.least.one.user.must.be.enter', 'error'])
+                .subscribe((translationObject: Object) =>
+                {
+                    this.snackBar.open(
+                        translationObject['at.least.one.user.must.be.enter'],
+                        translationObject['error'],
+                        {
+                            duration: 3000,
+                        });
+                });
         }
         else
         {
@@ -128,10 +134,16 @@ export class SprintParametersComponent implements OnInit
                     {
                         // Notification
                         // ------------
-                        this.translateService.get('modify.sprint.parameters.success').subscribe((msg: string) =>
-                        {
-                            this.toastyService.success(msg);
-                        });
+                        this.translateService.get(['modify.sprint.parameters.success', 'success'])
+                            .subscribe((translationObject: Object) =>
+                            {
+                                this.snackBar.open(
+                                    translationObject['modify.sprint.parameters.success'],
+                                    translationObject['success'],
+                                    {
+                                        duration: 3000,
+                                    });
+                            });
 
                         // Redirection
                         // -----------
@@ -145,10 +157,16 @@ export class SprintParametersComponent implements OnInit
                     {
                         // Notification
                         // ------------
-                        this.translateService.get('modify.sprint.parameters.error').subscribe((msg: string) =>
-                        {
-                            this.toastyService.error(msg);
-                        });
+                        this.translateService.get(['modify.sprint.parameters.error', 'error'])
+                            .subscribe((translationObject: Object) =>
+                            {
+                                this.snackBar.open(
+                                    translationObject['modify.sprint.parameters.error'],
+                                    translationObject['error'],
+                                    {
+                                        duration: 3000,
+                                    });
+                            });
 
                         // Jeton pour n'avoir qu'une soumission
                         // ------------------------------------

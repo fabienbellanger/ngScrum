@@ -3583,10 +3583,6 @@ ng2-slim-loading-bar@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/ng2-slim-loading-bar/-/ng2-slim-loading-bar-4.0.0.tgz#7256fdde7c058f14955a3ef2e65afafb5b664603"
 
-ng2-toasty@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/ng2-toasty/-/ng2-toasty-4.0.3.tgz#ea78ef8d18757d41ebaba11bd9f90a543f58fd7a"
-
 ngx-modialog@^3.0.3:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/ngx-modialog/-/ngx-modialog-3.0.4.tgz#ea4ada50decd26b491674e128525a353360f8a67"

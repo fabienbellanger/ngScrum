@@ -20,7 +20,6 @@
       "prefix": "app",
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-        "../node_modules/ng2-toasty/style.css",
         "../node_modules/ng2-slim-loading-bar/style.css",
         "../node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
         "scss/variables.scss",

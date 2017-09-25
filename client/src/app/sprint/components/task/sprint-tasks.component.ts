@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MdSnackBar } from '@angular/material';
 
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
-import { ToastyService } from 'ng2-toasty';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ApiSprintService } from '../../../api';
@@ -26,7 +26,7 @@ export class SprintTasksComponent implements OnInit
      * @param {ActivatedRoute}      route
      * @param {SprintService}       sprintService
      * @param {SprintChartsService} sprintChartsService
-     * @param {ToastyService}       toastyService
+     * @param {MdSnackBar}          snackBar
      * @param {Router}              router
      * @param {TranslateService}    translateService
      */
@@ -34,7 +34,7 @@ export class SprintTasksComponent implements OnInit
                 private route: ActivatedRoute,
                 private sprintService: SprintService,
                 private sprintChartsService: SprintChartsService,
-                private toastyService: ToastyService,
+                private snackBar: MdSnackBar,
                 private router: Router,
                 private translateService: TranslateService,
                 private modal: Modal)
@@ -120,7 +120,12 @@ export class SprintTasksComponent implements OnInit
                         {
                             // Notification
                             // ------------
-                            this.toastyService.success(translationObject['delete.task.success']);
+                            this.snackBar.open(
+                                translationObject['delete.task.success'],
+                                translationObject['success'],
+                                {
+                                    duration: 3000,
+                                });
 
                             // Rechargement de la vue
                             // ----------------------
@@ -130,7 +135,12 @@ export class SprintTasksComponent implements OnInit
                         {
                             // Notification
                             // ------------
-                            this.toastyService.error(translationObject['delete.task.error']);
+                            this.snackBar.open(
+                                translationObject['delete.task.error'],
+                                translationObject['error'],
+                                {
+                                    duration: 3000,
+                                });
                         });
                 })
                 .catch((cancel: any) => {});

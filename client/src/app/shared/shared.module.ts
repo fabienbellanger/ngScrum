@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ToastyModule } from 'ng2-toasty';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { ChartsModule } from 'ng2-charts';
 import { ModalModule } from 'ngx-modialog';
@@ -48,7 +47,6 @@ export function HttpLoaderFactory(http: HttpClient)
                 deps:       [HttpClient],
             }
         }),
-        ToastyModule.forRoot(),
         SlimLoadingBarModule.forRoot(),
         ChartsModule,
         ModalModule.forRoot(),
@@ -77,7 +75,6 @@ export function HttpLoaderFactory(http: HttpClient)
         ReactiveFormsModule,
         RouterModule,
         TranslateModule,
-        ToastyModule,
         SlimLoadingBarModule,
         ChartsModule,
         MaterialModule,
@@ -89,9 +86,7 @@ export function HttpLoaderFactory(http: HttpClient)
         DebugPipe,
         LoadingComponent,
     ],
-    entryComponents: [
-        // CustomModal,
-    ],
+    entryComponents: [],
 })
 
 export class SharedModule
