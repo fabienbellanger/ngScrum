@@ -22,11 +22,11 @@
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "../node_modules/ng2-slim-loading-bar/style.css",
         "../node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+        "scss/material.scss",
         "scss/variables.scss",
         "scss/styles.scss",
         "scss/auth.scss",
-        "scss/layout.scss",
-        "scss/material.scss"
+        "scss/layout.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
