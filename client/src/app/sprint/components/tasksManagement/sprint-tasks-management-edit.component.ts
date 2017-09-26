@@ -95,7 +95,7 @@ export class SprintTasksManagementEditComponent implements OnInit
     {
         // Initialisation du sprint
         // ------------------------
-        //this.sprintTasksManagementService.init(this.sprintId)
+        // this.sprintTasksManagementService.init(this.sprintId)
         //    .then(() =>
         //    {
                 this.sprint = this.sprintTasksManagementService.sprint;
