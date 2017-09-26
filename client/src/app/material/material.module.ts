@@ -18,6 +18,8 @@ import {
     MatSnackBarModule,
 } from '@angular/material';
 
+import { CustomSnackBarComponent } from './components/custom-snack-bar.component';
+
 @NgModule({
     imports:      [
         CommonModule,
@@ -37,6 +39,7 @@ import {
         MatSnackBarModule,
     ],
     declarations: [
+        CustomSnackBarComponent,
     ],
     providers:    [
     ],
@@ -55,6 +58,7 @@ import {
         MatIconModule,
         MatMenuModule,
         MatSnackBarModule,
+        CustomSnackBarComponent,
     ],
 })
 

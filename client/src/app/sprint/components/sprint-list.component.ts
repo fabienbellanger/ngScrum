@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog, MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -25,7 +25,7 @@ export class SprintListComponent implements OnInit
      * @param {ApiSprintService} apiSprintService
      * @param {TranslateService} translateService
      * @param {Router}           router
-     * @param {MatDialog}         dialog
+     * @param {MatDialog}        dialog
      * @param {MatSnackBar}      snackBar
      */
     constructor(private apiSprintService: ApiSprintService,
@@ -115,7 +115,7 @@ export class SprintListComponent implements OnInit
             {
                 if (result === true)
                 {
-                    /*this.apiSprintService.deleteSprint(sprint.id)
+                    this.apiSprintService.deleteSprint(sprint.id)
                         .then(() =>
                         {
                             // Rechargement des données
@@ -139,23 +139,7 @@ export class SprintListComponent implements OnInit
                                 {
                                     duration: 3000,
                                 });
-                        });*/
-                }
-                else
-                {
-                    const snackBarRef: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
-                        translationObject['delete.sprint.error'],
-                        translationObject['error'],
-                        {
-                            duration:           4000,
-                            horizontalPosition: 'end',
-                            verticalPosition:   'bottom',
                         });
-
-                    snackBarRef.onAction().subscribe(() =>
-                    {
-                        console.log('The snack-bar action was triggered!');
-                    });
                 }
             });
         });

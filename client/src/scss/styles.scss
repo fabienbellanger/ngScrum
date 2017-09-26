@@ -318,6 +318,13 @@ label {
     font-size:   18px !important;
 }
 
+.mat-card > .mat-toolbar {
+    margin:     -24px 0 24px -24px !important;
+    width:      calc(100% + 48px);
+    height:     48px;
+    min-height: 48px;
+  }
+
 // --------
 
 table {
@@ -424,15 +431,29 @@ a.list-group-item {
 // ----------------------
 .SprintsList {
     &-Sprint {
+        padding:    12px !important;
         margin-top: 20px;
-        cursor: pointer;
+        cursor:     pointer;
 
-        &-Menu {
+        &-Header {
+            .mat-card-header-text {
+                width: 100%;
+            }
+
+            &-title {
+                display:     flex !important;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+            }
+        }
+
+        /*&-Menu {
             position: absolute !important;
             top:      20px !important;
             right:    20px !important;
             z-index:  100 !important;
-        }
+        }*/
 
         &-infos {
             color: $mediumDarkColor;

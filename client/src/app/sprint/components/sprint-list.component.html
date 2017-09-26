@@ -25,44 +25,43 @@
         <md-card class="SprintsList-Sprint"
                  *ngFor="let sprint of sprints"
                  (click)="redirectToTasksManagement(sprint)">
-            <md-card-header>
-                <md-card-title>
-                    <h4 class="primary-color">
-                        {{ sprint.name }}
-                    </h4>
-
-                    <button md-mini-fab [mdMenuTriggerFor]="menu" class="SprintsList-Sprint-Menu"
-                            (click)="$event.stopPropagation()">
-                        <md-icon>more_vert</md-icon>
-                    </button>
-                    <md-menu #menu="mdMenu">
-                        <button md-menu-item
-                                [routerLink]="['/sprints', sprint.id, 'tasks']"
-                                routerLinkActive="true"
-                                [routerLinkActiveOptions]="{exact: false}">
-                            <md-icon>list</md-icon>
-                            <span>{{ 'tasks.list' | translate }}</span>
+            <md-card-header class="SprintsList-Sprint-Header">
+                <md-card-title color="primary" class="SprintsList-Sprint-Header-title">
+                    <h4 class="accent-color">{{ sprint.name }}</h4>
+                    <div>
+                        <button md-icon-button [mdMenuTriggerFor]="menu" class="SprintsList-Sprint-Menu"
+                                (click)="$event.stopPropagation()">
+                            <md-icon>more_vert</md-icon>
                         </button>
-                        <button md-menu-item
-                                [routerLink]="['/sprints', sprint.id, 'statistics']"
-                                routerLinkActive="true"
-                                [routerLinkActiveOptions]="{exact: false}">
-                            <md-icon>show_chart</md-icon>
-                            <span>{{ 'statistics' | translate }}</span>
-                        </button>
-                        <button md-menu-item
-                                [routerLink]="['/sprints', sprint.id, 'parameters']"
-                                routerLinkActive="true"
-                                [routerLinkActiveOptions]="{exact: false}">
-                            <md-icon>settings</md-icon>
-                            <span>{{ 'parameters' | translate }}</span>
-                        </button>
-                        <button md-menu-item *ngIf="sprint.finishedAt === null"
-                                (click)="deleteSprint(sprint)">
-                            <md-icon>delete</md-icon>
-                            <span>{{ 'delete' | translate }}</span>
-                        </button>
-                    </md-menu>
+                        <md-menu #menu="mdMenu">
+                            <button md-menu-item
+                                    [routerLink]="['/sprints', sprint.id, 'tasks']"
+                                    routerLinkActive="true"
+                                    [routerLinkActiveOptions]="{exact: false}">
+                                <md-icon>list</md-icon>
+                                <span>{{ 'tasks.list' | translate }}</span>
+                            </button>
+                            <button md-menu-item
+                                    [routerLink]="['/sprints', sprint.id, 'statistics']"
+                                    routerLinkActive="true"
+                                    [routerLinkActiveOptions]="{exact: false}">
+                                <md-icon>show_chart</md-icon>
+                                <span>{{ 'statistics' | translate }}</span>
+                            </button>
+                            <button md-menu-item
+                                    [routerLink]="['/sprints', sprint.id, 'parameters']"
+                                    routerLinkActive="true"
+                                    [routerLinkActiveOptions]="{exact: false}">
+                                <md-icon>settings</md-icon>
+                                <span>{{ 'parameters' | translate }}</span>
+                            </button>
+                            <button md-menu-item *ngIf="sprint.finishedAt === null"
+                                    (click)="deleteSprint(sprint)">
+                                <md-icon>delete</md-icon>
+                                <span>{{ 'delete' | translate }}</span>
+                            </button>
+                        </md-menu>
+                    </div>
                 </md-card-title>
             </md-card-header>
 
@@ -93,9 +92,9 @@
                         <div class="col-xs-12 text-center small">
                             <div>{{ sprint.progressPercent | percentFr }}</div>
                             <md-progress-bar [color]="primary"
-                                            [mode]="determinate"
-                                            [value]="sprint.progressPercent"
-                                            [bufferValue]="bufferValue">
+                                             [mode]="determinate"
+                                             [value]="sprint.progressPercent"
+                                             [bufferValue]="bufferValue">
                             </md-progress-bar>
                         </div>
                     </div>
@@ -103,7 +102,7 @@
             </md-card-content>
         </md-card>
         
-        <md-card *ngIf="sprints?.length === 0">
+        <md-card *ngIf="sprints?.length === 0" class="margin-top-20px">
             <md-card-content>
                 {{ 'no.sprint' | translate }}
             </md-card-content>
