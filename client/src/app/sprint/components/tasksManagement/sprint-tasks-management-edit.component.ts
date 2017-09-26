@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -34,7 +34,7 @@ export class SprintTasksManagementEditComponent implements OnInit
      * @param {ApiSprintService}                apiSprintService
      * @param {ActivatedRoute}                  route
      * @param {Router}                          router
-     * @param {MdSnackBar}                      snackBar
+     * @param {MatSnackBar}                     snackBar
      * @param {TranslateService}                translateService
      * @param {SprintTasksManagementService}    sprintTasksManagementService
      * @param {ApiTaskService}                  apiTaskService
@@ -42,7 +42,7 @@ export class SprintTasksManagementEditComponent implements OnInit
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
                 private router: Router,
-                private snackBar: MdSnackBar,
+                private snackBar: MatSnackBar,
                 private translateService: TranslateService,
                 private apiTaskService: ApiTaskService,
                 private sprintTasksManagementService: SprintTasksManagementService)

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -28,14 +28,14 @@ export class SprintNewComponent implements OnInit
      * @param {UserService}         userService
      * @param {DateService}         dateService
      * @param {TranslateService}    translateService
-     * @param {MdSnackBar}          snackBar
+     * @param {MatSnackBar}         snackBar
      */
     constructor(private apiSprintService: ApiSprintService,
                 private router: Router,
                 private userService: UserService,
                 private dateService: DateService,
                 private translateService: TranslateService,
-                private snackBar: MdSnackBar)
+                private snackBar: MatSnackBar)
     {
     }
 

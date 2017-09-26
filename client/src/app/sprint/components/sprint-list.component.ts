@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog, MD_DIALOG_DATA, MdSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -25,14 +25,14 @@ export class SprintListComponent implements OnInit
      * @param {ApiSprintService} apiSprintService
      * @param {TranslateService} translateService
      * @param {Router}           router
-     * @param {MdDialog}         dialog
-     * @param {MdSnackBar}       snackBar
+     * @param {MatDialog}         dialog
+     * @param {MatSnackBar}      snackBar
      */
     constructor(private apiSprintService: ApiSprintService,
                 private translateService: TranslateService,
                 private router: Router,
-                private dialog: MdDialog,
-                private snackBar: MdSnackBar)
+                private dialog: MatDialog,
+                private snackBar: MatSnackBar)
     {
     }
 
@@ -115,7 +115,7 @@ export class SprintListComponent implements OnInit
             {
                 if (result === true)
                 {
-                    this.apiSprintService.deleteSprint(sprint.id)
+                    /*this.apiSprintService.deleteSprint(sprint.id)
                         .then(() =>
                         {
                             // Rechargement des données
@@ -139,7 +139,23 @@ export class SprintListComponent implements OnInit
                                 {
                                     duration: 3000,
                                 });
+                        });*/
+                }
+                else
+                {
+                    const snackBarRef: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
+                        translationObject['delete.sprint.error'],
+                        translationObject['error'],
+                        {
+                            duration:           4000,
+                            horizontalPosition: 'end',
+                            verticalPosition:   'bottom',
                         });
+
+                    snackBarRef.onAction().subscribe(() =>
+                    {
+                        console.log('The snack-bar action was triggered!');
+                    });
                 }
             });
         });

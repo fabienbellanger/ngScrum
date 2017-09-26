@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MdDialog, MD_DIALOG_DATA, MdSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -27,8 +27,8 @@ export class SprintTasksComponent implements OnInit
      * @param {ActivatedRoute}      route
      * @param {SprintService}       sprintService
      * @param {SprintChartsService} sprintChartsService
-     * @param {MdSnackBar}          snackBar
-     * @param {MdDialog}            dialog
+     * @param {MatSnackBar}         snackBar
+     * @param {MatDialog}           dialog
      * @param {Router}              router
      * @param {TranslateService}    translateService
      */
@@ -36,8 +36,8 @@ export class SprintTasksComponent implements OnInit
                 private route: ActivatedRoute,
                 private sprintService: SprintService,
                 private sprintChartsService: SprintChartsService,
-                private snackBar: MdSnackBar,
-                private dialog: MdDialog,
+                private snackBar: MatSnackBar,
+                private dialog: MatDialog,
                 private router: Router,
                 private translateService: TranslateService)
     {
