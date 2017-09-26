@@ -27,7 +27,7 @@ export class LayoutSidebarService
             'sprints.list',
             'new.sprint.sidebar',
         ]).subscribe((transltationObject: Object) =>
-		{
+        {
             this.items = [
                 {
                     'label':      transltationObject['sprints.list'],

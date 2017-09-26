@@ -56,12 +56,12 @@ export class LayoutSidebarToggleDirective implements OnChanges
     public ngOnChanges(): void
     {
         if (this.state === 'open')
-		{
+        {
             this.el.nativeElement.style.width   = this.width + 'px';
-		}
-		else
-		{
-            this.el.nativeElement.style.width   = '0';
-		}
+        }
+        else
+        {
+            this.el.nativeElement.style.width   = '0px';
+        }
     }
 }
