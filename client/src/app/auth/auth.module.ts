@@ -12,27 +12,27 @@ import { UserService } from './services/user.service';
 
 import { LoginComponent } from './components/login.component';
 import { LogoutComponent } from './components/logout.component';
+import { ForgottenPasswordComponent } from './components/forgotten-password.component';
 
 @NgModule({
     imports:      [
         CommonModule,
         HttpModule,
         RouterModule,
-		FormsModule,
-		SharedModule,
+        FormsModule,
+        SharedModule,
     ],
     declarations: [
-		LoginComponent,
+        LoginComponent,
         LogoutComponent,
+        ForgottenPasswordComponent,
     ],
     providers:    [
-		AuthService,
+        AuthService,
         AuthGuardService,
         UserService,
     ],
     exports:      [
-		LoginComponent,
-        LogoutComponent,
     ],
 })
 

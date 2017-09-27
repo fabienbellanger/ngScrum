@@ -16,13 +16,13 @@ import { DateService } from '../../shared';
 
 export class SprintParametersComponent implements OnInit
 {
-    private sprint: any;
-    private usersInSprint: any[];
-    private usersNotInSprint: any[];
-    private parametersFormGroup: FormGroup;
-    private loading: boolean       = true;
-    private userIndexToAdd: number = -1;
-    private formSubmitted: boolean = false;
+    public sprint: any;
+    public usersInSprint: any[];
+    public usersNotInSprint: any[];
+    public parametersFormGroup: FormGroup;
+    public loading: boolean       = true;
+    public userIndexToAdd: number = -1;
+    public formSubmitted: boolean = false;
 
     /**
      * Constructeur
@@ -98,7 +98,7 @@ export class SprintParametersComponent implements OnInit
      *
      * @author Fabien Bellanger
      */
-    private saveParameters(): void
+    public saveParameters(): void
     {
         const data: any = {
             "name":      this.parametersFormGroup.get('name').value,
@@ -204,7 +204,7 @@ export class SprintParametersComponent implements OnInit
      * @author Fabien Bellanger
      * @param {integer} index Indice dans le tableau des utilisateurs à ajouter
      */
-    private addUser(index: number): void
+    public addUser(index: number): void
     {
         if (index >= 0)
         {
@@ -225,7 +225,7 @@ export class SprintParametersComponent implements OnInit
      * @author Fabien Bellanger
      * @param {integer} index Indice dans le tableau des utilisateurs à ajouter
      */
-    private deleteUser(index: number): void
+    public deleteUser(index: number): void
     {
         // Suppression du tableau des utilisateurs présents dans le sprint
         const user: any = this.usersInSprint.splice(index, 1);

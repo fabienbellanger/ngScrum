@@ -46,9 +46,13 @@
 
                 <md-card-actions>
                     <div class="Auth-Container-Card-Actions">
-                        <button md-raised-button color="primary" type="submit">{{ 'signin' | translate }}</button>
-                        <a md-button color="primary" routerLink=".">{{ 'forgotten.password' | translate }}</a>
-                    </div >
+                        <button md-raised-button color="primary" type="submit">
+                            {{ 'signin' | translate }}
+                        </button>
+                        <a md-button color="primary" routerLink="/forgotten-password">
+                            {{ 'forgotten.password' | translate }}
+                        </a>
+                    </div>
                 </md-card-actions>
 
                 <md-card-footer>

@@ -10,3 +10,4 @@ export { UserService } from './services/user.service';
 // ----------
 export { LoginComponent } from './components/login.component';
 export { LogoutComponent } from './components/logout.component';
+export { ForgottenPasswordComponent } from './components/forgotten-password.component';

@@ -16,10 +16,10 @@ import { AuthService } from '../services/auth.service';
  */
 export class LoginComponent implements OnInit
 {
-    private errorMessage: string;
-    private currentYear: string;
-    private emailFormControl: FormControl;
-    private passwordFormControl: FormControl;
+    public errorMessage: string;
+    public currentYear: string;
+    public emailFormControl: FormControl;
+    public passwordFormControl: FormControl;
 
     /**
      * Constructeur
@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit
      *
      * @author Fabien Bellanger
      */
-    private submitForm(): void
+    public submitForm(): void
     {
         this.authService.login(this.emailFormControl.value, this.passwordFormControl.value)
             .then(() =>

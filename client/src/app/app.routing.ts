@@ -1,6 +1,11 @@
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuardService, LoginComponent, LogoutComponent } from './auth';
+import {
+    AuthGuardService,
+    LoginComponent,
+    LogoutComponent,
+    ForgottenPasswordComponent,
+} from './auth';
 import { 
     SprintComponent,
     SprintListComponent,
@@ -23,6 +28,10 @@ const appRoutes: Routes = [
     {
         path:      'logout',
         component: LogoutComponent,
+    },
+    {
+        path:      'forgotten-password',
+        component: ForgottenPasswordComponent,
     },
     {
         path:        '',
