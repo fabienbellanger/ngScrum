@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '../services/auth.service';
 
@@ -18,8 +18,7 @@ export class LoginComponent implements OnInit
 {
     public errorMessage: string;
     public currentYear: string;
-    public emailFormControl: FormControl;
-    public passwordFormControl: FormControl;
+    public formGroup: FormGroup;
 
     /**
      * Constructeur
@@ -47,14 +46,16 @@ export class LoginComponent implements OnInit
 
         // FormControls
         // ------------
-        this.emailFormControl    = new FormControl('', [
-            Validators.required,
-            Validators.pattern(EMAIL_REGEX),
-        ]);
-        this.passwordFormControl = new FormControl('', [
-            Validators.required,
-            Validators.minLength(4),
-        ]);
+        this.formGroup = new FormGroup({
+            email:      new FormControl('', [
+                Validators.required,
+                Validators.pattern(EMAIL_REGEX),
+            ]),
+            password:   new FormControl('', [
+                Validators.required,
+                Validators.minLength(4),
+            ]),
+        });
 
         // L'utilisateur est-il déjà connecté ?
         // ------------------------------------
@@ -68,7 +69,7 @@ export class LoginComponent implements OnInit
      */
     public submitForm(): void
     {
-        this.authService.login(this.emailFormControl.value, this.passwordFormControl.value)
+        this.authService.login(this.formGroup.get('email').value, this.formGroup.get('password').value)
             .then(() =>
             {
                 this.router.navigate(['/']);

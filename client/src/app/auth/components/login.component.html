@@ -1,6 +1,6 @@
 <div class="container" class="Auth">
     <div class="Auth-Container">
-        <form class="form-signin" (ngSubmit)="submitForm()">
+        <form class="form-signin" [formGroup]="formGroup"  (ngSubmit)="submitForm()">
             <md-toolbar color="primary">
                 <h1 class="Auth-Container-Header mat-h1">
                     <md-icon>lock_outline</md-icon>
@@ -14,13 +14,13 @@
                             <md-input-container class="width-100">
                                 <input mdInput type="email"
                                        [placeholder]="'email' | translate"
-                                       [formControl]="emailFormControl"
+                                       formControlName="email"
                                        value=""
                                        autofocus required>
-                                <md-error *ngIf="emailFormControl.hasError('pattern')">
+                                <md-error *ngIf="formGroup.get('email').hasError('pattern')">
                                     {{ 'invalid.email' | translate }}
                                 </md-error>
-                                <md-error *ngIf="emailFormControl.hasError('required')">
+                                <md-error *ngIf="formGroup.get('email').hasError('required')">
                                     {{ 'required.email' | translate }}
                                 </md-error>
                             </md-input-container>
@@ -30,13 +30,13 @@
                             <md-input-container class="width-100">
                                 <input mdInput type="password"
                                        [placeholder]="'password' | translate"
-                                       [formControl]="passwordFormControl"
+                                       formControlName="password"
                                        value=""
                                        required>
-                                <md-error *ngIf="passwordFormControl.hasError('minlength')">
+                                <md-error *ngIf="formGroup.get('password').hasError('minlength')">
                                     {{ 'too.short.password' | translate }}
                                 </md-error>
-                                <md-error *ngIf="passwordFormControl.hasError('required')">
+                                <md-error *ngIf="formGroup.get('password').hasError('required')">
                                     {{ 'required.password' | translate }}
                                 </md-error>
                             </md-input-container>
@@ -46,7 +46,7 @@
 
                 <md-card-actions>
                     <div class="Auth-Container-Card-Actions">
-                        <button md-raised-button color="primary" type="submit">
+                        <button md-raised-button color="primary" type="submit" [disabled]="formGroup.invalid">
                             {{ 'signin' | translate }}
                         </button>
                         <a md-button color="primary" routerLink="/forgotten-password">
