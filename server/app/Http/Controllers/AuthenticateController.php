@@ -97,4 +97,29 @@
                 return Response::json($response['data'], 200);
             }
         }
+        
+        /**
+         * Nouveau mot de passe
+         *
+         * @author Fabien Bellanger
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function newPassword()
+        {
+            $data = Input::all();
+            if (!array_key_exists('password', $data) || !array_key_exists('token', $data))
+            {
+                return Response::badRequest('No data');
+            }
+
+            $response = UserRepository::newPassword($data['token'], $data['password']);
+            if ($response['code'] == 404)
+            {
+                return Response::notFound($response['message']);
+            }
+            else
+            {
+                return Response::json(null, 200);
+            }
+        }
     }

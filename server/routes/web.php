@@ -22,6 +22,11 @@
         // Mot de passe oublié
         // -------------------
         Route::post('forgotten-password', 'AuthenticateController@forgottenPassword');
+        
+        // --------------------
+        // Nouveau mot de passe
+        // --------------------
+        Route::post('new-password', 'AuthenticateController@newPassword');
 
         // ----------------
         // Routes protégées

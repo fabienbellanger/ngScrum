@@ -4,6 +4,9 @@
 
     use Auth;
     use DB;
+    use Illuminate\Support\Facades\Mail;
+    use Illuminate\Support\Facades\Hash;
+    use App\Mail\ForgottenPassword;
 
     class UserRepository
     {
@@ -166,8 +169,6 @@
          */
         public static function forgottenPassword($email): ?array
         {
-            $result = [];
-
             // 1. Vérification de l'existence de l'email
             // -----------------------------------------
             $emailExists = self::isEmailExists($email);
@@ -189,10 +190,74 @@
             ];
             DB::table('password_resets')->insert($data);
 
+            // Envoi du mail
+            // -------------
+            Mail::to($email)->send(new ForgottenPassword($token));
+
             return [
                 'code'    => 200,
                 'message' => 'Success',
                 'data'    => ['token' => $token],
+            ];
+        }
+        
+        /**
+         * Mot de passe oublié
+         *
+         * @author Fabien Bellanger
+         * @param string $token     Token
+         * @param string $password  Nouveau mot de passe
+         * @return array
+         */
+        public static function newPassword($token, $password): ?array
+        {
+            // 1. Recherche de l'email à partir du token
+            // -----------------------------------------
+            $email   = null;
+            $results = DB::select('
+                SELECT email
+                FROM password_resets
+                WHERE token = :token', ['token' => $token]);
+
+            if ($results && count($results) == 1)
+            {
+                $email = $results[0]->email;
+            }
+            else
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'Email not found',
+                ];
+            }
+
+            // 2. Recherche de l'Id de l'utilisateur par son email
+            // ---------------------------------------------------
+            $results = DB::select('
+                SELECT id
+                FROM users
+                WHERE email = :email', ['email' => $email]);
+            if ($results && count($results) == 1)
+            {
+                $userId = $results[0]->id;
+            }
+            else
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'User not found',
+                ];
+            }
+
+            // 3. Modification du mot de passe
+            // -------------------------------
+            DB::table('users')
+                ->where('id', $userId)
+                ->update(['password' => Hash::make($password)]);
+
+            return [
+                'code'    => 200,
+                'message' => 'Success',
             ];
         }
     }
