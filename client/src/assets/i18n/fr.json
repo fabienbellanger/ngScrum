@@ -127,5 +127,5 @@
 	"no": "Non",
 	"want.to.delete.sprint": "Êtes-vous sûr de vouloir supprimer ce sprint ?",
 	"want.to.delete.task": "Êtes-vous sûr de vouloir supprimer cette tâche ?",
-	"forgotten.password.text": "Saisissez l'adresse e-mail liée à votre compte. Vous recevrez ensuite votre nouveau mot de passe par email."
+	"forgotten.password.text": "Saisissez l'adresse e-mail liée à votre compte. Vous recevrez ensuite par email un lien pour saisir un nouveau mot de passe."
 }

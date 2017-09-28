@@ -18,6 +18,11 @@
         // ----------------
         Route::post('login', 'AuthenticateController@login');
 
+        // -------------------
+        // Mot de passe oublié
+        // -------------------
+        Route::post('forgotten-password', 'AuthenticateController@forgottenPassword');
+
         // ----------------
         // Routes protégées
         // ----------------

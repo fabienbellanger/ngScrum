@@ -64,6 +64,30 @@
         }
 
         /**
+         * L'email existe t-il ?
+         *
+         * @author Fabien Bellanger
+         * @param string $email Email de l'utilisateur
+         * @return bool
+         */
+        private static function isEmailExists($email): bool
+        {
+            $results = DB::select('
+                SELECT COUNT(*) AS nbEmails
+                FROM users
+                WHERE email = :email', ['email' => $email]);
+
+            if ($results && count($results) == 1)
+            {
+                return ($results[0]->nbEmails == 1);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /**
          * Liste des équipes (ID <=> Nom)
          *
          * @author Fabien Bellanger
@@ -130,6 +154,45 @@
                 'code'    => 200,
                 'message' => 'Success',
                 'data'    => $teams,
+            ];
+        }
+
+        /**
+         * Mot de passe oublié
+         *
+         * @author Fabien Bellanger
+         * @param string $email Email de l'utilisateur
+         * @return array
+         */
+        public static function forgottenPassword($email): ?array
+        {
+            $result = [];
+
+            // 1. Vérification de l'existence de l'email
+            // -----------------------------------------
+            $emailExists = self::isEmailExists($email);
+            if (!$emailExists)
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'Email not found',
+                ];
+            }
+
+            // 2. On écrit dans la table password_resets
+            // -----------------------------------------
+            $token = hash('sha512', uniqid() . $email);
+            $data  = [
+                'email'      => $email,
+                'token'      => $token,
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+            DB::table('password_resets')->insert($data);
+
+            return [
+                'code'    => 200,
+                'message' => 'Success',
+                'data'    => ['token' => $token],
             ];
         }
     }

@@ -9,6 +9,7 @@
     use Illuminate\Http\Request;
     use JWTAuth;
     use Tymon\JWTAuthExceptions\JWTException;
+    use Illuminate\Support\Facades\Input;
 
     class AuthenticateController extends Controller
     {
@@ -64,5 +65,36 @@
             JWTAuth::parseToken()->invalidate();
 
             return Response::respondState('Success', 'Success logout', 200);
+        }
+
+        /**
+         * Mot de passe oublié
+         *
+         * @author Fabien Bellanger
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function forgottenPassword()
+        {
+            $data = Input::all();
+            if (!array_key_exists('email', $data))
+            {
+                return Response::badRequest('No data');
+            }
+
+            // Valididé de l'email ?
+            if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL))
+            {
+                return Response::badRequest('Email not valid');
+            }
+
+            $response = UserRepository::forgottenPassword($data['email']);
+            if ($response['code'] == 404)
+            {
+                return Response::notFound($response['message']);
+            }
+            else
+            {
+                return Response::json($response['data'], 200);
+            }
         }
     }
