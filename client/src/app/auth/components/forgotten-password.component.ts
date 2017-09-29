@@ -20,6 +20,7 @@ import { ApiAuthService } from '../../api/services/api-auth.service';
 export class ForgottenPasswordComponent implements OnInit
 {
     public formGroup: FormGroup;
+    public formSubmitted: boolean;
 
     /**
      * Constructeur
@@ -44,10 +45,14 @@ export class ForgottenPasswordComponent implements OnInit
      */
     public ngOnInit(): void
     {
-        const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        
+        // Initialisation
+        // --------------
+        this.formSubmitted = false;
+
         // FormControls
         // ------------
+        const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        
         this.formGroup = new FormGroup({
             email:      new FormControl('', [
                 Validators.required,
@@ -63,43 +68,50 @@ export class ForgottenPasswordComponent implements OnInit
      */
     public submitForm(): void
     {
-        this.apiAuthService.forgottenPassword(this.formGroup.get('email').value)
-            .then((response: any) =>
-            {
-                this.translateService.get(['forgotten.password.success', 'success'])
-                    .subscribe((translationObject: Object) =>
-                    {
-                        this.snackBar.open(
-                            translationObject['forgotten.password.success'],
-                            translationObject['success'],
-                            {
-                                duration: 4000,
-                            });
-                    });
-                    
-                this.router.navigateByUrl('/login');
-            })
-            .catch((errorResponse: any) =>
-            {
-                const body: any = (typeof errorResponse.text() === 'string')
-                    ? JSON.parse(errorResponse.text())
-                    : null;
-                const errorMessage: string = (body.hasOwnProperty('message'))
-                    ? body.message
-                    : '';
+        if (!this.formSubmitted)
+        {
+            // Jeton pour n'avoir qu'une soumission
+            // ------------------------------------
+            this.formSubmitted = true;
 
-                this.translateService.get([errorMessage, 'error'])
-                    .subscribe((translationObject: Object) =>
-                    {
-                        this.snackBar.open(
-                            translationObject[errorMessage],
-                            translationObject['error'],
-                            {
-                                duration: 3000,
-                            });
-                    });
+            this.apiAuthService.forgottenPassword(this.formGroup.get('email').value)
+                .then((response: any) =>
+                {
+                    this.translateService.get(['forgotten.password.success', 'success'])
+                        .subscribe((translationObject: Object) =>
+                        {
+                            this.snackBar.open(
+                                translationObject['forgotten.password.success'],
+                                translationObject['success'],
+                                {
+                                    duration: 4000,
+                                });
+                        });
+                        
+                    this.router.navigateByUrl('/login');
+                })
+                .catch((errorResponse: any) =>
+                {
+                    const body: any = (typeof errorResponse.text() === 'string')
+                        ? JSON.parse(errorResponse.text())
+                        : null;
+                    const errorMessage: string = (body.hasOwnProperty('message'))
+                        ? body.message
+                        : '';
 
-                this.formGroup.get('email').setValue('');
-            });
+                    this.translateService.get([errorMessage, 'error'])
+                        .subscribe((translationObject: Object) =>
+                        {
+                            this.snackBar.open(
+                                translationObject[errorMessage],
+                                translationObject['error'],
+                                {
+                                    duration: 3000,
+                                });
+                        });
+
+                    this.formGroup.get('email').setValue('');
+                });
+        }
     }
 }

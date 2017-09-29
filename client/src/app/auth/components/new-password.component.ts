@@ -21,6 +21,7 @@ export class NewPasswordComponent implements OnInit
 {
     public formGroup: FormGroup;
     public token: string;
+    public formSubmitted: boolean;
 
     /**
      * Constructeur
@@ -47,7 +48,10 @@ export class NewPasswordComponent implements OnInit
      */
     public ngOnInit(): void
     {
-        this.token = this.route.snapshot.params['token'];
+        // Initialisation
+        // --------------
+        this.token         = this.route.snapshot.params['token'];
+        this.formSubmitted = false;
 
         // FormControls
         // ------------
@@ -71,46 +75,61 @@ export class NewPasswordComponent implements OnInit
      */
     public submitForm(): void
     {
-        this.apiAuthService.newPassword(this.token, this.formGroup.get('password').value)
-            .then((response: any) =>
-            {
-                this.translateService.get(['new.password.success', 'success'])
-                    .subscribe((translationObject: Object) =>
-                    {
-                        this.snackBar.open(
-                            translationObject['new.password.success'],
-                            translationObject['success'],
-                            {
-                                duration: 4000,
-                            });
-                    });
-                
-                // Redirection
-                // -----------
-                this.router.navigateByUrl('/login');
-            })
-            .catch((errorResponse: any) =>
-            {
-                const strBody: any = errorResponse.text();
-                const body: any = (typeof strBody === 'string')
-                    ? JSON.parse(strBody)
-                    : null;
-                const errorMessage: string = (body.hasOwnProperty('message'))
-                    ? body.message
-                    : 'error.occured';
+        if (!this.formSubmitted)
+        {
+            // Jeton pour n'avoir qu'une soumission
+            // ------------------------------------
+            this.formSubmitted = true;
 
-                this.translateService.get([errorMessage, 'error'])
-                    .subscribe((translationObject: Object) =>
-                    {
-                        this.snackBar.open(
-                            translationObject[errorMessage],
-                            translationObject['error'],
-                            {
-                                duration: 3000,
-                            });
-                    });
+            this.apiAuthService.newPassword(this.token, this.formGroup.get('password').value)
+                .then((response: any) =>
+                {
+                    this.translateService.get(['new.password.success', 'success'])
+                        .subscribe((translationObject: Object) =>
+                        {
+                            this.snackBar.open(
+                                translationObject['new.password.success'],
+                                translationObject['success'],
+                                {
+                                    duration: 4000,
+                                });
+                        });
+                        
+                    // Jeton pour n'avoir qu'une soumission
+                    // ------------------------------------
+                    this.formSubmitted = false;
+                    
+                    // Redirection
+                    // -----------
+                    this.router.navigateByUrl('/login');
+                })
+                .catch((errorResponse: any) =>
+                {
+                    const strBody: any = errorResponse.text();
+                    const body: any = (typeof strBody === 'string')
+                        ? JSON.parse(strBody)
+                        : null;
+                    const errorMessage: string = (body.hasOwnProperty('message'))
+                        ? body.message
+                        : 'error.occured';
 
-                this.formGroup.get('email').setValue('');
-            });
+                    this.translateService.get([errorMessage, 'error'])
+                        .subscribe((translationObject: Object) =>
+                        {
+                            this.snackBar.open(
+                                translationObject[errorMessage],
+                                translationObject['error'],
+                                {
+                                    duration: 3000,
+                                });
+                        });
+
+                    this.formGroup.get('email').setValue('');
+                    
+                    // Jeton pour n'avoir qu'une soumission
+                    // ------------------------------------
+                    this.formSubmitted = false;
+                });
+        }
     }
 }
