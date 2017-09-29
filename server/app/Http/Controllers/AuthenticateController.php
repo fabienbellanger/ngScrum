@@ -117,6 +117,10 @@
             {
                 return Response::notFound($response['message']);
             }
+            elseif ($response['code'] == 400)
+            {
+                return Response::badRequest($response['message']);
+            }
             else
             {
                 return Response::json(null, 200);

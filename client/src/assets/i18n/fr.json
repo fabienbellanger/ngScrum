@@ -127,5 +127,12 @@
 	"no": "Non",
 	"want.to.delete.sprint": "Êtes-vous sûr de vouloir supprimer ce sprint ?",
 	"want.to.delete.task": "Êtes-vous sûr de vouloir supprimer cette tâche ?",
-	"forgotten.password.text": "Saisissez l'adresse e-mail liée à votre compte. Vous recevrez ensuite par email un lien pour saisir un nouveau mot de passe."
+	"forgotten.password.text": "Saisissez l'adresse e-mail liée à votre compte. Vous recevrez ensuite par email un lien pour saisir un nouveau mot de passe.",
+	"No data": "Pas de donnée",
+	"Email not valid": "L'email n'est pas valide",
+	"Email not found": "L'email n'existe pas",
+	"Forgotten password token already used": "Le token utilisé pour regénérer un mot de passe a déjà été utilisé",
+	"User not found": "L'utilisateur n'existe pas",
+	"forgotten.password.error": "Erreur lors de la procédure de récupération du mot de passe",
+	"forgotten.password.success": "Vous allez recevoir un mail avec un lien pour réinitialiser votre mot de passe"
 }

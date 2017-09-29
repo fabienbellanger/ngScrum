@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
-import { AuthService } from '../services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
+
+import { ApiAuthService } from '../../api/services/api-auth.service';
 
 @Component({
     selector:    'sa-auth-forgotten-password',
@@ -22,11 +25,15 @@ export class ForgottenPasswordComponent implements OnInit
      * Constructeur
      *
      * @author Fabien Bellanger
-     * @param {AuthService} authService
-     * @param {Router}      router
+     * @param {ApiAuthService}      apiAuthService
+     * @param {Router}              router
+     * @param {MatSnackBar}         snackBar
+     * @param {TranslateService}    translateService
      */
-    constructor(private authService: AuthService,
-                private router: Router)
+    constructor(private apiAuthService: ApiAuthService,
+                private router: Router,
+                private snackBar: MatSnackBar,
+                private translateService: TranslateService)
     {
     }
 
@@ -56,6 +63,43 @@ export class ForgottenPasswordComponent implements OnInit
      */
     public submitForm(): void
     {
-        console.log(this.formGroup.get('email').value);
+        this.apiAuthService.forgottenPassword(this.formGroup.get('email').value)
+            .then((response: any) =>
+            {
+                this.translateService.get(['forgotten.password.success', 'success'])
+                    .subscribe((translationObject: Object) =>
+                    {
+                        this.snackBar.open(
+                            translationObject['forgotten.password.success'],
+                            translationObject['success'],
+                            {
+                                duration: 4000,
+                            });
+                    });
+                    
+                this.router.navigateByUrl('/login');
+            })
+            .catch((errorResponse: any) =>
+            {
+                const body: any = (typeof errorResponse.text() === 'string')
+                    ? JSON.parse(errorResponse.text())
+                    : null;
+                const errorMessage: string = (body.hasOwnProperty('message'))
+                    ? body.message
+                    : '';
+
+                this.translateService.get([errorMessage, 'error'])
+                    .subscribe((translationObject: Object) =>
+                    {
+                        this.snackBar.open(
+                            translationObject[errorMessage],
+                            translationObject['error'],
+                            {
+                                duration: 3000,
+                            });
+                    });
+
+                this.formGroup.get('email').setValue('');
+            });
     }
 }

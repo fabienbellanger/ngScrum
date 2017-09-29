@@ -3,9 +3,11 @@
     namespace App\Repositories;
 
     use Auth;
+    use App;
     use DB;
     use Illuminate\Support\Facades\Mail;
     use Illuminate\Support\Facades\Hash;
+    use Illuminate\Support\Facades\Log;
     use App\Mail\ForgottenPassword;
 
     class UserRepository
@@ -192,7 +194,16 @@
 
             // Envoi du mail
             // -------------
-            Mail::to($email)->send(new ForgottenPassword($token));
+            if (App::environment('local'))
+            {
+                // En local on logge
+                // -----------------
+                Log::info('[Forgotten Password] Send Token by mail: ' . $token);
+            }
+            else
+            {
+                Mail::to($email)->send(new ForgottenPassword($token));
+            }
 
             return [
                 'code'    => 200,
@@ -213,14 +224,20 @@
         {
             // 1. Recherche de l'email à partir du token
             // -----------------------------------------
-            $email   = null;
             $results = DB::select('
-                SELECT email
+                SELECT email, used_at
                 FROM password_resets
                 WHERE token = :token', ['token' => $token]);
 
             if ($results && count($results) == 1)
             {
+                if ($results[0]->used_at)
+                {
+                    return [
+                        'code'    => 400,
+                        'message' => 'Forgotten password token already used',
+                    ];
+                }
                 $email = $results[0]->email;
             }
             else
@@ -254,6 +271,12 @@
             DB::table('users')
                 ->where('id', $userId)
                 ->update(['password' => Hash::make($password)]);
+
+            // 4. On indique que le token a été utilisé
+            // ----------------------------------------
+            DB::table('password_resets')
+                ->where('token', $token)
+                ->update(['used_at' => date('Y-m-d H:i:s')]);
 
             return [
                 'code'    => 200,

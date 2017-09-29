@@ -101,9 +101,9 @@ export class SprintParametersComponent implements OnInit
     public saveParameters(): void
     {
         const data: any = {
-            "name":      this.parametersFormGroup.get('name').value,
-            "startedAt": this.dateService.toSqlDate(this.parametersFormGroup.get('startedAt').value),
-            "usersId":   this.usersInSprint.map(element => element.id),
+            'name':      this.parametersFormGroup.get('name').value,
+            'startedAt': this.dateService.toSqlDate(this.parametersFormGroup.get('startedAt').value),
+            'usersId':   this.usersInSprint.map(element => element.id),
         };
 
         if (data.usersId.length === 0)

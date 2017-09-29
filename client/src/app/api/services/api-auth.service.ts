@@ -129,4 +129,34 @@ export class ApiAuthService
             }
         });
     }
+    
+    /**
+     * Mot de passe oublié
+     *
+     * @author Fabien Bellanger
+     * @param {String}  email
+     * @return {Promise}
+     */
+    public forgottenPassword(email: string): any
+    {
+        return new Promise((resolve: any, reject: any) =>
+        {
+            const headers: any = new Headers();
+            headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+            const data: any = {
+                email: email,
+            };
+
+            this.httpService.post('/forgotten-password', data, {headers: headers}, false, true)
+                .then((response: any) =>
+                {
+                    resolve(response);
+                })
+                .catch((error: any) =>
+                {
+                    reject(error);
+                });
+        });
+    }
 }
