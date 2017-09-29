@@ -88,6 +88,10 @@ export class ForgottenPasswordComponent implements OnInit
                                 });
                         });
                         
+                    // Jeton pour n'avoir qu'une soumission
+                    // ------------------------------------
+                    this.formSubmitted = false;
+                        
                     this.router.navigateByUrl('/login');
                 })
                 .catch((errorResponse: any) =>
@@ -111,6 +115,10 @@ export class ForgottenPasswordComponent implements OnInit
                         });
 
                     this.formGroup.get('email').setValue('');
+                    
+                    // Jeton pour n'avoir qu'une soumission
+                    // ------------------------------------
+                    this.formSubmitted = false;
                 });
         }
     }
