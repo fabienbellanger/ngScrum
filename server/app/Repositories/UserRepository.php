@@ -192,8 +192,14 @@
             ];
             DB::table('password_resets')->insert($data);
 
-            // Envoi du mail
-            // -------------
+            // 3. On remet à '' le champ password de l'utilisateur
+            // ---------------------------------------------------
+            DB::table('users')
+                ->where('email', $email)
+                ->update(['password' => '']);
+
+            // 4. Envoi du mail
+            // ----------------
             if (App::environment('local'))
             {
                 // En local on logge

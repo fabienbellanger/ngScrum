@@ -13,6 +13,7 @@ import { UserService } from './services/user.service';
 import { LoginComponent } from './components/login.component';
 import { LogoutComponent } from './components/logout.component';
 import { ForgottenPasswordComponent } from './components/forgotten-password.component';
+import { NewPasswordComponent } from './components/new-password.component';
 
 @NgModule({
     imports:      [
@@ -26,6 +27,7 @@ import { ForgottenPasswordComponent } from './components/forgotten-password.comp
         LoginComponent,
         LogoutComponent,
         ForgottenPasswordComponent,
+        NewPasswordComponent,
     ],
     providers:    [
         AuthService,

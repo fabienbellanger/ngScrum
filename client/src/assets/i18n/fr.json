@@ -134,5 +134,11 @@
 	"Forgotten password token already used": "Le token utilisé pour regénérer un mot de passe a déjà été utilisé",
 	"User not found": "L'utilisateur n'existe pas",
 	"forgotten.password.error": "Erreur lors de la procédure de récupération du mot de passe",
-	"forgotten.password.success": "Vous allez recevoir un mail avec un lien pour réinitialiser votre mot de passe"
+	"forgotten.password.success": "Vous allez recevoir un mail avec un lien pour réinitialiser votre mot de passe",
+	"new.password": "Nouveau mot de passe",
+	"new.password.confirm": "Confirmation du mot de passe",
+	"passwords.must.be.equal": "Les mots de passe doivent être égaux",
+	"password.min.length": "Le mot de passe doit contenir au moins 4 caractères",
+	"error.occured": "Une erreur est survenue",
+	"new.password.success": "Votre mot de passe a bien été modifié"
 }

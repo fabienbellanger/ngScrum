@@ -127,8 +127,6 @@ export class SprintParametersComponent implements OnInit
                 // ------------------------------------
                 this.formSubmitted = true;
 
-                console.log(data);
-
                 this.apiSprintService.modifySprintParameters(this.sprint.id, data)
                     .then((response: any) =>
                     {

@@ -5,6 +5,7 @@ import {
     LoginComponent,
     LogoutComponent,
     ForgottenPasswordComponent,
+    NewPasswordComponent,
 } from './auth';
 import { 
     SprintComponent,
@@ -32,6 +33,10 @@ const appRoutes: Routes = [
     {
         path:      'forgotten-password',
         component: ForgottenPasswordComponent,
+    },
+    {
+        path:      'new-password/:token',
+        component: NewPasswordComponent,
     },
     {
         path:        '',

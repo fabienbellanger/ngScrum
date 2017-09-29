@@ -159,4 +159,36 @@ export class ApiAuthService
                 });
         });
     }
+    
+    /**
+     * Nouveau mot de passe
+     *
+     * @author Fabien Bellanger
+     * @param {string}  token
+     * @param {string}  password
+     * @return {Promise}
+     */
+    public newPassword(token: string, password: string): any
+    {
+        return new Promise((resolve: any, reject: any) =>
+        {
+            const headers: any = new Headers();
+            headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+            const data: any = {
+                token:    token,
+                password: password,
+            };
+
+            this.httpService.post('/new-password', data, {headers: headers}, false, true)
+                .then((response: any) =>
+                {
+                    resolve(response);
+                })
+                .catch((error: any) =>
+                {
+                    reject(error);
+                });
+        });
+    }
 }
