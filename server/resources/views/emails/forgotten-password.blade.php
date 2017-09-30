@@ -1,5 +1,6 @@
-<h1>Forgotten Password</h1>
-<h2>{{ __('messages.welcome') }}</h2>
+<h1>{{ __('messages.hello') }}</h1>
 <p>
-	{{ $token }}
+	{{ __('messages.click.link') }}
+	<br>
+	<a href="{{ env('APP_CLIENT_URL') }}/{{ $token }}">{{ __('messages.new.password') }}<a>
 </p>
