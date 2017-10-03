@@ -140,7 +140,7 @@ export class DateService
      * Retourne la date du jour de Pâques
      * 
      * @author Fabien Bellanger
-     * @param {number} year Année (Optionel) 
+     * @param {number} year Année (Optionel)
      * @return {any} Date du jour de Pâques
      */
     public easterDay(year?: number): any
@@ -171,104 +171,124 @@ export class DateService
         return moment(new Date(year, month - 1, day));
     }
 
+    /**
+     * Liste des jours fériés
+     * 
+     * TODO: A faire selon la locale
+     * 
+     * @author Fabien Bellanger
+     * @param {number} year Année (Optionel)
+     * @return {any[]} Tableau des jours fériés
+     */
     public getHolidayDates(year?: number): any[]
     {
+        if (year === undefined)
+        {
+            year = moment().year();
+        }
+
         const dates = [];
         const easterDay: any = this.easterDay(year);
 
+        // Jour de l'an
+        // ------------
+        dates.push(moment(new Date(year, 0, 1)));
+        
+        // Fête du travail
+        // ---------------
+        dates.push(moment(new Date(year, 4, 1)));
+        
+        // Victoire des alliés
+        // -------------------
+        dates.push(moment(new Date(year, 4, 8)));
+        
+        // Fête nationale
+        // --------------
+        dates.push(moment(new Date(year, 6, 14)));
+        
+        // Assomption
+        // ----------
+        dates.push(moment(new Date(year, 7, 15)));
+        
+        // Toussaint
+        // ---------
+        dates.push(moment(new Date(year, 10, 1)));
+        
+        // Armistice
+        // ---------
+        dates.push(moment(new Date(year, 10, 11)));
+        
+        // Noël
+        // ----
+        dates.push(moment(new Date(year, 11, 25)));
+
         // Lundi de Pâques
+        // ---------------
         dates.push(easterDay.add(1, 'days'));
 
         // Ascension
-/*
+        // ---------
+        dates.push(easterDay.add(39, 'days'));
 
-moment.fn.ascension = function (Y) {
-      if (Y === undefined) {
-        Y = this.year();
-      }
-      return moment.fn.paques(Y).add(39, "days");
-    };
-
-    moment.fn.pentecote = function (Y) {
-      if (Y === undefined) {
-        Y = this.year();
-      }
-      return moment.fn.paques(Y).add(50, "days");
-    };
-
-    moment.fn.jourDeLAn = function (Y) {
-      if (Y === undefined) {
-        Y = this.year();
-      }
-      return moment("1-1-" + Y, "DD-MM-YYYY");
-    };
-
-    moment.fn.feteDuTravail = function (Y) {
-      if (Y === undefined) {
-        Y = this.year();
-      }
-      return moment("1-5-" + Y, "DD-MM-YYYY");
-    };
-
-    moment.fn.victoireDeAllies = function (Y) {
-      if (Y === undefined) {
-        Y = this.year();
-      }
-      return moment("8-5-" + Y, "DD-MM-YYYY");
-    };
-
-    moment.fn.feteNationale = function (Y) {
-      if (Y === undefined) {
-        Y = this.year();
-      }
-      return moment("14-7-" + Y, "DD-MM-YYYY");
-    };
-
-    moment.fn.assomption = function (Y) {
-      if (Y === undefined) {
-        Y = this.year();
-      }
-      return moment("15-8-" + Y, "DD-MM-YYYY");
-    };
-
-    moment.fn.toussaint = function (Y) {
-      if (Y === undefined) {
-        Y = this.year();
-      }
-      return moment("1-11-" + Y, "DD-MM-YYYY");
-    };
-
-    moment.fn.armistice = function (Y) {
-      if (Y === undefined) {
-        Y = this.year();
-      }
-      return moment("11-11-" + Y, "DD-MM-YYYY");
-    };
-
-    moment.fn.noel = function (Y) {
-      if (Y === undefined) {
-        Y = this.year();
-      }
-      return moment("25-12-" + Y, "DD-MM-YYYY");
-    };
-
-    var listeFerie = {
-      "Jour de l'an": moment.fn.jourDeLAn,
-      "Fête du travail": moment.fn.feteDuTravail,
-      "Victoire des alliés": moment.fn.victoireDeAllies,
-      "Fête Nationale": moment.fn.feteNationale,
-      "Assomption": moment.fn.assomption,
-      "Toussaint": moment.fn.toussaint,
-      "Armistice": moment.fn.armistice,
-      "Noël": moment.fn.noel,
-      "Pâques": moment.fn.paques,
-      "Lundi de Pâques": moment.fn.lundiDePaques,
-      "Ascension": moment.fn.ascension,
-      "Pentecôte": moment.fn.pentecote
-    };
-
-*/
+        // Pentecôte
+        // ---------
+        dates.push(easterDay.add(50, 'days'));
 
         return dates;
+    }
+
+    /**
+     * Est-ce un jour férié ?
+     * 
+     * @author Fabien Bellanger
+     * @param {string} date Date
+     * @return {boolean}
+     */
+    public isHoliday(date: string): boolean
+    {
+        let isHolyday: boolean    = false;
+        const holidayDates: any[] = this.getHolidayDates();
+
+        holidayDates.map((e: any) =>
+        {
+            if (moment(date).isSame(e))
+            {
+                isHolyday = true;
+            }
+        });
+
+        return isHolyday;
+    }
+
+    /**
+     * Est-ce un week-end ?
+     * 
+     * @author Fabien Bellanger
+     * @param {string} date Date
+     * @return {boolean} 
+     */
+    public isWeekend(date: string): boolean
+    {
+        let isWeekend: boolean  = false;
+        const dayOfWeek: number = +moment(date).format('E');
+
+        if (dayOfWeek === 6 || dayOfWeek === 7)
+        {
+            isWeekend = true;
+        }
+
+        return isWeekend;
+    }
+
+    /**
+     * Est-ce un jour travaillé
+     * 
+     * @author Fabien Bellanger
+     * @param {string} date Date
+     * @return {boolean}
+     */
+    public isWorked(date: string): boolean
+    {
+        return (!this.isWeekend(date) && !this.isHoliday(date));
     }
 }
