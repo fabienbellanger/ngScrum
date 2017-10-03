@@ -37,6 +37,7 @@ export class SprintNewComponent implements OnInit
                 private translateService: TranslateService,
                 private snackBar: MatSnackBar)
     {
+        console.log(this.dateService.getHolidayDates(2017));
     }
 
     /**

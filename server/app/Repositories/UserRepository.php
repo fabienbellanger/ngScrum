@@ -200,16 +200,16 @@
 
             // 4. Envoi du mail
             // ----------------
-            /*if (App::environment('local'))
+            if (App::environment('local'))
             {
-                // En local on logge
-                // -----------------
+                // En local on loggue
+                // ------------------
                 Log::info('[Forgotten Password] Send Token by mail: ' . $token);
             }
             else
-            {*/
+            {
                 Mail::to($email)->send(new ForgottenPassword($token));
-            //}
+            }
 
             return [
                 'code'    => 200,
