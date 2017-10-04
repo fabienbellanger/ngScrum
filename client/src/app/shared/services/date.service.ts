@@ -281,7 +281,7 @@ export class DateService
     }
 
     /**
-     * Est-ce un jour travaillé
+     * Est-ce un jour travaillé ?
      * 
      * @author Fabien Bellanger
      * @param {string} date Date
