@@ -24,11 +24,11 @@
     <div class="margin-bottom-20px">
         <md-card class="SprintsList-Sprint"
                  *ngFor="let sprint of sprints"
-                 (click)="redirectToTasksManagement(sprint)">
+                 (click)="redirectToTasksManagement(sprint)" sprintHideMenu>
             <md-card-header class="SprintsList-Sprint-Header">
                 <md-card-title color="primary" class="SprintsList-Sprint-Header-title">
                     <h4 class="accent-color">{{ sprint.name }}</h4>
-                    <div>
+                    <div style="display: none">
                         <button md-icon-button [mdMenuTriggerFor]="menu" class="SprintsList-Sprint-Menu"
                                 (click)="$event.stopPropagation()">
                             <md-icon>more_vert</md-icon>
@@ -77,7 +77,12 @@
                     </div>
                     <div class="row SprintsList-Sprint-info">
                         <div class="SprintsList-Sprint-label">{{ 'estimated.end.date' | translate }}</div>
-                        <div class="SprintsList-Sprint-value">{{ sprint.estimatedFinishedAt | date:"dd/MM/yyyy" }}</div>
+                        <div class="SprintsList-Sprint-value">
+                            <span *ngIf="sprint.estimatedFinishedAt !== null">
+                                {{ sprint.estimatedFinishedAt | date:"dd/MM/yyyy" }}
+                            </span>
+                            <span *ngIf="sprint.estimatedFinishedAt === null">-</span>
+                        </div>
                     </div>
                     <div class="row SprintsList-Sprint-info" *ngIf="sprint.finishedAt">
                         <div class="SprintsList-Sprint-label">{{ 'finished.at' | translate }}</div>

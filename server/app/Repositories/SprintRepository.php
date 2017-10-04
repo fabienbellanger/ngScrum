@@ -221,8 +221,8 @@
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
                     INNER JOIN team_member ON team.id = team_member.team_id AND team_member.user_id = :userId
-                    INNER JOIN task ON sprint.id = task.sprint_id
-                    INNER JOIN task_user ON task.id = task_user.task_id';
+                    LEFT JOIN task ON sprint.id = task.sprint_id
+                    LEFT JOIN task_user ON task.id = task_user.task_id';
             if ($filter == 'inProgress')
             {
                 $query .= ' WHERE sprint.finished_at IS NULL';
@@ -255,8 +255,8 @@
                         $tasks[$sprintId]['remainingDuration'] = 0;
                     }
 
-                    $tasks[$sprintId]['initialDuration']   += $line->initialDuration;
-                    $tasks[$sprintId]['remainingDuration'] += $line->remainingDuration;
+                    $tasks[$sprintId]['initialDuration']   += floatval($line->initialDuration);
+                    $tasks[$sprintId]['remainingDuration'] += floatval($line->remainingDuration);
                 }
             }
 
@@ -283,8 +283,8 @@
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
                     INNER JOIN team_member ON team.id = team_member.team_id AND team_member.user_id = :userId
-                    INNER JOIN task ON sprint.id = task.sprint_id
-                    INNER JOIN task_user ON task.id = task_user.task_id';
+                    LEFT JOIN task ON sprint.id = task.sprint_id
+                    LEFT JOIN task_user ON task.id = task_user.task_id';
             if ($filter == 'inProgress')
             {
                 $query .= ' WHERE sprint.finished_at IS NULL';
@@ -307,8 +307,8 @@
                 foreach ($results as $line)
                 {
                     $sprintId            = $line->sprintId;
-                    $decrementedDuration = $line->decrementedDuration;
-                    $nbDates             = $line->nbDates;
+                    $decrementedDuration = floatval($line->decrementedDuration);
+                    $nbDates             = floatval($line->nbDates);
 
                     // Initialisation
                     // --------------
@@ -326,7 +326,7 @@
                 // -----------------------------------------------
                 foreach ($data as $id => $line)
                 {
-                    $data[$id]['decrementedDurationPerDay'] = ($nbDates != 0)
+                    $data[$id]['decrementedDurationPerDay'] = ($line['nbDates'] != 0)
                         ? $line['decrementedDuration'] / $line['nbDates']
                         : 0;
                 }

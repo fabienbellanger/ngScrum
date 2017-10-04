@@ -20,3 +20,7 @@ export { SprintTasksManagementEditComponent } from './components/tasksManagement
 export { SprintTasksManagementListComponent } from './components/tasksManagement/sprint-tasks-management-list.component';
 export { SprintDeleteDialogComponent } from './components/dialogs/sprint-delete-dialog.component';
 export { SprintTaskDeleteDialogComponent } from './components/dialogs/sprint-task-delete-dialog.component';
+
+// Directives
+// ----------
+export { SprintHideMenuDirective } from './directives/sprint-hide-menu.directive';

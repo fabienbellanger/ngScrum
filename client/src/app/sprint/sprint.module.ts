@@ -18,6 +18,7 @@ import { SprintTasksManagementEditComponent } from './components/tasksManagement
 import { SprintTasksManagementListComponent } from './components/tasksManagement/sprint-tasks-management-list.component';
 import { SprintDeleteDialogComponent } from './components/dialogs/sprint-delete-dialog.component';
 import { SprintTaskDeleteDialogComponent } from './components/dialogs/sprint-task-delete-dialog.component';
+import { SprintHideMenuDirective } from './directives/sprint-hide-menu.directive';
 
 import { SprintService } from './services/sprint.service';
 import { SprintTasksManagementService } from './services/sprint-tasks-management.service';
@@ -44,6 +45,7 @@ import { SprintChartsService } from './services/sprint-charts.service';
         SprintNewComponent,
         SprintDeleteDialogComponent,
         SprintTaskDeleteDialogComponent,
+        SprintHideMenuDirective,
     ],
     providers:    [
         HttpService,
@@ -54,6 +56,9 @@ import { SprintChartsService } from './services/sprint-charts.service';
     entryComponents:      [
         SprintDeleteDialogComponent,
         SprintTaskDeleteDialogComponent,
+    ],
+    exports:    [
+        SprintHideMenuDirective,
     ],
 })
 

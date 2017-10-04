@@ -224,15 +224,18 @@ export class SprintService
         // -------------------------------------------
         for (const userId in informations)
         {
-            if (this.sprint.users.hasOwnProperty(userId))
+            if (informations.hasOwnProperty(userId))
             {
-                informations[userId].name  = this.sprint.users[userId].firstname + ' ';
-                informations[userId].name += this.sprint.users[userId].lastname;
+                if (this.sprint.users.hasOwnProperty(userId))
+                {
+                    informations[userId].name  = this.sprint.users[userId].firstname + ' ';
+                    informations[userId].name += this.sprint.users[userId].lastname;
+                }
+                informations[userId].coefficient = (informations[userId].workedDuration !== 0)
+                    ? informations[userId].duration / informations[userId].workedDuration
+                    : 0;
+                informations[userId].performance = informations[userId].coefficient * 100;
             }
-            informations[userId].coefficient = (informations[userId].workedDuration !== 0)
-                ? informations[userId].duration / informations[userId].workedDuration
-                : 0;
-            informations[userId].performance = informations[userId].coefficient * 100;
         }
 
         // Conversion Object => Array
@@ -283,18 +286,21 @@ export class SprintService
         {
             for (const taskIndex in this.sprint.tasks)
             {
-                task     = this.sprint.tasks[taskIndex];
-                duration = 0;
-
-                if (task.list.length > 0)
+                if (this.sprint.tasks.hasOwnProperty(taskIndex))
                 {
-                    for (const taskUser of task.list)
-                    {
-                        duration += +taskUser.workedDuration;
-                    }
-                }
+                    task     = this.sprint.tasks[taskIndex];
+                    duration = 0;
 
-                this.sprint.tasks[taskIndex].workedDuration = duration;
+                    if (task.list.length > 0)
+                    {
+                        for (const taskUser of task.list)
+                        {
+                            duration += +taskUser.workedDuration;
+                        }
+                    }
+
+                    this.sprint.tasks[taskIndex].workedDuration = duration;
+                }
             }
         }
     }
@@ -304,9 +310,9 @@ export class SprintService
      *
      * @author Fabien Bellanger
      * @param {any} sprint Sprint
-     * @return {string} Date de fin théorique du sprint
+     * @return {string|null} Date de fin théorique du sprint ou null si la date ne peut être calculée
      */
-    public getSprintEndDate(sprint: any): string
+    public getSprintEndDate(sprint: any): string|null
     {
         let dateEnd: any                        = this.dateService.now();
         const year: number                      = dateEnd.year();
@@ -318,7 +324,7 @@ export class SprintService
 
         if (nbRemainingDays === Infinity)
         {
-            // TODO
+            return null;
         }
         else
         {
@@ -326,6 +332,7 @@ export class SprintService
             let loop: number       = 0;
             const maxLoops: number = 2 * nbRemainingDays;
             let nextDate: any;
+
             while (!(remaingDay <= 0 || loop === maxLoops))
             {
                 nextDate = dateEnd.add(1, 'days');
@@ -340,7 +347,7 @@ export class SprintService
 
             if (loop === maxLoops)
             {
-                // TODO
+                return null;
             }
             else
             {

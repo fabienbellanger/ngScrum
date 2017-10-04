@@ -22,21 +22,21 @@ import { LayoutSidebarService } from './services/layout-sidebar.service';
         SharedModule,
     ],
     declarations: [
-		LayoutNavbarComponent,
-		LayoutSidebarComponent,
+        LayoutNavbarComponent,
+        LayoutSidebarComponent,
         LayoutFooterComponent,
         LayoutComponent,
-		LayoutSidebarToggleDirective,
+        LayoutSidebarToggleDirective,
     ],
     providers:    [
-		LayoutSidebarService,
+        LayoutSidebarService,
     ],
     exports:      [
-	    LayoutNavbarComponent,
-		LayoutSidebarComponent,
+        LayoutNavbarComponent,
+        LayoutSidebarComponent,
         LayoutFooterComponent,
         LayoutComponent,
-		LayoutSidebarToggleDirective,
+        LayoutSidebarToggleDirective,
     ],
 })
 
