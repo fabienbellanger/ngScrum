@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { SprintDeleteDialogComponent } from './dialogs/sprint-delete-dialog.component';
 import { ApiSprintService } from '../../api';
+import { SprintService } from '../services/sprint.service';
 
 @Component({
     selector:    'sa-sprint-list',
@@ -27,12 +28,14 @@ export class SprintListComponent implements OnInit
      * @param {Router}           router
      * @param {MatDialog}        dialog
      * @param {MatSnackBar}      snackBar
+     * @param {SprintService}    sprintService
      */
     constructor(private apiSprintService: ApiSprintService,
                 private translateService: TranslateService,
                 private router: Router,
                 private dialog: MatDialog,
-                private snackBar: MatSnackBar)
+                private snackBar: MatSnackBar,
+                private sprintService: SprintService)
     {
     }
 
@@ -64,7 +67,17 @@ export class SprintListComponent implements OnInit
         this.apiSprintService.getList(state)
             .then((sprints: any) =>
             {
+                // Date de fin théorique des sprints
+                // ---------------------------------
+                for (const sprintIndex in sprints)
+                {
+                    if (sprints.hasOwnProperty(sprintIndex))
+                    {
+                        sprints[sprintIndex]['estimatedFinishedAt'] = this.sprintService.getSprintEndDate(sprints[sprintIndex]);
+                    }
+                }
                 this.sprints = sprints;
+
                 this.loading = false;
             })
             .catch(() =>

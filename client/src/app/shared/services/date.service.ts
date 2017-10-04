@@ -30,9 +30,9 @@ export class DateService
      * Retourne le datetime actuel
      *
      * @author Fabien Bellanger
-     * @return {any}
+     * @return {any|string}
      */
-    public now(format?: string): any
+    public now(format?: string): any|string
     {
         if (format == null)
         {
@@ -50,9 +50,9 @@ export class DateService
      * @author Fabien Bellanger
      * @param {any}     baseDate    Valeur initiale     (Optional)
      * @param {string}  format      Format              (Optional)
-     * @return {any}
+     * @return {any|string}
      */
-    public date(baseDate: any, format?: string): any
+    public date(baseDate: any, format?: string): any|string
     {
         if (format == null)
         {
@@ -72,9 +72,9 @@ export class DateService
      * @param {string}  unit        Nom unit
      * @param {any}     baseDate    Valeur initiale     (Optional)
      * @param {string}  format      Format              (Optional)
-     * @return {any}
+     * @return {any|string}
      */
-    public subtract(value: any, unit: string, baseDate?: any, format?: string): any
+    public subtract(value: any, unit: string, baseDate?: any, format?: string): any|string
     {
         const date: any = (baseDate == null) ? moment() : moment(baseDate);
 
@@ -96,9 +96,9 @@ export class DateService
      * @param {string}  unit        Nom unit
      * @param {any}     baseDate    Valeur initiale     (Optional)
      * @param {string}  format      Format              (Optional)
-     * @return {any}
+     * @return {any|string}
      */
-    public add(value: any, unit: string, baseDate?: any, format?: string): any
+    public add(value: any, unit: string, baseDate?: any, format?: string): any|string
     {
         const date: any = (baseDate == null) ? moment() : moment(baseDate);
 
@@ -247,6 +247,7 @@ export class DateService
     public isHoliday(date: string): boolean
     {
         let isHolyday: boolean    = false;
+        // TODO: Passer year en paramètre de getHolidayDates()
         const holidayDates: any[] = this.getHolidayDates();
 
         holidayDates.map((e: any) =>

@@ -167,4 +167,16 @@ export class ToolboxService
     {
         return Object.keys(object).map((k: any) => object[k]);
     }
+    
+    /**
+     * Conversion d'un objet en tableau
+     *
+     * @author Fabien Bellanger
+     * @param  {any} object
+     * @return {any}
+     */
+    public cloneObject(object: any): any
+    {
+        return JSON.parse(JSON.stringify(object));
+    }
 }

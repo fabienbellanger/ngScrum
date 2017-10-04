@@ -140,5 +140,7 @@
 	"passwords.must.be.equal": "Les mots de passe doivent être égaux",
 	"password.min.length": "Le mot de passe doit contenir au moins 4 caractères",
 	"error.occured": "Une erreur est survenue",
-	"new.password.success": "Votre mot de passe a bien été modifié"
+	"new.password.success": "Votre mot de passe a bien été modifié",
+	"decrement.hours.per.day": "Heures décrémentées / jour",
+	"day": "jour"
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { StorageService } from '../../shared';
+import { StorageService, DateService, ToolboxService } from '../../shared';
 import { Sprint, Task } from '../../models';
 
 @Injectable()
@@ -23,8 +23,12 @@ export class SprintService
      *
      * @author Fabien Bellanger
      * @param {StorageService} storageService
+     * @param {DateService}    dateService
+     * @param {ToolboxService} toolboxService
      */
-    constructor(private storageService: StorageService)
+    constructor(private storageService: StorageService,
+                private dateService: DateService,
+                private toolboxService: ToolboxService)
     {
         this.sprint                      = null;
         this.initialDuration             = 0;
@@ -176,11 +180,11 @@ export class SprintService
      * Retourne les informations sur les utilisateurs
      *
      * @author Fabien Bellanger
-     * @return {any[]} Durée
+     * @return {any[]}
      */
     private getUsersInformation(): any[]
     {
-        let informations: any = {};
+        const informations: any = {};
 
         // Récupération des données
         // ------------------------
@@ -238,10 +242,15 @@ export class SprintService
         return result;
     }
 
-
+    /**
+     * Retourne les informations totales sur les utilisateurs
+     *
+     * @author Fabien Bellanger
+     * @return {any[]}
+     */
     private getUsersTotalInformation(): any
     {
-        let total: any = {
+        const total: any = {
             duration:       0,
             workedDuration: 0,
             coefficient:    0,
@@ -288,5 +297,57 @@ export class SprintService
                 this.sprint.tasks[taskIndex].workedDuration = duration;
             }
         }
+    }
+
+    /**
+     * Retourne la date de fin théorique du sprint
+     *
+     * @author Fabien Bellanger
+     * @param {any} sprint Sprint
+     * @return {string} Date de fin théorique du sprint
+     */
+    public getSprintEndDate(sprint: any): string
+    {
+        let dateEnd: any                        = this.dateService.now();
+        const year: number                      = dateEnd.year();
+        const decrementedDurationPerDay: number = +sprint.decrementedDurationPerDay;
+        const remainingDuration: number         = +sprint.remainingDuration;
+        const nbRemainingDays: number           = (decrementedDurationPerDay !== 0)
+            ? Math.ceil(remainingDuration / decrementedDurationPerDay)
+            : Infinity;
+
+        if (nbRemainingDays === Infinity)
+        {
+            // TODO
+        }
+        else
+        {
+            let remaingDay: number = nbRemainingDays;
+            let loop: number       = 0;
+            const maxLoops: number = 2 * nbRemainingDays;
+            let nextDate: any;
+            while (!(remaingDay <= 0 || loop === maxLoops))
+            {
+                nextDate = dateEnd.add(1, 'days');
+
+                if (this.dateService.isWorked(nextDate.format('YYYY-MM-DD')))
+                {
+                    remaingDay--;
+                }
+
+                loop++;
+            }
+
+            if (loop === maxLoops)
+            {
+                // TODO
+            }
+            else
+            {
+                dateEnd = nextDate;
+            }
+        }
+
+        return dateEnd.format('YYYY-MM-DD');
     }
 }

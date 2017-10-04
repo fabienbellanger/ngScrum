@@ -23,6 +23,10 @@
 
             if ($sprints)
             {
+                // Informations sur les sprints
+                // ----------------------------
+                $sprintsInformation = self::getSprintsInformation($id, $filter);
+
                 // Informations sur les tâches
                 // ---------------------------
                 $sprintsTasksWorked = self::getSprintsWorkedDurationOfUser($id, $filter);
@@ -34,6 +38,11 @@
                     if (array_key_exists($sprintId, $sprintsTasksWorked))
                     {
                         $sprints[$sprintId] = array_merge($sprintData, $sprintsTasksWorked[$sprintId]);
+                    }
+
+                    if (array_key_exists($sprintId, $sprintsInformation))
+                    {
+                        $sprints[$sprintId] = array_merge($sprintData, $sprintsInformation[$sprintId]);
                     }
                 }
             }
@@ -246,14 +255,84 @@
                         $tasks[$sprintId]['remainingDuration'] = 0;
                     }
 
-                    // Calculs
-                    // -------
                     $tasks[$sprintId]['initialDuration']   += $line->initialDuration;
                     $tasks[$sprintId]['remainingDuration'] += $line->remainingDuration;
                 }
             }
 
             return $tasks;
+        }
+        
+        /**
+         * Informations sur les sprints d'un utilisateur
+         *
+         * @author Fabien Bellanger
+         * @param int    $userId ID de l'utilisateur
+         * @param string $filter Filtre {'all', 'finished', 'inProgress'}
+         * @return array
+         */
+        public static function getSprintsInformation($userId, $filter): ?array
+        {
+            // Requête
+            // -------
+            $query = '
+                SELECT
+                    sprint.id AS sprintId,
+                    SUM(task_user.duration) AS decrementedDuration,
+                    COUNT(DISTINCT(task_user.date)) AS nbDates
+                FROM sprint
+                    INNER JOIN team ON team.id = sprint.team_id
+                    INNER JOIN team_member ON team.id = team_member.team_id AND team_member.user_id = :userId
+                    INNER JOIN task ON sprint.id = task.sprint_id
+                    INNER JOIN task_user ON task.id = task_user.task_id';
+            if ($filter == 'inProgress')
+            {
+                $query .= ' WHERE sprint.finished_at IS NULL';
+            }
+            elseif ($filter == 'finished')
+            {
+                $query .= ' WHERE sprint.finished_at IS NOT NULL';
+            }
+            $query .= ' GROUP BY sprint.id';
+
+            $results = DB::select($query, ['userId' => $userId]);
+
+            // Traitement
+            // ----------
+            $data = [];
+            if ($results)
+            {
+                // Mise en forme des données
+                // -------------------------
+                foreach ($results as $line)
+                {
+                    $sprintId            = $line->sprintId;
+                    $decrementedDuration = $line->decrementedDuration;
+                    $nbDates             = $line->nbDates;
+
+                    // Initialisation
+                    // --------------
+                    if (!isset($data[$sprintId]))
+                    {
+                        $data[$sprintId]['decrementedDuration'] = 0;
+                        $data[$sprintId]['nbDates']             = 0;
+                    }
+
+                    $data[$sprintId]['decrementedDuration'] += $decrementedDuration;
+                    $data[$sprintId]['nbDates']             += $nbDates;
+                }
+
+                // Calcul du nombre d'heures décrémentées par jour
+                // -----------------------------------------------
+                foreach ($data as $id => $line)
+                {
+                    $data[$id]['decrementedDurationPerDay'] = ($nbDates != 0)
+                        ? $line['decrementedDuration'] / $line['nbDates']
+                        : 0;
+                }
+            }
+
+            return $data;
         }
 
         /**
