@@ -148,6 +148,7 @@
                     sprint.id                    AS sprintId,
                     sprint.name                  AS sprintName,
                     sprint.team_id               AS teamId,
+                    team.name                    AS teamName,
                     sprint.created_at            AS sprintCreatedAt,
                     sprint.started_at            AS sprintStartedAt,
                     sprint.finished_at           AS sprintFinishedAt,
@@ -185,6 +186,7 @@
                         $sprints[$sprintId]['id']                = $sprintId;
                         $sprints[$sprintId]['name']              = $line->sprintName;
                         $sprints[$sprintId]['teamId']            = $line->teamId;
+                        $sprints[$sprintId]['teamName']          = $line->teamName;
                         $sprints[$sprintId]['createdAt']         = $line->sprintCreatedAt;
                         $sprints[$sprintId]['finishedAt']        = $line->sprintFinishedAt;
                         $sprints[$sprintId]['startedAt']         = $line->sprintStartedAt;

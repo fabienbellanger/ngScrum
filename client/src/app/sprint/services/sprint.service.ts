@@ -330,14 +330,15 @@ export class SprintService
         {
             let remaingDay: number = nbRemainingDays;
             let loop: number       = 0;
-            const maxLoops: number = 2 * nbRemainingDays;
             let nextDate: any;
+            // Au max 5 jours non travaillés consécutifs
+            const maxLoops: number = 5 * nbRemainingDays;
 
             while (!(remaingDay <= 0 || loop === maxLoops))
             {
                 nextDate = dateEnd.add(1, 'days');
 
-                if (this.dateService.isWorked(nextDate.format('YYYY-MM-DD')))
+                if (this.dateService.isWorked(nextDate))
                 {
                     remaingDay--;
                 }

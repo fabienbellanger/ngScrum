@@ -241,18 +241,18 @@ export class DateService
      * Est-ce un jour férié ?
      * 
      * @author Fabien Bellanger
-     * @param {string} date Date
+     * @param {any} date Date
      * @return {boolean}
      */
-    public isHoliday(date: string): boolean
+    public isHoliday(date: any): boolean
     {
         let isHolyday: boolean    = false;
         // TODO: Passer year en paramètre de getHolidayDates()
-        const holidayDates: any[] = this.getHolidayDates();
+        const holidayDates: any[] = this.getHolidayDates(date.year());
 
         holidayDates.map((e: any) =>
         {
-            if (moment(date).isSame(e))
+            if (date.isSame(e))
             {
                 isHolyday = true;
             }
@@ -265,13 +265,13 @@ export class DateService
      * Est-ce un week-end ?
      * 
      * @author Fabien Bellanger
-     * @param {string} date Date
+     * @param {any} date Date
      * @return {boolean} 
      */
-    public isWeekend(date: string): boolean
+    public isWeekend(date: any): boolean
     {
         let isWeekend: boolean  = false;
-        const dayOfWeek: number = +moment(date).format('E');
+        const dayOfWeek: number = +date.format('E');
 
         if (dayOfWeek === 6 || dayOfWeek === 7)
         {
@@ -285,10 +285,10 @@ export class DateService
      * Est-ce un jour travaillé ?
      * 
      * @author Fabien Bellanger
-     * @param {string} date Date
+     * @param {any} date Date
      * @return {boolean}
      */
-    public isWorked(date: string): boolean
+    public isWorked(date: any): boolean
     {
         return (!this.isWeekend(date) && !this.isHoliday(date));
     }

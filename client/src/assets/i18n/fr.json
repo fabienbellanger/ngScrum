@@ -142,5 +142,6 @@
 	"error.occured": "Une erreur est survenue",
 	"new.password.success": "Votre mot de passe a bien été modifié",
 	"decrement.hours.per.day": "Heures décrémentées / jour",
-	"day": "jour"
+	"day": "jour",
+	"team:": "Equipe :"
 }
