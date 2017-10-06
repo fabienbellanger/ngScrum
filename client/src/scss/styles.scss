@@ -331,7 +331,12 @@ label {
     width:      calc(100% + 48px);
     height:     48px;
     min-height: 48px;
-  }
+}
+
+.mat-progress-spinner svg {
+    width: 50px !important;
+    height: 50px !important;
+}
 
 // --------
 
