@@ -5,50 +5,50 @@
     <form class="form-horizontal SprintParameters" [formGroup]="parametersFormGroup" (ngSubmit)="saveParameters()">
         <div class="row margin-bottom-20px">
             <div class="col-xs-12">
-                <button md-raised-button type="button"
+                <button mat-raised-button type="button"
                         routerLink="/sprints"
                         [routerLinkActiveOptions]="{exact: false}"
                         routerLinkActive="true">
-                    <md-icon>keyboard_arrow_left</md-icon>
+                    <mat-icon>keyboard_arrow_left</mat-icon>
                     <span>{{ 'sprints.list' | translate }}</span>
                 </button>
                 &nbsp;&nbsp;
-                <button md-raised-button color="primary" [disabled]="parametersFormGroup.invalid">
-                    <md-icon>save</md-icon>
+                <button mat-raised-button color="primary" [disabled]="parametersFormGroup.invalid">
+                    <mat-icon>save</mat-icon>
                     <span>{{ 'save' | translate }}</span>
                 </button>
             </div>
         </div>
 
-        <md-card class="margin-bottom-20px">
-            <md-card-content>
+        <mat-card class="margin-bottom-20px">
+            <mat-card-content>
                 <div class="row">
-                    <p class="col-xs-12 col-sm-6 col-md-4">
-                        <md-input-container class="width-100">
-                            <input mdInput type="text" name="name"
+                    <p class="col-xs-12 col-sm-6 col-mat-4">
+                        <mat-input-container class="width-100">
+                            <input matInput type="text" name="name"
                                    [placeholder]="'name' | translate"
                                    formControlName="name"
                                    maxlength="50"
                                    autofocus required>
-                            <md-hint align="end">{{ parametersFormGroup.get('name').value.length }} / 50</md-hint>
-                            <md-error *ngIf="parametersFormGroup.get('name').hasError('required')">
+                            <mat-hint align="end">{{ parametersFormGroup.get('name').value.length }} / 50</mat-hint>
+                            <mat-error *ngIf="parametersFormGroup.get('name').hasError('required')">
                                 {{ 'required.name' | translate }}
-                            </md-error>
-                        </md-input-container>
+                            </mat-error>
+                        </mat-input-container>
                     </p>
                 </div>
                 
                 <div class="row">
-                    <p class="col-xs-12 col-sm-6 col-md-4">
-                        <md-form-field class="width-100">
-                            <input mdInput [mdDatepicker]="picker" [placeholder]="'started.at' | translate"
+                    <p class="col-xs-12 col-sm-6 col-mat-4">
+                        <mat-form-field class="width-100">
+                            <input matInput [matDatepicker]="picker" [placeholder]="'started.at' | translate"
                                    formControlName="startedAt" required>
-                            <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
-                            <md-datepicker #picker></md-datepicker>
-                            <md-error *ngIf="parametersFormGroup.get('startedAt').hasError('required')">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error *ngIf="parametersFormGroup.get('startedAt').hasError('required')">
                                 {{ 'required.date.begin' | translate }}
-                            </md-error>
-                        </md-form-field>
+                            </mat-error>
+                        </mat-form-field>
                     </p>
                 </div>
 
@@ -72,12 +72,12 @@
                                             {{ user.name }}
                                         </div>
                                         <div class="SprintParameters-Users-Add-delete">
-                                            <button md-mini-fab
+                                            <button mat-mini-fab
                                                     color="warn"
                                                     type="button"
                                                     (click)="deleteUser(index)"
                                                     [disabled]="userService.user.id === user.id">
-                                                <md-icon>delete</md-icon>
+                                                <mat-icon>delete</mat-icon>
                                             </button>
                                         </div>
                                     </div>
@@ -87,23 +87,24 @@
                                     <p class="bold">{{ 'add.user.to.sprint' | translate }}</p>
                                     <div class="row margin-top-20px">
                                         <div class="col-xs-12 col-sm-8">
-                                            <md-select class="width-100"
-                                                       [placeholder]="'choose.user' | translate"
-                                                       [(ngModel)]="userIndexToAdd"
-                                                       [ngModelOptions]="{standalone: true}">
-                                                <md-option>{{ 'none' | translate }}</md-option>
-                                                <md-option *ngFor="let user of usersNotInSprint; index as indexAdd"
-                                                           [value]="indexAdd">
-                                                    {{ user.name }}
-                                                </md-option>
-                                            </md-select>
+                                            <mat-form-field class="width-100">
+                                                <mat-select [placeholder]="'choose.user' | translate"
+                                                            [(ngModel)]="userIndexToAdd"
+                                                            [ngModelOptions]="{standalone: true}">
+                                                    <mat-option>{{ 'none' | translate }}</mat-option>
+                                                    <mat-option *ngFor="let user of usersNotInSprint; index as indexAdd"
+                                                            [value]="indexAdd">
+                                                        {{ user.name }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
                                         </div>
                                         <div class="xs-12 visible-xs margin-top-10px">&nbsp;</div>
                                         <div class="col-xs-12 col-sm-4">
-                                            <button md-raised-button type="button" color="primary"
+                                            <button mat-raised-button type="button" color="primary"
                                                     class="SprintParameters-Users-Delete-add"
                                                     (click)="addUser(userIndexToAdd)">
-                                                <md-icon>add</md-icon>
+                                                <mat-icon>add</mat-icon>
                                                 {{ 'add' | translate }}
                                             </button>
                                         </div>
@@ -113,22 +114,22 @@
                         </div>
                     </div>
                 </div>
-            </md-card-content>
+            </mat-card-content>
 
-            <md-card-actions>
-                <button md-raised-button type="button"
+            <mat-card-actions>
+                <button mat-raised-button type="button"
                         routerLink="/sprints"
                         [routerLinkActiveOptions]="{exact: false}"
                         routerLinkActive="true">
-                    <md-icon>keyboard_arrow_left</md-icon>
+                    <mat-icon>keyboard_arrow_left</mat-icon>
                     <span>{{ 'sprints.list' | translate }}</span>
                 </button>
                 &nbsp;&nbsp;
-                <button md-button color="primary" [disabled]="parametersFormGroup.invalid">
-                    <md-icon>save</md-icon>
+                <button mat-button color="primary" [disabled]="parametersFormGroup.invalid">
+                    <mat-icon>save</mat-icon>
                     <span>{{ 'save' | translate }}</span>
                 </button>
-            </md-card-actions>
-        </md-card>
+            </mat-card-actions>
+        </mat-card>
     </form>
 </div>

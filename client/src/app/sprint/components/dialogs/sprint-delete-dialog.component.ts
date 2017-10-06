@@ -5,13 +5,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
     selector: 'sa-sprint-delete-dialog',
     template: `
-        <h1 md-dialog-title> {{ 'warning' | translate }}</h1>
-		<div md-dialog-content>
+        <h1 mat-dialog-title> {{ 'warning' | translate }}</h1>
+		<div mat-dialog-content>
 			<p>{{ 'want.to.delete.sprint' | translate }}</p>
 		</div>
-		<div md-dialog-actions>
-			<button md-button color="primary" [md-dialog-close]="data.confirm" tabindex="2">{{ 'yes' | translate }}</button>
-			<button md-button (click)="onNoClick()" tabindex="-1">{{ 'no' | translate }}</button>
+		<div mat-dialog-actions>
+			<button mat-button color="primary" [mat-dialog-close]="data.confirm" tabindex="2">{{ 'yes' | translate }}</button>
+			<button mat-button (click)="onNoClick()" tabindex="-1">{{ 'no' | translate }}</button>
 		</div>
 	`,
 })

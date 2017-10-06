@@ -3,7 +3,7 @@
         <li *ngFor="let item of layoutSidebarService.items">
             <a [routerLink]="item.route" routerLinkActive="active"
                [routerLinkActiveOptions]="{exact: item.routeExact}">
-                <md-icon>{{ item.picto }}</md-icon>
+                <mat-icon>{{ item.picto }}</mat-icon>
                 &nbsp;
                 <span>{{ item.label }}</span>
             </a>

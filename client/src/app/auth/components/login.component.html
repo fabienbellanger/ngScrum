@@ -1,68 +1,68 @@
 <div class="container" class="Auth">
     <div class="Auth-Container">
         <form class="form-signin" [formGroup]="formGroup"  (ngSubmit)="submitForm()">
-            <md-toolbar color="primary">
+            <mat-toolbar color="primary">
                 <h1 class="Auth-Container-Header mat-h1">
-                    <md-icon>lock_outline</md-icon>
+                    <mat-icon>lock_outline</mat-icon>
                     <span class="Auth-Container-Header-title">{{ 'authentication' | translate }}</span>
                 </h1>
-            </md-toolbar>
-            <md-card class="Auth-Container-Card">
-                <md-card-content>
+            </mat-toolbar>
+            <mat-card class="Auth-Container-Card">
+                <mat-card-content>
                     <div class="Auth-Container-Card-Content">
                         <p>
-                            <md-input-container class="width-100">
-                                <input mdInput type="email"
+                            <mat-input-container class="width-100">
+                                <input matInput type="email"
                                        [placeholder]="'email' | translate"
                                        formControlName="email"
                                        value=""
                                        autofocus required>
-                                <md-error *ngIf="formGroup.get('email').hasError('pattern')">
+                                <mat-error *ngIf="formGroup.get('email').hasError('pattern')">
                                     {{ 'invalid.email' | translate }}
-                                </md-error>
-                                <md-error *ngIf="formGroup.get('email').hasError('required')">
+                                </mat-error>
+                                <mat-error *ngIf="formGroup.get('email').hasError('required')">
                                     {{ 'required.email' | translate }}
-                                </md-error>
-                            </md-input-container>
+                                </mat-error>
+                            </mat-input-container>
                         </p>
 
                         <p>
-                            <md-input-container class="width-100">
-                                <input mdInput type="password"
+                            <mat-input-container class="width-100">
+                                <input matInput type="password"
                                        [placeholder]="'password' | translate"
                                        formControlName="password"
                                        value=""
                                        required>
-                                <md-error *ngIf="formGroup.get('password').hasError('minlength')">
+                                <mat-error *ngIf="formGroup.get('password').hasError('minlength')">
                                     {{ 'too.short.password' | translate }}
-                                </md-error>
-                                <md-error *ngIf="formGroup.get('password').hasError('required')">
+                                </mat-error>
+                                <mat-error *ngIf="formGroup.get('password').hasError('required')">
                                     {{ 'required.password' | translate }}
-                                </md-error>
-                            </md-input-container>
+                                </mat-error>
+                            </mat-input-container>
                         </p>
                     </div>
-                </md-card-content>
+                </mat-card-content>
 
-                <md-card-actions>
+                <mat-card-actions>
                     <div class="Auth-Container-Card-Actions">
-                        <button md-raised-button color="primary" type="submit" [disabled]="formGroup.invalid">
+                        <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid">
                             {{ 'signin' | translate }}
                         </button>
-                        <a md-button color="primary" routerLink="/forgotten-password">
+                        <a mat-button color="primary" routerLink="/forgotten-password">
                             {{ 'forgotten.password' | translate }}
                         </a>
                     </div>
-                </md-card-actions>
+                </mat-card-actions>
 
-                <md-card-footer>
+                <mat-card-footer>
                     <p class="text-center text-muted Auth-Container-Card-Footer">
                         {{ 'copyright' | translate }} &copy; {{ currentYear }}
                         <a href="http://www.apitic.com" target="_blank">Apitic</a>
                         - {{ 'all.right.reserved' | translate }}
                     </p>
-                </md-card-footer>
-            </md-card>
+                </mat-card-footer>
+            </mat-card>
         </form>
     </div>
 </div>

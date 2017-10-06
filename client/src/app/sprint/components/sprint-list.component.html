@@ -3,17 +3,17 @@
     <h1>{{ 'sprints.list' | translate }}</h1>
 
     <div class="btn-group" role="group">
-        <button md-raised-button (click)="getSprints('inProgress')"
+        <button mat-raised-button (click)="getSprints('inProgress')"
                 [color]="(state === 'inProgress') ? 'primary' : ''">
             {{ 'sprint.in.progress.list' | translate }}
         </button>
         &nbsp;&nbsp;
-        <button md-raised-button (click)="getSprints('finished')"
+        <button mat-raised-button (click)="getSprints('finished')"
                 [color]="(state === 'finished') ? 'primary' : ''">
             {{ 'sprint.finished.list' | translate }}
         </button>
         &nbsp;&nbsp;
-        <button md-raised-button type="button" color="accent"
+        <button mat-raised-button type="button" color="accent"
                 [routerLink]="['/sprints/new']"
                 routerLinkActive="true"
                 [routerLinkActiveOptions]="{exact: false}">
@@ -22,52 +22,52 @@
     </div>
 
     <div class="margin-bottom-20px">
-        <md-card class="SprintsList-Sprint"
+        <mat-card class="SprintsList-Sprint"
                  *ngFor="let sprint of sprints"
                  (click)="redirectToTasksManagement(sprint)">
-            <md-card-header class="SprintsList-Sprint-Header">
-                <md-card-title color="primary" class="SprintsList-Sprint-Header-title">
+            <mat-card-header class="SprintsList-Sprint-Header">
+                <mat-card-title color="primary" class="SprintsList-Sprint-Header-title">
                     <h4 class="primary-color">{{ sprint.name }}</h4>
                     <div class="SprintsList-Sprint-Menu">
-                        <button md-icon-button [mdMenuTriggerFor]="menu"
+                        <button mat-icon-button [matMenuTriggerFor]="menu"
                                 class="grey-700-color"
                                 (click)="$event.stopPropagation()">
-                            <md-icon>more_vert</md-icon>
+                            <mat-icon>more_vert</mat-icon>
                         </button>
-                        <md-menu #menu="mdMenu">
-                            <button md-menu-item
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item
                                     [routerLink]="['/sprints', sprint.id, 'tasks']"
                                     routerLinkActive="true"
                                     [routerLinkActiveOptions]="{exact: false}">
-                                <md-icon>list</md-icon>
+                                <mat-icon>list</mat-icon>
                                 <span>{{ 'tasks.list' | translate }}</span>
                             </button>
-                            <button md-menu-item
+                            <button mat-menu-item
                                     [routerLink]="['/sprints', sprint.id, 'statistics']"
                                     routerLinkActive="true"
                                     [routerLinkActiveOptions]="{exact: false}">
-                                <md-icon>show_chart</md-icon>
+                                <mat-icon>show_chart</mat-icon>
                                 <span>{{ 'statistics' | translate }}</span>
                             </button>
-                            <button md-menu-item
+                            <button mat-menu-item
                                     [routerLink]="['/sprints', sprint.id, 'parameters']"
                                     routerLinkActive="true"
                                     [routerLinkActiveOptions]="{exact: false}">
-                                <md-icon>settings</md-icon>
+                                <mat-icon>settings</mat-icon>
                                 <span>{{ 'parameters' | translate }}</span>
                             </button>
-                            <button md-menu-item *ngIf="sprint.finishedAt === null"
+                            <button mat-menu-item *ngIf="sprint.finishedAt === null"
                                     (click)="deleteSprint(sprint)">
-                                <md-icon>delete</md-icon>
+                                <mat-icon>delete</mat-icon>
                                 <span>{{ 'delete' | translate }}</span>
                             </button>
-                        </md-menu>
+                        </mat-menu>
                     </div>
-                </md-card-title>
-                <md-card-subtitle>{{ 'team:' | translate }} <b>{{ sprint.teamName }}</b></md-card-subtitle>
-            </md-card-header>
+                </mat-card-title>
+                <mat-card-subtitle>{{ 'team:' | translate }} <b>{{ sprint.teamName }}</b></mat-card-subtitle>
+            </mat-card-header>
 
-            <md-card-content>
+            <mat-card-content>
                 <div class="list-group-item-text">
                     <div class="row SprintsList-Sprint-info">
                         <div class="SprintsList-Sprint-label">{{ 'created.at' | translate }}</div>
@@ -108,21 +108,21 @@
                     <div class="row margin-bottom-20px margin-top-10px">
                         <div class="col-xs-12 text-center small">
                             <div>{{ sprint.progressPercent | percentFr }}</div>
-                            <md-progress-bar [color]="primary"
+                            <mat-progress-bar [color]="primary"
                                              [mode]="determinate"
                                              [value]="sprint.progressPercent"
                                              [bufferValue]="bufferValue">
-                            </md-progress-bar>
+                            </mat-progress-bar>
                         </div>
                     </div>
                 </div>
-            </md-card-content>
-        </md-card>
+            </mat-card-content>
+        </mat-card>
         
-        <md-card *ngIf="sprints?.length === 0" class="margin-top-20px">
-            <md-card-content>
+        <mat-card *ngIf="sprints?.length === 0" class="margin-top-20px">
+            <mat-card-content>
                 {{ 'no.sprint' | translate }}
-            </md-card-content>
-        </md-card>
+            </mat-card-content>
+        </mat-card>
     </div>
 </div>

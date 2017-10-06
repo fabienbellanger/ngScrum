@@ -5,11 +5,11 @@ import { Component } from '@angular/core';
     template: `
         <div class="loading">
             <div>
-                <md-progress-spinner
-                    [mode]="'indeterminate'"
-                    [value]="100"
+                <mat-progress-spinner
+                    mode="indeterminate"
+                    value="100"
                     style="height: 50px; width: 50px">
-                </md-progress-spinner>
+                </mat-progress-spinner>
             </div>
             <h2 class="primary-color">{{ 'loading' | translate }}...</h2>
         </div>

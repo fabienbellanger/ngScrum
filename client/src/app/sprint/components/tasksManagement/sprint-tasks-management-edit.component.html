@@ -5,24 +5,24 @@
     <form [formGroup]="taskFormGroup" (ngSubmit)="saveTask()">
         <div class="row margin-bottom-20px">
             <div class="col-xs-12">
-                <button md-raised-button type="button"
+                <button mat-raised-button type="button"
                         [routerLink]="['/sprints', sprintId, 'tasks-management']">
-                    <md-icon>keyboard_arrow_left</md-icon>
+                    <mat-icon>keyboard_arrow_left</mat-icon>
                     <span class="hidden-xs">{{ 'back' | translate }}</span>
                 </button>
                 &nbsp;&nbsp;
-                <button md-raised-button color="primary" type="button"
+                <button mat-raised-button color="primary" type="button"
                         [disabled]="taskFormGroup.invalid"
                         (click)="saveTask()">
-                    <md-icon>save</md-icon>
+                    <mat-icon>save</mat-icon>
                     <span>{{ 'save' | translate }}</span>
                 </button>
             </div>
         </div>
 
-        <md-card class="margin-bottom-20px">
-            <md-card-header>
-                <md-card-title>
+        <mat-card class="margin-bottom-20px">
+            <mat-card-header>
+                <mat-card-title>
                     <h4 *ngIf="isEdit">
                         {{ task.name }}
                         ({{ task.remainingDuration | duration:'hour' }})
@@ -30,63 +30,63 @@
                     <h4 *ngIf="!isEdit">
                         {{ 'new.task' | translate }}
                     </h4>
-                </md-card-title>
-                <md-card-subtitle>
+                </mat-card-title>
+                <mat-card-subtitle>
                     <h5>
                         {{ user.firstname + ' ' + user.lastname }}
                     </h5>
-                </md-card-subtitle>
-            </md-card-header>
+                </mat-card-subtitle>
+            </mat-card-header>
 
-            <md-card-content>
+            <mat-card-content>
                 <div class="row margin-bottom-20px" *ngIf="!isEdit">
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <md-select class="width-100"
-                                   [placeholder]="'choose.task' | translate"
-                                   formControlName="taskId"
-                                   required>
-                            <md-option>{{ 'none' | translate }}</md-option>
-                            <md-option *ngFor="let task of tasks" [value]="task.id">
-                                {{ task.label }}
-                            </md-option>
-                        </md-select>
+                    <div class="col-xs-12 col-sm-6 col-mat-3">
+                        <mat-form-field class="width-100">
+                            <mat-select [placeholder]="'choose.task' | translate"
+                                        formControlName="taskId" required>
+                                <mat-option>{{ 'none' | translate }}</mat-option>
+                                <mat-option *ngFor="let task of tasks" [value]="task.id">
+                                    {{ task.label }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
                     </div>
                 </div>
 
                 <div class="row margin-bottom-10px">
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <md-input-container class="width-100">
-                            <input mdInput type="number" name="workedDuration"
+                    <div class="col-xs-12 col-sm-6 col-mat-3">
+                        <mat-input-container class="width-100">
+                            <input matInput type="number" name="workedDuration"
                                    min="0" max="35" step="0.5"
                                    formControlName="workedDuration"
                                    [placeholder]="'worked.hours' | translate"
                                    [autofocus]="task !== null" required>
-                            <span mdSuffix>&nbsp;h</span>
-                            <md-error *ngIf="taskFormGroup.get('workedDuration').hasError('required')">
+                            <span matSuffix>&nbsp;h</span>
+                            <mat-error *ngIf="taskFormGroup.get('workedDuration').hasError('required')">
                                 {{ 'required.worked.hours' | translate }}
-                            </md-error>
-                        </md-input-container>
+                            </mat-error>
+                        </mat-input-container>
                     </div>
                 </div>
 
                 <div class="row margin-bottom-10px">
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <md-input-container class="width-100">
-                            <input mdInput type="number" name="remainingDuration"
+                    <div class="col-xs-12 col-sm-6 col-mat-3">
+                        <mat-input-container class="width-100">
+                            <input matInput type="number" name="remainingDuration"
                                    min="0" max="35" step="0.5"
                                    [placeholder]="'remaining.hours' | translate"
                                    formControlName="remainingDuration"
                                    required>
-                            <span mdSuffix>&nbsp;h</span>
-                            <md-error *ngIf="taskFormGroup.get('remainingDuration').hasError('required')">
+                            <span matSuffix>&nbsp;h</span>
+                            <mat-error *ngIf="taskFormGroup.get('remainingDuration').hasError('required')">
                                 {{ 'required.remaining.hours' | translate }}
-                            </md-error>
-                        </md-input-container>
+                            </mat-error>
+                        </mat-input-container>
                     </div>
                 </div>
 
                 <div class="row" *ngIf="isEdit">
-                    <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="col-xs-12 col-sm-6 col-mat-3">
                         Heures dépilées :
                         <span [class.red-color]="task.remainingDuration < +taskFormGroup.get('remainingDuration').value"
                               *ngIf="+taskFormGroup.get('remainingDuration').value > 0">
@@ -97,22 +97,22 @@
                         </span>
                     </div>
                 </div>
-            </md-card-content>
+            </mat-card-content>
 
-            <md-card-actions>
-                <button md-raised-button type="button"
+            <mat-card-actions>
+                <button mat-raised-button type="button"
                         [routerLink]="['/sprints', sprintId, 'tasks-management']">
-                    <md-icon>keyboard_arrow_left</md-icon>
+                    <mat-icon>keyboard_arrow_left</mat-icon>
                     <span class="hidden-xs">{{ 'back' | translate }}</span>
                 </button>
                 &nbsp;&nbsp;
-                <button md-button color="primary" type="button"
+                <button mat-button color="primary" type="button"
                         [disabled]="taskFormGroup.invalid"
                         (click)="saveTask()">
-                    <md-icon>save</md-icon>
+                    <mat-icon>save</mat-icon>
                     <span>{{ 'save' | translate }}</span>
                 </button>
-            </md-card-actions>
-        </md-card>
+            </mat-card-actions>
+        </mat-card>
     </form>
 </div>

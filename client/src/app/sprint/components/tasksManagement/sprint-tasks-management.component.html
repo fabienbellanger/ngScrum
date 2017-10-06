@@ -4,9 +4,9 @@
 
     <div class="row margin-bottom-20px">
         <div class="col-xs-12">
-            <button md-raised-button type="button"
+            <button mat-raised-button type="button"
                     [routerLink]="['/sprints', sprintId, 'tasks-management-list']">
-                <md-icon>keyboard_arrow_left</md-icon>
+                <mat-icon>keyboard_arrow_left</mat-icon>
                 <span class="hidden-xs">{{ 'back' | translate }}</span>
             </button>
         </div>
@@ -16,14 +16,14 @@
         <h4>{{ 'date:' | translate }} {{ date | moment:'DD/MM/YYYY' }}</h4>
     </div>
 
-    <md-card *ngFor="let user of sprintTasksManagementService.users" class="TasksManagement-List">
-        <md-card-content class="overflow-auto">
+    <mat-card *ngFor="let user of sprintTasksManagementService.users" class="TasksManagement-List">
+        <mat-card-content class="overflow-auto">
             <h3 class="info-color TasksManagement-List-Header">
                 <span>{{ user.name }}</span>
-                <button md-button type="button" class="TasksManagement-List-Add"
+                <button mat-button type="button" class="TasksManagement-List-Add"
                         [routerLink]="['/sprints', sprintId, 'tasks-management', 'new', user.id]">
                     <span class="TasksManagement-List-Add-Container">
-                        <md-icon class="TasksManagement-List-Add-Container-Icon">add_circle_outline</md-icon>
+                        <mat-icon class="TasksManagement-List-Add-Container-Icon">add_circle_outline</mat-icon>
                         <span class="hidden-xs TasksManagement-List-Add-Container-Label">
                             {{ 'add.task' | translate }}
                         </span>
@@ -68,9 +68,9 @@
                             {{ task.performance | percentFr:0 }}
                         </td>
                         <td align="center" valign="middle">
-                            <button md-button type="button" class="mat-button-small-width"
+                            <button mat-button type="button" class="mat-button-small-width"
                                     [routerLink]="['/sprints', sprintId, 'tasks-management', 'edit', user.id, task.id]">
-                                <md-icon class="mat-icon-20px">mode_edit</md-icon>
+                                <mat-icon class="mat-icon-20px">mode_edit</mat-icon>
                             </button>
                         </td>
                     </tr>
@@ -87,14 +87,14 @@
                     </tr>
                 </tfoot>
             </table>
-        </md-card-content>
-    </md-card>
+        </mat-card-content>
+    </mat-card>
 
     <div class="row margin-bottom-20px">
         <div class="col-xs-12">
-            <button md-raised-button type="button"
+            <button mat-raised-button type="button"
                     [routerLink]="['/sprints', sprintId, 'tasks-management-list']">
-                <md-icon>keyboard_arrow_left</md-icon>
+                <mat-icon>keyboard_arrow_left</mat-icon>
                 <span class="hidden-xs">{{ 'back' | translate }}</span>
             </button>
         </div>
