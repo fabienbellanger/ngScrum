@@ -47,5 +47,9 @@
             // User
             // ----
             include_once('api/user.php');
+
+            // Statistiques
+            // ------------
+            include_once('api/statistics.php');
         });
     });
