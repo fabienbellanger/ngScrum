@@ -19,7 +19,7 @@
             // ------
             $groups = [
                 ['id' => 1, 'name' => 'Administrator', 'parent_id' => null],
-                ['id' => 2, 'name' => 'Product Onwer', 'parent_id' => 1],
+                ['id' => 2, 'name' => 'Product Owner', 'parent_id' => 1],
                 ['id' => 3, 'name' => 'Scrum Master', 'parent_id' => 1],
                 ['id' => 4, 'name' => 'Project Manager', 'parent_id' => 3],
                 ['id' => 5, 'name' => 'Developer', 'parent_id' => 4]
