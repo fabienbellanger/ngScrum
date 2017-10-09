@@ -4,9 +4,11 @@
 
     use App\Helpers\ResponseHelper as Response;
     use App\Repositories\SprintRepository;
+    use App\Repositories\UserRepository;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Input;
 
+    use TZ;
     class SprintController extends Controller
     {
         /**
@@ -90,6 +92,12 @@
         public function getSprintManagement(Request $request, $id, $sprintId, $date = null)
         {
             $date     = ($date) ? $date : date('Y-m-d');
+            
+            /*$timezone = UserRepository::getTimezone();
+            $newDate = TZ::getUTCDatetime($timezone, $date, '00:00:00', 'Y-m-d');
+
+            dd($date, $newDate);*/
+
             $response = SprintRepository::getSprintManagement($id, $sprintId, $date);
 
             if ($response['code'] == 404)

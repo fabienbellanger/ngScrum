@@ -5,6 +5,7 @@
     use Auth;
     use App;
     use DB;
+    use TZ;
     use Illuminate\Support\Facades\Mail;
     use Illuminate\Support\Facades\Hash;
     use Illuminate\Support\Facades\Log;
@@ -34,6 +35,7 @@
                 'email'             => $user->email,
                 'groupId'           => $user->group_id,
                 'workedHoursPerDay' => $user->worked_hours_per_day,
+                'timezone'          => $user->timezone,
                 'teams'             => self::getTeamsIdName($user->id),
             ];
 
@@ -184,11 +186,12 @@
 
             // 2. On écrit dans la table password_resets
             // -----------------------------------------
-            $token = hash('sha512', uniqid() . $email);
-            $data  = [
+            $timezone = self::getTimezone();
+            $token    = hash('sha512', uniqid() . $email);
+            $data     = [
                 'email'      => $email,
                 'token'      => $token,
-                'created_at' => date('Y-m-d H:i:s'),
+                'created_at' => TZ::getUTCDatetime2($timezone, date('Y-m-d H:i:s'), 'Y-m-d H:i:s'),
             ];
             DB::table('password_resets')->insert($data);
 
@@ -280,13 +283,33 @@
 
             // 4. On indique que le token a été utilisé
             // ----------------------------------------
+            $timezone  = self::getTimezone();
+            $usedAt    = TZ::getUTCDatetime2($timezone, date('Y-m-d H:i:s'), 'Y-m-d H:i:s');
             DB::table('password_resets')
                 ->where('token', $token)
-                ->update(['used_at' => date('Y-m-d H:i:s')]);
+                ->update(['used_at' => $usedAt]);
 
             return [
                 'code'    => 200,
                 'message' => 'Success',
             ];
+        }
+
+        /**
+         * Récupère le timezone de l'utilisateur connecté
+         *
+         * @author Fabien Bellanger
+         * @return string Timezone
+         */
+        static public function getTimezone(): string
+        {
+            $user = Auth::User();
+            
+            if (!$user)
+            {
+                return 'UTC';
+            }
+
+            return $user->timezone;
         }
     }

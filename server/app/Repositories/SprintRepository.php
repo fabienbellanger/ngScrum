@@ -3,7 +3,9 @@
     namespace App\Repositories;
 
     use DB;
+    use TZ;
     use Exception;
+    use App\Repositories\UserRepository;
 
     class SprintRepository
     {
@@ -172,7 +174,8 @@
 
             // Traitement
             // ----------
-            $sprints = [];
+            $sprints  = [];
+            $timezone = UserRepository::getTimezone();
             if ($results)
             {
                 // Mise en forme des données
@@ -187,8 +190,8 @@
                         $sprints[$sprintId]['name']              = $line->sprintName;
                         $sprints[$sprintId]['teamId']            = $line->teamId;
                         $sprints[$sprintId]['teamName']          = $line->teamName;
-                        $sprints[$sprintId]['createdAt']         = $line->sprintCreatedAt;
-                        $sprints[$sprintId]['finishedAt']        = $line->sprintFinishedAt;
+                        $sprints[$sprintId]['createdAt']         = TZ::getLocalDatetime2($timezone, $line->sprintCreatedAt, 'Y-m-d H:i:s');
+                        $sprints[$sprintId]['finishedAt']        = TZ::getLocalDatetime2($timezone, $line->sprintFinishedAt, 'Y-m-d H:i:s');
                         $sprints[$sprintId]['startedAt']         = $line->sprintStartedAt;
                         $sprints[$sprintId]['initialDuration']   = $line->initialDuration;
                         $sprints[$sprintId]['remainingDuration'] = $line->remainingDuration;
@@ -364,12 +367,16 @@
                 ];
             }
 
+            // Timezone
+            // --------
+            $timezone = UserRepository::getTimezone();
+
             $sprint['id']         = $sprintId;
             $sprint['name']       = $results[0]->name;
-            $sprint['createdAt']  = $results[0]->created_at;
-            $sprint['updatedAt']  = $results[0]->updated_at;
+            $sprint['createdAt']  = TZ::getLocalDatetime2($timezone, $results[0]->created_at, 'Y-m-d H:i:s');
+            $sprint['updatedAt']  = TZ::getLocalDatetime2($timezone, $results[0]->updated_at, 'Y-m-d H:i:s');
             $sprint['startedAt']  = $results[0]->started_at;
-            $sprint['finishedAt'] = $results[0]->finished_at;
+            $sprint['finishedAt'] = TZ::getLocalDatetime2($timezone, $results[0]->finished_at, 'Y-m-d H:i:s');
 
             // 2. Récupération des tâches
             // --------------------------
@@ -563,7 +570,9 @@
         {
             // Ajout dans la table task
             // ------------------------
-            $taskData = [
+            $timezone  = UserRepository::getTimezone();
+            $createdAt = TZ::getUTCDatetime2($timezone, date('Y-m-d H:i:s'), 'Y-m-d H:i:s');
+            $taskData  = [
                 'user_id'            => $userId,
                 'sprint_id'          => $sprintId,
                 'name'               => $data['name'],
@@ -571,8 +580,8 @@
                 'initial_duration'   => floatval($data['duration']),
                 'remaining_duration' => floatval($data['duration']),
                 'added_after'        => intval($data['notPlanned']),
-                'created_at'         => date('Y-m-d H:i:s'),
-                'updated_at'         => date('Y-m-d H:i:s'),
+                'created_at'         => $createdAt,
+                'updated_at'         => $createdAt,
             ];
             $taskId   = DB::table('task')->insertGetId($taskData);
 
@@ -612,12 +621,13 @@
 
             // Mise à jour dans la table task
             // ------------------------------
-            $taskData = [
+            $timezone  = UserRepository::getTimezone();
+            $updatedAt = TZ::getUTCDatetime2($timezone, date('Y-m-d H:i:s'), 'Y-m-d H:i:s');
+            $taskData  = [
                 'name'        => $data['name'],
                 'description' => ($data['description']) ? $data['description'] : null,
-                //'initial_duration'   => floatval($data['duration']),
                 'added_after' => intval($data['notPlanned']),
-                'updated_at'  => date('Y-m-d H:i:s'),
+                'updated_at'  => $updatedAt,
             ];
             DB::table('task')
               ->where('id', $taskId)
@@ -938,14 +948,18 @@
                 ];
             }
 
+            // Timezone
+            // --------
+            $timezone = UserRepository::getTimezone();
+            
             $sprint['date']       = $date;
             $sprint['id']         = $sprintId;
             $sprint['name']       = $results[0]->name;
             $sprint['teamId']     = $results[0]->team_id;
-            $sprint['createdAt']  = $results[0]->created_at;
-            $sprint['updatedAt']  = $results[0]->updated_at;
+            $sprint['createdAt']  = TZ::getLocalDatetime2($timezone, $results[0]->created_at, 'Y-m-d H:i:s');
+            $sprint['updatedAt']  = TZ::getLocalDatetime2($timezone, $results[0]->updated_at, 'Y-m-d H:i:s');
             $sprint['startedAt']  = $results[0]->started_at;
-            $sprint['finishedAt'] = $results[0]->finished_at;
+            $sprint['finishedAt'] = TZ::getLocalDatetime2($timezone, $results[0]->finished_at, 'Y-m-d H:i:s');
 
             // 2. Récupération des tâches
             // --------------------------
@@ -1078,6 +1092,8 @@
                 $taskUserId = $results[0]->id;
             }
 
+            $timezone  = UserRepository::getTimezone();
+            $createdAt = TZ::getUTCDatetime2($timezone, date('Y-m-d H:i:s'), 'Y-m-d H:i:s');
             if (!$taskUserId)
             {
                 // Création
@@ -1088,8 +1104,8 @@
                     'date'            => $data['date'],
                     'duration'        => $data['duration'],
                     'worked_duration' => $data['workedDuration'],
-                    'created_at'      => date('Y-m-d H:i:s'),
-                    'updated_at'      => date('Y-m-d H:i:s'),
+                    'created_at'      => $createdAt,
+                    'updated_at'      => $createdAt,
                 ];
                 $taskUserId   = DB::table('task_user')->insertGetId($taskUserData);
             }
@@ -1097,11 +1113,10 @@
             {
                 // Modification
                 // ------------
-
                 $taskUserData = [
                     'duration'        => $data['duration'],
                     'worked_duration' => $data['workedDuration'],
-                    'updated_at'      => date('Y-m-d H:i:s'),
+                    'updated_at'      => $createdAt,
                 ];
                 DB::table('task_user')
                   ->where('id', $taskUserId)
@@ -1137,11 +1152,13 @@
 
             // 2. Ajout en base de données
             // ---------------------------
+            $timezone  = UserRepository::getTimezone();
+            $createdAt = TZ::getUTCDatetime2($timezone, date('Y-m-d H:i:s'), 'Y-m-d H:i:s');
             $sprintData = [
                 'name'        => $data['name'],
                 'team_id'     => $data['teamId'],
-                'created_at'  => date('Y-m-d H:i:s'),
-                'updated_at'  => date('Y-m-d H:i:s'),
+                'created_at'  => $createdAt,
+                'updated_at'  => $createdAt,
                 'started_at'  => $data['startedAt'],
                 'finished_at' => null,
             ];
