@@ -423,7 +423,7 @@
                     $tasks[$taskId]['list'][$taskPartId]['userId']         = $task->taskPartUserId;
                     $tasks[$taskId]['list'][$taskPartId]['duration']       = floatval($task->taskPartDuration);
                     $tasks[$taskId]['list'][$taskPartId]['workedDuration'] = floatval($task->taskPartWorkedDuration);
-                    $tasks[$taskId]['list'][$taskPartId]['date']           = $task->taskPartDate;
+                    $tasks[$taskId]['list'][$taskPartId]['date']           = TZ::getLocalDatetime2($timezone, $task->taskPartDate, 'Y-m-d');
                 }
             }
 
@@ -1007,7 +1007,7 @@
                     $tasksUsers[$taskPartId]['userId']         = $task->taskPartUserId;
                     $tasksUsers[$taskPartId]['duration']       = floatval($task->taskPartDuration);
                     $tasksUsers[$taskPartId]['workedDuration'] = floatval($task->taskPartWorkedDuration);
-                    $tasksUsers[$taskPartId]['date']           = $task->taskPartDate;
+                    $tasksUsers[$taskPartId]['date']           = TZ::getLocalDatetime2($timezone, $task->taskPartDate, 'Y-m-d');
                 }
             }
 
@@ -1101,7 +1101,7 @@
                 $taskUserData = [
                     'task_id'         => $taskId,
                     'user_id'         => $data['userId'],
-                    'date'            => $data['date'],
+                    'date'            => TZ::getUTCDatetime2($timezone, $data['date'], 'Y-m-d'),
                     'duration'        => $data['duration'],
                     'worked_duration' => $data['workedDuration'],
                     'created_at'      => $createdAt,
@@ -1123,11 +1123,17 @@
                   ->update($taskUserData);
             }
 
-            // 3. Modification de la durée restante de la tâche
-            // ------------------------------------------------
+            // 3. Modification de la tâche
+            // ---------------------------
+            $taskData = ['remaining_duration' => $data['remainingDuration']];
+            if ($data['remainingDuration'] == 0)
+            {
+                $taskData['finished_at'] = TZ::getUTCDatetime2($timezone, date('Y-m-d H:i:s'), 'Y-m-d H:i:s');
+            }
+
             DB::table('task')
               ->where('id', $taskId)
-              ->update(['remaining_duration' => $data['remainingDuration']]);
+              ->update($taskData);
 
             return [
                 'code'    => 200,
