@@ -219,9 +219,9 @@
             // -------
             $query = '
                 SELECT
-                    sprint.id AS sprintId,
-                    task.id AS taskId,
-                    task.initial_duration AS initialDuration,
+                    sprint.id               AS sprintId,
+                    task.id                 AS taskId,
+                    task.initial_duration   AS initialDuration,
                     task.remaining_duration AS remainingDuration
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
@@ -282,8 +282,8 @@
             // -------
             $query = '
                 SELECT
-                    sprint.id AS sprintId,
-                    SUM(task_user.duration) AS decrementedDuration,
+                    sprint.id                       AS sprintId,
+                    SUM(task_user.duration)         AS decrementedDuration,
                     COUNT(DISTINCT(task_user.date)) AS nbDates
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
@@ -382,18 +382,18 @@
             // --------------------------
             $query   = '
                 SELECT
-                    task.id AS taskId,
-                    task.name AS taskName,
-                    task.description AS taskDescription,
-                    task.initial_duration AS taskInitialDuration,
-                    task.remaining_duration AS taskRemainingDuration,
-                    task.user_id AS taskUserId,
-                    task.added_after AS taskAddedAfter,
-                    task_user.id AS taskPartId,
-                    task_user.user_id AS taskPartUserId,
-                    task_user.duration AS taskPartDuration,
-                    task_user.worked_duration AS taskPartWorkedDuration,
-                    task_user.date AS taskPartDate
+                    task.id                     AS taskId,
+                    task.name                   AS taskName,
+                    task.description            AS taskDescription,
+                    task.initial_duration       AS taskInitialDuration,
+                    task.remaining_duration     AS taskRemainingDuration,
+                    task.user_id                AS taskUserId,
+                    task.added_after            AS taskAddedAfter,
+                    task_user.id                AS taskPartId,
+                    task_user.user_id           AS taskPartUserId,
+                    task_user.duration          AS taskPartDuration,
+                    task_user.worked_duration   AS taskPartWorkedDuration,
+                    task_user.date              AS taskPartDate
                 FROM task
                     LEFT JOIN task_user ON task_user.task_id = task.id
                 WHERE task.sprint_id = :sprintId
@@ -965,18 +965,18 @@
             // --------------------------
             $query      = '
                 SELECT
-                    task.id AS taskId,
-                    task.name AS taskName,
-                    task.description AS taskDescription,
-                    task.initial_duration AS taskInitialDuration,
-                    task.remaining_duration AS taskRemainingDuration,
-                    task.user_id AS taskUserId,
-                    task.added_after AS taskAddedAfter,
-                    task_user.id AS taskPartId,
-                    task_user.user_id AS taskPartUserId,
-                    task_user.duration AS taskPartDuration,
-                    task_user.worked_duration AS taskPartWorkedDuration,
-                    task_user.date AS taskPartDate
+                    task.id                     AS taskId,
+                    task.name                   AS taskName,
+                    task.description            AS taskDescription,
+                    task.initial_duration       AS taskInitialDuration,
+                    task.remaining_duration     AS taskRemainingDuration,
+                    task.user_id                AS taskUserId,
+                    task.added_after            AS taskAddedAfter,
+                    task_user.id                AS taskPartId,
+                    task_user.user_id           AS taskPartUserId,
+                    task_user.duration          AS taskPartDuration,
+                    task_user.worked_duration   AS taskPartWorkedDuration,
+                    task_user.date              AS taskPartDate
                 FROM task
                     LEFT JOIN task_user ON task_user.task_id = task.id
                 WHERE task.sprint_id = :sprintId

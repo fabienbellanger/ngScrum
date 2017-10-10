@@ -21,14 +21,16 @@
                     users.lastname                 AS lastname,
                     users.firstname                AS firstname,
                     application.name               AS applicationName,
-                    SUM(task_user.worked_duration) AS duration
+                    task.id                        AS taskId,
+                    SUM(task_user.worked_duration) AS duration,
+                    COUNT(application.id)          AS nbApplications
                 FROM task_user
                     INNER JOIN task ON task.id=task_user.task_id
                     INNER JOIN users ON users.id=task_user.user_id
                     INNER JOIN task_application ON task.id=task_application.task_id
                     INNER JOIN application ON application.id=task_application.application_id
                 WHERE task_user.date LIKE :year
-                GROUP BY users.id, application.id;';
+                GROUP BY users.id, task.id;';
             $results = DB::select($query, ['year' => $year . '%']);
 
             // TODO: Problème avec les tâches multi-applications
