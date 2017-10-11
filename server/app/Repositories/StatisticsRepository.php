@@ -12,9 +12,9 @@
          *
          * @author Fabien Bellanger
 		 * @param  string|null $year Année souhaitée
-         * @return false|Array
+         * @return array
          */
-        public static function getCIR($year): ?array
+        public static function getCIR($year): array
         {
             // 1. Récupération des durées par utilisateur et par tâche
             // -------------------------------------------------------
@@ -45,12 +45,13 @@
 
                     if (!isset($tabTasksDurationPerUser[$id]))
                     {
+                        $tabTasksDurationPerUser[$id]['id']        = $id;
                         $tabTasksDurationPerUser[$id]['lastname']  = $lastname;
                         $tabTasksDurationPerUser[$id]['firstname'] = $firstname;
                         $tabTasksDurationPerUser[$id]['tasks']     = [];
                     }
 
-                    $tabTasksDurationPerUser[$id]['tasks'][$taskId] = floatval($duration);
+                    $tabTasksDurationPerUser[$id]['tasks'][$taskId]['duration'] = floatval($duration);
                 }
             }
 
@@ -87,7 +88,67 @@
                 }
             }
 
-            dd($tabTasksDurationPerUser, $tabTasksApplications);
+            // 3. Construction du tableau final
+            // --------------------------------
+            foreach ($tabTasksDurationPerUser as $userId => $userInfo)
+            {
+                $userApplications = [];
+
+                foreach ($userInfo['tasks'] as $taskId => $taskInfo)
+                {
+                    if (isset($tabTasksApplications[$taskId]))
+                    {
+                        $nbApplications    = count($tabTasksApplications[$taskId]);
+                        $remainingDuration = $taskInfo['duration'];
+                        $index             = 0;
+                        
+                        foreach ($tabTasksApplications[$taskId] as $applicationId => $applicationName)
+                        {
+                            if ($index == $nbApplications - 1)
+                            {
+                                // Dernière application
+                                // --------------------
+                                $tabTasksDurationPerUser[$userId]['tasks'][$taskId]['applications'][$applicationId] = round($remainingDuration, 2);
+                            }
+                            else
+                            {
+                                $tabTasksDurationPerUser[$userId]['tasks'][$taskId]['applications'][$applicationId] = round($taskInfo['duration'] / $nbApplications, 2);
+
+                                // Mise à jour de la durée restante à répartir
+                                // -------------------------------------------
+                                $remainingDuration -= $tabTasksDurationPerUser[$userId]['tasks'][$taskId]['applications'][$applicationId];
+                            }
+
+                            // On rempli de tableau des applications de l'utilisateur
+                            // ------------------------------------------------------
+                            if (!isset($userApplications[$applicationId]))
+                            {
+                                $userApplications[$applicationId]['name']     = $applicationName;
+                                $userApplications[$applicationId]['duration'] = $tabTasksDurationPerUser[$userId]['tasks'][$taskId]['applications'][$applicationId];
+                            }
+                            else
+                            {
+                                $userApplications[$applicationId]['duration'] += $tabTasksDurationPerUser[$userId]['tasks'][$taskId]['applications'][$applicationId];
+                            }
+
+                            $index++;
+                        }
+                    }
+                }
+                
+                // On structure la tableau par application
+                // ---------------------------------------
+                $tabTasksDurationPerUser[$userId]['applications'] = $userApplications;
+                unset($tabTasksDurationPerUser[$userId]['tasks']);
+            }
+            
+            $tabTasksDurationPerUser = array_values($tabTasksDurationPerUser);
+
+            return [
+                'code'    => 200,
+                'message' => 'Success',
+                'data'    => $tabTasksDurationPerUser,
+            ];
         }
     }
     
