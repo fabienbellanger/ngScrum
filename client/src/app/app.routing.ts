@@ -19,6 +19,10 @@ import {
     SprintTasksManagementEditComponent,
     SprintTasksManagementListComponent,
 } from './sprint';
+import { 
+    StatisticsComponent,
+    StatisticsCirComponent,
+} from './statistics';
 import { LayoutComponent } from './layout';
 
 const appRoutes: Routes = [
@@ -95,6 +99,16 @@ const appRoutes: Routes = [
                     {
                         path:      ':sprintId/tasks-management/new/:userId',
                         component: SprintTasksManagementEditComponent,
+                    },
+                ],
+            },
+            {
+                path:        'statistics',
+                component:   StatisticsComponent,
+                children:    [
+                    {
+                        path:      'cir',
+                        component: StatisticsCirComponent,
                     },
                 ],
             },

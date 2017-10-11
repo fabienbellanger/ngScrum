@@ -143,5 +143,6 @@
 	"new.password.success": "Votre mot de passe a bien été modifié",
 	"decrement.hours.per.day": "Heures décrémentées / jour",
 	"day": "jour",
-	"team:": "Equipe :"
+	"team:": "Equipe :",
+	"statistics.cii.cir": "Statistiques CII/CIR"
 }

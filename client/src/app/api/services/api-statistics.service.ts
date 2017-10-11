@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers } from '@angular/http';
 
-import { HttpService } from '../../shared';
+import { HttpService, StorageService } from '../../shared';
 
 @Injectable()
 
@@ -12,8 +12,10 @@ export class ApiStatisticsService
      *
      * @author Fabien Bellanger
      * @param {HttpService}       httpService
+     * @param {StorageService}    storageService
      */
-    constructor(private httpService: HttpService)
+    constructor(private httpService: HttpService,
+                private storageService: StorageService)
     {
     }
 

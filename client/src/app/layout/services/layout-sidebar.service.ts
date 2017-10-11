@@ -26,6 +26,7 @@ export class LayoutSidebarService
         this.translateService.get([
             'sprints.list',
             'new.sprint.sidebar',
+            'statistics.cii.cir',
         ]).subscribe((transltationObject: Object) =>
         {
             this.items = [
@@ -40,7 +41,13 @@ export class LayoutSidebarService
                     'route':      ['/sprints/new'],
                     'routeExact': true,
                     'picto':      'add',
-                }
+                },
+                {
+                    'label':      transltationObject['statistics.cii.cir'],
+                    'route':      ['/statistics/cir'],
+                    'routeExact': true,
+                    'picto':      'show_chart',
+                },
             ];
         });
     }

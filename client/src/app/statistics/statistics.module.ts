@@ -6,6 +6,9 @@ import { RouterModule } from '@angular/router';
 import { HttpService, SharedModule } from '../shared';
 import { LayoutModule } from '../layout';
 
+import { StatisticsComponent } from './components/statistics.component';
+import { StatisticsCirComponent } from './components/statistics-cir.component';
+
 @NgModule({
     imports:         [
         CommonModule,
@@ -15,6 +18,8 @@ import { LayoutModule } from '../layout';
         LayoutModule,
     ],
     declarations:    [
+        StatisticsCirComponent,
+        StatisticsComponent,
     ],
     providers:       [
         HttpService,
