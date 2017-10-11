@@ -1,1 +1,49 @@
-<h1>Stats CIR</h1>
+<sa-loading *ngIf="loading"></sa-loading>
+<div *ngIf="!loading">
+	<h1>Stats CIR</h1>
+
+	<!--<p [innerHtml]="data | debug"></p>-->
+
+	<mat-card class="margin-bottom-20px" *ngIf="data.length > 0">
+        <mat-card-content class="overflow-auto">
+            <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+                <thead>
+                    <tr>
+						<th>
+							{{ 'users' | translate }}
+						</th>
+                        <ng-template ngFor let-application [ngForOf]="applicationsHeader">
+                            <th class="text-center">{{ application }}</th>
+                        </ng-template>
+                        <th align="center" valign="middle" class="bold no-wrap">
+                            {{ 'total' | translate }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let line of data">
+                        <td valign="middle">{{ line.lastname +  ' ' + line.firstname }}</td>
+                        <ng-template ngFor let-application [ngForOf]="applicationsHeader">
+                            <td align="center" class="no-wrap">
+                            </td>
+                        </ng-template>
+                        <td align="center" valign="middle" class="bold no-wrap">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>{{ 'total' | translate }}</th>
+                        <ng-template ngFor let-total [ngForOf]="applicationsTotal">
+							<th class="text-center no-wrap">
+								{{ total | duration:'hour' }}
+							</th>
+                        </ng-template>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </mat-card-content>
+    </mat-card>
+</div>

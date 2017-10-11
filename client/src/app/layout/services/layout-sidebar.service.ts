@@ -69,9 +69,9 @@ export class LayoutSidebarService
      */
     public mobileClose(): void
     {
-        if (window.innerWidth <= 640)
-        {
+        // if (window.innerWidth <= 640)
+        // {
             this.state = 'close';
-        }
+        // }
     }
 }

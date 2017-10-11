@@ -2,6 +2,7 @@ export { StatisticsModule } from './statistics.module';
 
 // Services
 // --------
+export { StatisticsService } from './services/statistics.service';
 
 // Composants
 // ----------

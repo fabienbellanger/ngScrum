@@ -9,6 +9,8 @@ import { LayoutModule } from '../layout';
 import { StatisticsComponent } from './components/statistics.component';
 import { StatisticsCirComponent } from './components/statistics-cir.component';
 
+import { StatisticsService } from './services/statistics.service';
+
 @NgModule({
     imports:         [
         CommonModule,
@@ -23,6 +25,7 @@ import { StatisticsCirComponent } from './components/statistics-cir.component';
     ],
     providers:       [
         HttpService,
+        StatisticsService,
     ],
     entryComponents: [
     ],
