@@ -8,6 +8,7 @@ import { ApiAuthService } from './services/api-auth.service';
 import { ApiUserService } from './services/api-user.service';
 import { ApiSprintService } from './services/api-sprint.service';
 import { ApiTaskService } from './services/api-task.service';
+import { ApiStatisticsService } from './services/api-statistics.service';
 
 @NgModule({
     imports:      [
@@ -19,11 +20,12 @@ import { ApiTaskService } from './services/api-task.service';
     declarations: [
     ],
     providers:    [
-		HttpService,
+        HttpService,
         ApiAuthService,
         ApiUserService,
         ApiSprintService,
         ApiTaskService,
+        ApiStatisticsService,
     ],
     exports:      [
     ],

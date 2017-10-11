@@ -15,6 +15,7 @@ import { AuthModule } from './auth';
 import { SprintModule } from './sprint';
 import { LayoutModule } from './layout';
 import { MaterialModule } from './material';
+import { StatisticsModule } from './statistics';
 
 @NgModule({
     declarations: [
@@ -33,6 +34,7 @@ import { MaterialModule } from './material';
         AuthModule,
         SprintModule,
         LayoutModule,
+        StatisticsModule,
     ],
     providers: [
         { provide: LOCALE_ID, useValue: environment.locale },
