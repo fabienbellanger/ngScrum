@@ -119,7 +119,7 @@ export class SprintTasksManagementListComponent implements OnInit
         // TasksUsers
         // ----------
         let date: string;
-        let data: any = {};
+        const data: any = {};
 
         for (const taskUser of this.sprint.tasksUsers)
         {
@@ -173,20 +173,26 @@ export class SprintTasksManagementListComponent implements OnInit
 
         // 2. Performance par date
         // -----------------------
-        for (const date in data)
+        for (const d in data)
         {
-            data[date].performance = (data[date].workedDuration !== 0)
-                ? (data[date].duration / data[date].workedDuration) * 100
-                : 0;
+            if (data.hasOwnProperty(d))
+            {
+                data[d].performance = (data[d].workedDuration !== 0)
+                    ? (data[d].duration / data[d].workedDuration) * 100
+                    : 0;
+            }
         }
 
         // 3. Performance par utilisateur
         // ------------------------------
         for (const userId in this.usersTotal)
         {
-            this.usersTotal[userId].performance  = (this.usersTotal[userId].workedDuration !== 0)
-                ? (this.usersTotal[userId].duration / this.usersTotal[userId].workedDuration) * 100
-                : 0;
+            if (this.usersTotal.hasOwnProperty(userId))
+            {
+                this.usersTotal[userId].performance  = (this.usersTotal[userId].workedDuration !== 0)
+                    ? (this.usersTotal[userId].duration / this.usersTotal[userId].workedDuration) * 100
+                    : 0;
+            }
         }
 
         // Tri et conversion de l'objet en tableau

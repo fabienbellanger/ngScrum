@@ -19,6 +19,7 @@ export class StatisticsCirComponent implements OnInit
     public applicationsHeader: any;
     public applicationsTotal: any;
     public totalDuration: number = 0;
+    public yearsList: number[];
 
     /**
      * Constructeur
@@ -45,8 +46,9 @@ export class StatisticsCirComponent implements OnInit
      */
     public ngOnInit(): void
     {
-        this.year = this.dateService.now('YYYY');
-        this.data = [];
+        this.year      = this.dateService.now('YYYY');
+        this.data      = [];
+        this.yearsList = [2016, 2017];
 
         // Requète pour récupérer les données
         // ----------------------------------

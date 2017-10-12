@@ -14,6 +14,17 @@
 
 	<mat-card class="margin-bottom-20px" *ngIf="data.length > 0">
         <mat-card-content class="overflow-auto">
+            <mat-form-field>
+                <mat-select [placeholder]="'choose.year' | translate"
+                            [(ngModel)]="year"
+                            [ngModelOptions]="{standalone: true}">
+                    <mat-option *ngFor="let yearSelected of yearsList"
+                                [value]="yearSelected">
+                        {{ yearSelected }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
             <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
                 <thead>
                     <tr>

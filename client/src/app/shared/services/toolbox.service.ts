@@ -141,24 +141,23 @@ export class ToolboxService
         const sortedArray: any[]  = [];
         let keysArray:     any[]  = [];
         let n:             number = 0;
-        let key:           any;
 
         for (const key in arrayToSort)
         {
-            if (arrayToSort.hasOwnPrioperty(key))
+            if (arrayToSort.hasOwnProperty(key))
             {
                 keysArray[n++] = key;
             }
         }
-
+        
         // Tri croissant
         keysArray = keysArray.sort();
         n         = keysArray.length;
-        for (key = 0; key < n; key++)
+        for (const key2 of keysArray)
         {
-            sortedArray[keysArray[key]] = arrayToSort[keysArray[key]];
+            sortedArray[key2] = arrayToSort[key2];
         }
-
+        
         return sortedArray;
     }
 
