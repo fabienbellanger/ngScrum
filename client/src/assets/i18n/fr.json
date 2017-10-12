@@ -145,6 +145,8 @@
 	"day": "jour",
 	"team:": "Equipe :",
 	"statistics.cii.cir": "Statistiques CII/CIR",
-	"users": "Utilisateur",
-	"other": "Autre"
+	"users": "Utilisateurs",
+	"other": "Autre",
+	"export.csv": "Export CSV",
+	"cii.cir.csv.filename": "Statistiques_CII-CIR"
 }

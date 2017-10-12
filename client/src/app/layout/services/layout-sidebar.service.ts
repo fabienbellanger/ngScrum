@@ -44,7 +44,7 @@ export class LayoutSidebarService
                 },
                 {
                     'label':      transltationObject['statistics.cii.cir'],
-                    'route':      ['/statistics/cir'],
+                    'route':      ['/statistics/cii-cir'],
                     'routeExact': true,
                     'picto':      'show_chart',
                 },

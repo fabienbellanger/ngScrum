@@ -7,6 +7,7 @@ export { HttpService } from './services/http.service';
 export { Rc4Service } from './services/rc4.service';
 export { StorageService } from './services/storage.service';
 export { ToolboxService } from './services/toolbox.service';
+export { CsvService } from './services/csv.service';
 
 // Pipes
 // -----

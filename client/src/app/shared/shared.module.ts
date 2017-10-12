@@ -16,6 +16,7 @@ import { HttpService } from './services/http.service';
 import { Rc4Service } from './services/rc4.service';
 import { StorageService } from './services/storage.service';
 import { ToolboxService } from './services/toolbox.service';
+import { CsvService } from './services/csv.service';
 
 import { MomentPipe } from './pipes/moment.pipe';
 import { NewLinePipe } from './pipes/new-line.pipe';
@@ -64,6 +65,7 @@ export function HttpLoaderFactory(http: HttpClient)
         Rc4Service,
         StorageService,
         ToolboxService,
+        CsvService,
     ],
     exports:      [
         HttpModule,

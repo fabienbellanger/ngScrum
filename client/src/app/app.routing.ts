@@ -107,7 +107,7 @@ const appRoutes: Routes = [
                 component:   StatisticsComponent,
                 children:    [
                     {
-                        path:      'cir',
+                        path:      'cii-cir',
                         component: StatisticsCirComponent,
                     },
                 ],

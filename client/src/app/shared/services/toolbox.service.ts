@@ -12,11 +12,11 @@ export class ToolboxService
      * Equivalent du number_format de PHP
      *
      * @author Fabien Bellanger
-     * @param (number)  value
-     * @param (number)  nbDecimals
-     * @param (string)  decimalIndicator
-     * @param (string)  thousandsSeparator
-     * @return (string)
+     * @param {number}  value
+     * @param {number}  nbDecimals
+     * @param {string}  decimalIndicator
+     * @param {string}  thousandsSeparator
+     * @return {string}
      */
     public number_format(value: number,
                          nbDecimals: number,
@@ -28,7 +28,7 @@ export class ToolboxService
             precision: number  = !isFinite(+nbDecimals) ? 0 : Math.abs(nbDecimals),
             separator: string  = (typeof thousandsSeparator === 'undefined') ? ',' : thousandsSeparator,
             indicator: string  = (typeof decimalIndicator === 'undefined') ? '.' : decimalIndicator,
-            result: Array<any> = [],
+            result: any[] = [],
             toFixedFix: any    = (n: number, precision: number) =>
             {
                 let k: number = Math.pow(10, precision);
@@ -55,9 +55,9 @@ export class ToolboxService
      * Equivalent partiel du round de PHP
      *
      * @author Fabien Bellanger
-     * @param (number)  value
-     * @param (number)  precision (default 0)
-     * @return (number)
+     * @param {number}  value
+     * @param {number}  precision (default 0)
+     * @return {number}
      */
     public round(value: number, precision: number = 0): number
     {
@@ -78,8 +78,8 @@ export class ToolboxService
      * TODO: Détection de la locale et de la devise
      *
      * @author Fabien Bellanger
-     * @param (number)  value
-     * @return (number)
+     * @param {number}  value
+     * @return {number}
      */
     public price_format(value: number): number
     {
@@ -89,7 +89,7 @@ export class ToolboxService
         }
         else
         {
-            let lang: string = 'fr';
+            const lang: string = 'fr';
             let newValue: number;
 
             if (lang === 'fr')
@@ -110,17 +110,20 @@ export class ToolboxService
      * Equivalent du array_values de PHP
      *
      * @author Fabien Bellanger
-     * @param (any)  obj
-     * @return (Array<any>)
+     * @param {any}  obj
+     * @return {any[]}
      */
-    public array_values(obj: any): Array<any>
+    public array_values(obj: any): any[]
     {
-        let array: Array<any> = [];
-        let key: string       = '';
+        const array: any[] = [];
+        let key: string    = '';
 
         for (key in obj)
         {
-            array[array.length] = obj[key];
+            if (obj.hasOwnPrioperty(key))
+            {
+                array[array.length] = obj[key];
+            }
         }
 
         return array;
@@ -135,14 +138,17 @@ export class ToolboxService
      */
     public ksort(arrayToSort: any): any
     {
-        let sortedArray: any[] = [];
-        let keysArray: any[]   = [];
-        let n: number          = 0;
-        let key: any;
+        const sortedArray: any[]  = [];
+        let keysArray:     any[]  = [];
+        let n:             number = 0;
+        let key:           any;
 
-        for (key in arrayToSort)
+        for (const key in arrayToSort)
         {
-            keysArray[n++] = key;
+            if (arrayToSort.hasOwnPrioperty(key))
+            {
+                keysArray[n++] = key;
+            }
         }
 
         // Tri croissant

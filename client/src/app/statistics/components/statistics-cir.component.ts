@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { ApiStatisticsService } from '../../api';
-import { DateService, ToolboxService } from '../../shared';
+import { DateService, ToolboxService, CsvService } from '../../shared';
 
 @Component({
     selector:    'sa-statistics-cir',
@@ -25,10 +27,14 @@ export class StatisticsCirComponent implements OnInit
      * @param {ApiStatisticsService}    apiStatisticsService
      * @param {DateService}             dateService
      * @param {ToolboxService}          toolboxService
+     * @param {CsvService}              csvService
+     * @param {TranslateService}        translateService
      */
     constructor(private apiStatisticsService: ApiStatisticsService,
                 private dateService: DateService,
-                private toolboxService: ToolboxService)
+                private toolboxService: ToolboxService,
+                private csvService: CsvService,
+                private translateService: TranslateService)
     {
     }
 
@@ -118,5 +124,93 @@ export class StatisticsCirComponent implements OnInit
         this.applicationsTotal  = this.toolboxService.objectToArray(applicationsTotal);
 
         this.data = data;
+    }
+
+    /**
+     * Préparation des données pour l'export CSV
+     * 
+     * @author Fabien Bellanger
+     * @returns {any}
+     */
+    private prepareDataForCsvExport(): any
+    {
+        const headers: string[] = [];
+        const data: any[]       = [];
+
+        this.translateService.get(['users', 'other']).subscribe((translationObject: Object) =>
+        {
+            // Entêtes
+            // -------
+            headers.push(translationObject['users']);
+            for (const application of this.applicationsHeader)
+            {
+                if (application.id === 0)
+                {
+                    headers.push(translationObject['other']);
+                }
+                else
+                {
+                    headers.push(application.name);
+                }
+            }
+
+            // Données
+            // -------
+            let userInfo: any[];
+            for (const line of this.data)
+            {
+                // Première colonne : Nom de l'utilisateur
+                userInfo = [];
+                userInfo.push(line.firstname + ' ' + line.lastname);
+
+                let durationString: string;
+                for (const application of this.applicationsHeader)
+                {
+                    if (!line.applications.hasOwnProperty(application.id))
+                    {
+                        userInfo.push(0);
+                    }
+                    else
+                    {
+                        // TODO: Généraliser pour gérer plusieurs locales
+                        durationString = line.applications[application.id].duration + '';
+
+                        userInfo.push(durationString.replace('.', ','));
+                    }
+                }
+
+                data.push(userInfo);
+            }
+        });
+
+        return {
+            headers: headers,
+            data:    data,
+        };
+    }
+
+    /**
+     * Export CSV
+     * 
+     * @author Fabien Bellanger
+     */
+    public exportToCSV(): void
+    {
+        this.translateService.get('cii.cir.csv.filename').subscribe((message: string) =>
+        {
+            // Préparation des données pour l'export
+            // -------------------------------------
+            const basename: string = `${message}_${this.year}`; 
+            let headers:    string[];
+            let data:       any[];
+
+            const preparedData: any = this.prepareDataForCsvExport();
+            headers = preparedData.headers;
+            data    = preparedData.data;
+
+            // Export
+            // ------
+            this.csvService.exportToCSV(headers, data, basename);
+        });
     }
 }
