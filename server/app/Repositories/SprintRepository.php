@@ -1007,7 +1007,7 @@
                     $tasksUsers[$taskPartId]['userId']         = $task->taskPartUserId;
                     $tasksUsers[$taskPartId]['duration']       = floatval($task->taskPartDuration);
                     $tasksUsers[$taskPartId]['workedDuration'] = floatval($task->taskPartWorkedDuration);
-                    $tasksUsers[$taskPartId]['date']           = TZ::getLocalDatetime2($timezone, $task->taskPartDate, 'Y-m-d');
+                    $tasksUsers[$taskPartId]['date']           = TZ::getLocalDatetime2($timezone, $task->taskPartDate, 'Y-m-d H:i:s');
                 }
             }
 
@@ -1094,6 +1094,7 @@
 
             $timezone  = UserRepository::getTimezone();
             $createdAt = TZ::getUTCDatetime2($timezone, date('Y-m-d H:i:s'), 'Y-m-d H:i:s');
+            
             if (!$taskUserId)
             {
                 // Création

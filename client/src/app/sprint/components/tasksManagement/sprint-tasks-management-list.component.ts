@@ -123,7 +123,9 @@ export class SprintTasksManagementListComponent implements OnInit
 
         for (const taskUser of this.sprint.tasksUsers)
         {
-            date = taskUser.date;
+            // On ne prend que la date sans les heures
+            // ---------------------------------------
+            date = taskUser.date.substring(0, 10);
 
             if (!data.hasOwnProperty(date))
             {

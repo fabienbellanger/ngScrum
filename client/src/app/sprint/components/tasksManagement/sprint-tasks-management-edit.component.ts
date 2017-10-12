@@ -252,7 +252,7 @@ export class SprintTasksManagementEditComponent implements OnInit
             ? this.sprint.tasks[taskId]
             : this.task;
 
-        let data: any = {
+        const data: any = {
             'userId':            +this.userId,
             'workedDuration':    +this.taskFormGroup.get('workedDuration').value,
             'remainingDuration': +this.taskFormGroup.get('remainingDuration').value,

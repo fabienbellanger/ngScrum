@@ -91,12 +91,9 @@
          */
         public function getSprintManagement(Request $request, $id, $sprintId, $date = null)
         {
-            $date     = ($date) ? $date : date('Y-m-d');
-            
-            /*$timezone = UserRepository::getTimezone();
-            $newDate = TZ::getUTCDatetime($timezone, $date, '00:00:00', 'Y-m-d');
-
-            dd($date, $newDate);*/
+            $date     = ($date) ? $date : date('Y-m-d H:i:s');
+            $timezone = UserRepository::getTimezone();
+            $date     = TZ::getUTCDatetime2($timezone, $date, 'Y-m-d H:i:s');
 
             $response = SprintRepository::getSprintManagement($id, $sprintId, $date);
 
