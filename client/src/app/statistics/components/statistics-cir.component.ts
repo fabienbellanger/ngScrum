@@ -13,9 +13,10 @@ export class StatisticsCirComponent implements OnInit
 {
     public loading: boolean = true;
     public year: number;
-    public data: any;
+    public data: any[];
     public applicationsHeader: any;
     public applicationsTotal: any;
+    public totalDuration: number = 0;
 
     /**
      * Constructeur
@@ -39,6 +40,7 @@ export class StatisticsCirComponent implements OnInit
     public ngOnInit(): void
     {
         this.year = this.dateService.now('YYYY');
+        this.data = [];
 
         // Requète pour récupérer les données
         // ----------------------------------
@@ -57,14 +59,15 @@ export class StatisticsCirComponent implements OnInit
         this.apiStatisticsService.getCIRData(this.year)
             .then((data: any) =>
             {
-                this.data = data;
+                // Préparation des données
+                // -----------------------
                 this.prepareData(data);
 
                 this.loading = false;
             })
             .catch(() =>
             {
-                console.error('Error CIR data');
+                console.error('Error CII/CIR data');
 
                 this.loading = false;
             });
@@ -77,8 +80,8 @@ export class StatisticsCirComponent implements OnInit
      */
     private prepareData(data: any): void
     {
-        const applications: any      = {};
-        const applicationsTotal: any = {};
+        const applicationsHeader: any = {};
+        const applicationsTotal: any  = {};
 
         for (const index in data)
         {
@@ -88,21 +91,32 @@ export class StatisticsCirComponent implements OnInit
                 {
                     if (data[index].applications.hasOwnProperty(applicationId))
                     {
-                        if (!applications.hasOwnProperty(applicationId))
+                        if (!applicationsHeader.hasOwnProperty(applicationId))
                         {
-                            applications[applicationId]      = data[index].applications[applicationId].name;
-                            applicationsTotal[applicationId] = data[index].applications[applicationId].duration;
+                            applicationsHeader[applicationId]      = {};
+                            applicationsHeader[applicationId].id   = +applicationId;
+                            applicationsHeader[applicationId].name = data[index].applications[applicationId].name;
+
+                            applicationsTotal[applicationId] = +data[index].applications[applicationId].duration;
                         }
                         else
                         {
-                            applicationsTotal[applicationId] += data[index].applications[applicationId].duration;
+                            applicationsTotal[applicationId] += +data[index].applications[applicationId].duration;
                         }
+
+                        // Mise à jour du total des heures travaillées
+                        // -------------------------------------------
+                        this.totalDuration += +data[index].applications[applicationId].duration;
                     }
                 }
             }
         }
 
-        this.applicationsHeader = this.toolboxService.objectToArray(applications);
+        // Conversion Object => Array
+        // --------------------------
+        this.applicationsHeader = this.toolboxService.objectToArray(applicationsHeader);
         this.applicationsTotal  = this.toolboxService.objectToArray(applicationsTotal);
+
+        this.data = data;
     }
 }

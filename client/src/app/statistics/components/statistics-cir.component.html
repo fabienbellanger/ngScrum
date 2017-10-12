@@ -1,8 +1,16 @@
 <sa-loading *ngIf="loading"></sa-loading>
 <div *ngIf="!loading">
-	<h1>Stats CIR</h1>
-
-	<!--<p [innerHtml]="data | debug"></p>-->
+    <h1>Stats CIR</h1>
+    
+    <div class="row margin-bottom-20px">
+        <div class="col-xs-12">
+            <button mat-raised-button type="button"
+                    routerLink="/sprints">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                <span class="hidden-xs">{{ 'export.csv' | translate }}</span>
+            </button>
+        </div>
+    </div>
 
 	<mat-card class="margin-bottom-20px" *ngIf="data.length > 0">
         <mat-card-content class="overflow-auto">
@@ -13,22 +21,26 @@
 							{{ 'users' | translate }}
 						</th>
                         <ng-template ngFor let-application [ngForOf]="applicationsHeader">
-                            <th class="text-center">{{ application }}</th>
+                            <th class="text-center" *ngIf="application.id !== 0">{{ application.name }}</th>
+                            <th class="text-center" *ngIf="application.id === 0">{{ 'other' | translate }}</th>
                         </ng-template>
-                        <th align="center" valign="middle" class="bold no-wrap">
+                        <th class="text-center" valign="middle">
                             {{ 'total' | translate }}
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let line of data">
-                        <td valign="middle">{{ line.lastname +  ' ' + line.firstname }}</td>
+                        <td valign="middle">{{ line.firstname +  ' ' + line.lastname }}</td>
                         <ng-template ngFor let-application [ngForOf]="applicationsHeader">
                             <td align="center" class="no-wrap">
+                                <span *ngIf="line.applications[application.id] !== undefined">
+                                    {{ line.applications[application.id].duration | duration:'hour' }}
+                                </span>
                             </td>
                         </ng-template>
                         <td align="center" valign="middle" class="bold no-wrap">
-                            
+                            {{ line.totalDuration | duration:'hour' }}
                         </td>
                     </tr>
                 </tbody>
@@ -40,7 +52,9 @@
 								{{ total | duration:'hour' }}
 							</th>
                         </ng-template>
-                        <th></th>
+                        <th class="text-center no-wrap">
+                            {{ totalDuration | duration:'hour' }}
+                        </th>
                     </tr>
                 </tfoot>
             </table>

@@ -92,7 +92,8 @@
             // --------------------------------
             foreach ($tabTasksDurationPerUser as $userId => $userInfo)
             {
-                $userApplications = [];
+                $userApplications  = [];
+                $userTotalDuration = 0;
 
                 foreach ($userInfo['tasks'] as $taskId => $taskInfo)
                 {
@@ -100,6 +101,7 @@
                     {
                         $nbApplications    = count($tabTasksApplications[$taskId]);
                         $remainingDuration = $taskInfo['duration'];
+                        $userTotalDuration += $taskInfo['duration'];
                         $index             = 0;
                         
                         foreach ($tabTasksApplications[$taskId] as $applicationId => $applicationName)
@@ -138,7 +140,8 @@
                 
                 // On structure la tableau par application
                 // ---------------------------------------
-                $tabTasksDurationPerUser[$userId]['applications'] = $userApplications;
+                $tabTasksDurationPerUser[$userId]['applications']   = $userApplications;
+                $tabTasksDurationPerUser[$userId]['totalDuration']  = $userTotalDuration;
                 unset($tabTasksDurationPerUser[$userId]['tasks']);
             }
             
