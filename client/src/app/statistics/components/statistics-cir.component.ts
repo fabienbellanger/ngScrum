@@ -48,7 +48,7 @@ export class StatisticsCirComponent implements OnInit
     {
         this.year      = this.dateService.now('YYYY');
         this.data      = [];
-        this.yearsList = [2016, 2017];
+        this.yearsList = [];
 
         // Requète pour récupérer les données
         // ----------------------------------
@@ -65,11 +65,13 @@ export class StatisticsCirComponent implements OnInit
         this.loading = true;
 
         this.apiStatisticsService.getCIRData(this.year)
-            .then((data: any) =>
+            .then((result: any) =>
             {
                 // Préparation des données
                 // -----------------------
-                this.prepareData(data);
+                this.prepareData(result.data);
+
+                this.yearsList = result.years;
 
                 this.loading = false;
             })

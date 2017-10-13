@@ -147,10 +147,30 @@
             
             $tabTasksDurationPerUser = array_values($tabTasksDurationPerUser);
 
+            // 4. Liste des années disponibles
+            // -------------------------------
+            $query = '
+                SELECT DISTINCT SUBSTRING(task_user.date, 1, 4) AS year
+                FROM task_user
+                ORDER BY year ASC';
+            $results = DB::select($query);
+
+            $years = [];
+            if ($results && count($results) > 0)
+            {
+                foreach ($results as $item)
+                {
+                    $years[] = $item->year;
+                }
+            }
+
             return [
                 'code'    => 200,
                 'message' => 'Success',
-                'data'    => $tabTasksDurationPerUser,
+                'data'    => [
+                    'data'  => $tabTasksDurationPerUser,
+                    'years' => $years,
+                ],
             ];
         }
     }
