@@ -121,6 +121,7 @@ export class StatisticsCirComponent implements OnInit
                 }
             }
         }
+        this.totalDuration = this.toolboxService.round(this.totalDuration, 1);
 
         // Conversion Object => Array
         // --------------------------
@@ -141,7 +142,7 @@ export class StatisticsCirComponent implements OnInit
         const headers: string[] = [];
         const data: any[]       = [];
 
-        this.translateService.get(['users', 'other']).subscribe((translationObject: Object) =>
+        this.translateService.get(['users', 'other', 'total']).subscribe((translationObject: Object) =>
         {
             // Entêtes
             // -------
@@ -157,6 +158,7 @@ export class StatisticsCirComponent implements OnInit
                     headers.push(application.name);
                 }
             }
+            headers.push(translationObject['total']);
 
             // Données
             // -------
@@ -167,7 +169,6 @@ export class StatisticsCirComponent implements OnInit
                 userInfo = [];
                 userInfo.push(line.firstname + ' ' + line.lastname);
 
-                let durationString: string;
                 for (const application of this.applicationsHeader)
                 {
                     if (!line.applications.hasOwnProperty(application.id))
@@ -177,14 +178,24 @@ export class StatisticsCirComponent implements OnInit
                     else
                     {
                         // TODO: Généraliser pour gérer plusieurs locales
-                        durationString = line.applications[application.id].duration + '';
-
-                        userInfo.push(durationString.replace('.', ','));
+                        userInfo.push((line.applications[application.id].duration + '').replace('.', ','));
                     }
                 }
+                userInfo.push((line.totalDuration + '').replace('.', ','));
 
                 data.push(userInfo);
             }
+
+            // Total
+            // -----
+            userInfo = [translationObject['total']];
+            for (const application of this.applicationsTotal)
+            {
+                // TODO: Généraliser pour gérer plusieurs locales
+                userInfo.push((application + '').replace('.', ','));
+            }
+            userInfo.push((this.totalDuration + '').replace('.', ','));
+            data.push(userInfo);
         });
 
         return {

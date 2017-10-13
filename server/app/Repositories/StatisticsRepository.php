@@ -110,11 +110,11 @@
                             {
                                 // Dernière application
                                 // --------------------
-                                $tabTasksDurationPerUser[$userId]['tasks'][$taskId]['applications'][$applicationId] = round($remainingDuration, 2);
+                                $tabTasksDurationPerUser[$userId]['tasks'][$taskId]['applications'][$applicationId] = round($remainingDuration, 1);
                             }
                             else
                             {
-                                $tabTasksDurationPerUser[$userId]['tasks'][$taskId]['applications'][$applicationId] = round($taskInfo['duration'] / $nbApplications, 2);
+                                $tabTasksDurationPerUser[$userId]['tasks'][$taskId]['applications'][$applicationId] = round($taskInfo['duration'] / $nbApplications, 1);
 
                                 // Mise à jour de la durée restante à répartir
                                 // -------------------------------------------
