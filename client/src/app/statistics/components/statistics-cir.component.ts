@@ -71,6 +71,8 @@ export class StatisticsCirComponent implements OnInit
                 // -----------------------
                 this.prepareData(result.data);
 
+                // Tableau des années
+                // ------------------
                 this.yearsList = result.years;
 
                 this.loading = false;
@@ -227,5 +229,15 @@ export class StatisticsCirComponent implements OnInit
             // ------
             this.csvService.exportToCSV(headers, data, basename);
         });
+    }
+
+    /**
+     * Changement d'année
+     * 
+     * @author Fabien Bellanger
+     */
+    public changeYear(): void
+    {
+        this.getData();
     }
 }

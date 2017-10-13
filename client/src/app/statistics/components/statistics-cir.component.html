@@ -16,7 +16,7 @@
         <mat-card-content class="overflow-auto">
             <mat-form-field>
                 <mat-select [placeholder]="'choose.year' | translate"
-                            [(ngModel)]="year"
+                            [(ngModel)]="year" (change)="changeYear()"
                             [ngModelOptions]="{standalone: true}">
                     <mat-option *ngFor="let yearSelected of yearsList"
                                 [value]="yearSelected">
