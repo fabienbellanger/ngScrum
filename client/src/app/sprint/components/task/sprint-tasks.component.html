@@ -24,12 +24,14 @@
         <mat-card-content>
             <div class="row">
                 <div class="col-xs-12">
+                    <span *ngIf="sprintService.sprint.tasks?.length === 0">{{ 'no.task' | translate }}</span>
                     <table class="table table-striped table-bordered table-hover table-condensed table-responsive"
                            *ngIf="sprintService.sprint.tasks?.length > 0">
                         <thead>
                             <tr>
                                 <th>{{ 'name' | translate }}</th>
                                 <th class="hidden-xs">{{ 'description' | translate }}</th>
+                                <th class="hidden-xs">{{ 'type' | translate }}</th>
                                 <th>{{ 'initial.duration' | translate }}</th>
                                 <th>{{ 'worked.duration' | translate }}</th>
                                 <th>{{ 'remaining.duration' | translate }}</th>
@@ -41,9 +43,20 @@
                             <tr *ngFor="let task of sprintService.sprint.tasks">
                                 <td align="left" valign="middle">{{ task.name }}</td>
                                 <td align="left" valign="middle" class="hidden-xs">{{ task.description }}</td>
-                                <td class="text-center" valign="middle">{{ task.initialDuration | duration:'hour' }}</td>
-                                <td class="text-center" valign="middle">{{ task.workedDuration | duration:'hour' }}</td>
-                                <td class="text-center" valign="middle">{{ task.remainingDuration | duration:'hour' }}</td>
+                                <td align="left" valign="middle" class="hidden-xs">
+                                    <span *ngIf="task.type > 0">
+                                        {{ 'task.type.' + sprintService.sprint.taskTypes[task.type] | translate }}
+                                    </span>
+                                </td>
+                                <td class="text-center" valign="middle">
+                                    {{ task.initialDuration | duration:'hour' }}
+                                </td>
+                                <td class="text-center" valign="middle">
+                                    {{ task.workedDuration | duration:'hour' }}
+                                </td>
+                                <td class="text-center" valign="middle">
+                                    {{ task.remainingDuration | duration:'hour' }}
+                                </td>
                                 <td align="center" valign="middle">
                                       <mat-icon *ngIf="!task.addedAfter" class="green-color">done</mat-icon>
                                       <mat-icon *ngIf="task.addedAfter" class="red-color">clear</mat-icon>
@@ -63,6 +76,7 @@
                         <tfoot>
                             <tr>
                                 <th align="left" valign="middle">{{ 'total' | translate }}</th>
+                                <th class="hidden-xs"></th>
                                 <th class="hidden-xs"></th>
                                 <th class="text-center" valign="middle">
                                     {{ sprintService.totalDuration | duration:'hour' }}

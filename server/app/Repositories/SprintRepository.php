@@ -6,6 +6,7 @@
     use TZ;
     use Exception;
     use App\Repositories\UserRepository;
+    use App\Repositories\TaskRepository;
 
     class SprintRepository
     {
@@ -385,6 +386,7 @@
                     task.id                     AS taskId,
                     task.name                   AS taskName,
                     task.description            AS taskDescription,
+                    task.type                   AS taskType,
                     task.initial_duration       AS taskInitialDuration,
                     task.remaining_duration     AS taskRemainingDuration,
                     task.user_id                AS taskUserId,
@@ -410,6 +412,7 @@
                     $tasks[$taskId]['id']                = $taskId;
                     $tasks[$taskId]['name']              = $task->taskName;
                     $tasks[$taskId]['description']       = $task->taskDescription;
+                    $tasks[$taskId]['type']              = $task->taskType;
                     $tasks[$taskId]['initialDuration']   = floatval($task->taskInitialDuration);
                     $tasks[$taskId]['remainingDuration'] = floatval($task->taskRemainingDuration);
                     $tasks[$taskId]['userId']            = $task->taskUserId;
@@ -460,7 +463,11 @@
             }
             $sprint['users'] = $users;
 
-            // 4. Objet => tableau
+            // 4. Récupération des types de tâche
+            // ----------------------------------
+            $sprint['taskTypes'] = TaskRepository::getTaskTypes();
+
+            // 5. Objet => tableau
             // -------------------
             $tasks = array_values($tasks);
             foreach ($tasks as $index => $task)
@@ -577,6 +584,7 @@
                 'sprint_id'          => $sprintId,
                 'name'               => $data['name'],
                 'description'        => ($data['description']) ? $data['description'] : null,
+                'type'               => intval($data['type']),
                 'initial_duration'   => floatval($data['duration']),
                 'remaining_duration' => floatval($data['duration']),
                 'added_after'        => intval($data['notPlanned']),
@@ -626,6 +634,7 @@
             $taskData  = [
                 'name'        => $data['name'],
                 'description' => ($data['description']) ? $data['description'] : null,
+                'type'        => intval($data['type']),
                 'added_after' => intval($data['notPlanned']),
                 'updated_at'  => $updatedAt,
             ];
@@ -740,6 +749,7 @@
                 'sprintId'          => intval($task->sprint_id),
                 'name'              => $task->name,
                 'description'       => $task->description,
+                'type'              => $task->type,
                 'initialDuration'   => floatval($task->initial_duration),
                 'remainingDuration' => floatval($task->remaining_duration),
                 'addedAfter'        => intval($task->added_after),
@@ -757,6 +767,10 @@
             {
                 $taskData['applications'][] = $application->id;
             }
+
+            // 5. Récupération des types de tâche
+            // ----------------------------------
+            $taskData['types'] = TaskRepository::getTaskTypes();
 
             return [
                 'code'    => 200,

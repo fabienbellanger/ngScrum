@@ -40,7 +40,7 @@
 
             <mat-card-content>
                 <div class="row margin-bottom-20px" *ngIf="!isEdit">
-                    <div class="col-xs-12 col-sm-6 col-mat-3">
+                    <div class="col-xs-12 col-sm-6 col-md-3">
                         <mat-form-field class="width-100">
                             <mat-select [placeholder]="'choose.task' | translate"
                                         formControlName="taskId" required>
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="row margin-bottom-10px">
-                    <div class="col-xs-12 col-sm-6 col-mat-3">
+                    <div class="col-xs-12 col-sm-6 col-md-3">
                         <mat-input-container class="width-100">
                             <input matInput type="number" name="workedDuration"
                                    min="0" max="35" step="0.5"
@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="row margin-bottom-10px">
-                    <div class="col-xs-12 col-sm-6 col-mat-3">
+                    <div class="col-xs-12 col-sm-6 col-md-3">
                         <mat-input-container class="width-100">
                             <input matInput type="number" name="remainingDuration"
                                    min="0" max="35" step="0.5"
@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="row" *ngIf="isEdit">
-                    <div class="col-xs-12 col-sm-6 col-mat-3">
+                    <div class="col-xs-12 col-sm-6 col-md-3">
                         Heures dépilées :
                         <span [class.red-color]="task.remainingDuration < +taskFormGroup.get('remainingDuration').value"
                               *ngIf="+taskFormGroup.get('remainingDuration').value > 0">

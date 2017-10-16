@@ -25,7 +25,7 @@
                 SELECT DISTINCT users.id
                 FROM users
                     INNER JOIN team_member ON team_member.user_id=users.id
-					INNER JOIN sprint ON sprint.team_id = :id AND team_member.team_id=sprint.team_id
+					INNER JOIN sprint ON sprint.id = :id AND team_member.team_id=sprint.team_id
 				', ['id' => $sprintId]);
         }
     }

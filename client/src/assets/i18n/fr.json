@@ -149,5 +149,13 @@
 	"other": "Autre",
 	"export.csv": "Export CSV",
 	"cii.cir.csv.filename": "Statistiques_CII-CIR",
-	"choose.year": "Choisissez une année"
+	"choose.year": "Choisissez une année",
+	"choose.type": "Choisissez un type",
+	"task.type.bug": "Bug",
+	"task.type.new": "Nouveauté",
+	"task.type.improvement": "Amélioration",
+	"task.type.test": "Test",
+	"task.type.configuration": "Configuration",
+	"type": "Type",
+	"no.task": "Pas de tâche"
 }

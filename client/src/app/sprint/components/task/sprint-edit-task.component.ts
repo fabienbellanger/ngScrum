@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ApiSprintService } from '../../../api';
-import { StorageService } from '../../../shared';
+import { StorageService, ToolboxService } from '../../../shared';
 import { SprintService } from '../../services/sprint.service';
 
 import { Task } from '../../../models';
@@ -23,6 +23,7 @@ export class SprintEditTaskComponent implements OnInit
     public description: string;
     public remainingDuration: number;
     public applications: any[];
+    public types: string[];
     public applicationsIds: any;
     public notPlanned: boolean;
     public title: string;
@@ -43,6 +44,7 @@ export class SprintEditTaskComponent implements OnInit
      * @param {MatSnackBar}         snackBar
      * @param {Router}              router
      * @param {TranslateService}    translateService
+     * @param {ToolboxService}      toolboxService
      */
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
@@ -50,7 +52,8 @@ export class SprintEditTaskComponent implements OnInit
                 private storageService: StorageService,
                 private snackBar: MatSnackBar,
                 private router: Router,
-                private translateService: TranslateService)
+                private translateService: TranslateService,
+                private toolboxService: ToolboxService)
     {
     }
 
@@ -104,6 +107,10 @@ export class SprintEditTaskComponent implements OnInit
                 Validators.min(0.5),
                 Validators.max(35),
             ]),
+            type:     new FormControl('', [
+                Validators.required,
+                Validators.min(0),
+            ]),
         });
 
         if (this.id === 0)
@@ -111,6 +118,7 @@ export class SprintEditTaskComponent implements OnInit
             this.description     = '';
             this.notPlanned      = false;
             this.applicationsIds = {};
+            this.types           = [];
 
             this.loading = false;
         }
@@ -121,6 +129,7 @@ export class SprintEditTaskComponent implements OnInit
                 {
                     this.taskFormGroup.get('name').setValue(response.name);
                     this.taskFormGroup.get('duration').setValue(response.initialDuration);
+                    this.taskFormGroup.get('type').setValue(response.type - 1);
                     this.description = response.description;
                     this.notPlanned  = response.addedAfter;
 
@@ -128,13 +137,17 @@ export class SprintEditTaskComponent implements OnInit
                     // ----------------------------------------
                     const applicationIds = response.applications;
                     this.applicationsIds = {};
-                    for (let applicationIndex in this.applications)
+                    for (const applicationIndex in this.applications)
                     {
                         if (applicationIds.indexOf(this.applications[applicationIndex].id) !== -1)
                         {
                             this.applicationsIds[applicationIndex] = this.applications[applicationIndex].id;
                         }
                     }
+
+                    // Construction du tableau des types de tâche
+                    // ------------------------------------------
+                    this.types = this.toolboxService.objectToArray(response.types);
 
                     this.loading = false;
                 })
@@ -167,7 +180,7 @@ export class SprintEditTaskComponent implements OnInit
     {
         // Conversion Object => Array
         // --------------------------
-        let applicationsIdsSelected: number[] = Object.keys(this.applicationsIds)
+        const applicationsIdsSelected: number[] = Object.keys(this.applicationsIds)
                                                       .map((k: any) => this.applicationsIds[k]);
 
         // Requête
@@ -203,6 +216,7 @@ export class SprintEditTaskComponent implements OnInit
             this.apiSprintService.addTask(this.sprintId, {
                 name:            this.taskFormGroup.get('name').value,
                 description:     this.description,
+                type:            +this.taskFormGroup.get('type').value + 1,
                 duration:        +this.taskFormGroup.get('duration').value,
                 notPlanned:      +this.notPlanned,
                 applicationsIds: applicationsIdsSelected,
@@ -269,6 +283,7 @@ export class SprintEditTaskComponent implements OnInit
             this.apiSprintService.modifyTask(this.sprintId, this.id, {
                 name:            this.taskFormGroup.get('name').value,
                 description:     this.description,
+                type:            +this.taskFormGroup.get('type').value + 1,
                 duration:        +this.taskFormGroup.get('duration').value,
                 notPlanned:      +this.notPlanned,
                 applicationsIds: applicationsIdsSelected,

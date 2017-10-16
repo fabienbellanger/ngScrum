@@ -25,7 +25,7 @@
         <mat-card>
             <mat-card-content>
                 <div class="row">
-                    <p class="col-xs-12 col-sm-6 col-mat-4">
+                    <p class="col-xs-12 col-sm-6 col-md-4">
                         <mat-input-container class="width-100">
                             <input matInput type="text" name="name"
                                    [placeholder]="'name' | translate"
@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="row">
-                    <p class="col-xs-12 col-sm-6 col-mat-4">
+                    <p class="col-xs-12 col-sm-6 col-md-4">
                         <mat-input-container class="width-100">
                             <textarea matInput matTextareaAutosize name="description"
                                       [placeholder]="'description' | translate"
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="row">
-                    <p class="col-xs-12 col-sm-6 col-mat-4">
+                    <p class="col-xs-12 col-sm-6 col-md-4">
                         <mat-input-container class="width-100">
                             <input matInput type="number" name="duration"
                                    min="0.5" max="35" step="0.5"
@@ -68,11 +68,28 @@
                 </div>
 
                 <div class="row">
-                    <p class="col-xs-12 col-sm-6 col-mat-4">
+                    <p class="col-xs-12 col-sm-6 col-md-4">
                         <mat-checkbox color="primary" name="notPlanned"
                                      [(ngModel)]="notPlanned" [ngModelOptions]="{standalone: true}">
                             {{ 'not.planned' | translate }}
                         </mat-checkbox>
+                    </p>
+                </div>
+
+                <div class="row margin-top-10px">
+                    <p class="col-xs-12 col-sm-6 col-md-4">
+                        <mat-form-field class="width-100">
+                            <mat-select [placeholder]="'choose.type' | translate"
+                                        formControlName="type" required>
+                                <mat-option value="-1">{{ 'none' | translate }}</mat-option>
+                                <mat-option *ngFor="let type of types; let index = index" [value]="index">
+                                    {{ 'task.type.' + type | translate }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="taskFormGroup.get('type').hasError('required')">
+                                {{ 'required.type' | translate }}
+                            </mat-error>
+                        </mat-form-field>
                     </p>
                 </div>
 
@@ -82,7 +99,7 @@
                             <h4>{{ 'applications' | translate }}</h4>
                         </div>
                         <div class="margin-bottom-20px">
-                            <div class="col-xs-12 col-sm-6 col-mat-4 no-padding"
+                            <div class="col-xs-12 col-sm-6 col-md-4 no-padding"
                                 *ngFor="let application of applications; let index = index">
                                 <div class="radio-checkbox">
                                     <mat-checkbox color="primary" [name]="'application_' + index" [id]="'application_' + index"
