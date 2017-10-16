@@ -1021,7 +1021,7 @@
                     $tasksUsers[$taskPartId]['userId']         = $task->taskPartUserId;
                     $tasksUsers[$taskPartId]['duration']       = floatval($task->taskPartDuration);
                     $tasksUsers[$taskPartId]['workedDuration'] = floatval($task->taskPartWorkedDuration);
-                    $tasksUsers[$taskPartId]['date']           = TZ::getLocalDatetime2($timezone, $task->taskPartDate, 'Y-m-d H:i:s');
+                    $tasksUsers[$taskPartId]['date']           = TZ::getLocalDatetime2($timezone, $task->taskPartDate, 'Y-m-d');
                 }
             }
 
@@ -1116,7 +1116,7 @@
                 $taskUserData = [
                     'task_id'         => $taskId,
                     'user_id'         => $data['userId'],
-                    'date'            => TZ::getUTCDatetime2($timezone, $data['date'], 'Y-m-d'),
+                    'date'            => TZ::getUTCDatetime2($timezone, $data['date'], 'Y-m-d H:i:s'),
                     'duration'        => $data['duration'],
                     'worked_duration' => $data['workedDuration'],
                     'created_at'      => $createdAt,
