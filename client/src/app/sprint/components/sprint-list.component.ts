@@ -57,6 +57,20 @@ export class SprintListComponent implements OnInit
      */
     public getSprints(state: string): void
     {
+        // TODO
+        /*
+         Date de début
+         Date de fin estimée
+         Date de fin théorique
+         Ecart en jour
+         Durée total en jour
+         Jours restants
+         Avancement
+         Performance
+         Coef de prod quotidienne
+         Tâches non initialement prévues
+        */
+
         if (state !== 'all' && state !== 'inProgress' && state !== 'finished')
         {
             state = 'inProgress';
