@@ -42,15 +42,98 @@ export class SprintChartsService
         });
 
         return {
-            type:   'pie',
-            labels: [
+            type:    'pie',
+            labels:  [
                 remainingLabel,
                 totalLabel,
             ],
-            data:   [
+            data:    [
                 this.sprintService.remainingDuration,
                 this.sprintService.totalDuration,
             ],
+            options: {
+                responsive: false, 
+                legend:     {
+                    position: 'left',
+                }, 
+                title:      {
+                    display: true,
+                    text:    'Heures travaillées / heures restantes',
+                },
+            },
+        };
+    }
+
+    /**
+     * Initialisation du graphique des types de tâche
+     *
+     * @author Fabien Bellanger
+     * @return {any} Données pour le graphique
+     */
+    public getPieChartTaskTypes(): any
+    {
+        // Labels
+        // ------
+        const typeslabel: any = {};
+        const typesData:  any = {};
+        const types:      any = this.sprintService.sprint.taskTypes;
+        const tasks: any[]    = this.sprintService.sprint.tasks;
+
+        this.translateService.get([
+            'task.type.bug',
+            'task.type.new',
+            'task.type.improvement',
+            'task.type.test',
+            'task.type.configuration',
+        ]).subscribe((translationObject: string[]) =>
+        {
+            for (const index in types)
+            {
+                if (types.hasOwnProperty(index))
+                {
+                    typeslabel[index] = translationObject['task.type.' + types[index]];
+                }
+            }
+        });
+
+        // Données
+        // -------
+
+        // Initialisation
+        for (const index in types)
+        {
+            if (types.hasOwnProperty(index))
+            {
+                typesData[index] = 0;
+            }
+        }
+
+        // Calculs
+        for (const task of tasks)
+        {
+            if (task.list.length > 0)
+            {
+                for (const taskUser of task.list)
+                {
+                    typesData[task.type] += +taskUser.workedDuration;
+                }
+            }
+        }
+
+        return {
+            type:    'pie',
+            labels:  this.toolboxService.objectToArray(typeslabel),
+            data:    this.toolboxService.objectToArray(typesData),
+            options: {
+                responsive: false, 
+                legend:     {
+                    position: 'left',
+                }, 
+                title:      {
+                    display: true,
+                    text:    'Types de tâches',
+                },
+            },
         };
     }
 
@@ -64,14 +147,14 @@ export class SprintChartsService
     {
         // Traitement des données
         // ----------------------
-        let data: any      = {};
+        const data: any      = {};
         const tasks: any[] = this.sprintService.sprint.tasks;
 
-        for (let task of tasks)
+        for (const task of tasks)
         {
             if (task.list.length > 0)
             {
-                for (let taskUser of task.list)
+                for (const taskUser of task.list)
                 {
                     if (!data.hasOwnProperty(taskUser.date))
                     {
@@ -92,14 +175,20 @@ export class SprintChartsService
 
         // Calcul des coefficients
         // -----------------------
-        for (let date in data)
+        for (const date in data)
         {
-            for (let userId in data[date])
+            if (data.hasOwnProperty(date))
             {
-                // On arrondi le coefficient à 2 chiffres après la virgule
-                data[date][userId] = Math.round(
-                    data[date][userId].duration / data[date][userId].workedDuration * 100
-                ) / 100;
+                for (const userId in data[date])
+                {
+                    if (data[date].hasOwnProperty(userId))
+                    {
+                        // On arrondi le coefficient à 2 chiffres après la virgule
+                        data[date][userId] = Math.round(
+                            data[date][userId].duration / data[date][userId].workedDuration * 100
+                        ) / 100;
+                    }
+                }
             }
         }
 
@@ -116,7 +205,7 @@ export class SprintChartsService
     {
         // Traitement des données
         // ----------------------
-        let data: any = this.getLineChartUsesCoefficientData();
+        const data: any = this.getLineChartUsesCoefficientData();
 
         // Labels triés par date croissante
         // --------------------------------
@@ -124,35 +213,38 @@ export class SprintChartsService
 
         // Datasets
         // --------
-        let datasetsObject: any = {};
+        const datasetsObject: any = {};
         let lastData: number;
 
-        for (let userId in this.sprintService.sprint.users)
+        for (const userId in this.sprintService.sprint.users)
         {
-            // Initialisation de la structure
-            // ------------------------------
-            datasetsObject[userId] = {
-                label: this.sprintService.sprint.users[userId].firstname,
-                fill:  false,
-                data:  [],
-            };
-
-            // Ajout des données
-            // -----------------
-            for (let date in data)
+            if (this.sprintService.sprint.users.hasOwnProperty(userId))
             {
-                if (data[date].hasOwnProperty(userId))
-                {
-                    datasetsObject[userId].data.push(data[date][userId]);
-                }
-                else
-                {
-                    // Quand il n'y a pas de valeur on prend la précédente si elle existe, 0 sinon
-                    lastData = (datasetsObject[userId].data.length === 0)
-                        ? 0
-                        : datasetsObject[userId].data[datasetsObject[userId].data.length - 1];
+                // Initialisation de la structure
+                // ------------------------------
+                datasetsObject[userId] = {
+                    label: this.sprintService.sprint.users[userId].firstname,
+                    fill:  false,
+                    data:  [],
+                };
 
-                    datasetsObject[userId].data.push(lastData);
+                // Ajout des données
+                // -----------------
+                for (const date in data)
+                {
+                    if (data[date].hasOwnProperty(userId))
+                    {
+                        datasetsObject[userId].data.push(data[date][userId]);
+                    }
+                    else
+                    {
+                        // Quand il n'y a pas de valeur on prend la précédente si elle existe, 0 sinon
+                        lastData = (datasetsObject[userId].data.length === 0)
+                            ? 0
+                            : datasetsObject[userId].data[datasetsObject[userId].data.length - 1];
+
+                        datasetsObject[userId].data.push(lastData);
+                    }
                 }
             }
         }
@@ -168,4 +260,3 @@ export class SprintChartsService
         };
     }
 }
-    

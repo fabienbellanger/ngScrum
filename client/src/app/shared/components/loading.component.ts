@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
         </div>
     `,
     styles: [
-        '.loading {display: flex; flex-direction: row;  align-items: center; margin: 20px 0px 0px 0px}',
+        '.loading {display: flex; flex-direction: row;  align-items: center; margin: 0px 0px 0px 0px; height: 150px}',
         'h2 {margin: 20px}',
     ],
 })
