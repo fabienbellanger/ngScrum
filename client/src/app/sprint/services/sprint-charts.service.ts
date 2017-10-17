@@ -52,7 +52,7 @@ export class SprintChartsService
                 this.sprintService.totalDuration,
             ],
             options: {
-                responsive: false, 
+                responsive: true, 
                 legend:     {
                     position: 'left',
                 }, 
@@ -125,7 +125,7 @@ export class SprintChartsService
             labels:  this.toolboxService.objectToArray(typeslabel),
             data:    this.toolboxService.objectToArray(typesData),
             options: {
-                responsive: false, 
+                responsive: true, 
                 legend:     {
                     position: 'left',
                 }, 
