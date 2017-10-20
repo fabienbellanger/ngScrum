@@ -17,9 +17,9 @@ import { DateService } from '../../shared';
 export class SprintNewComponent implements OnInit
 {
     public sprintFormGroup: FormGroup;
-    private formSubmitted: boolean;
+    public formSubmitted: boolean;
 
-	/**
+    /**
      * Constructeur
      *
      * @author Fabien Bellanger
@@ -32,7 +32,7 @@ export class SprintNewComponent implements OnInit
      */
     constructor(private apiSprintService: ApiSprintService,
                 private router: Router,
-                private userService: UserService,
+                public userService: UserService,
                 private dateService: DateService,
                 private translateService: TranslateService,
                 private snackBar: MatSnackBar)
@@ -48,7 +48,7 @@ export class SprintNewComponent implements OnInit
     {
         this.formSubmitted = false;
 
-		// FormControls
+        // FormControls
         // ------------
         this.sprintFormGroup = new FormGroup({
             name:      new FormControl('', [
@@ -64,11 +64,11 @@ export class SprintNewComponent implements OnInit
         });
     }
 
-	/**
-	 * Nouveau sprint
-	 *
-	 * @author Fabien Bellanger
-	 */
+    /**
+     * Nouveau sprint
+     *
+     * @author Fabien Bellanger
+     */
     public newSprint(): void
     {
         if (!this.formSubmitted)

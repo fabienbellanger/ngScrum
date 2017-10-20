@@ -34,7 +34,7 @@ export class SprintTasksComponent implements OnInit
      */
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
-                private sprintService: SprintService,
+                public sprintService: SprintService,
                 private sprintChartsService: SprintChartsService,
                 private snackBar: MatSnackBar,
                 private dialog: MatDialog,
@@ -89,7 +89,7 @@ export class SprintTasksComponent implements OnInit
      * @author Fabien Bellanger
      * @param {number} taskId ID de la tâche
      */
-    private deleteTask(taskId: number): void
+    public deleteTask(taskId: number): void
     {
         const dialog = this.dialog.open(SprintTaskDeleteDialogComponent, {
             data: {
@@ -149,7 +149,7 @@ export class SprintTasksComponent implements OnInit
      * @author Fabien Bellanger
      * @param {number} taskId ID de la tâche
      */
-    private editTask(taskId: number): void
+    public editTask(taskId: number): void
     {
         this.router.navigate(['/sprints', this.sprintId, 'tasks', 'edit', taskId]);
     }

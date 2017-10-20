@@ -40,7 +40,7 @@ export class LayoutComponent implements OnInit
      *
      * @author Fabien Bellanger
      */
-    private changeRoute(): void
+    public changeRoute(): void
     {
         // On referme la sidebar en mode mobile       
         this.layoutSidebarService.mobileClose();

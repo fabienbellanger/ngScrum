@@ -26,7 +26,7 @@ export class SprintDeleteDialogComponent
      * @param {any}                                       data       Données transmises
      */
     constructor(private dialogRef: MatDialogRef<SprintDeleteDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) private data: any)
+                @Inject(MAT_DIALOG_DATA) public data: any)
     {}
 
     /**

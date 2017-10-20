@@ -15,7 +15,7 @@ export class LayoutSidebarComponent implements OnInit
      * @author Fabien Bellanger
 	 * @param {LayoutSidebarService} LayoutSidebarService
      */
-    constructor(private layoutSidebarService: LayoutSidebarService)
+    constructor(public layoutSidebarService: LayoutSidebarService)
     {
     }
 

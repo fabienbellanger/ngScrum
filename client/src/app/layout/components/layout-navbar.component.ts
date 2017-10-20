@@ -14,11 +14,11 @@ export class LayoutNavbarComponent implements OnInit
      * Constructeur
      *
      * @author Fabien Bellanger
-	 * @param {LayoutSidebarService} layoutSidebarService
-	 * @param {UserService}          userService
+     * @param {LayoutSidebarService} layoutSidebarService
+     * @param {UserService}          userService
      */
     constructor(private layoutSidebarService: LayoutSidebarService,
-                private userService: UserService)
+                public userService: UserService)
     {
     }
 
@@ -29,16 +29,16 @@ export class LayoutNavbarComponent implements OnInit
      */
     public ngOnInit(): void
     {
-		
+        
     }
 
-	/**
-	 * Toggle sur le sidebar
-	 * 
-	 * @author Fabien Bellanger
-	 */
-	private toggleSidebar(): void
-	{
-		this.layoutSidebarService.toogle();
-	}
+    /**
+     * Toggle sur le sidebar
+     * 
+     * @author Fabien Bellanger
+     */
+    public toggleSidebar(): void
+    {
+        this.layoutSidebarService.toogle();
+    }
 }

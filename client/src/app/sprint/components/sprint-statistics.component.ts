@@ -27,7 +27,7 @@ export class SprintStatisticsComponent implements OnInit
      */
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
-                private sprintService: SprintService,
+                public sprintService: SprintService,
                 private sprintChartsService: SprintChartsService)
     {
         this.sprintService.init(null);
