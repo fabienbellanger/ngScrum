@@ -13,4 +13,5 @@
             ->where([
                         'year' => '[12]\d{3}',
                     ]);
+        Route::get('/dashboard', 'StatisticsController@getDashboard');
     });

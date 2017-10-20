@@ -173,5 +173,20 @@
                 ],
             ];
         }
+
+        /**
+         * Dashboard
+         *
+         * @author Fabien Bellanger
+         * @return array
+         */
+        public static function getDashboard(): array
+        {
+            return [
+                'code'    => 200,
+                'message' => 'Success',
+                'data'    => [],
+            ];
+        }
     }
     

@@ -16,9 +16,30 @@
          * @param string                   $year
          * @return \Illuminate\Http\JsonResponse
          */
-        public function getCIR(Request $request, string $year = null)
+        public function getCIR(Request $request, string $year = null): \Illuminate\Http\JsonResponse
         {
             $response = StatisticsRepository::getCIR($year);
+
+            if ($response['code'] == 404)
+            {
+                return Response::notFound($response['message']);
+            }
+            else
+            {
+                return Response::json($response['data'], 200);
+            }
+        }
+
+        /**
+         * Dashboard
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function getDashboard(Request $request): \Illuminate\Http\JsonResponse
+        {
+            $response = StatisticsRepository::getDashboard();
 
             if ($response['code'] == 404)
             {
