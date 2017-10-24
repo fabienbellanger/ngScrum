@@ -59,17 +59,18 @@ export class SprintListComponent implements OnInit
     {
         // TODO
         /*
-         Date de début
-         Date de fin estimée
+         Date de début : OK
+         Date de fin estimée : OK
          Date de fin théorique
          Ecart en jour
          Durée total en jour
-         Jours restants
-         Avancement
-         Performance
+         Jours restants : OK
+         Avancement : OK
+         Performance : OK
          Coef de prod quotidienne
-         Tâches non initialement prévues
+         Tâches non initialement prévues : OK
         */
+        // Calcul de la vélocité
 
         if (state !== 'all' && state !== 'inProgress' && state !== 'finished')
         {
@@ -81,13 +82,20 @@ export class SprintListComponent implements OnInit
         this.apiSprintService.getList(state)
             .then((sprints: any) =>
             {
-                // Date de fin théorique des sprints
-                // ---------------------------------
+                // Date de fin théorique des sprints et performance
+                // ------------------------------------------------
                 for (const sprintIndex in sprints)
                 {
                     if (sprints.hasOwnProperty(sprintIndex))
                     {
                         sprints[sprintIndex]['estimatedFinishedAt'] = this.sprintService.getSprintEndDate(sprints[sprintIndex]);
+                        sprints[sprintIndex]['performance']         = (sprints[sprintIndex]['workedDuration'] !== 0)
+                            ? (sprints[sprintIndex]['decrementedDuration'] / sprints[sprintIndex]['workedDuration']) * 100
+                            : 0;
+                        // TODO: La valeur ici est basée sur le nombre de tâche et non sur le nombre d'heure (à changer)
+                        sprints[sprintIndex]['tasksAddedPercent']   = (sprints[sprintIndex]['tasksNumber'] !== 0)
+                            ? (sprints[sprintIndex]['tasksAddedNumber'] / sprints[sprintIndex]['tasksNumber']) * 100
+                            : 0;
                     }
                 }
                 this.sprints = sprints;

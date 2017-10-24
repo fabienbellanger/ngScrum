@@ -59,11 +59,11 @@ export class DurationPipe implements PipeTransform
 
             if (dayTimeObject.days !== 0)
             {
-                s += dayTimeObject.days + ' jour';
-                if (dayTimeObject.days >= 2)
+                s += dayTimeObject.days + ' j';
+                /*if (dayTimeObject.days >= 2)
                 {
                     s += 's';
-                }
+                }*/
                 if (dayTimeObject.hours !== 0)
                 {
                     s += ' ' + dayTimeObject.hours + ' h';
@@ -85,18 +85,18 @@ export class DurationPipe implements PipeTransform
 
             if (weekTimeObject.weeks !== 0)
             {
-                s += weekTimeObject.weeks + ' semaine';
-                if (weekTimeObject.weeks >= 2)
+                s += weekTimeObject.weeks + ' s';
+                /*if (weekTimeObject.weeks >= 2)
                 {
                     s += 's';
-                }
+                }*/
                 if (weekTimeObject.days !== 0)
                 {
-                    s += ' ' + weekTimeObject.days + ' jour';
-                    if (weekTimeObject.days >= 2)
+                    s += ' ' + weekTimeObject.days + ' j';
+                    /*if (weekTimeObject.days >= 2)
                     {
                         s += 's';
-                    }
+                    }*/
                     if (weekTimeObject.hours !== 0)
                     {
                         s += ' ' + weekTimeObject.hours + ' h';
@@ -114,7 +114,7 @@ export class DurationPipe implements PipeTransform
             {
                 if (weekTimeObject.days !== 0)
                 {
-                    s += weekTimeObject.days + ' jour';
+                    s += weekTimeObject.days + ' j';
                     if (weekTimeObject.days >= 2)
                     {
                         s += 's';
@@ -161,9 +161,9 @@ export class DurationPipe implements PipeTransform
         }
         else
         {
-            let hours: number = Math.round(value % this.hoursInDay * 10) / 10;
-            let days: number  = Math.floor(value / this.hoursInDay);
-            let weeks: number = 0;
+            const hours: number = Math.round(value % this.hoursInDay * 10) / 10;
+            let days:    number = Math.floor(value / this.hoursInDay);
+            let weeks:   number = 0;
 
             if (days > 0)
             {
@@ -200,8 +200,8 @@ export class DurationPipe implements PipeTransform
         }
         else
         {
-            let hours: number = Math.round(value % this.hoursInDay * 10) / 10;
-            let days: number  = Math.floor(value / this.hoursInDay);
+            const hours: number = Math.round(value % this.hoursInDay * 10) / 10;
+            const days: number  = Math.floor(value / this.hoursInDay);
 
             return {
                 hours: hours,

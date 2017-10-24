@@ -26,6 +26,10 @@
 
             if ($sprints)
             {
+                // ------------------------------------------------------------------------------------------
+                // TODO: Optimiser les deux fonctions car certainement requêtes faisant presque la même chose
+                // ------------------------------------------------------------------------------------------
+
                 // Informations sur les sprints
                 // ----------------------------
                 $sprintsInformation = self::getSprintsInformation($id, $filter);
@@ -40,13 +44,15 @@
                 {
                     if (array_key_exists($sprintId, $sprintsTasksWorked))
                     {
-                        $sprints[$sprintId] = array_merge($sprintData, $sprintsTasksWorked[$sprintId]);
+                        $sprintData = array_merge($sprintData, $sprintsTasksWorked[$sprintId]);
                     }
 
                     if (array_key_exists($sprintId, $sprintsInformation))
                     {
-                        $sprints[$sprintId] = array_merge($sprintData, $sprintsInformation[$sprintId]);
+                        $sprintData = array_merge($sprintData, $sprintsInformation[$sprintId]);
                     }
+
+                    $sprints[$sprintId] = $sprintData;
                 }
             }
 
@@ -148,15 +154,15 @@
             // -------
             $query = '
                 SELECT
-                    sprint.id                    AS sprintId,
-                    sprint.name                  AS sprintName,
-                    sprint.team_id               AS teamId,
-                    team.name                    AS teamName,
-                    sprint.created_at            AS sprintCreatedAt,
-                    sprint.started_at            AS sprintStartedAt,
-                    sprint.finished_at           AS sprintFinishedAt,
-                    SUM(task.initial_duration)   AS initialDuration,
-                    SUM(task.remaining_duration) AS remainingDuration
+                    sprint.id                      AS sprintId,
+                    sprint.name                    AS sprintName,
+                    sprint.team_id                 AS teamId,
+                    team.name                      AS teamName,
+                    sprint.created_at              AS sprintCreatedAt,
+                    sprint.started_at              AS sprintStartedAt,
+                    sprint.finished_at             AS sprintFinishedAt,
+                    SUM(task.initial_duration)     AS initialDuration,
+                    SUM(task.remaining_duration)   AS remainingDuration
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
                     INNER JOIN team_member ON team.id = team_member.team_id AND team_member.user_id = :userId
@@ -194,8 +200,8 @@
                         $sprints[$sprintId]['createdAt']         = TZ::getLocalDatetime2($timezone, $line->sprintCreatedAt, 'Y-m-d H:i:s');
                         $sprints[$sprintId]['finishedAt']        = TZ::getLocalDatetime2($timezone, $line->sprintFinishedAt, 'Y-m-d H:i:s');
                         $sprints[$sprintId]['startedAt']         = $line->sprintStartedAt;
-                        $sprints[$sprintId]['initialDuration']   = $line->initialDuration;
-                        $sprints[$sprintId]['remainingDuration'] = $line->remainingDuration;
+                        $sprints[$sprintId]['initialDuration']   = floatval($line->initialDuration);
+                        $sprints[$sprintId]['remainingDuration'] = floatval($line->remainingDuration);
                         $sprints[$sprintId]['progressPercent']   = ($line->initialDuration != 0)
                             ? round((($line->initialDuration - $line->remainingDuration) / $line->initialDuration) * 100, 0)
                             : 0;
@@ -220,10 +226,10 @@
             // -------
             $query = '
                 SELECT
-                    sprint.id               AS sprintId,
-                    task.id                 AS taskId,
-                    task.initial_duration   AS initialDuration,
-                    task.remaining_duration AS remainingDuration
+                    sprint.id                      AS sprintId,
+                    task.id                        AS taskId,
+                    task.added_after               AS taskAddedAfter,
+                    SUM(task_user.worked_duration) AS workedDuration
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
                     INNER JOIN team_member ON team.id = team_member.team_id AND team_member.user_id = :userId
@@ -257,12 +263,17 @@
                     // --------------
                     if (!isset($tasks[$sprintId]))
                     {
-                        $tasks[$sprintId]['initialDuration']   = 0;
-                        $tasks[$sprintId]['remainingDuration'] = 0;
+                        $tasks[$sprintId]['workedDuration']   = 0;
+                        $tasks[$sprintId]['tasksNumber']      = 0;
+                        $tasks[$sprintId]['tasksAddedNumber'] = 0;
                     }
 
-                    $tasks[$sprintId]['initialDuration']   += floatval($line->initialDuration);
-                    $tasks[$sprintId]['remainingDuration'] += floatval($line->remainingDuration);
+                    $tasks[$sprintId]['workedDuration'] += floatval($line->workedDuration);
+                    $tasks[$sprintId]['tasksNumber']++;
+                    if ($line->taskAddedAfter)
+                    {
+                        $tasks[$sprintId]['tasksAddedNumber']++;
+                    }
                 }
             }
 
@@ -285,6 +296,7 @@
                 SELECT
                     sprint.id                       AS sprintId,
                     SUM(task_user.duration)         AS decrementedDuration,
+                    SUM(task_user.worked_duration)  AS workedDuration,
                     COUNT(DISTINCT(task_user.date)) AS nbDates
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
@@ -314,6 +326,7 @@
                 {
                     $sprintId            = $line->sprintId;
                     $decrementedDuration = floatval($line->decrementedDuration);
+                    $workedDuration      = floatval($line->workedDuration);
                     $nbDates             = floatval($line->nbDates);
 
                     // Initialisation
@@ -321,10 +334,12 @@
                     if (!isset($data[$sprintId]))
                     {
                         $data[$sprintId]['decrementedDuration'] = 0;
+                        $data[$sprintId]['workedDuration']      = 0;
                         $data[$sprintId]['nbDates']             = 0;
                     }
 
                     $data[$sprintId]['decrementedDuration'] += $decrementedDuration;
+                    $data[$sprintId]['workedDuration']      += $workedDuration;
                     $data[$sprintId]['nbDates']             += $nbDates;
                 }
 
@@ -334,6 +349,9 @@
                 {
                     $data[$id]['decrementedDurationPerDay'] = ($line['nbDates'] != 0)
                         ? $line['decrementedDuration'] / $line['nbDates']
+                        : 0;
+                    $data[$id]['workedDurationPerDay'] = ($line['nbDates'] != 0)
+                        ? $line['workedDuration'] / $line['nbDates']
                         : 0;
                 }
             }

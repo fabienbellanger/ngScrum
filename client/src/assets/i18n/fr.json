@@ -142,7 +142,7 @@
 	"password.min.length": "Le mot de passe doit contenir au moins 4 caractères",
 	"error.occured": "Une erreur est survenue",
 	"new.password.success": "Votre mot de passe a bien été modifié",
-	"decrement.hours.per.day": "Heures décrémentées / jour",
+	"decrement.duration.per.day": "Durée décrémentée / jour",
 	"day": "jour",
 	"team:": "Equipe :",
 	"statistics.cii.cir": "Statistiques CII/CIR",
@@ -158,5 +158,6 @@
 	"task.type.test": "Test",
 	"task.type.configuration": "Configuration",
 	"type": "Type",
-	"no.task": "Pas de tâche"
+	"no.task": "Pas de tâche",
+	"added.tasks": "Tâches non prévues"
 }

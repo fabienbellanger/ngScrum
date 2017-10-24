@@ -91,27 +91,44 @@
                         <div class="SprintsList-Sprint-value">{{ sprint.finishedAt | date:"dd/MM/yyyy" }}</div>
                     </div>
                     <div class="row SprintsList-Sprint-info">
-                        <div class="SprintsList-Sprint-label">{{ 'remaining.hours' | translate }}</div>
-                        <div class="SprintsList-Sprint-value">{{ sprint.remainingDuration | duration:'hour' }}</div>
-                    </div>
-                    <div class="row SprintsList-Sprint-info">
-                        <div class="SprintsList-Sprint-label">{{ 'decrement.hours' | translate }}</div>
-                        <div class="SprintsList-Sprint-value">{{ sprint.decrementedDuration | duration:'hour' }}</div>
-                    </div>
-                    <div class="row SprintsList-Sprint-info">
-                        <div class="SprintsList-Sprint-label">{{ 'decrement.hours.per.day' | translate }}</div>
+                        <div class="SprintsList-Sprint-label">{{ 'remaining.duration' | translate }}</div>
                         <div class="SprintsList-Sprint-value">
-                            {{ sprint.decrementedDurationPerDay | duration:'hour' }} / {{ 'day' | translate }}
+                            <span class="bolder accent-color">
+                                {{ sprint.remainingDuration | duration:'hour' }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row SprintsList-Sprint-info">
+                        <div class="SprintsList-Sprint-label">{{ 'decrement.duration' | translate }}</div>
+                        <div class="SprintsList-Sprint-value">
+                            {{ sprint.decrementedDuration | duration:'hour' }}
+                            ({{ sprint.decrementedDurationPerDay | duration:'hour' }} / {{ 'day' | translate }})
+                        </div>
+                    </div>
+                    <div class="row SprintsList-Sprint-info">
+                        <div class="SprintsList-Sprint-label">{{ 'worked.duration' | translate }}</div>
+                        <div class="SprintsList-Sprint-value">
+                            {{ sprint.workedDuration | duration:'hour' }}
+                            ({{ sprint.workedDurationPerDay | duration:'hour' }} / {{ 'day' | translate }})
+                        </div>
+                    </div>
+                    <div class="row SprintsList-Sprint-info">
+                        <div class="SprintsList-Sprint-label">{{ 'performance' | translate }}</div>
+                        <div class="SprintsList-Sprint-value">
+                            <span class="bolder accent-color">{{ sprint.performance | percentFr:0 }}</span>
+                        </div>
+                    </div>
+                    <div class="row SprintsList-Sprint-info">
+                        <div class="SprintsList-Sprint-label">{{ 'added.tasks' | translate }}</div>
+                        <div class="SprintsList-Sprint-value">
+                            {{ sprint.tasksAddedPercent | percentFr:0 }}
                         </div>
                     </div>
 
                     <div class="row margin-bottom-20px margin-top-10px">
                         <div class="col-xs-12 text-center small">
                             <div>{{ sprint.progressPercent | percentFr }}</div>
-                            <mat-progress-bar [color]="primary"
-                                             [mode]="determinate"
-                                             [value]="sprint.progressPercent"
-                                             [bufferValue]="bufferValue">
+                            <mat-progress-bar color="primary" mode="determinate" [value]="sprint.progressPercent">
                             </mat-progress-bar>
                         </div>
                     </div>
