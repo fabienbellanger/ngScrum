@@ -70,7 +70,6 @@ export class SprintListComponent implements OnInit
          Coef de prod quotidienne
          Tâches non initialement prévues : OK
         */
-        // Calcul de la vélocité
 
         if (state !== 'all' && state !== 'inProgress' && state !== 'finished')
         {
