@@ -274,11 +274,11 @@ export class SprintTasksManagementEditComponent implements OnInit
             {
                 // Notification
                 // ------------
-                this.translateService.get(['add.taskuser.success', 'success'])
+                this.translateService.get(['save.success', 'success'])
                     .subscribe((translationObject: Object) =>
                     {
                         this.snackBar.open(
-                            translationObject['add.taskuser.success'],
+                            translationObject['save.success'],
                             translationObject['success'],
                             {
                                 duration: 3000,
@@ -293,11 +293,11 @@ export class SprintTasksManagementEditComponent implements OnInit
             {
                 // Notification
                 // ------------
-                this.translateService.get(['add.taskuser.error', 'error'])
+                this.translateService.get(['save.error', 'error'])
                     .subscribe((translationObject: Object) =>
                     {
                         this.snackBar.open(
-                            translationObject['add.taskuser.error'],
+                            translationObject['save.error'],
                             translationObject['error'],
                             {
                                 duration: 3000,

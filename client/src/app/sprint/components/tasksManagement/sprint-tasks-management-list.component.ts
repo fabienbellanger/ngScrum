@@ -212,6 +212,13 @@ export class SprintTasksManagementListComponent implements OnInit
     {
         this.sprintTasksManagementService.date = date;
 
-        this.router.navigate(['/sprints', this.sprintId, 'tasks-management']);
+        if (date === undefined)
+        {
+            this.router.navigate(['/sprints', this.sprintId, 'tasks-management']);
+        }
+        else
+        {
+            this.router.navigate(['/sprints', this.sprintId, 'tasks-management', date]);
+        }
     }
 }

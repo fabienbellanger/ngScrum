@@ -159,5 +159,7 @@
 	"task.type.configuration": "Configuration",
 	"type": "Type",
 	"no.task": "Pas de tâche",
-	"added.tasks": "Tâches non prévues"
+	"added.tasks": "Tâches non prévues",
+    "save.success": "Enregistrement réussi",
+    "save.error": "Erreur lors de l'enregistrement"
 }

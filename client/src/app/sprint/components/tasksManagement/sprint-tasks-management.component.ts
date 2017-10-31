@@ -51,20 +51,12 @@ export class SprintTasksManagementComponent implements OnInit
         {
             // Récupération du sprint
             // ----------------------
-            this.sprintId = +params.get('sprintId');
+            this.sprintId      = +params.get('sprintId');
+            const date: string = params.get('date');
 
             // Initialisation
             // --------------
-            if (this.sprintTasksManagementService.sprint === undefined)
-            {
-                this.init();
-            }
-            else
-            {
-                this.date = this.dateService.toDate(this.sprintTasksManagementService.date);
-                
-                this.loading = false;
-            }
+            this.init(date);
         });
     }
 
@@ -72,11 +64,13 @@ export class SprintTasksManagementComponent implements OnInit
      * Initialisation du sprint
      *
      * @author Fabien Bellanger
+     * @param {string} date Date
      */
-    private init(): void
+    private init(date: string = null): void
     {
         // Initialisation du sprint
         // ------------------------
+        this.sprintTasksManagementService.date = (date) ? date : this.sprintTasksManagementService.date
         this.sprintTasksManagementService.init(this.sprintId)
             .then(() =>
             {
@@ -87,7 +81,7 @@ export class SprintTasksManagementComponent implements OnInit
             .catch(() =>
             {
                 this.date = new Date();
-                
+
                 this.loading = false;
             });
     }
