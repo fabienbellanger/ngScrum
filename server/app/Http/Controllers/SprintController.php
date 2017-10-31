@@ -93,7 +93,7 @@
         {
             $timezone = UserRepository::getTimezone();
             $date     = ($date)
-                ? TZ::getUTCDatetime2($timezone, $date, 'Y-m-d')
+                ? $date
                 : TZ::getLocalDatetime2($timezone, date('Y-m-d H:i:s'), 'Y-m-d');
 
             $response = SprintRepository::getSprintManagement($id, $sprintId, $date);

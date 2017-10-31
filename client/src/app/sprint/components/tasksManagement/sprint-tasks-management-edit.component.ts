@@ -83,7 +83,27 @@ export class SprintTasksManagementEditComponent implements OnInit
 
         // Initialisation
         // --------------
-        this.init();
+        if (this.sprintTasksManagementService.sprint !== undefined)
+        {
+            this.init();
+        }
+        else
+        {
+            // TODO: Rediriger vers tasks-management-list
+            this.sprintTasksManagementService.init(this.sprintId)
+                .then(() =>
+                {
+                    this.init();
+                })
+                .catch((error: any) =>
+                {
+                    // Erreur : Données non valides
+                    // ----------------------------
+                    this.dataError();
+    
+                    this.loading = false;
+                });
+        }
     }
 
     /**
@@ -93,125 +113,111 @@ export class SprintTasksManagementEditComponent implements OnInit
      */
     private init(): void
     {
-        // Initialisation du sprint
-        // ------------------------
-        // this.sprintTasksManagementService.init(this.sprintId)
-        //    .then(() =>
-        //    {
-                this.sprint = this.sprintTasksManagementService.sprint;
+        this.sprint = this.sprintTasksManagementService.sprint;
+        
+        // Recherche de la tâche
+        // ---------------------
+        if (this.sprint.tasks.hasOwnProperty(this.taskId))
+        {
+            this.task = this.sprint.tasks[this.taskId];
+        }
 
-                // Recherche de la tâche
-                // ---------------------
-                if (this.sprint.tasks.hasOwnProperty(this.taskId))
-                {
-                    this.task = this.sprint.tasks[this.taskId];
-                }
-
-                // Récupération de l'utilisateur
-                // -----------------------------
-                for (const user of this.sprint.users)
-                {
-                    if (user.id === this.userId)
-                    {
-                        this.user = user;
-
-                        break;
-                    }
-                }
-
-                // Récupération de la TaskUser
-                // ---------------------------
-                if (this.isEdit)
-                {
-                    for (const taskUser of this.sprint.tasksUsers)
-                    {
-                        if (taskUser.taskId === this.taskId && taskUser.userId === this.userId &&
-                            taskUser.date === this.sprintTasksManagementService.date)
-                        {
-                            this.taskUser = taskUser;
-
-                            break;
-                        }
-                    }
-                }
-
-                // Tableau des tâches si création
-                // ------------------------------
-                if (!this.isEdit)
-                {
-                    let label: string;
-                    let taskUserDone: boolean;
-                    let taskUserIndex: number;
-                    const taskUserLength: number = this.sprint.tasksUsers.length;
-
-                    for (const taskId in this.sprint.tasks)
-                    {
-                        if (this.sprint.tasks.hasOwnProperty(taskId))
-                        {
-                            // TODO: Doit-on proposer une tâche terminée ?
-
-                            // On n'ajoute pas les tâches déjà faites par l'utilisateur
-                            // --------------------------------------------------------
-                            taskUserDone  = false;
-                            taskUserIndex = 0;
-                            while (!(taskUserIndex === taskUserLength || taskUserDone))
-                            {
-                                if (this.sprint.tasksUsers[taskUserIndex].userId === this.userId &&
-                                    this.sprint.tasksUsers[taskUserIndex].taskId ===  +taskId)
-                                {
-                                    taskUserDone = true;
-                                }
-
-                                taskUserIndex++;
-                            }
-
-                            if (!taskUserDone)
-                            {
-                                label = this.sprint.tasks[taskId].name;
-                                label += (this.sprint.tasks[taskId].remainingDuration !== 0)
-                                    ? ' (' + this.sprint.tasks[taskId].remainingDuration + ' h)'
-                                    : ' (Terminée)';
-
-                                this.tasks.push({
-                                    'id':    this.sprint.tasks[taskId].id,
-                                    'label': label,
-                                });
-                            }
-                        }
-                    }
-                }
-
-                if (this.user === null)
-                {
-                    // Erreur : Données non valides
-                    // ----------------------------
-                    this.dataError();
-                }
-                else
-                {
-                    if (this.taskUser !== null && this.task !== null)
-                    {
-                        // Mise à jour de la durée restante sur la tâche
-                        // ---------------------------------------------
-                        this.task.remainingDuration += this.taskUser.duration;
-
-                        // Initialisation du formulaire
-                        // ----------------------------
-                        this.taskFormGroup.get('remainingDuration').setValue(this.task.remainingDuration - this.taskUser.duration);
-                        this.taskFormGroup.get('workedDuration').setValue(this.taskUser.workedDuration);
-                    }
-                }
-
-                this.loading = false;
-           /* })
-            .catch((error: any) =>
+        // Récupération de l'utilisateur
+        // -----------------------------
+        for (const user of this.sprint.users)
+        {
+            if (user.id === this.userId)
             {
-                // Erreur : Données non valides
-                // ----------------------------
-                this.dataError();
+                this.user = user;
 
-                this.loading = false;
-            })*/
+                break;
+            }
+        }
+
+        // Récupération de la TaskUser
+        // ---------------------------
+        if (this.isEdit)
+        {
+            for (const taskUser of this.sprint.tasksUsers)
+            {
+                if (taskUser.taskId === this.taskId && taskUser.userId === this.userId &&
+                    taskUser.date === this.sprintTasksManagementService.date)
+                {
+                    this.taskUser = taskUser;
+
+                    break;
+                }
+            }
+        }
+
+        // Tableau des tâches si création
+        // ------------------------------
+        if (!this.isEdit)
+        {
+            let label: string;
+            let taskUserDone: boolean;
+            let taskUserIndex: number;
+            const taskUserLength: number = this.sprint.tasksUsers.length;
+
+            for (const taskId in this.sprint.tasks)
+            {
+                if (this.sprint.tasks.hasOwnProperty(taskId))
+                {
+                    // TODO: Doit-on proposer une tâche terminée ?
+
+                    // On n'ajoute pas les tâches déjà faites par l'utilisateur
+                    // --------------------------------------------------------
+                    taskUserDone  = false;
+                    taskUserIndex = 0;
+                    while (!(taskUserIndex === taskUserLength || taskUserDone))
+                    {
+                        if (this.sprint.tasksUsers[taskUserIndex].userId === this.userId &&
+                            this.sprint.tasksUsers[taskUserIndex].taskId ===  +taskId)
+                        {
+                            taskUserDone = true;
+                        }
+
+                        taskUserIndex++;
+                    }
+
+                    if (!taskUserDone)
+                    {
+                        label = this.sprint.tasks[taskId].name;
+                        label += (this.sprint.tasks[taskId].remainingDuration !== 0)
+                            ? ' (' + this.sprint.tasks[taskId].remainingDuration + ' h)'
+                            : ' (Terminée)';
+
+                        this.tasks.push({
+                            'id':    this.sprint.tasks[taskId].id,
+                            'label': label,
+                        });
+                    }
+                }
+            }
+        }
+
+        if (this.user === null)
+        {
+            // Erreur : Données non valides
+            // ----------------------------
+            this.dataError();
+        }
+        else
+        {
+            if (this.taskUser !== null && this.task !== null)
+            {
+                // Mise à jour de la durée restante sur la tâche
+                // ---------------------------------------------
+                this.task.remainingDuration += this.taskUser.duration;
+
+                // Initialisation du formulaire
+                // ----------------------------
+                this.taskFormGroup.get('remainingDuration').setValue(this.task.remainingDuration - this.taskUser.duration);
+                this.taskFormGroup.get('workedDuration').setValue(this.taskUser.workedDuration);
+            }
+        }
+
+        this.loading = false;
     }
 
     /**

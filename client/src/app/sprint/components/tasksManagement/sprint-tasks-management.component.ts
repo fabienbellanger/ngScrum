@@ -55,7 +55,16 @@ export class SprintTasksManagementComponent implements OnInit
 
             // Initialisation
             // --------------
-            this.init();
+            if (this.sprintTasksManagementService.sprint === undefined)
+            {
+                this.init();
+            }
+            else
+            {
+                this.date = this.dateService.toDate(this.sprintTasksManagementService.date);
+                
+                this.loading = false;
+            }
         });
     }
 
@@ -78,7 +87,7 @@ export class SprintTasksManagementComponent implements OnInit
             .catch(() =>
             {
                 this.date = new Date();
-
+                
                 this.loading = false;
             });
     }

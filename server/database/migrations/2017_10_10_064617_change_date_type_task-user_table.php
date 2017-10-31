@@ -15,7 +15,7 @@ class ChangeDateTypeTaskUserTable extends Migration
     {
         Schema::table('task_user', function (Blueprint $table)
         {
-            $table->datetime('date')->change();
+            // $table->datetime('date')->change();
         });
     }
 
@@ -28,7 +28,7 @@ class ChangeDateTypeTaskUserTable extends Migration
     {
         Schema::table('task_user', function (Blueprint $table)
         {
-            $table->date('date')->change();
+            // $table->date('date')->change();
         });
     }
 }

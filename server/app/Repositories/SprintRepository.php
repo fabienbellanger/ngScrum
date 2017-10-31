@@ -1039,7 +1039,7 @@
                     $tasksUsers[$taskPartId]['userId']         = $task->taskPartUserId;
                     $tasksUsers[$taskPartId]['duration']       = floatval($task->taskPartDuration);
                     $tasksUsers[$taskPartId]['workedDuration'] = floatval($task->taskPartWorkedDuration);
-                    $tasksUsers[$taskPartId]['date']           = TZ::getLocalDatetime2($timezone, $task->taskPartDate, 'Y-m-d');
+                    $tasksUsers[$taskPartId]['date']           = $task->taskPartDate; // TZ::getLocalDatetime2($timezone, $task->taskPartDate, 'Y-m-d');
                 }
             }
 
@@ -1112,7 +1112,7 @@
             $query      = '
                 SELECT id
                 FROM task_user 
-                WHERE task_id = :taskId AND user_id = :userId AND date = :date';
+                WHERE task_id = :taskId AND user_id = :userId AND date LIKE :date';
             $results    = DB::select($query, [
                 'taskId' => $taskId,
                 'userId' => $data['userId'],
@@ -1134,7 +1134,7 @@
                 $taskUserData = [
                     'task_id'         => $taskId,
                     'user_id'         => $data['userId'],
-                    'date'            => TZ::getUTCDatetime2($timezone, $data['date'], 'Y-m-d H:i:s'),
+                    'date'            => TZ::getUTCDatetime2($timezone, $data['date'], 'Y-m-d'),
                     'duration'        => $data['duration'],
                     'worked_duration' => $data['workedDuration'],
                     'created_at'      => $createdAt,
