@@ -92,8 +92,9 @@ export class SprintTasksManagementService
 
                 // On prend les tâches non terminées de l'utilisateur
                 // --------------------------------------------------
-                if (taskUser.userId === user.id && task !== undefined && task.remainingDuration !== 0)
+                if (taskUser.userId === user.id && task !== undefined) // && task.remainingDuration !== 0)
                 {
+                    console.log(taskUser);
                     if (!this.users[userIndex]['tasks'].hasOwnProperty(taskId))
                     {
                         // Nouvelle tâche
