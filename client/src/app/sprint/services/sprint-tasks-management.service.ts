@@ -94,7 +94,6 @@ export class SprintTasksManagementService
                 // --------------------------------------------------
                 if (taskUser.userId === user.id && task !== undefined) // && task.remainingDuration !== 0)
                 {
-                    console.log(taskUser);
                     if (!this.users[userIndex]['tasks'].hasOwnProperty(taskId))
                     {
                         // Nouvelle tâche
