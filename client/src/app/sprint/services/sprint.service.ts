@@ -10,9 +10,9 @@ export class SprintService
     public sprint: Sprint;
     public initialDuration: number;
     public addedDuration: number;
-    public totalDuration: number;
+    public estimatedDuration: number;
     public remainingDuration: number;
-    public totalTaskUserWorkedDuration: number;
+    public totalWorkedDuration: number;
     public totalTaskUserDuration: number;
     public averageWorkedHoursPerDay: number;
     public usersInformation: any;
@@ -30,16 +30,16 @@ export class SprintService
                 private dateService: DateService,
                 private toolboxService: ToolboxService)
     {
-        this.sprint                      = null;
-        this.initialDuration             = 0;
-        this.addedDuration               = 0;
-        this.totalDuration               = 0;
-        this.remainingDuration           = 0;
-        this.totalTaskUserWorkedDuration = 0;
-        this.totalTaskUserDuration       = 0;
-        this.averageWorkedHoursPerDay    = 7;
-        this.usersInformation            = {};
-        this.usersTotalInformation       = {};
+        this.sprint                   = null;
+        this.initialDuration          = 0;
+        this.addedDuration            = 0;
+        this.estimatedDuration        = 0;
+        this.remainingDuration        = 0;
+        this.totalWorkedDuration      = 0;
+        this.totalTaskUserDuration    = 0;
+        this.averageWorkedHoursPerDay = 7;
+        this.usersInformation         = {};
+        this.usersTotalInformation    = {};
     }
 
     /**
@@ -50,16 +50,16 @@ export class SprintService
      */
     public init(sprint: Sprint): void
     {
-        this.sprint                      = sprint;
-        this.initialDuration             = this.getDuration(false);
-        this.addedDuration               = this.getDuration(true);
-        this.totalDuration               = this.initialDuration + this.addedDuration;
-        this.remainingDuration           = this.getRemainigDuration();
-        this.totalTaskUserWorkedDuration = this.getTotalTaskUserDuration(true);
-        this.totalTaskUserDuration       = this.getTotalTaskUserDuration(false);
-        this.averageWorkedHoursPerDay    = this.getAverageWorkedHoursPerDay();
-        this.usersInformation            = this.getUsersInformation();
-        this.usersTotalInformation       = this.getUsersTotalInformation();
+        this.sprint                   = sprint;
+        this.initialDuration          = this.getDuration(false);
+        this.addedDuration            = this.getAddedDuration(true);
+        this.estimatedDuration        = this.initialDuration + this.getDuration(true);
+        this.remainingDuration        = this.getRemainigDuration();
+        this.totalWorkedDuration      = this.getTotalTaskUserDuration(true);
+        this.totalTaskUserDuration    = this.getTotalTaskUserDuration(false);
+        this.averageWorkedHoursPerDay = this.getAverageWorkedHoursPerDay();
+        this.usersInformation         = this.getUsersInformation();
+        this.usersTotalInformation    = this.getUsersTotalInformation();
 
         // Calcul de la durée travaillée des tâches
         // ----------------------------------------
@@ -90,6 +90,37 @@ export class SprintService
 
         return duration;
     }
+    
+    /**
+     * Durée non prévue
+     *
+     * @author Fabien Bellanger
+     * @param {boolean} worked Travaillée
+     * @return {number} Durée
+     */
+    private getAddedDuration(worked: boolean = false): number
+    {
+        let duration: number = 0;
+        
+        if (this.sprint !== null)
+        {
+            for (const task of this.sprint.tasks)
+            {
+                if (task.list.length > 0)
+                {
+                    for (const taskUser of task.list)
+                    {
+                        if (!!task.addedAfter)
+                        {
+                            duration += (worked) ? +taskUser.workedDuration : +taskUser.duration;
+                        }
+                    }
+                }
+            }
+        }
+
+        return duration;
+    }
 
     /**
      * Retourne la durée restante
@@ -99,9 +130,7 @@ export class SprintService
      */
     private getRemainigDuration(): number
     {
-        let duration: number;
-
-        duration = 0;
+        let duration: number = 0;
 
         if (this.sprint !== null)
         {
@@ -118,14 +147,12 @@ export class SprintService
      * Retourne la durée totales des tâches réalisées par les utilisateurs
      *
      * @author Fabien Bellanger
-     * @param {boolean} worked Travaillées
+     * @param {boolean} worked Travaillée
      * @return {number} Durée
      */
     private getTotalTaskUserDuration(worked: boolean = false): number
     {
-        let duration: number;
-
-        duration = 0;
+        let duration: number = 0;
 
         if (this.sprint !== null)
         {
@@ -135,14 +162,7 @@ export class SprintService
                 {
                     for (const taskUser of task.list)
                     {
-                        if (worked)
-                        {
-                            duration += +taskUser.workedDuration;
-                        }
-                        else
-                        {
-                            duration += +taskUser.duration;
-                        }
+                        duration += (worked) ? +taskUser.workedDuration : +taskUser.duration;
                     }
                 }
             }
@@ -159,9 +179,7 @@ export class SprintService
      */
     private getAverageWorkedHoursPerDay(): number
     {
-        let taskUserLength: number;
-
-        taskUserLength = 0;
+        let taskUserLength: number = 0;
 
         if (this.sprint !== null)
         {
@@ -172,7 +190,7 @@ export class SprintService
         }
 
         return (taskUserLength !== 0)
-            ? this.totalTaskUserWorkedDuration / taskUserLength
+            ? this.totalWorkedDuration / taskUserLength
             : 7;
     }
 

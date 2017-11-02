@@ -78,8 +78,8 @@ export class SprintListComponent implements OnInit
                             ? (sprints[sprintIndex]['decrementedDuration'] / sprints[sprintIndex]['workedDuration']) * 100
                             : 0;
                         // TODO: La valeur ici est basée sur le nombre de tâche et non sur le nombre d'heure (à changer)
-                        sprints[sprintIndex]['tasksAddedPercent']   = (sprints[sprintIndex]['tasksNumber'] !== 0)
-                            ? (sprints[sprintIndex]['tasksAddedNumber'] / sprints[sprintIndex]['tasksNumber']) * 100
+                        sprints[sprintIndex]['tasksAddedPercent']   = (sprints[sprintIndex]['workedDuration'] !== 0)
+                            ? (sprints[sprintIndex]['addedWorkedDuration'] / sprints[sprintIndex]['workedDuration']) * 100
                             : 0;
                     }
                 }

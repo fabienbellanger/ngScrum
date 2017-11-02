@@ -28,11 +28,10 @@
     "initial.duration": "Durée initiale",
     "added.duration": "Durée non prévue",
     "total.duration": "Durée totale",
-    "total.duration.per.user": "Durée totale par personne",
+    "estimated.duration.per.user": "Durée estimée par personne",
     "remaining.duration": "Durée restante",
     "remaining.duration.per.user": "Durée restante par personne",
     "total.worked.duration": "Durée totale travaillée",
-    "total.tasks.duration": "Durée totale des tâches réalisées",
 	"created.at": "Créé le",
 	"started.at": "Démarré le",
 	"finished.at": "Terminé le",
@@ -161,5 +160,6 @@
 	"no.task": "Pas de tâche",
 	"added.tasks": "Tâches non prévues",
     "save.success": "Enregistrement réussi",
-    "save.error": "Erreur lors de l'enregistrement"
+    "save.error": "Erreur lors de l'enregistrement",
+    "estimated.duration": "Durée estimée"
 }

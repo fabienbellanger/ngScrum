@@ -263,9 +263,10 @@
                     // --------------
                     if (!isset($tasks[$sprintId]))
                     {
-                        $tasks[$sprintId]['workedDuration']   = 0;
-                        $tasks[$sprintId]['tasksNumber']      = 0;
-                        $tasks[$sprintId]['tasksAddedNumber'] = 0;
+                        $tasks[$sprintId]['workedDuration']      = 0;
+                        $tasks[$sprintId]['addedWorkedDuration'] = 0;
+                        $tasks[$sprintId]['tasksNumber']         = 0;
+                        $tasks[$sprintId]['tasksAddedNumber']    = 0;
                     }
 
                     $tasks[$sprintId]['workedDuration'] += floatval($line->workedDuration);
@@ -273,6 +274,7 @@
                     if ($line->taskAddedAfter)
                     {
                         $tasks[$sprintId]['tasksAddedNumber']++;
+                        $tasks[$sprintId]['addedWorkedDuration'] += floatval($line->workedDuration);
                     }
                 }
             }

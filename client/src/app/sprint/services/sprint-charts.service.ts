@@ -49,7 +49,7 @@ export class SprintChartsService
             ],
             data:    [
                 this.sprintService.remainingDuration,
-                this.sprintService.totalDuration,
+                this.sprintService.estimatedDuration,
             ],
             options: {
                 responsive: true, 

@@ -1,5 +1,18 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/theming';
 
+// Thème personnalisé
+// ------------------
+@include mat-core();
+$scrum-app-primary: mat-palette($mat-indigo);
+$scrum-app-accent:  mat-palette($mat-orange, A200, A100, A400);
+$scrum-app-theme:   mat-light-theme($scrum-app-primary, $scrum-app-accent);
+$scrum-app-warn:    mat-palette($mat-red);
+$scrum-app-theme:   mat-light-theme($scrum-app-primary, $scrum-app-accent, $scrum-app-warn);
+@include angular-material-theme($scrum-app-theme);
+
+// Variables - Couleurs
+// --------------------
 $mat-red-50: #ffebee;
 $mat-red-100: #ffcdd2;
 $mat-red-200: #ef9a9a;

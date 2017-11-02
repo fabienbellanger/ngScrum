@@ -80,7 +80,7 @@
                     <div class="row SprintsList-Sprint-info">
                         <div class="SprintsList-Sprint-label">{{ 'estimated.end.date' | translate }}</div>
                         <div class="SprintsList-Sprint-value">
-                            <span *ngIf="sprint.estimatedFinishedAt !== null" class="bolder accent-color">
+                            <span *ngIf="sprint.estimatedFinishedAt !== null" class="bold accent-color">
                                 {{ sprint.estimatedFinishedAt | date:"dd/MM/yyyy" }}
                             </span>
                             <span *ngIf="sprint.estimatedFinishedAt === null">-</span>
@@ -93,7 +93,7 @@
                     <div class="row SprintsList-Sprint-info">
                         <div class="SprintsList-Sprint-label">{{ 'remaining.duration' | translate }}</div>
                         <div class="SprintsList-Sprint-value">
-                            <span class="bolder accent-color">
+                            <span class="bold accent-color">
                                 {{ sprint.remainingDuration | duration:'hour' }}
                             </span>
                         </div>
@@ -115,7 +115,7 @@
                     <div class="row SprintsList-Sprint-info">
                         <div class="SprintsList-Sprint-label">{{ 'performance' | translate }}</div>
                         <div class="SprintsList-Sprint-value">
-                            <span class="bolder accent-color">{{ sprint.performance | percentFr:0 }}</span>
+                            <span class="bold accent-color">{{ sprint.performance | percentFr:0 }}</span>
                         </div>
                     </div>
                     <div class="row SprintsList-Sprint-info">

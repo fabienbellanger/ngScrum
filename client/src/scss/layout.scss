@@ -37,7 +37,7 @@
             }
 
             a:hover {
-                color: $accentColor;// $primayLightColor;
+                color: $accentColor;
             }
 
             .app-name {
@@ -76,7 +76,7 @@
                 font-weight: $fontWeightNormal;
 
                 a {
-                    color: $accentColor;// $primayLightColor;
+                    color: $accentColor;
                 }
             }
         }
@@ -95,23 +95,24 @@
     // -------
     #sidebar {
         @include unselectable();
-        position:         absolute;
+        position:         fixed;
         top:              0px;
         left:             0px;
         z-index:          100;
         width:            220px;
         height:           100%;
         padding-top:      50px;
-        background-color: #2a2a2a;
+        background-color: $sidebarBackgroundColor;
         transition:       0.3s;
-        overflow:         hidden;
+        overflow-x:       hidden;
+        overflow-y:       auto;
 
         .sidebar-header {
             padding:     10px;
             text-align:  center;
             font-size:   18px;
             font-weight: 500;
-            color:       $accentColor;// $primayLightColor;
+            color:       $accentColor;
         }
 
         ul {
@@ -130,12 +131,12 @@
                 }
 
                 a:hover, a:active, a:focus {
-                    color:           $accentColor;// $primayLightColor;
+                    color:           $accentColor;
                     text-decoration: none;
                 }
 
                 a.active {
-                    color: $accentColor;// $primayLightColor;
+                    color: $accentColor;
                 }
             }
         }

@@ -26,32 +26,18 @@
                     </div>
                     <div class="row">
                         <div class="col-md-5 col-sm-6 col-xs-7 text-right">
-                            {{ 'added.duration' | translate }}
+                            {{ 'estimated.duration' | translate }}
                         </div>
                         <div class="col-md-7 col-sm-6 col-xs-5 bold">
-                            {{ sprintService.addedDuration | duration:'hour' }}
-                            <span class="normal" *ngIf="sprintService.totalDuration !== 0">
-                                ({{ sprintService.addedDuration / sprintService.totalDuration * 100 | percentFr }})
-                            </span>
-                            <span class="normal" *ngIf="sprintService.totalDuration === 0">
-                                ({{ 0 | percentFr }})
-                            </span>
+                            {{ sprintService.estimatedDuration | duration:'hour' }}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-5 col-sm-6 col-xs-7 text-right">
-                            {{ 'total.duration' | translate }}
+                            {{ 'estimated.duration.per.user' | translate }}
                         </div>
                         <div class="col-md-7 col-sm-6 col-xs-5 bold">
-                            {{ sprintService.totalDuration | duration:'hour' }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-5 col-sm-6 col-xs-7 text-right">
-                            {{ 'total.duration.per.user' | translate }}
-                        </div>
-                        <div class="col-md-7 col-sm-6 col-xs-5 bold">
-                            {{ sprintService.totalDuration / sprintService.averageWorkedHoursPerDay | duration:'hour' }} / pers.
+                            {{ sprintService.estimatedDuration / sprintService.averageWorkedHoursPerDay | duration:'hour' }} / pers.
                         </div>
                     </div>
                     <div class="row">
@@ -72,7 +58,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-5 col-sm-6 col-xs-7 text-right">
-                            {{ 'total.tasks.duration' | translate }}
+                            {{ 'decrement.duration' | translate }}
                         </div>
                         <div class="col-md-7 col-sm-6 col-xs-5 bold">
                             {{ sprintService.totalTaskUserDuration | duration:'hour' }}
@@ -80,10 +66,24 @@
                     </div>
                     <div class="row">
                         <div class="col-md-5 col-sm-6 col-xs-7 text-right">
-                            {{ 'total.worked.duration' | translate }}
+                            {{ 'worked.duration' | translate }}
                         </div>
                         <div class="col-md-7 col-sm-6 col-xs-5 bold">
-                            {{ sprintService.totalTaskUserWorkedDuration | duration:'hour' }}
+                            {{ sprintService.totalWorkedDuration | duration:'hour' }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 col-sm-6 col-xs-7 text-right">
+                            {{ 'added.duration' | translate }}
+                        </div>
+                        <div class="col-md-7 col-sm-6 col-xs-5 bold">
+                            {{ sprintService.addedDuration | duration:'hour' }}
+                            <span class="normal" *ngIf="sprintService.estimatedDuration !== 0">
+                                ({{ sprintService.addedDuration / sprintService.totalWorkedDuration * 100 | percentFr:0 }})
+                            </span>
+                            <span class="normal" *ngIf="sprintService.estimatedDuration === 0">
+                                ({{ 0 | percentFr:0 }})
+                            </span>
                         </div>
                     </div>
                 </div>
