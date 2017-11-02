@@ -55,4 +55,7 @@ RUN curl -fsSL 'https://xdebug.org/files/xdebug-2.4.0.tgz' -o xdebug.tar.gz \
     && rm -r xdebug \
     && docker-php-ext-enable xdebug
 
+# On décommente les alias
+RUN sed -i 's/# alias/alias/g' /root/.bashrc
+
 WORKDIR /var/www/laravel
