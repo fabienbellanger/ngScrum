@@ -58,4 +58,8 @@ RUN curl -fsSL 'https://xdebug.org/files/xdebug-2.4.0.tgz' -o xdebug.tar.gz \
 # On décommente les alias
 RUN sed -i 's/# alias/alias/g' /root/.bashrc
 
+# NodeJs & npm
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN apt-get install -y nodejs
+
 WORKDIR /var/www/laravel
