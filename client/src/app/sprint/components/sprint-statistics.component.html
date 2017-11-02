@@ -61,7 +61,7 @@
                             {{ 'decrement.duration' | translate }}
                         </div>
                         <div class="col-md-7 col-sm-6 col-xs-5 bold">
-                            {{ sprintService.totalTaskUserDuration | duration:'hour' }}
+                            {{ sprintService.decrementedDuration | duration:'hour' }}
                         </div>
                     </div>
                     <div class="row">
@@ -69,7 +69,7 @@
                             {{ 'worked.duration' | translate }}
                         </div>
                         <div class="col-md-7 col-sm-6 col-xs-5 bold">
-                            {{ sprintService.totalWorkedDuration | duration:'hour' }}
+                            {{ sprintService.workedDuration | duration:'hour' }}
                         </div>
                     </div>
                     <div class="row">
@@ -79,11 +79,19 @@
                         <div class="col-md-7 col-sm-6 col-xs-5 bold">
                             {{ sprintService.addedDuration | duration:'hour' }}
                             <span class="normal" *ngIf="sprintService.estimatedDuration !== 0">
-                                ({{ sprintService.addedDuration / sprintService.totalWorkedDuration * 100 | percentFr:0 }})
+                                ({{ sprintService.addedDuration / sprintService.workedDuration * 100 | percentFr:0 }})
                             </span>
                             <span class="normal" *ngIf="sprintService.estimatedDuration === 0">
                                 ({{ 0 | percentFr:0 }})
                             </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 col-sm-6 col-xs-7 text-right">
+                            {{ 'difference.estimated.worked.duration' | translate }}
+                        </div>
+                        <div class="col-md-7 col-sm-6 col-xs-5 bold">
+                            {{ sprintService.diffEstimatedWorkedDuration | duration:'hour' }}
                         </div>
                     </div>
                 </div>

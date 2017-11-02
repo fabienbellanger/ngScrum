@@ -161,5 +161,6 @@
 	"added.tasks": "Tâches non prévues",
     "save.success": "Enregistrement réussi",
     "save.error": "Erreur lors de l'enregistrement",
-    "estimated.duration": "Durée estimée"
+    "estimated.duration": "Durée estimée",
+    "difference.estimated.worked.duration": "Différence estimée / travaillée"
 }
