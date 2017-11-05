@@ -51,5 +51,9 @@
             // Statistiques
             // ------------
             include_once('api/statistics.php');
+
+            // Equipes
+            // -------
+            include_once('api/team.php');
         });
     });

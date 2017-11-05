@@ -9,6 +9,7 @@ import { ApiUserService } from './services/api-user.service';
 import { ApiSprintService } from './services/api-sprint.service';
 import { ApiTaskService } from './services/api-task.service';
 import { ApiStatisticsService } from './services/api-statistics.service';
+import { ApiTeamService } from './services/api-team.service';
 
 @NgModule({
     imports:      [
@@ -26,6 +27,7 @@ import { ApiStatisticsService } from './services/api-statistics.service';
         ApiSprintService,
         ApiTaskService,
         ApiStatisticsService,
+        ApiTeamService,
     ],
     exports:      [
     ],

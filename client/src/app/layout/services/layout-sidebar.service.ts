@@ -27,6 +27,7 @@ export class LayoutSidebarService
             'sprints.list',
             'new.sprint.sidebar',
             'statistics.cii.cir',
+            'team.management',
         ]).subscribe((transltationObject: Object) =>
         {
             this.items = [
@@ -47,6 +48,12 @@ export class LayoutSidebarService
                     'route':      ['/statistics/cii-cir'],
                     'routeExact': true,
                     'picto':      'show_chart',
+                },
+                {
+                    'label':      transltationObject['team.management'],
+                    'route':      ['/teams'],
+                    'routeExact': true,
+                    'picto':      'group',
                 },
             ];
         });

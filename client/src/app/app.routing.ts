@@ -23,6 +23,10 @@ import {
     StatisticsComponent,
     StatisticsCirComponent,
 } from './statistics';
+import { 
+    TeamComponent,
+    TeamListComponent,
+} from './team';
 import { LayoutComponent } from './layout';
 
 const appRoutes: Routes = [
@@ -113,6 +117,16 @@ const appRoutes: Routes = [
                     {
                         path:      'cii-cir',
                         component: StatisticsCirComponent,
+                    },
+                ],
+            },
+            {
+                path:        'teams',
+                component:   TeamComponent,
+                children:    [
+                    {
+                        path:      '',
+                        component: TeamListComponent,
                     },
                 ],
             },
