@@ -591,3 +591,18 @@ a.list-group-item {
         }
     }
 }
+
+// -------------------
+// Gestion des équipes
+// -------------------
+.TeamsList {
+    &-Teams .mat-expansion-panel-header-title, 
+    &-Teams .mat-expansion-panel-header-description {
+      flex-basis: 0;
+    }
+    
+    &-Teams .mat-expansion-panel-header-description {
+      justify-content: flex-end;
+      align-items:     center;
+    }
+}

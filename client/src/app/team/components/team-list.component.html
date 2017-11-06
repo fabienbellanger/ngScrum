@@ -1,5 +1,5 @@
 <sa-loading *ngIf="loading"></sa-loading>
-<div *ngIf="!loading" class="margin-bottom-20px">
+<div *ngIf="!loading" class="TeamsList margin-bottom-20px">
     <h1>{{ 'teams.management' | translate }}</h1>
     
     <div class="row margin-bottom-20px">
@@ -11,7 +11,7 @@
         </div>
 	</div>
 
-    <mat-accordion *ngIf="teams.length > 0">
+    <mat-accordion *ngIf="teams.length > 0" class="TeamsList-Teams">
         <mat-expansion-panel [expanded]="step === index" (opened)="setStep(index)" hideToggle="true"
                              *ngFor="let team of teams; let index = index">
             <mat-expansion-panel-header>
@@ -29,6 +29,11 @@
                     </span>
                 </mat-list-item>
             </mat-list>
+
+            <mat-action-row>
+                <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                <button mat-button color="primary" (click)="nextStep()">Next</button>
+            </mat-action-row>
         </mat-expansion-panel>
     </mat-accordion>
 
