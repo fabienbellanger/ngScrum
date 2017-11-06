@@ -14,7 +14,10 @@ import { ToolboxService } from '../../shared';
 export class TeamListComponent implements OnInit
 {
     public loading: boolean = true;
-
+    public teams: any[]     = [];
+    public users: any[]     = [];
+    public usersIdName: any = {};
+    public step: number     = -1;
     /**
      * Constructeur
      *
@@ -38,5 +41,51 @@ export class TeamListComponent implements OnInit
     {
         // Requète pour récupérer les données
         // ----------------------------------
+        this.loading = true;
+        
+        this.apiTeamService.getTeams()
+            .then((result: any) =>
+            {
+                this.teams = result['teams'];
+                this.users = result['users'];
+
+                this.constructUsersIdName();
+
+                this.loading = false;
+            })
+            .catch(() =>
+            {
+                console.error('Error teams data');
+
+                this.loading = false;
+            });
+    }
+
+    /**
+     * Construction du tableau de correspondance ID <=> Nom
+     * 
+     * @author Fabien Béllanger
+     */
+    private constructUsersIdName(): void
+    {
+        for (const user of this.users)
+        {
+            this.usersIdName[user.id] = user.lastname + ' ' + user.firstname;
+        }
+    }
+
+    public setStep(index: number): void
+    {
+        this.step = index;
+    }
+    
+    public nextStep(): void
+    {
+        this.step++;
+    }
+    
+    public prevStep(): void
+    {
+        this.step--;
     }
 }

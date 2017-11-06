@@ -1,1 +1,40 @@
-<h1>Teams list</h1>
+<sa-loading *ngIf="loading"></sa-loading>
+<div *ngIf="!loading" class="margin-bottom-20px">
+    <h1>{{ 'teams.management' | translate }}</h1>
+    
+    <div class="row margin-bottom-20px">
+        <div class="col-xs-12">
+            <button mat-raised-button type="button">
+                <mat-icon>add</mat-icon>
+                <span class="hidden-xs">{{ 'add.team' | translate }}</span>
+            </button>
+        </div>
+	</div>
+
+    <mat-accordion *ngIf="teams.length > 0">
+        <mat-expansion-panel [expanded]="step === index" (opened)="setStep(index)" hideToggle="true"
+                             *ngFor="let team of teams; let index = index">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="accent-color bold">{{ team.name }}</mat-panel-title>
+                <mat-panel-description class="italic">
+                    {{ team.members.length }} members
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            
+            <mat-list *ngIf="team.members.length > 0">
+                <mat-list-item *ngFor="let userId of team.members">
+                    <span *ngIf="usersIdName[userId] !== undefined">
+                        <img matListAvatar src="https://www.gravatar.com/avatar/3fdfe9c7c04fe3f1b916575df4134225?s=50" alt="avatar">
+                        {{ usersIdName[userId] }}
+                    </span>
+                </mat-list-item>
+            </mat-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-card class="margin-bottom-20px" *ngIf="teams.length === 0">
+		<mat-card-content class="overflow-auto">
+			{{ 'no.team' | translate }}
+		</mat-card-content>
+	</mat-card>
+</div>

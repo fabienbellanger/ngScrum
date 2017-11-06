@@ -16,6 +16,8 @@ import {
     MatIconModule,
     MatMenuModule,
     MatSnackBarModule,
+    MatExpansionModule,
+    MatListModule,
 } from '@angular/material';
 
 import { CustomSnackBarComponent } from './components/custom-snack-bar.component';
@@ -37,6 +39,8 @@ import { CustomSnackBarComponent } from './components/custom-snack-bar.component
         MatIconModule,
         MatMenuModule,
         MatSnackBarModule,
+        MatExpansionModule,
+        MatListModule,
     ],
     declarations: [
         CustomSnackBarComponent,
@@ -58,6 +62,8 @@ import { CustomSnackBarComponent } from './components/custom-snack-bar.component
         MatIconModule,
         MatMenuModule,
         MatSnackBarModule,
+        MatExpansionModule,
+        MatListModule,
         CustomSnackBarComponent,
     ],
 })

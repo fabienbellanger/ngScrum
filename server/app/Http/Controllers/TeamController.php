@@ -5,6 +5,7 @@
     use App\Helpers\ResponseHelper as Response;
     use Illuminate\Http\Request;
     use App\Repositories\TeamRepository;
+    use App\Repositories\UserRepository;
 
     class TeamController extends Controller
     {
@@ -17,16 +18,10 @@
          */
         public function getTeams(Request $request): \Illuminate\Http\JsonResponse
         {
-            $teams = TeamRepository::getAllTeams();
-            dd($teams);
-            if ($response['code'] == 404)
-            {
-                return Response::notFound($response['message']);
-            }
-            else
-            {
-                return Response::json($response['data'], 200);
-            }
+            $response['teams'] = TeamRepository::getAllTeams();
+            $response['users'] = UserRepository::getAllUsers();
+            
+            return Response::json($response, 200);
         }
     }
     

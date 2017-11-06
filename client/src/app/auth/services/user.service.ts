@@ -14,25 +14,25 @@ export class UserService
      * Constructeur
      *
      * @author Fabien Bellanger
-	 * @param {StorageService} storageService
+     * @param {StorageService} storageService
      */
     constructor(private storageService: StorageService)
     {
         this.user = this.storageService.get('session', 'user', null);
     }
 
-	/**
-	 * Initialisation
-	 * 
-	 * @author Fabien Bellanger
-	 * @param {User} user Utilisateur
-	 */
+    /**
+     * Initialisation
+     * 
+     * @author Fabien Bellanger
+     * @param {User} user Utilisateur
+     */
     public init(user: User): void
     {
         this.user = user;
 
-		// Enregistrement en session
-		// -------------------------
+        // Enregistrement en session
+        // -------------------------
         this.storageService.set('session', 'user', user);
     }
 

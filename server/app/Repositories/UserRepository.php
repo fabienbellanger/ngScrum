@@ -312,4 +312,30 @@
 
             return $user->timezone;
         }
+        
+        /**
+         * Liste de tous les utilisateurs
+         * 
+         * @author Fabien Bellanger
+         * @return array
+         */
+        public static function getAllUsers(): array
+        {
+            $users = [];
+
+            $query   = 'SELECT id, lastname, firstname, email FROM users';
+            $results = DB::select($query);
+            if ($results)
+            {
+                foreach ($results as $index => $line)
+                {
+                    $users[$index]['id']        = $line->id;
+                    $users[$index]['lastname']  = $line->lastname;
+                    $users[$index]['firstname'] = $line->firstname;
+                    $users[$index]['email']     = $line->email;
+                }
+            }
+
+            return $users;
+        }
     }

@@ -163,5 +163,7 @@
     "save.error": "Erreur lors de l'enregistrement",
     "estimated.duration": "Durée estimée",
 	"difference.estimated.worked.duration": "Différence estimée / travaillée",
-	"team.management": "Gestion des équipes"
+	"teams.management": "Gestion des équipes",
+	"add.team": "Ajouter une équipe",
+	"no.team": "Pas d'équipe"
 }

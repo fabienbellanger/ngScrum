@@ -27,7 +27,7 @@ export class LayoutSidebarService
             'sprints.list',
             'new.sprint.sidebar',
             'statistics.cii.cir',
-            'team.management',
+            'teams.management',
         ]).subscribe((transltationObject: Object) =>
         {
             this.items = [
@@ -50,7 +50,7 @@ export class LayoutSidebarService
                     'picto':      'show_chart',
                 },
                 {
-                    'label':      transltationObject['team.management'],
+                    'label':      transltationObject['teams.management'],
                     'route':      ['/teams'],
                     'routeExact': true,
                     'picto':      'group',
