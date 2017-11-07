@@ -99,6 +99,11 @@ export class AuthService
                     // Enregistrement de la liste des applications
                     // -------------------------------------------
                     this.storageService.set('session', 'applications', data.user.applications);
+                    this.userService.init(user);
+
+                    // Enregistrement de la liste des types de tâches
+                    // ----------------------------------------------
+                    this.storageService.set('session', 'taskTypes', data.user.taskTypes);
 
                     resolve();
                 })

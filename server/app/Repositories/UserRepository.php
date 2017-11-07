@@ -10,6 +10,7 @@
     use Illuminate\Support\Facades\Hash;
     use Illuminate\Support\Facades\Log;
     use App\Mail\ForgottenPassword;
+    use App\Repositories\TaskRepository;
 
     class UserRepository
     {
@@ -42,6 +43,10 @@
             // Récupération des applications
             // -----------------------------
             $data['applications'] = DB::select('SELECT * FROM application ORDER BY name ASC');
+            
+            // Récupération des types de tâche
+            // -------------------------------
+            $data['taskTypes'] = TaskRepository::getTaskTypes();
 
             return $data;
         }
