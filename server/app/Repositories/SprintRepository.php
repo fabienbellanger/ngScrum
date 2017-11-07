@@ -1100,8 +1100,8 @@
                 ];
             }
 
-            // 2. Recherche la taskUser
-            // ------------------------
+            // 2. Recherche de la taskUser
+            // ---------------------------
             $query      = '
                 SELECT id
                 FROM task_user 

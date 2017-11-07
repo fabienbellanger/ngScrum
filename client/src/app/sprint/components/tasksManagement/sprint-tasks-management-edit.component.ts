@@ -265,9 +265,10 @@ export class SprintTasksManagementEditComponent implements OnInit
             'date':              this.sprintTasksManagementService.date,
         };
 
-        data.duration = (this.isEdit)
+        /* data.duration = (this.isEdit)
             ? +task.remainingDuration - +this.taskFormGroup.get('remainingDuration').value
-            : +task.initialDuration - +this.taskFormGroup.get('remainingDuration').value;
+            : +task.initialDuration - +this.taskFormGroup.get('remainingDuration').value;*/
+        data.duration = +task.remainingDuration - +this.taskFormGroup.get('remainingDuration').value;
 
         this.apiTaskService.editTaskUser(this.sprintId, taskId, data, this.isEdit)
             .then(() =>
