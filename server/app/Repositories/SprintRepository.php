@@ -6,7 +6,6 @@
     use TZ;
     use Exception;
     use App\Repositories\UserRepository;
-    use App\Repositories\TaskRepository;
 
     class SprintRepository
     {
@@ -483,10 +482,6 @@
             }
             $sprint['users'] = $users;
 
-            // 4. Récupération des types de tâche
-            // ----------------------------------
-            $sprint['taskTypes'] = TaskRepository::getTaskTypes();
-
             // 5. Objet => tableau
             // -------------------
             $tasks = array_values($tasks);
@@ -787,10 +782,6 @@
             {
                 $taskData['applications'][] = $application->id;
             }
-
-            // 5. Récupération des types de tâche
-            // ----------------------------------
-            $taskData['types'] = TaskRepository::getTaskTypes();
 
             return [
                 'code'    => 200,

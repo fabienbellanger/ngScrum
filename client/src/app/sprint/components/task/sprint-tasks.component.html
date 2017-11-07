@@ -45,7 +45,7 @@
                                 <td align="left" valign="middle" class="hidden-xs">{{ task.description }}</td>
                                 <td align="left" valign="middle" class="hidden-xs">
                                     <span *ngIf="task.type > 0">
-                                        {{ 'task.type.' + sprintService.sprint.taskTypes[task.type] | translate }}
+                                        {{ 'task.type.' + taskTypes[task.type] | translate }}
                                     </span>
                                 </td>
                                 <td class="text-center" valign="middle">

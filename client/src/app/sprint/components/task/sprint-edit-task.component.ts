@@ -113,24 +113,17 @@ export class SprintEditTaskComponent implements OnInit
             ]),
         });
 
+        // Types de tâche
+        // --------------
+        this.types = this.toolboxService.objectToArray(this.storageService.get('session', 'taskTypes', {}));
+
         if (this.id === 0)
         {
             this.description     = '';
             this.notPlanned      = false;
             this.applicationsIds = {};
 
-            if (this.sprintService.sprint !== null)
-            {
-                this.types = (this.sprintService.sprint.taskTypes !== undefined)
-                    ? this.toolboxService.objectToArray(this.sprintService.sprint.taskTypes)
-                    : [];
-    
-                this.loading = false;
-            }
-            else
-            {
-                this.loading = false;
-            }
+            this.loading = false;
         }
         else
         {
@@ -154,10 +147,6 @@ export class SprintEditTaskComponent implements OnInit
                             this.applicationsIds[applicationIndex] = this.applications[applicationIndex].id;
                         }
                     }
-
-                    // Construction du tableau des types de tâche
-                    // ------------------------------------------
-                    this.types = this.toolboxService.objectToArray(response.types);
 
                     this.loading = false;
                 })

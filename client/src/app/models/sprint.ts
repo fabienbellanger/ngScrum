@@ -19,7 +19,6 @@ export class Sprint
      * @param {string}   finishedAt
      * @param {Task[]}   tasks
      * @param {User[]}   users
-     * @param {any}      taskTypes
      */
     constructor(public id: number,
                 public name: string,
@@ -27,8 +26,7 @@ export class Sprint
                 public updatedAt: string,
                 public finishedAt: string,
                 public tasks: Task[],
-                public users: User[],
-                public taskTypes: any)
+                public users: User[])
     {
     }
 }

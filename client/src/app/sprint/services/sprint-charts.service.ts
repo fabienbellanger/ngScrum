@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { SprintService } from './sprint.service';
-import { ToolboxService } from '../../shared';
+import { ToolboxService, StorageService } from '../../shared';
 
 @Injectable()
 
@@ -15,10 +15,12 @@ export class SprintChartsService
      * @param {SprintService}       sprintService
      * @param {TranslateService}    translateService
      * @param {ToolboxService}      toolboxService
+     * @param {StorageService}      storageService
      */
     constructor(private sprintService: SprintService,
                 private translateService: TranslateService,
-                private toolboxService: ToolboxService)
+                private toolboxService: ToolboxService,
+                private storageService: StorageService)
     {
     }
 
@@ -76,7 +78,7 @@ export class SprintChartsService
         // ------
         const typeslabel: any = {};
         const typesData:  any = {};
-        const types:      any = this.sprintService.sprint.taskTypes;
+        const types:      any = this.toolboxService.objectToArray(this.storageService.get('session', 'taskTypes', {}));
         const tasks: any[]    = this.sprintService.sprint.tasks;
 
         this.translateService.get([

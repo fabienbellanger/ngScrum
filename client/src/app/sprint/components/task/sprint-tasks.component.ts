@@ -9,6 +9,7 @@ import { SprintTaskDeleteDialogComponent } from '../dialogs/sprint-task-delete-d
 import { ApiSprintService } from '../../../api';
 import { SprintService } from '../../services/sprint.service';
 import { SprintChartsService } from '../../services/sprint-charts.service';
+import { StorageService, ToolboxService } from '../../../shared';
 
 @Component({
     selector:    'sa-sprint-tasks-info',
@@ -18,6 +19,7 @@ import { SprintChartsService } from '../../services/sprint-charts.service';
 export class SprintTasksComponent implements OnInit
 {
     public sprintId: number;
+    public taskTypes: any[];
 
     /**
      * Constructeur
@@ -31,6 +33,8 @@ export class SprintTasksComponent implements OnInit
      * @param {MatDialog}           dialog
      * @param {Router}              router
      * @param {TranslateService}    translateService
+     * @param {StorageService}      storageService
+     * @param {ToolboxService}      toolboxService
      */
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
@@ -39,7 +43,9 @@ export class SprintTasksComponent implements OnInit
                 private snackBar: MatSnackBar,
                 private dialog: MatDialog,
                 private router: Router,
-                private translateService: TranslateService)
+                private translateService: TranslateService,
+                private storageService: StorageService,
+                private toolboxService: ToolboxService)
     {
     }
 
@@ -69,6 +75,10 @@ export class SprintTasksComponent implements OnInit
         // Remise à zéro du sprint
         // -----------------------
         this.sprintService.sprint = null;
+
+        // Liste des types de tâche
+        // ------------------------
+        this.taskTypes = this.toolboxService.objectToArray(this.storageService.get('session', 'taskTypes', {}));
 
         // Initialisation du sprint
         // ------------------------
