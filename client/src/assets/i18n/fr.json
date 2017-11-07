@@ -166,5 +166,7 @@
 	"teams.management": "Gestion des équipes",
 	"add.team": "Ajouter une équipe",
 	"no.team": "Pas d'équipe",
-	"required.type": "Type obligatoire"
+	"required.type": "Type obligatoire",
+	"member": "{{ number }} membre",
+	"members": "{{ number }} membres"
 }

@@ -5,8 +5,7 @@ import { Component } from '@angular/core';
     template: `
         <div class="loading">
             <div>
-                <mat-progress-spinner mode="indeterminate" [diameter]="50" [strokeWidth]="4">
-                </mat-progress-spinner>
+                <mat-progress-spinner mode="indeterminate" [diameter]="50" [strokeWidth]="4"></mat-progress-spinner>
             </div>
             <h2 class="primary-color">{{ 'loading' | translate }}...</h2>
         </div>

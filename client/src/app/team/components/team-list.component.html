@@ -15,16 +15,21 @@
         <mat-expansion-panel [expanded]="step === index" (opened)="setStep(index)" hideToggle="true"
                              *ngFor="let team of teams; let index = index">
             <mat-expansion-panel-header>
-                <mat-panel-title class="accent-color bold">{{ team.name }}</mat-panel-title>
+                <mat-panel-title class="primary-color bold">{{ team.name }}</mat-panel-title>
                 <mat-panel-description class="italic">
-                    {{ team.members.length }} members
+                    <span *ngIf="team.members.length < 2">
+                        {{ 'member' | translate:{'number': team.members.length} }}
+                    </span>
+                    <span *ngIf="team.members.length > 1">
+                        {{ 'members' | translate:{'number': team.members.length} }}
+                    </span>
                 </mat-panel-description>
             </mat-expansion-panel-header>
             
             <mat-list *ngIf="team.members.length > 0">
                 <mat-list-item *ngFor="let userId of team.members">
                     <span *ngIf="usersIdName[userId] !== undefined">
-                        <img matListAvatar src="https://www.gravatar.com/avatar/3fdfe9c7c04fe3f1b916575df4134225?s=50" alt="avatar">
+                        <img matListAvatar [src]="userService.getGravatarUrl2(usersIdEmail[userId], 40)" alt="">
                         {{ usersIdName[userId] }}
                     </span>
                 </mat-list-item>
