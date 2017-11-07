@@ -13,16 +13,10 @@ import { LayoutSidebarService } from '../services/layout-sidebar.service';
  */
 export class LayoutSidebarToggleDirective implements OnChanges
 {
-    /*
-     |---------------------------------------------------------------------------
-     | Variables
-     |---------------------------------------------------------------------------
-     */
     private width: number           = 220;
     private responsiveWidth: number = 900;
 
     @Input('saToggleSidebar') state: string;
-
 
     /**
      * Constructeur

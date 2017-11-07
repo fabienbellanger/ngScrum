@@ -72,6 +72,10 @@
                                     [routerLink]="['/sprints', sprintId, 'tasks-management', 'edit', user.id, task.id]">
                                 <mat-icon class="mat-icon-20px">mode_edit</mat-icon>
                             </button>
+                            <button mat-button type="button" class="mat-button-small-width"
+                                    (click)="removeTask(user.id, task.id)">
+                                <mat-icon class="mat-icon-20px">delete</mat-icon>
+                            </button>
                         </td>
                     </tr>
                 </tbody>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { LayoutSidebarService } from '../services/layout-sidebar.service';
 
@@ -15,23 +15,15 @@ import { LayoutSidebarService } from '../services/layout-sidebar.service';
 		<sa-layout-footer></sa-layout-footer>`,
 })
 
-export class LayoutComponent implements OnInit
+export class LayoutComponent
 {
     /**
      * Constructeur
      *
      * @author Fabien Bellanger
+     * @param {LayoutSidebarService} layoutSidebarService
      */
     constructor(private layoutSidebarService: LayoutSidebarService)
-    {
-    }
-
-    /**
-     * Initialisation du composant
-     *
-     * @author Fabien Bellanger
-     */
-    public ngOnInit(): void
     {
     }
 

@@ -87,12 +87,14 @@ export class SprintTasksManagementComponent implements OnInit
     }
 
     /**
-     * Edition d'une tâche
+     * Suppression d'une tâche
      *
      * @author Fabien Bellanger
+     * @param {number}  userId ID de l'utilisateur
+     * @param {number}  taskId ID de la tâche
      */
-    public editTask(userId: number, taskId: number): void
+    public removeTask(userId: number, taskId: number): void
     {
-        alert(userId + ' - ' + taskId);
+        alert('TODO: Suppression - ' + userId + ' - ' + taskId + ' - ' + this.date);
     }
 }

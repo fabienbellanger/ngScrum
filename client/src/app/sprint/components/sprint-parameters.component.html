@@ -72,8 +72,7 @@
                                             {{ user.name }}
                                         </div>
                                         <div class="SprintParameters-Users-Add-delete">
-                                            <button mat-icon-button
-                                                    color="warn" type="button"
+                                            <button mat-icon-button type="button"
                                                     (click)="deleteUser(index)"
                                                     [disabled]="userService.user.id === user.id">
                                                 <mat-icon>delete</mat-icon>

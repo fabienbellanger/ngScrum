@@ -1,27 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
+import { LayoutSidebarService } from '../../layout/services/layout-sidebar.service';
 
 @Component({
     selector: 'sa-layout',
-    template: `<router-outlet></router-outlet>`,
+    template: `<router-outlet (activate)="changeRoute()"></router-outlet>`,
 })
 
-export class SprintComponent implements OnInit
+export class SprintComponent
 {
     /**
      * Constructeur
      *
      * @author Fabien Bellanger
+     * @param {LayoutSidebarService} layoutSidebarService
      */
-    constructor()
+    constructor(private layoutSidebarService: LayoutSidebarService)
     {
     }
-
+    
     /**
-     * Initialisation du composant
+     * Changement de route
      *
      * @author Fabien Bellanger
      */
-    public ngOnInit(): void
+    public changeRoute(): void
     {
+        // On referme la sidebar en mode mobile       
+        this.layoutSidebarService.mobileClose();
     }
 }
