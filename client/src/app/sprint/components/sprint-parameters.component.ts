@@ -183,7 +183,7 @@ export class SprintParametersComponent implements OnInit
     {
         const users: any[] = this.sprint.users;
 
-        for (let user of users)
+        for (const user of users)
         {
             if (user.inTeam)
             {

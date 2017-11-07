@@ -832,7 +832,7 @@
             $teamId = $results[0]->teamId;
             $users  = [];
             $query  = '
-                SELECT DISTINCT
+                SELECT
                     users.id,
                     users.firstname,
                     users.lastname,
@@ -851,6 +851,11 @@
                         $users[$user->id]['id']     = $user->id;
                         $users[$user->id]['email']  = $user->email;
                         $users[$user->id]['name']   = $user->firstname . ' ' . $user->lastname;
+                        $users[$user->id]['inTeam'] = ($teamId == $user->team_id);
+                    }
+                    elseif (!$users[$user->id]['inTeam'])
+                    {
+                        // Si l'utilisateur n'est pas dans l'équipe, on fait le test
                         $users[$user->id]['inTeam'] = ($teamId == $user->team_id);
                     }
                 }
