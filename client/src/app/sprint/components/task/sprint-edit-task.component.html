@@ -70,7 +70,7 @@
                 <div class="row">
                     <p class="col-xs-12 col-sm-6 col-md-4">
                         <mat-checkbox color="primary" name="notPlanned"
-                                     [(ngModel)]="notPlanned" [ngModelOptions]="{standalone: true}">
+                                      [(ngModel)]="notPlanned" [ngModelOptions]="{standalone: true}">
                             {{ 'not.planned' | translate }}
                         </mat-checkbox>
                     </p>
@@ -117,7 +117,7 @@
 
             <mat-card-actions>
                 <div>
-                    <button mat-raised-button type="button"
+                    <button mat-button type="button"
                             [routerLink]="['/sprints', sprintId, 'tasks']"
                             [routerLinkActiveOptions]="{exact: false}"
                             routerLinkActive="true">

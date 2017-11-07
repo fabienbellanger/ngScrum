@@ -118,9 +118,19 @@ export class SprintEditTaskComponent implements OnInit
             this.description     = '';
             this.notPlanned      = false;
             this.applicationsIds = {};
-            this.types           = [];
 
-            this.loading = false;
+            if (this.sprintService.sprint !== null)
+            {
+                this.types = (this.sprintService.sprint.taskTypes !== undefined)
+                    ? this.toolboxService.objectToArray(this.sprintService.sprint.taskTypes)
+                    : [];
+    
+                this.loading = false;
+            }
+            else
+            {
+                this.loading = false;
+            }
         }
         else
         {
@@ -181,7 +191,7 @@ export class SprintEditTaskComponent implements OnInit
         // Conversion Object => Array
         // --------------------------
         const applicationsIdsSelected: number[] = Object.keys(this.applicationsIds)
-                                                      .map((k: any) => this.applicationsIds[k]);
+                                                        .map((k: any) => this.applicationsIds[k]);
 
         // Requête
         // -------

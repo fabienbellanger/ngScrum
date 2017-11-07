@@ -165,5 +165,6 @@
 	"difference.estimated.worked.duration": "Différence estimée / travaillée",
 	"teams.management": "Gestion des équipes",
 	"add.team": "Ajouter une équipe",
-	"no.team": "Pas d'équipe"
+	"no.team": "Pas d'équipe",
+	"required.type": "Type obligatoire"
 }
