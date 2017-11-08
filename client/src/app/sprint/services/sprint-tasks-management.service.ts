@@ -50,8 +50,7 @@ export class SprintTasksManagementService
                 })
                 .catch((error: any) =>
                 {
-                    console.error('Error sprint information');
-                    console.error(error);
+                    console.error('Error sprint information', error);
 
                     reject(error);
                 });

@@ -77,7 +77,6 @@ export class SprintListComponent implements OnInit
                         sprints[sprintIndex]['performance']         = (sprints[sprintIndex]['workedDuration'] !== 0)
                             ? (sprints[sprintIndex]['decrementedDuration'] / sprints[sprintIndex]['workedDuration']) * 100
                             : 0;
-                        // TODO: La valeur ici est basée sur le nombre de tâche et non sur le nombre d'heure (à changer)
                         sprints[sprintIndex]['tasksAddedPercent']   = (sprints[sprintIndex]['workedDuration'] !== 0)
                             ? (sprints[sprintIndex]['addedWorkedDuration'] / sprints[sprintIndex]['workedDuration']) * 100
                             : 0;
@@ -153,6 +152,8 @@ export class SprintListComponent implements OnInit
                         })
                         .catch(() =>
                         {
+                            // Notification
+                            // ------------
                             this.snackBar.open(
                                 translationObject['delete.sprint.error'],
                                 translationObject['error'],

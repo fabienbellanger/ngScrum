@@ -78,7 +78,7 @@ export class SprintChartsService
         // ------
         const typeslabel: any = {};
         const typesData:  any = {};
-        const types:      any = this.toolboxService.objectToArray(this.storageService.get('session', 'taskTypes', {}));
+        const types:      any = this.storageService.get('session', 'taskTypes', {});
         const tasks: any[]    = this.sprintService.sprint.tasks;
 
         this.translateService.get([

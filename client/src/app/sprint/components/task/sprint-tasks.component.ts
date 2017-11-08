@@ -9,7 +9,7 @@ import { SprintTaskDeleteDialogComponent } from '../dialogs/sprint-task-delete-d
 import { ApiSprintService } from '../../../api';
 import { SprintService } from '../../services/sprint.service';
 import { SprintChartsService } from '../../services/sprint-charts.service';
-import { StorageService, ToolboxService } from '../../../shared';
+import { StorageService } from '../../../shared';
 
 @Component({
     selector:    'sa-sprint-tasks-info',
@@ -34,7 +34,6 @@ export class SprintTasksComponent implements OnInit
      * @param {Router}              router
      * @param {TranslateService}    translateService
      * @param {StorageService}      storageService
-     * @param {ToolboxService}      toolboxService
      */
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
@@ -44,8 +43,7 @@ export class SprintTasksComponent implements OnInit
                 private dialog: MatDialog,
                 private router: Router,
                 private translateService: TranslateService,
-                private storageService: StorageService,
-                private toolboxService: ToolboxService)
+                private storageService: StorageService)
     {
     }
 
@@ -78,7 +76,7 @@ export class SprintTasksComponent implements OnInit
 
         // Liste des types de tâche
         // ------------------------
-        this.taskTypes = this.toolboxService.objectToArray(this.storageService.get('session', 'taskTypes', {}));
+        this.taskTypes = this.storageService.get('session', 'taskTypes', {});
 
         // Initialisation du sprint
         // ------------------------

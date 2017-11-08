@@ -3,19 +3,16 @@
     <h1>{{ 'sprints.list' | translate }}</h1>
 
     <div class="btn-group" role="group">
-        <button mat-raised-button (click)="getSprints('inProgress')"
-                [color]="(state === 'inProgress') ? 'primary' : ''">
+        <button mat-raised-button (click)="getSprints('inProgress')" [color]="(state === 'inProgress') ? 'primary' : ''">
             {{ 'sprint.in.progress.list' | translate }}
         </button>
         &nbsp;&nbsp;
-        <button mat-raised-button (click)="getSprints('finished')"
-                [color]="(state === 'finished') ? 'primary' : ''">
+        <button mat-raised-button (click)="getSprints('finished')" [color]="(state === 'finished') ? 'primary' : ''">
             {{ 'sprint.finished.list' | translate }}
         </button>
         &nbsp;&nbsp;
         <button mat-raised-button type="button" color="accent"
-                [routerLink]="['/sprints/new']"
-                routerLinkActive="true"
+                [routerLink]="['/sprints/new']" routerLinkActive="true"
                 [routerLinkActiveOptions]="{exact: false}">
             {{ 'new.sprint' | translate }}
         </button>
@@ -29,29 +26,25 @@
                 <mat-card-title color="primary" class="SprintsList-Sprint-Header-title">
                     <h4 class="primary-color">{{ sprint.name }}</h4>
                     <div class="SprintsList-Sprint-Menu">
-                        <button mat-icon-button [matMenuTriggerFor]="menu"
-                                class="grey-700-color"
+                        <button mat-icon-button [matMenuTriggerFor]="menu" class="grey-700-color"
                                 (click)="$event.stopPropagation()">
                             <mat-icon>more_vert</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item
-                                    [routerLink]="['/sprints', sprint.id, 'tasks']"
-                                    routerLinkActive="true"
+                                    [routerLink]="['/sprints', sprint.id, 'tasks']" routerLinkActive="true"
                                     [routerLinkActiveOptions]="{exact: false}">
                                 <mat-icon>list</mat-icon>
                                 <span>{{ 'tasks.list' | translate }}</span>
                             </button>
                             <button mat-menu-item
-                                    [routerLink]="['/sprints', sprint.id, 'statistics']"
-                                    routerLinkActive="true"
+                                    [routerLink]="['/sprints', sprint.id, 'statistics']" routerLinkActive="true"
                                     [routerLinkActiveOptions]="{exact: false}">
                                 <mat-icon>show_chart</mat-icon>
                                 <span>{{ 'statistics' | translate }}</span>
                             </button>
                             <button mat-menu-item
-                                    [routerLink]="['/sprints', sprint.id, 'parameters']"
-                                    routerLinkActive="true"
+                                    [routerLink]="['/sprints', sprint.id, 'parameters']" routerLinkActive="true"
                                     [routerLinkActiveOptions]="{exact: false}">
                                 <mat-icon>settings</mat-icon>
                                 <span>{{ 'parameters' | translate }}</span>
@@ -128,8 +121,7 @@
                     <div class="row margin-bottom-20px margin-top-10px">
                         <div class="col-xs-12 text-center small">
                             <div>{{ sprint.progressPercent | percentFr }}</div>
-                            <mat-progress-bar color="primary" mode="determinate" [value]="sprint.progressPercent">
-                            </mat-progress-bar>
+                            <mat-progress-bar color="primary" mode="determinate" [value]="sprint.progressPercent"></mat-progress-bar>
                         </div>
                     </div>
                 </div>

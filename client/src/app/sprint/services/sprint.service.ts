@@ -270,7 +270,7 @@ export class SprintService
      * Retourne les informations totales sur les utilisateurs
      *
      * @author Fabien Bellanger
-     * @return {any[]}
+     * @return {any}
      */
     private getUsersTotalInformation(): any
     {
