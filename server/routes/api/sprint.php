@@ -96,5 +96,13 @@
                              'sprintId' => '[0-9]+',
                              'taskId'   => '[0-9]+',
                          ]);
+
+            Route::delete('/{taskId}/task-user/{date}', 'SprintController@deleteTaskUser')
+                 ->where([
+                             'id'       => '[0-9]+',
+                             'sprintId' => '[0-9]+',
+                             'taskId'   => '[0-9]+',
+                             'date'     => '([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))',
+                         ]);
         });
     });

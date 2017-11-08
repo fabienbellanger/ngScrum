@@ -6,6 +6,7 @@
     use TZ;
     use Exception;
     use App\Repositories\UserRepository;
+    use App\Repositories\TaskRepository;
 
     class SprintRepository
     {
@@ -17,7 +18,7 @@
          * @param string $filter Filtre {'all', 'finished', 'inProgress'}
          * @return array
          */
-        public static function getSprints($id, $filter = 'all'): ?array
+        public static function getSprints(int $id, string $filter = 'all'): array
         {
             // Liste des sprints
             // -----------------
@@ -72,9 +73,9 @@
          * @author Fabien Bellanger
          * @param int $sprintId ID du sprint
          * @param int $taskId   ID de la tâche (default 0)
-         * @return stdClass
+         * @return \stdClass
          */
-        public static function getTask($sprintId, $taskId)
+        public static function getTask(int $sprintId, int $taskId): \stdClass
         {
             $taskId = intval($taskId);
             $query  = '
@@ -101,7 +102,7 @@
          * @param int $sprintId ID du sprint
          * @return bool
          */
-        public static function isSprintValid($userId, $sprintId): ?bool
+        public static function isSprintValid(int $userId, int $sprintId): bool
         {
             $query   = '
                 SELECT sprint.id
@@ -124,7 +125,7 @@
          * @param int $sprintId ID du sprint
          * @return int
          */
-        public static function getTeamId($sprintId): ?int
+        public static function getTeamId(int $sprintId): int
         {
             $query   = '
                 SELECT sprint.team_id
@@ -147,7 +148,7 @@
          * @param string $filter Filtre {'all', 'finished', 'inProgress'}
          * @return array
          */
-        public static function getSprintsOfUser($userId, $filter): ?array
+        public static function getSprintsOfUser(int $userId, string $filter): array
         {
             // Requête
             // -------
@@ -219,7 +220,7 @@
          * @param string $filter Filtre {'all', 'finished', 'inProgress'}
          * @return array
          */
-        public static function getSprintsWorkedDurationOfUser($userId, $filter): ?array
+        public static function getSprintsWorkedDurationOfUser(int $userId, string $filter): array
         {
             // Requête
             // -------
@@ -289,7 +290,7 @@
          * @param string $filter Filtre {'all', 'finished', 'inProgress'}
          * @return array
          */
-        public static function getSprintsInformation($userId, $filter): ?array
+        public static function getSprintsInformation(int $userId, string $filter): array
         {
             // Requête
             // -------
@@ -368,7 +369,7 @@
          * @param int $sprintId ID du sprint
          * @return array
          */
-        public static function getSprintInfo($userId, $sprintId): ?array
+        public static function getSprintInfo(int $userId, int $sprintId): array
         {
             $sprint = [];
 
@@ -509,7 +510,7 @@
          * @param int   $taskId   ID de la tâche (default 0)
          * @return array
          */
-        public static function editTask($userId, $sprintId, $data, $taskId = 0): ?array
+        public static function editTask(int $userId, int $sprintId, array $data, int $taskId = 0): array
         {
             // 1. Vérification des données
             // ---------------------------
@@ -588,7 +589,7 @@
          * @param int   $sprintId ID du sprint
          * @param array $data     POST data (Référence)
          */
-        static private function addTask($userId, $sprintId, &$data)
+        static private function addTask(int $userId, int $sprintId, array &$data): void
         {
             // Ajout dans la table task
             // ------------------------
@@ -634,9 +635,8 @@
          * @param int   $sprintId ID du sprint
          * @param int   $taskId   ID de la tâche
          * @param array $data     POST data (Référence)
-         * @return array
          */
-        static private function modifyTask($userId, $sprintId, $taskId, &$data)
+        static private function modifyTask(int $userId, int $sprintId, int $taskId, array &$data): void
         {
             // Récupération de la tâche
             // ------------------------
@@ -690,7 +690,7 @@
          * @param int $taskOd   ID de la tâche
          * @return array
          */
-        static public function deleteTask($userId, $sprintId, $taskId): ?array
+        static public function deleteTask(int $userId, int $sprintId, int $taskId): array
         {
             // 1. Sprint valide ?
             // ------------------
@@ -726,7 +726,7 @@
          * @param int $taskOd   ID de la tâche
          * @return array
          */
-        static public function getTaskInfo($userId, $sprintId, $taskId): ?array
+        static public function getTaskInfo(int $userId, int $sprintId, int $taskId): array
         {
             // 1. Tâche valide ?
             // -----------------
@@ -798,7 +798,7 @@
          * @param int $sprintId ID du sprint
          * @return array
          */
-        static public function getSprintParameters($id, $sprintId): ?array
+        static public function getSprintParameters(int $id, int $sprintId): array
         {
             $sprint = [];
 
@@ -878,7 +878,7 @@
          * @param array $data     POST data (Référence)
          * @return array
          */
-        static public function modifySprintParameters($userId, $sprintId, &$data)
+        static public function modifySprintParameters(int $userId, int $sprintId, array &$data): array
         {
             $sprintId = intval($sprintId);
 
@@ -953,7 +953,7 @@
          * @param string $date     Date
          * @return array
          */
-        public static function getSprintManagement($userId, $sprintId, $date): ?array
+        public static function getSprintManagement(int $userId, int $sprintId, string $date): array
         {
             $sprint = [];
 
@@ -1081,7 +1081,39 @@
                 'message' => 'Success',
                 'data'    => $sprint,
             ];
-        }
+        } 
+        
+        /**
+         * Récupération d'une taskUser
+         * 
+         * @author Fabien Bellanger
+         * @param int    $userId   ID de l'utilisateur
+         * @param int    $taskId   ID de la tâche
+         * @param string $date     Date
+         * @return null|array
+         */
+        static private function getTaskUser(int $taskId, int $userId, string $date): ?array
+        {
+            $query      = '
+                SELECT id, date, duration, worked_duration
+                FROM task_user 
+                WHERE task_id = :taskId AND user_id = :userId AND date LIKE :date';
+            $results    = DB::select($query, [
+                'taskId' => $taskId,
+                'userId' => $userId,
+                'date'   => $date,
+            ]);
+            $taskUser = null;
+            if ($results && count($results) === 1)
+            {
+                $taskUser['id']             = $results[0]->id;
+                $taskUser['date']           = $results[0]->date;
+                $taskUser['duration']       = $results[0]->duration;
+                $taskUser['workedDuration'] = $results[0]->worked_duration;
+            }
+
+            return $taskUser;
+        } 
 
         /**
          * Création / Modification d'une taskUser
@@ -1093,7 +1125,7 @@
          * @param array $data     Données
          * @return array
          */
-        static public function editTaskUser($userId, $sprintId, $taskId, $data)
+        static public function editTaskUser(int $userId, int $sprintId, int $taskId, array $data): array
         {
             // 1. Sprint valide ?
             // ------------------
@@ -1107,21 +1139,10 @@
 
             // 2. Recherche de la taskUser
             // ---------------------------
-            $query      = '
-                SELECT id
-                FROM task_user 
-                WHERE task_id = :taskId AND user_id = :userId AND date LIKE :date';
-            $results    = DB::select($query, [
-                'taskId' => $taskId,
-                'userId' => $data['userId'],
-                'date'   => $data['date'],
-            ]);
-            $taskUserId = 0;
-            if ($results && count($results) === 1)
-            {
-                $taskUserId = $results[0]->id;
-            }
+            $taskUser   = self::getTaskUser($taskId, $data['userId'], $data['date']);
+            $taskUserId = ($taskUser) ? $taskUser['id'] : 0;
 
+            // Timezone
             $timezone  = UserRepository::getTimezone();
             $createdAt = TZ::getUTCDatetime2($timezone, date('Y-m-d H:i:s'), 'Y-m-d H:i:s');
             
@@ -1181,7 +1202,7 @@
          * @param array $data     Données
          * @return array
          */
-        static public function newSprint($userId, $data)
+        static public function newSprint(int $userId, array $data): array
         {
             // 1. Verification de la validité de l'équipe
             // ------------------------------------------
@@ -1216,7 +1237,7 @@
          * @param int   $sprintId ID du sprint
          * @return array
          */
-        static public function deleteSprint($userId, $sprintId)
+        static public function deleteSprint($userId, $sprintId): array
         {
             // 1. Sprint valide ?
             // ------------------
@@ -1237,6 +1258,60 @@
             return [
                 'code'    => 200,
                 'message' => 'Sprint successful deleted',
+            ];
+        }
+
+        /**
+         * Suppression d'un taskUser
+         *
+         * @author Fabien Bellanger
+         * @param int    $userId   ID de l'utilisateur
+         * @param int    $sprintId ID du sprint
+         * @param int    $taskId   ID de la tâche
+         * @param string $date     Date
+         * @return array
+         */
+        public static function deleteTaskUser(int $userId, int $sprintId, int $taskId, string $date): array
+        {
+            // 1. Sprint valide ?
+            // ------------------
+            if (!self::isSprintValid($userId, $sprintId))
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'No sprint found',
+                ];
+            }
+
+            // 2. Recherche de la taskUser
+            // ---------------------------
+            $taskUser   = self::getTaskUser($taskId, $userId, $date);
+            $taskUserId = ($taskUser) ? $taskUser['id'] : 0;
+            if (!$taskUserId)
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'No taskUser found',
+                ];
+            }
+
+            // 3. On rajoute de temps à la tâche
+            // ---------------------------------
+            $taskRemainingDuration = TaskRepository::getTaskRemainingDuration($taskId);
+            $taskData              = ['remaining_duration' => $taskRemainingDuration + $taskUser['duration']];
+            DB::table('task')
+              ->where('id', $taskId)
+              ->update($taskData);
+
+            // 4. Suppression de la taskUser
+            // -----------------------------
+            DB::table('task_user')
+                ->where('id', $taskUserId)
+                ->delete();
+
+            return [
+                'code'    => 200,
+                'message' => 'TaskUser successful deleted',
             ];
         }
     }

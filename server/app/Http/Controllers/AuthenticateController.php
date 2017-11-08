@@ -20,7 +20,7 @@
          * @param Request $request
          * @return \Illuminate\Http\JsonResponse
          */
-        public function login(Request $request)
+        public function login(Request $request): \Illuminate\Http\JsonResponse
         {
             $credentials = $request->only('email', 'password');
 
@@ -60,7 +60,7 @@
          * @author Fabien Bellanger
          * @return \Illuminate\Http\JsonResponse
          */
-        public function logout()
+        public function logout(): \Illuminate\Http\JsonResponse
         {
             JWTAuth::parseToken()->invalidate();
 
@@ -73,7 +73,7 @@
          * @author Fabien Bellanger
          * @return \Illuminate\Http\JsonResponse
          */
-        public function forgottenPassword()
+        public function forgottenPassword(): \Illuminate\Http\JsonResponse
         {
             $data = Input::all();
             if (!array_key_exists('email', $data))
@@ -104,7 +104,7 @@
          * @author Fabien Bellanger
          * @return \Illuminate\Http\JsonResponse
          */
-        public function newPassword()
+        public function newPassword(): \Illuminate\Http\JsonResponse
         {
             $data = Input::all();
             if (!array_key_exists('password', $data) || !array_key_exists('token', $data))

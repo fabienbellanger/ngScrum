@@ -3,7 +3,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { ApiSprintService } from '../../../api';
+import { ApiTaskService } from '../../../api';
 import { SprintTasksManagementService } from '../../services/sprint-tasks-management.service';
 import { DateService } from '../../../shared';
 
@@ -22,14 +22,14 @@ export class SprintTasksManagementComponent implements OnInit
      * Constructeur
      *
      * @author Fabien Bellanger
-     * @param {ApiSprintService}                apiSprintService
+     * @param {ApiTaskService}                  apiTaskService
      * @param {ActivatedRoute}                  route
      * @param {Router}                          router
      * @param {TranslateService}                translateService
      * @param {SprintTasksManagementService}    sprintTasksManagementService
      * @param {DateService}                     dateService
      */
-    constructor(private apiSprintService: ApiSprintService,
+    constructor(private apiTaskService: ApiTaskService,
                 private route: ActivatedRoute,
                 private router: Router,
                 private translateService: TranslateService,
@@ -95,6 +95,14 @@ export class SprintTasksManagementComponent implements OnInit
      */
     public removeTask(userId: number, taskId: number): void
     {
-        alert('TODO: Suppression - ' + userId + ' - ' + taskId + ' - ' + this.date);
+        this.apiTaskService.deleteTaskUser(this.sprintId, userId, taskId, this.dateService.toSqlDate(this.date))
+            .then(() =>
+            {
+                alert('OK');
+            })
+            .catch(() =>
+            {
+                alert('KO');
+            });
     }
 }

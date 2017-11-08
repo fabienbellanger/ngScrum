@@ -19,7 +19,7 @@
          * @param int                      $id ID de l'utilisateur
          * @return \Illuminate\Http\JsonResponse
          */
-        public function getAllSprints(Request $request, $id)
+        public function getAllSprints(Request $request, int $id): \Illuminate\Http\JsonResponse
         {
             $response = SprintRepository::getSprints($id, 'all');
 
@@ -42,7 +42,7 @@
          * @param string                   $state Type de recherche {all, inProgress, finished}
          * @return \Illuminate\Http\JsonResponse
          */
-        public function getSprints(Request $request, $id, $state)
+        public function getSprints(Request $request, int $id, string $state): \Illuminate\Http\JsonResponse
         {
             $response = SprintRepository::getSprints($id, $state);
 
@@ -65,7 +65,7 @@
          * @param int                      $sprintId ID du sprint
          * @return \Illuminate\Http\JsonResponse
          */
-        public function getSprintInfo(Request $request, $id, $sprintId)
+        public function getSprintInfo(Request $request, int $id, int $sprintId): \Illuminate\Http\JsonResponse
         {
             $response = SprintRepository::getSprintInfo($id, $sprintId);
 
@@ -89,7 +89,7 @@
          * @param strint                   $date     Date
          * @return \Illuminate\Http\JsonResponse
          */
-        public function getSprintManagement(Request $request, $id, $sprintId, $date = null)
+        public function getSprintManagement(Request $request, int $id, int $sprintId, string $date = null): \Illuminate\Http\JsonResponse
         {
             $timezone = UserRepository::getTimezone();
             $date     = ($date)
@@ -117,7 +117,7 @@
          * @param int                      $sprintId ID du sprint
          * @return \Illuminate\Http\JsonResponse
          */
-        public function addTask(Request $request, $id, $sprintId)
+        public function addTask(Request $request, int $id, int $sprintId): \Illuminate\Http\JsonResponse
         {
             $data = Input::all();
             if (!array_key_exists('data', $data))
@@ -156,7 +156,7 @@
          * @param int                      $taskId   ID d'une tâche
          * @return \Illuminate\Http\JsonResponse
          */
-        public function modifyTask(Request $request, $id, $sprintId, $taskId)
+        public function modifyTask(Request $request, int $id, int $sprintId, int $taskId): \Illuminate\Http\JsonResponse
         {
             $data = Input::all();
             if (!array_key_exists('data', $data))
@@ -195,7 +195,7 @@
          * @param int                      $taskId   ID d'une tâche
          * @return \Illuminate\Http\JsonResponse
          */
-        public function deleteTask(Request $request, $id, $sprintId, $taskId)
+        public function deleteTask(Request $request, int $id, int $sprintId, int $taskId): \Illuminate\Http\JsonResponse
         {
             $response = SprintRepository::deleteTask($id, $sprintId, $taskId);
 
@@ -219,7 +219,7 @@
          * @param int                      $taskId   ID d'une tâche
          * @return \Illuminate\Http\JsonResponse
          */
-        public function getTask(Request $request, $id, $sprintId, $taskId)
+        public function getTask(Request $request, int $id, int $sprintId, int $taskId): \Illuminate\Http\JsonResponse
         {
             $response = SprintRepository::getTaskInfo($id, $sprintId, $taskId);
 
@@ -246,7 +246,7 @@
          * @param int                      $sprintId ID du sprint
          * @return \Illuminate\Http\JsonResponse
          */
-        public function getSprintParameters(Request $request, $id, $sprintId)
+        public function getSprintParameters(Request $request, int $id, int $sprintId): \Illuminate\Http\JsonResponse
         {
             $response = SprintRepository::getSprintParameters($id, $sprintId);
             if ($response['code'] == 404)
@@ -272,7 +272,7 @@
          * @param int                      $sprintId ID du sprint
          * @return \Illuminate\Http\JsonResponse
          */
-        public function modifySprintParameters(Request $request, $id, $sprintId)
+        public function modifySprintParameters(Request $request, int $id, int $sprintId): \Illuminate\Http\JsonResponse
         {
             $data = Input::all();
             if (!array_key_exists('data', $data))
@@ -307,7 +307,7 @@
          * @param int                      $taskId   ID d'une tâche
          * @return \Illuminate\Http\JsonResponse
          */
-        public function editTaskUser(Request $request, $id, $sprintId, $taskId)
+        public function editTaskUser(Request $request, int $id, int $sprintId, int $taskId): \Illuminate\Http\JsonResponse
         {
             $data = Input::all();
             if (!array_key_exists('data', $data))
@@ -354,7 +354,7 @@
          * @param int                      $id       ID de l'utilisateur
          * @return \Illuminate\Http\JsonResponse
          */
-        public function newSprint(Request $request, $id)
+        public function newSprint(Request $request, int $id): \Illuminate\Http\JsonResponse
         {
             $data = Input::all();
             if (!array_key_exists('data', $data))
@@ -400,10 +400,40 @@
          * @param int                      $sprintId ID du sprint
          * @return \Illuminate\Http\JsonResponse
          */
-        public function deleteSprint(Request $request, $id, $sprintId)
+        public function deleteSprint(Request $request, int $id, int $sprintId): \Illuminate\Http\JsonResponse
         {
             $response = SprintRepository::deleteSprint($id, $sprintId);
       
+            if ($response['code'] == 404)
+            {
+                return Response::notFound($response['message']);
+            }
+            else
+            {
+                return Response::json(null, 200);
+            }
+        }
+        
+        /**
+         * Suppression d'une taskUser
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @param int                      $id       ID de l'utilisateur
+         * @param int                      $sprintId ID du sprint
+         * @param int                      $taskId   ID d'une tâche
+         * @param string                   $date     Date au format YYYY-MM-DD
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function deleteTaskUser(Request $request, int $id, int $sprintId, int $taskId, string $date): \Illuminate\Http\JsonResponse
+        {
+            if (!$id || !$sprintId || !$taskId || !$date)
+            {
+                return Response::internalError('Missing or bad data');
+            }
+
+            $response = SprintRepository::deleteTaskUser($id, $sprintId, $taskId, $date);
+
             if ($response['code'] == 404)
             {
                 return Response::notFound($response['message']);

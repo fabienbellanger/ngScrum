@@ -16,7 +16,7 @@
          * @param int $id ID de l'utilisateur
          * @return \Illuminate\Http\JsonResponse
          */
-        public function getTeams(Request $request, $id)
+        public function getTeams(Request $request, int $id): \Illuminate\Http\JsonResponse
         {
             $response = UserRepository::getTeams($id);
 
