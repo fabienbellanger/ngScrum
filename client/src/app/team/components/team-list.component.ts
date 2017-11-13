@@ -55,6 +55,18 @@ export class TeamListComponent implements OnInit
         // ----------------------------------
         this.loading = true;
         
+        // Initialisation
+        // --------------
+        this.init();
+    }
+
+    /**
+     * Initialisation
+     * 
+     * @author Fabien Bellanger
+     */
+    private init(): void
+    {
         this.apiTeamService.getTeams()
             .then((result: any) =>
             {
@@ -144,7 +156,29 @@ export class TeamListComponent implements OnInit
             {
                 if (result === true)
                 {
-                    console.log(result + ' - Team ID: ' + teamId);
+                    this.apiTeamService.deleteTeam(teamId)
+                        .then(() =>
+                        {
+                            this.snackBar.open(
+                                translationObject['delete.team.success'],
+                                translationObject['success'],
+                                {
+                                    duration: 4000,
+                                });
+
+                            // On recharge les informations des équipes
+                            // ----------------------------------------
+                            this.init();
+                        })
+                        .catch(() =>
+                        {
+                            this.snackBar.open(
+                                translationObject['delete.team.error'],
+                                translationObject['error'],
+                                {
+                                    duration: 4000,
+                                });
+                        });
                 }
             });
         });

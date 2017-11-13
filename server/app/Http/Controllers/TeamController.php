@@ -23,5 +23,27 @@
             
             return Response::json($response, 200);
         }
+
+        /**
+         * Suppression d'une équipe
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @param int                      $teamId
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function deleteTeam(Request $request, int $teamId): \Illuminate\Http\JsonResponse
+        {
+            $response = TeamRepository::deleteTeam($teamId);
+            
+            if ($response['code'] == 404)
+            {
+                return Response::notFound($response['message']);
+            }
+            else
+            {
+                return Response::json($response['message'], 200);
+            }
+        }
     }
     
