@@ -38,9 +38,8 @@
             </mat-list>
 
             <mat-action-row>
-                <button mat-button color="primary"
-                        [routerLink]="['/teams/edit', team.id]" routerLinkActive="true"
-                        [routerLinkActiveOptions]="{exact: false}">
+                <button mat-button [routerLink]="['/teams/edit', team.id]"
+                        routerLinkActive="true" [routerLinkActiveOptions]="{exact: false}">
                     <mat-icon>edit</mat-icon>
                     <span>{{ 'edit' | translate }}</span>
                 </button>

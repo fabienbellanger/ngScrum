@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  apiScrum_mariadb:3306
--- Généré le :  Ven 10 Novembre 2017 à 17:18
+-- Généré le :  Lun 13 Novembre 2017 à 17:28
 -- Version du serveur :  10.1.22-MariaDB-1~jessie
 -- Version de PHP :  7.0.15
 
@@ -57,7 +57,9 @@ INSERT INTO `application` (`id`, `name`) VALUES
 (19, 'ApiShop'),
 (20, 'Mythic Burger'),
 (21, 'Jour'),
-(22, 'Eat SUSHI');
+(22, 'Eat SUSHI'),
+(23, 'ApiRouting'),
+(24, 'Planet Sushi');
 
 -- --------------------------------------------------------
 
@@ -167,8 +169,8 @@ CREATE TABLE `sprint` (
 --
 
 INSERT INTO `sprint` (`id`, `name`, `team_id`, `created_at`, `updated_at`, `started_at`, `finished_at`) VALUES
-(1, 'Sprint test', 1, '2017-05-22 00:00:00', '2017-05-22 00:00:00', '2017-05-24', NULL),
-(17, 'Jour Order v3', 2, '2017-11-07 06:45:21', '2017-11-07 06:45:21', '2017-11-06', NULL);
+(17, 'Jour Order v3', 2, '2017-11-07 06:45:21', '2017-11-07 06:45:21', '2017-11-06', NULL),
+(18, 'Routing LNE', 3, '2017-11-13 06:59:37', '2017-11-13 06:59:37', '2017-11-13', NULL);
 
 -- --------------------------------------------------------
 
@@ -196,16 +198,23 @@ CREATE TABLE `task` (
 --
 
 INSERT INTO `task` (`id`, `sprint_id`, `user_id`, `name`, `description`, `type`, `initial_duration`, `remaining_duration`, `added_after`, `created_at`, `updated_at`, `finished_at`) VALUES
-(3, 1, 1, 'Task 3', 'Description de ma troisième tâche en plus du sprint initial', 1, 4.00, 0.00, 1, '2017-05-26 00:00:00', '2017-05-26 10:00:00', '2017-10-10 04:37:18'),
-(8, 1, 1, 'Correction notes', 'Correction des erreurs de notes', 2, 12.50, 9.00, 0, '2017-06-24 20:52:38', '2017-06-24 20:52:38', NULL),
-(11, 1, 1, 'Archivage', NULL, 4, 35.00, 25.00, 0, '2017-06-26 21:40:13', '2017-07-04 20:36:46', NULL),
 (13, 17, 1, 'Ajout du numéro de ticket au WS sendCommand', NULL, 3, 0.50, 0.00, 0, '2017-11-07 08:11:30', '2017-11-08 16:27:36', '2017-11-09 07:39:56'),
 (14, 17, 1, 'WS historique des commandes', 'Historique de notes au plus \"tard\" 12 semaines en arrière et une plage d\'1 semaine max par demande', 2, 7.00, 3.00, 0, '2017-11-07 15:00:04', '2017-11-07 15:00:04', NULL),
-(15, 17, 1, 'Ticket spécial pour les salades et les jus', NULL, 2, 7.00, 2.00, 0, '2017-11-07 15:00:35', '2017-11-07 15:00:35', NULL),
+(15, 17, 1, 'Ticket spécial pour les salades et les jus', NULL, 2, 7.00, 1.00, 0, '2017-11-07 15:00:35', '2017-11-07 15:00:35', NULL),
 (16, 17, 1, 'Type menu (Mélanger ou pas)', '3 types : Mélanger avec sauce, Mélanger sans sauce et Ne pas mélanger\nUtilisation des sous-produits', 3, 15.00, 1.00, 0, '2017-11-07 15:01:44', '2017-11-07 15:01:44', NULL),
 (17, 17, 1, 'Ecran de production avec plusieurs états par page', NULL, 3, 20.00, 1.00, 0, '2017-11-07 15:02:08', '2017-11-07 15:02:08', NULL),
-(18, 17, 1, 'Gestion des impressions sur l\'écran de production', NULL, 2, 16.00, 3.00, 0, '2017-11-07 15:02:37', '2017-11-07 15:02:37', NULL),
-(19, 17, 1, 'Gestion des impressions - Structure de données', 'Structure de données et gestion du changement d\'état', 3, 7.00, 7.00, 0, '2017-11-08 09:30:36', '2017-11-08 09:30:36', NULL);
+(18, 17, 1, 'Gestion des impressions sur l\'écran de production', NULL, 2, 16.00, 0.00, 0, '2017-11-07 15:02:37', '2017-11-07 15:02:37', '2017-11-13 09:40:18'),
+(19, 17, 1, 'Gestion des impressions - Structure de données', 'Structure de données et gestion du changement d\'état', 3, 7.00, 1.00, 0, '2017-11-08 09:30:36', '2017-11-08 09:30:36', NULL),
+(20, 18, 1, 'Script initialisation de la base de données', NULL, 2, 4.00, 1.00, 0, '2017-11-13 07:01:05', '2017-11-13 07:01:05', NULL),
+(21, 18, 1, 'Changement WSDL site ApiShop', NULL, 3, 4.00, 4.00, 0, '2017-11-13 07:03:26', '2017-11-13 07:03:26', NULL),
+(22, 18, 1, 'Changement WSDL Jour', NULL, 3, 4.00, 4.00, 0, '2017-11-13 07:04:00', '2017-11-13 07:04:00', NULL),
+(23, 18, 1, 'Changement WSDL Planet Sushi', NULL, 3, 4.00, 4.00, 0, '2017-11-13 07:45:48', '2017-11-13 07:45:48', NULL),
+(24, 18, 1, 'Changement WSDL BAP', NULL, 3, 4.00, 4.00, 0, '2017-11-13 07:46:31', '2017-11-13 07:46:31', NULL),
+(25, 18, 1, 'Changement WSDL Mythic Burger', NULL, 3, 4.00, 4.00, 0, '2017-11-13 07:46:48', '2017-11-13 07:46:48', NULL),
+(26, 18, 1, 'Changement WSDL Eat Sushi', NULL, 3, 4.00, 4.00, 0, '2017-11-13 07:47:03', '2017-11-13 07:47:03', NULL),
+(27, 18, 1, 'Changement WSDL application ApiShop', NULL, 3, 2.00, 2.00, 0, '2017-11-13 07:47:30', '2017-11-13 07:47:30', NULL),
+(28, 18, 1, 'WS getURL v2', NULL, 3, 4.00, 4.00, 0, '2017-11-13 07:47:54', '2017-11-13 07:47:54', NULL),
+(29, 18, 1, 'WS caisse sans clé d\'authentification (7 WS)', 'A décomposer', 3, 28.00, 28.00, 0, '2017-11-13 07:48:43', '2017-11-13 07:48:43', NULL);
 
 -- --------------------------------------------------------
 
@@ -223,18 +232,23 @@ CREATE TABLE `task_application` (
 --
 
 INSERT INTO `task_application` (`task_id`, `application_id`) VALUES
-(8, 1),
-(8, 3),
-(11, 1),
-(11, 2),
-(11, 7),
 (13, 1),
 (14, 1),
 (15, 1),
 (16, 1),
 (17, 1),
 (18, 1),
-(19, 1);
+(19, 1),
+(20, 1),
+(21, 19),
+(22, 21),
+(23, 24),
+(24, 18),
+(25, 20),
+(26, 22),
+(27, 19),
+(28, 23),
+(29, 1);
 
 -- --------------------------------------------------------
 
@@ -258,15 +272,6 @@ CREATE TABLE `task_user` (
 --
 
 INSERT INTO `task_user` (`id`, `task_id`, `user_id`, `date`, `duration`, `worked_duration`, `created_at`, `updated_at`) VALUES
-(3, 3, 1, '2016-05-31', 1.0, 4.0, '2017-05-31 00:00:00', '2017-05-26 10:00:00'),
-(4, 3, 1, '2017-06-06', 4.5, 6.0, '2017-06-06 00:00:00', '2017-05-26 00:00:00'),
-(5, 3, 1, '2017-08-30', 0.5, 5.0, '2017-08-30 11:08:45', '2017-08-30 11:59:16'),
-(6, 3, 1, '2017-09-12', -0.5, 5.0, '2017-09-12 15:31:13', '2017-09-12 15:31:13'),
-(7, 11, 2, '2017-05-31', 5.0, 7.0, '2017-09-15 15:03:57', '2017-09-15 15:03:57'),
-(8, 3, 1, '2017-09-17', 1.0, 4.0, '2017-09-17 12:47:56', '2017-09-17 12:47:56'),
-(9, 8, 1, '2017-09-17', 3.5, 3.0, '2017-09-17 12:48:09', '2017-09-17 12:48:09'),
-(10, 11, 2, '2017-09-17', 5.0, 7.0, '2017-09-17 12:48:24', '2017-09-17 12:48:24'),
-(12, 3, 1, '2017-10-10', 1.0, 1.0, '2017-10-10 04:37:18', '2017-10-10 04:37:18'),
 (14, 18, 4, '2017-11-07', 1.0, 4.0, '2017-11-07 15:03:51', '2017-11-07 15:03:51'),
 (15, 16, 5, '2017-11-07', 4.0, 4.0, '2017-11-07 15:04:06', '2017-11-07 15:04:06'),
 (17, 17, 3, '2017-11-07', 2.0, 4.0, '2017-11-07 15:08:06', '2017-11-07 15:08:06'),
@@ -283,7 +288,13 @@ INSERT INTO `task_user` (`id`, `task_id`, `user_id`, `date`, `duration`, `worked
 (28, 16, 3, '2017-11-10', 3.0, 7.0, '2017-11-10 07:33:09', '2017-11-10 07:33:09'),
 (29, 18, 4, '2017-11-10', 2.0, 7.0, '2017-11-10 07:33:20', '2017-11-10 07:33:20'),
 (30, 14, 5, '2017-11-10', 4.0, 7.0, '2017-11-10 07:33:41', '2017-11-10 07:33:41'),
-(31, 17, 6, '2017-11-10', 0.0, 7.0, '2017-11-10 07:33:51', '2017-11-10 07:33:51');
+(31, 17, 6, '2017-11-10', 0.0, 7.0, '2017-11-10 07:33:51', '2017-11-10 07:33:51'),
+(32, 15, 5, '2017-11-13', 1.0, 3.0, '2017-11-13 07:42:43', '2017-11-13 07:42:43'),
+(33, 17, 6, '2017-11-13', 0.0, 7.0, '2017-11-13 07:42:58', '2017-11-13 07:42:58'),
+(34, 19, 3, '2017-11-13', 3.0, 7.0, '2017-11-13 07:43:22', '2017-11-13 07:43:22'),
+(35, 20, 7, '2017-11-13', 3.0, 3.0, '2017-11-13 08:06:43', '2017-11-13 08:07:10'),
+(36, 18, 4, '2017-11-13', 3.0, 3.0, '2017-11-13 09:40:17', '2017-11-13 09:40:17'),
+(37, 19, 4, '2017-11-13', 3.0, 3.0, '2017-11-13 09:40:34', '2017-11-13 09:40:34');
 
 -- --------------------------------------------------------
 
@@ -306,7 +317,8 @@ CREATE TABLE `team` (
 
 INSERT INTO `team` (`id`, `name`, `picture_url`, `owner_id`, `created_at`, `updated_at`) VALUES
 (1, 'Apitic', NULL, 1, '2017-05-01 00:00:00', '2017-05-01 00:00:00'),
-(2, 'Jour Order v3', NULL, 1, '2017-11-07 08:00:00', '2017-11-07 08:00:00');
+(2, 'Jour Order v3', NULL, 1, '2017-11-07 08:00:00', '2017-11-07 08:00:00'),
+(3, 'Routing LNE', NULL, 1, '2017-11-13 09:00:00', '2017-11-13 09:00:00');
 
 -- --------------------------------------------------------
 
@@ -330,7 +342,10 @@ INSERT INTO `team_member` (`team_id`, `user_id`) VALUES
 (2, 3),
 (2, 4),
 (2, 5),
-(2, 6);
+(2, 6),
+(3, 1),
+(3, 2),
+(3, 7);
 
 -- --------------------------------------------------------
 
@@ -362,7 +377,8 @@ INSERT INTO `users` (`id`, `group_id`, `lastname`, `firstname`, `email`, `passwo
 (3, 5, 'Le Gall', 'Adrien', 'adrien.legall@apitic.com', '$2y$10$Uh12xxbDiG6t/Q4hvTEdzuG2ozBDKH/84AMHcVwzw/yB.aBe8ZJOq', NULL, 7.0, 'Europe/Paris', '2017-06-13 19:15:51', '2017-06-13 19:15:51'),
 (4, 5, 'Ledeux', 'Thibault', 'thibault.ledeux@apitic.com', '$2y$10$Uh12xxbDiG6t/Q4hvTEdzuG2ozBDKH/84AMHcVwzw/yB.aBe8ZJOq', NULL, 7.0, 'Europe/Paris', '2017-06-13 19:15:51', '2017-06-13 19:15:51'),
 (5, 5, 'Ganachaud', 'Alexandre', 'alexandre.ganachaud@apitic.com', '$2y$10$Uh12xxbDiG6t/Q4hvTEdzuG2ozBDKH/84AMHcVwzw/yB.aBe8ZJOq', NULL, 7.0, 'Europe/Paris', '2017-06-13 19:15:51', '2017-06-13 19:15:51'),
-(6, 5, 'Cassel', 'Clara', 'cassel.clara@gmail.com', '$2y$10$Uh12xxbDiG6t/Q4hvTEdzuG2ozBDKH/84AMHcVwzw/yB.aBe8ZJOq', NULL, 7.0, 'Europe/Paris', '2017-06-13 19:15:51', '2017-06-13 19:15:51');
+(6, 5, 'Cassel', 'Clara', 'cassel.clara@gmail.com', '$2y$10$Uh12xxbDiG6t/Q4hvTEdzuG2ozBDKH/84AMHcVwzw/yB.aBe8ZJOq', NULL, 7.0, 'Europe/Paris', '2017-06-13 19:15:51', '2017-06-13 19:15:51'),
+(7, 5, 'Corentin', 'Bisson', 'corentin.bisson@gmail.com', '$2y$10$Uh12xxbDiG6t/Q4hvTEdzuG2ozBDKH/84AMHcVwzw/yB.aBe8ZJOq', NULL, 7.0, 'Europe/Paris', '2017-06-13 19:15:51', '2017-06-13 19:15:51');
 
 --
 -- Index pour les tables exportées
@@ -455,7 +471,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `application`
 --
 ALTER TABLE `application`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT pour la table `group`
 --
@@ -470,27 +486,27 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT pour la table `sprint`
 --
 ALTER TABLE `sprint`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT pour la table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT pour la table `task_user`
 --
 ALTER TABLE `task_user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT pour la table `team`
 --
 ALTER TABLE `team`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Contraintes pour les tables exportées
 --
