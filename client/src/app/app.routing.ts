@@ -26,6 +26,7 @@ import {
 import { 
     TeamComponent,
     TeamListComponent,
+    TeamEditComponent,
 } from './team';
 import { LayoutComponent } from './layout';
 
@@ -127,6 +128,14 @@ const appRoutes: Routes = [
                     {
                         path:      '',
                         component: TeamListComponent,
+                    },
+                    {
+                        path:      'create',
+                        component: TeamEditComponent,
+                    },
+                    {
+                        path:      'edit/:teamId',
+                        component: TeamEditComponent,
                     },
                 ],
             },

@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { TranslateService } from '@ngx-translate/core';
 
+import { TeamDeleteDialogComponent } from './dialogs/team-delete-dialog.component';
 import { ApiTeamService } from '../../api';
 import { ToolboxService } from '../../shared';
 import { UserService } from '../../auth';
+import { log } from 'util';
 
 @Component({
     selector:    'sa-team-list',
@@ -20,6 +23,7 @@ export class TeamListComponent implements OnInit
     public usersIdName:  any     = {};
     public usersIdEmail: any     = {};
     public step:         number  = -1;
+
     /**
      * Constructeur
      *
@@ -28,11 +32,15 @@ export class TeamListComponent implements OnInit
      * @param {ToolboxService}    toolboxService
      * @param {TranslateService}  translateService
      * @param {UserService}       userService
+     * @param {MatDialog}         dialog
+     * @param {MatSnackBar}       snackBar
      */
     constructor(private apiTeamService: ApiTeamService,
                 private toolboxService: ToolboxService,
                 private translateService: TranslateService,
-                private userService: UserService)
+                private userService: UserService,
+                private dialog: MatDialog,
+                private snackBar: MatSnackBar)
     {
     }
 
@@ -108,5 +116,37 @@ export class TeamListComponent implements OnInit
     public prevStep(): void
     {
         this.step--;
+    }
+    
+    /**
+     * Suppression d'une équipe
+     * 
+     * @author Fabien Bellanger
+     * @param {number} teamId ID de l'équipe
+     */
+    public deleteTeam(teamId: number): void
+    {
+        const dialog = this.dialog.open(TeamDeleteDialogComponent, {
+            data: {
+                confirm: true,
+            },
+            disableClose: false,
+        });
+
+        dialog.afterClosed().subscribe((result: any) =>
+        {
+            this.translateService.get([
+                'delete.team.success',
+                'delete.team.error',
+                'error',
+                'success',
+            ]).subscribe((translationObject: Object) =>
+            {
+                if (result === true)
+                {
+                    console.log(result + ' - Team ID: ' + teamId);
+                }
+            });
+        });
     }
 }

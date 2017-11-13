@@ -4,7 +4,9 @@
     
     <div class="row margin-bottom-20px">
         <div class="col-xs-12">
-            <button mat-raised-button type="button">
+            <button mat-raised-button type="button"
+                    [routerLink]="['/teams/create']" routerLinkActive="true"
+                    [routerLinkActiveOptions]="{exact: false}">
                 <mat-icon>add</mat-icon>
                 <span class="hidden-xs">{{ 'add.team' | translate }}</span>
             </button>
@@ -36,8 +38,16 @@
             </mat-list>
 
             <mat-action-row>
-                <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                <button mat-button color="primary" (click)="nextStep()">Next</button>
+                <button mat-button color="primary"
+                        [routerLink]="['/teams/edit', team.id]" routerLinkActive="true"
+                        [routerLinkActiveOptions]="{exact: false}">
+                    <mat-icon>edit</mat-icon>
+                    <span>{{ 'edit' | translate }}</span>
+                </button>
+                <button mat-button color="warn" (click)="deleteTeam(team.id)">
+                    <mat-icon>delete</mat-icon>
+                    <span>{{ 'delete' | translate }}</span>
+                </button>
             </mat-action-row>
         </mat-expansion-panel>
     </mat-accordion>

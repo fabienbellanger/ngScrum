@@ -8,6 +8,8 @@ import { LayoutModule } from '../layout';
 
 import { TeamComponent } from './components/team.component';
 import { TeamListComponent } from './components/team-list.component';
+import { TeamEditComponent } from './components/team-edit.component';
+import { TeamDeleteDialogComponent } from './components/dialogs/team-delete-dialog.component';
 
 @NgModule({
     imports:         [
@@ -20,11 +22,14 @@ import { TeamListComponent } from './components/team-list.component';
     declarations:    [
         TeamComponent,
         TeamListComponent,
+        TeamEditComponent,
+        TeamDeleteDialogComponent,
     ],
     providers:       [
         HttpService,
     ],
     entryComponents: [
+        TeamDeleteDialogComponent,
     ],
     exports:         [
     ],
