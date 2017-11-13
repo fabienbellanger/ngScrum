@@ -1054,7 +1054,8 @@
                     users.group_id
                 FROM users
                     INNER JOIN team_member ON team_member.user_id=users.id
-					INNER JOIN sprint ON sprint.team_id = :teamId AND team_member.team_id=sprint.team_id';
+                    INNER JOIN sprint ON sprint.team_id = :teamId AND team_member.team_id=sprint.team_id
+                ORDER BY users.firstname ASC, users.lastname ASC';
             $results = DB::select($query, ['teamId' => $sprint['teamId']]);
             if ($results && count($results) > 0)
             {

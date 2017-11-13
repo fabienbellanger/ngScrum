@@ -70,7 +70,7 @@ export class SprintTasksManagementComponent implements OnInit
     {
         // Initialisation du sprint
         // ------------------------
-        this.sprintTasksManagementService.date = (date) ? date : this.sprintTasksManagementService.date
+        this.sprintTasksManagementService.date = (date) ? date : this.sprintTasksManagementService.date;
         this.sprintTasksManagementService.init(this.sprintId)
             .then(() =>
             {
