@@ -11,4 +11,25 @@
         </div>
     </div>
 
+    <form class="form-horizontal TeamEdit" [formGroup]="formGroup" (ngSubmit)="saveTeam()">
+        <mat-card class="margin-bottom-20px">
+            <mat-card-content>
+                <div class="row">
+                    <p class="col-xs-12 col-sm-6 col-md-4">
+                        <mat-input-container class="width-100">
+                            <input matInput type="text" name="name"
+                                   [placeholder]="'name' | translate"
+                                   formControlName="name"
+                                   maxlength="50" minlength="5"
+                                   autofocus required>
+                            <mat-hint align="end">{{ formGroup.get('name').value.length }} / 50</mat-hint>
+                            <mat-error *ngIf="formGroup.get('name').hasError('required')">
+                                {{ 'required.name' | translate }}
+                            </mat-error>
+                        </mat-input-container>
+                    </p>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </form>
 </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -14,8 +15,10 @@ import { UserService } from '../../auth';
 
 export class TeamEditComponent implements OnInit
 {
-    public loading: boolean = true;
-    public title:   string;
+    public loading:       boolean = true;
+    public title:         string;
+    public formGroup:     FormGroup;
+    public formSubmitted: boolean = false;
     
     /**
      * Constructeur
@@ -53,9 +56,34 @@ export class TeamEditComponent implements OnInit
         {
             this.title = (teamId === 0) ? translationObject['create.team.title'] : translationObject['edit.team.title'];
         });
+        
+        // FormControls
+        // ------------
+        this.formGroup = new FormGroup({
+            name:    new FormControl('', [
+                Validators.required,
+                Validators.minLength(5),
+                Validators.maxLength(50),
+            ]),
+            ownerId: new FormControl('', [
+                Validators.required,
+                Validators.min(1),
+            ]),
+        });
 
         // Requète pour récupérer les données
         // ----------------------------------
         this.loading = false;
+
+    }
+
+    /**
+     * Soumission du formulaire
+     *
+     * @author Fabien Bellanger
+     */
+    public saveTeam(): void
+    {
+
     }
 }
