@@ -14,7 +14,8 @@ import { UserService } from '../../auth';
 
 export class TeamEditComponent implements OnInit
 {
-    public loading:      boolean = true;
+    public loading: boolean = true;
+    public title:   string;
     
     /**
      * Constructeur
@@ -24,11 +25,13 @@ export class TeamEditComponent implements OnInit
      * @param {ToolboxService}    toolboxService
      * @param {TranslateService}  translateService
      * @param {UserService}       userService
+     * @param {ActivatedRoute}    route
      */
     constructor(private apiTeamService: ApiTeamService,
                 private toolboxService: ToolboxService,
                 private translateService: TranslateService,
-                private userService: UserService)
+                private userService: UserService,
+                private route: ActivatedRoute)
     {
     }
 
@@ -39,8 +42,20 @@ export class TeamEditComponent implements OnInit
      */
     public ngOnInit(): void
     {
+        const teamId: number = (isNaN(+this.route.snapshot.params['teamId'])) ? 0 : +this.route.snapshot.params['teamId'];
+
+        // Titre
+        // -----
+        this.translateService.get([
+            'create.team.title',
+            'edit.team.title',
+        ]).subscribe((translationObject: Object) =>
+        {
+            this.title = (teamId === 0) ? translationObject['create.team.title'] : translationObject['edit.team.title'];
+        });
+
         // Requète pour récupérer les données
         // ----------------------------------
-        this.loading = true;
+        this.loading = false;
     }
 }

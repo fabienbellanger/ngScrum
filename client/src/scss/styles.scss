@@ -596,4 +596,10 @@ a.list-group-item {
       justify-content: flex-end;
       align-items:     center;
     }
+
+    .mat-list .mat-list-item,
+    .mat-nav-list .mat-list-item,
+    .mat-selection-list .mat-list-item {
+        font-size: 14px;
+    }
 }

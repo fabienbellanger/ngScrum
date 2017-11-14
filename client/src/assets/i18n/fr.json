@@ -172,5 +172,8 @@
 	"edit": "Editer",
 	"delete.team.success": "Suppression de l'équipe avec succès",
 	"delete.team.error": "Erreur lors de la suppression de l'équipe",
-	"want.to.delete.team": "Êtes-vous sûr de vouloir supprimer cette équipe ?"
+	"want.to.delete.team": "Êtes-vous sûr de vouloir supprimer cette équipe ?",
+	"teams.list": "Liste des équipes",
+	"create.team.title": "Création d'une équipe",
+	"edit.team.title": "Modification d'une équipe"
 }
