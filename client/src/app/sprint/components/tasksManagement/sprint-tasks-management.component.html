@@ -83,10 +83,10 @@
                     <tr>
                         <th width="50%" colspan="3" class="hidden-xs">{{ 'total' | translate }}</th>
                         <th width="50%" class="visible-xs">{{ 'total' | translate }}</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th class="hidden-xs"></th>
+                        <th valign="middle" class="text-center no-wrap">{{ user.total.workedDuration | duration:'hour' }}</th>
+                        <th valign="middle" class="text-center no-wrap">{{ user.total.duration | duration:'hour' }}</th>
+                        <th valign="middle" class="text-center no-wrap hidden-xs">{{ user.total.difference | duration:'hour' }}</th>
+                        <th valign="middle" class="text-center no-wrap">{{ user.total.performance | percentFr:0 }}</th>
                         <th></th>
                     </tr>
                 </tfoot>

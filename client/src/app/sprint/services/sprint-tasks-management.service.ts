@@ -80,6 +80,12 @@ export class SprintTasksManagementService
             this.users[userIndex]['id']    = user.id;
             this.users[userIndex]['name']  = user.firstname + ' ' + user.lastname;
             this.users[userIndex]['tasks'] = {};
+            this.users[userIndex]['total'] = {
+                'duration':       0,
+                'workedDuration': 0,
+                'difference':     0,
+                'performance':    0,
+            };
 
             // Tâches
             // ------
@@ -126,6 +132,16 @@ export class SprintTasksManagementService
                     this.users[userIndex]['tasks'][taskId]['performance'] = (this.users[userIndex]['tasks'][taskId]['workedDuration'] !== 0)
                         ? (this.users[userIndex]['tasks'][taskId]['duration']
                             / this.users[userIndex]['tasks'][taskId]['workedDuration']) * 100
+                        : 0;
+
+                    // Calcul des totaux
+                    // -----------------
+                    this.users[userIndex]['total'].duration       += this.users[userIndex]['tasks'][taskId]['duration'];
+                    this.users[userIndex]['total'].workedDuration += this.users[userIndex]['tasks'][taskId]['workedDuration'];
+                    this.users[userIndex]['total'].difference     = this.users[userIndex]['total'].duration
+                        - this.users[userIndex]['total'].workedDuration;
+                    this.users[userIndex]['total'].performance    = (this.users[userIndex]['total'].workedDuration !== 0)
+                        ? (this.users[userIndex]['total'].duration / this.users[userIndex]['total'].workedDuration) * 100
                         : 0;
                 }
             }
