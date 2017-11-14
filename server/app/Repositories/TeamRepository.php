@@ -133,4 +133,55 @@
                 'message' => 'Delete team success',
             ];
         }
+
+        /**
+         * Information pour créer ou modifier une équipe
+         * 
+         * @author Fabien Bellanger
+         * @param int $teamId ID de l'équipe
+         * @return array
+         */
+        public static function getTeamEdit(int $teamId): array
+        {
+            $teamId   = intval($teamId);
+            $team = [];
+
+            // Récupération de l'équipe dans le cas d'une édition
+            // --------------------------------------------------
+            if ($teamId != 0)
+            {
+                $query = '
+                    SELECT
+                        team.name, team.owner_id, team_member.user_id
+                    FROM team LEFT JOIN team_member ON team.id = team_member.team_id
+                    WHERE team.id = :teamId';
+                $results = DB::select($query, ['teamId' => $teamId]);
+                if ($results)
+                {
+                    foreach ($results as $line)
+                    {
+                        if (!array_key_exists('name', $team))
+                        {
+                            $team['name']    = $line->name;
+                            $team['ownerId'] = $line->owner_id;
+                            $team['members'] = [];
+                        }
+                        $team['members'][] = $line->user_id;
+                    }
+                }
+            }
+
+            // Récupération des utilisateurs
+            // -----------------------------
+            $users = UserRepository::getAllUsers();
+
+            return [
+                'code'    => 200,
+                'message' => 'Success',
+                'data'    => [
+                    'team'  => $team,
+                    'users' => $users,
+                ]
+            ];
+        }
     }

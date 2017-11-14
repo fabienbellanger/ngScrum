@@ -20,7 +20,7 @@
                             <input matInput type="text" name="name"
                                    [placeholder]="'name' | translate"
                                    formControlName="name"
-                                   maxlength="50" minlength="5"
+                                   maxlength="50"
                                    autofocus required>
                             <mat-hint align="end">{{ formGroup.get('name').value.length }} / 50</mat-hint>
                             <mat-error *ngIf="formGroup.get('name').hasError('required')">

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -15,10 +16,12 @@ import { UserService } from '../../auth';
 
 export class TeamEditComponent implements OnInit
 {
-    public loading:       boolean = true;
+    public loading:       boolean  = true;
+    public formSubmitted: boolean  = false;
+    public users:         any[]    = [];
+    public members:       number[] = [];
     public title:         string;
     public formGroup:     FormGroup;
-    public formSubmitted: boolean = false;
     
     /**
      * Constructeur
@@ -29,12 +32,16 @@ export class TeamEditComponent implements OnInit
      * @param {TranslateService}  translateService
      * @param {UserService}       userService
      * @param {ActivatedRoute}    route
+     * @param {MatSnackBar}       snackBar
+     * @param {Router}            router
      */
     constructor(private apiTeamService: ApiTeamService,
                 private toolboxService: ToolboxService,
                 private translateService: TranslateService,
                 private userService: UserService,
-                private route: ActivatedRoute)
+                private route: ActivatedRoute,
+                private snackBar: MatSnackBar,
+                private router: Router)
     {
     }
 
@@ -62,10 +69,9 @@ export class TeamEditComponent implements OnInit
         this.formGroup = new FormGroup({
             name:    new FormControl('', [
                 Validators.required,
-                Validators.minLength(5),
                 Validators.maxLength(50),
             ]),
-            ownerId: new FormControl('', [
+            ownerId: new FormControl(0, [
                 Validators.required,
                 Validators.min(1),
             ]),
@@ -73,7 +79,37 @@ export class TeamEditComponent implements OnInit
 
         // Requète pour récupérer les données
         // ----------------------------------
-        this.loading = false;
+        this.apiTeamService.getEditInfo(teamId)
+            .then((response: any) =>
+            {
+                this.users = response.users;
+                if (teamId !== 0)
+                {
+                    this.formGroup.get('name').setValue(response.team.name);
+                    this.formGroup.get('ownerId').setValue(response.team.ownerId);
+                    this.members = response.team.members;
+                }
+
+                this.loading = false;
+            })
+            .catch(() =>
+            {
+                this.translateService.get(['get.data.error', 'error'])
+                    .subscribe((translationObject: Object) =>
+                    {
+                        this.snackBar.open(
+                            translationObject['get.data.error'],
+                            translationObject['error'],
+                            {
+                                duration: 3000,
+                            });
+                    });
+
+                // Redirection
+                this.router.navigate(['/teams']);
+
+                this.loading = false;
+            });
 
     }
 

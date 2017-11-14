@@ -59,6 +59,46 @@ export class ApiTeamService
     }
     
     /**
+     * Récupération des informations pour créer ou modifier une équipe
+     *
+     * @author Fabien Bellanger
+     * @param {number} teamId ID de l'équipe
+     * @return {Promise}
+     */
+    public getEditInfo(teamId: number = 0): any
+    {
+        return new Promise((resolve: any, reject: any) =>
+        {
+            // 1. Récupération du token
+            // ------------------------
+            const token: string = this.storageService.get('session', 'token', null);
+
+            if (token != null)
+            {
+                // 2. Requête
+                // ----------
+                const headers: any = new Headers();
+                headers.append('Authorization', 'Bearer ' + token);
+                headers.append('Content-Type', 'application/json');
+                
+                this.httpService.get('/teams/edit/' + teamId, {headers: headers}, true, true)
+                    .then((data: any) =>
+                    {
+                        resolve(data);
+                    })
+                    .catch(() =>
+                    {
+                        reject();
+                    });
+            }
+            else
+            {
+                reject();
+            }
+        });
+    }
+    
+    /**
      * Récupération des équipes
      *
      * @author Fabien Bellanger
