@@ -14,9 +14,10 @@ import { DateService } from '../../../shared';
 
 export class SprintTasksManagementComponent implements OnInit
 {
-    public loading: boolean;
+    public loading:  boolean;
     public sprintId: number;
-    public date: Date;
+    public date:     Date;
+    public step:     number = -1;
 
     /**
      * Constructeur
@@ -58,6 +59,37 @@ export class SprintTasksManagementComponent implements OnInit
             // --------------
             this.init(date);
         });
+    }
+    
+    /**
+     * Initialisation de l'étape
+     * 
+     * @author Fabien Bellanger
+     * @param {number} index 
+     */
+    public setStep(index: number): void
+    {
+        this.step = index;
+    }
+    
+    /**
+     * Etape suivante
+     * 
+     * @author Fabien Bellanger
+     */
+    public nextStep(): void
+    {
+        this.step++;
+    }
+    
+    /**
+     * Etape précédente
+     * 
+     * @author Fabien Bellanger
+     */
+    public prevStep(): void
+    {
+        this.step--;
     }
 
     /**

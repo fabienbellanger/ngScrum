@@ -553,6 +553,18 @@ a.list-group-item {
         margin: 20px 0px;
     }
 
+    &-Users {
+        .mat-expansion-panel-header-title, 
+        .mat-expansion-panel-header-description {
+          flex-basis: 0;
+        }
+        
+        .mat-expansion-panel-header-description {
+          justify-content: flex-end;
+          align-items:     center;
+        }
+    }
+
     &-List {
         margin-bottom: 20px;
         overflow:      auto;
