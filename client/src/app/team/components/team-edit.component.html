@@ -29,7 +29,61 @@
                         </mat-input-container>
                     </p>
                 </div>
+
+                <div class="row">
+					<p class="col-xs-12 col-sm-6 col-md-4">
+						<mat-form-field class="width-100">
+							<mat-select [placeholder]="'owner' | translate"
+										formControlName="ownerId" required>
+								<mat-option>{{ 'none' | translate }}</mat-option>
+								<mat-option *ngFor="let user of users" [value]="user.id">
+									{{ user.firstname + ' ' + user.lastname }}
+								</mat-option>
+							</mat-select>
+                            <mat-error *ngIf="formGroup.get('ownerId').hasError('required')">
+                                {{ 'required.owner' | translate }}
+                            </mat-error>
+						</mat-form-field>
+					</p>
+				</div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="bold margin-top-20px">
+                            <h4>{{ 'users' | translate }}</h4>
+                        </div>
+                        <div class="margin-bottom-20px">
+                            <div class="col-xs-12 col-sm-6 col-md-4 no-padding"
+                                *ngFor="let user of users; let index = index">
+                                <div class="radio-checkbox">
+                                    <mat-checkbox color="primary" [name]="'user_' + index" [id]="'user_' + index"
+                                                 (change)="toggleUser($event, index, user.id)"
+                                                 [ngModel]="usersIds[index]"
+                                                 [ngModelOptions]="{standalone: true}">
+                                        {{ user.firstname + ' ' + user.lastname }}
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </mat-card-content>
+            
+            <mat-card-actions>
+                <div>
+                    <button mat-button type="button" routerLinkActive="true"
+                            [routerLink]="['/teams']" [routerLinkActiveOptions]="{exact: false}">
+                        <mat-icon>keyboard_arrow_left</mat-icon>
+                        <span>{{ 'teams.list' | translate }}</span>
+                    </button>
+                    &nbsp;&nbsp;
+                    <button mat-button type="submit" color="primary"
+                            [disabled]="formGroup.invalid">
+                        <mat-icon>add</mat-icon>
+                        <span>{{ buttonTitle }}</span>
+                    </button>
+                </div>
+            </mat-card-actions>
         </mat-card>
     </form>
 </div>

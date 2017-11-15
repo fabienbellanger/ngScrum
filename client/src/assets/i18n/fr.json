@@ -175,5 +175,11 @@
 	"want.to.delete.team": "Êtes-vous sûr de vouloir supprimer cette équipe ?",
 	"teams.list": "Liste des équipes",
 	"create.team.title": "Création d'une équipe",
-	"edit.team.title": "Modification d'une équipe"
+	"edit.team.title": "Modification d'une équipe",
+	"required.owner": "Propriétaire obligatoire",
+	"owner": "Propriétaire",
+	"add.team.error": "Erreur lors de l'ajout d'une équipe",
+	"add.team.success": "Ajout de l'équipe avec succès",
+	"modify.team.error": "Erreur lors de la modification d'une équipe",
+	"modify.team.success": "Modification de l'équipe avec succès"
 }

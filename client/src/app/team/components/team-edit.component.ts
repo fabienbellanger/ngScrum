@@ -20,8 +20,11 @@ export class TeamEditComponent implements OnInit
     public formSubmitted: boolean  = false;
     public users:         any[]    = [];
     public members:       number[] = [];
+    public usersIds:      any      = {};
     public title:         string;
+    public buttonTitle:   string;
     public formGroup:     FormGroup;
+    public teamId:        number;
     
     /**
      * Constructeur
@@ -52,16 +55,19 @@ export class TeamEditComponent implements OnInit
      */
     public ngOnInit(): void
     {
-        const teamId: number = (isNaN(+this.route.snapshot.params['teamId'])) ? 0 : +this.route.snapshot.params['teamId'];
+        this.teamId = (isNaN(+this.route.snapshot.params['teamId'])) ? 0 : +this.route.snapshot.params['teamId'];
 
         // Titre
         // -----
         this.translateService.get([
             'create.team.title',
             'edit.team.title',
+            'create',
+            'modify',
         ]).subscribe((translationObject: Object) =>
         {
-            this.title = (teamId === 0) ? translationObject['create.team.title'] : translationObject['edit.team.title'];
+            this.title       = (this.teamId === 0) ? translationObject['create.team.title'] : translationObject['edit.team.title'];
+            this.buttonTitle = (this.teamId === 0) ? translationObject['create'] : translationObject['modify'];
         });
         
         // FormControls
@@ -79,15 +85,24 @@ export class TeamEditComponent implements OnInit
 
         // Requète pour récupérer les données
         // ----------------------------------
-        this.apiTeamService.getEditInfo(teamId)
+        this.apiTeamService.getEditInfo(this.teamId)
             .then((response: any) =>
             {
                 this.users = response.users;
-                if (teamId !== 0)
+                if (this.teamId !== 0)
                 {
                     this.formGroup.get('name').setValue(response.team.name);
                     this.formGroup.get('ownerId').setValue(response.team.ownerId);
-                    this.members = response.team.members;
+
+                    const userIds: number[] = response.team.members;
+                    this.usersIds           = {};
+                    for (const userIndex in this.users)
+                    {
+                        if (userIds.indexOf(this.users[userIndex].id) !== -1)
+                        {
+                            this.usersIds[userIndex] = this.users[userIndex].id;
+                        }
+                    }
                 }
 
                 this.loading = false;
@@ -110,7 +125,6 @@ export class TeamEditComponent implements OnInit
 
                 this.loading = false;
             });
-
     }
 
     /**
@@ -120,6 +134,164 @@ export class TeamEditComponent implements OnInit
      */
     public saveTeam(): void
     {
+        // Conversion Object => Array
+        // --------------------------
+        const usersIdsSelected: number[] = this.toolboxService.objectToArray(this.usersIds);
 
+        if (!this.formSubmitted)
+        {
+            // Jeton pour n'avoir qu'une soumission
+            // ------------------------------------
+            this.formSubmitted = true;
+
+            if (this.teamId === 0)
+            {
+                // Création
+                // --------
+                this.addTeam(usersIdsSelected);
+            }
+            else
+            {
+                // Modification
+                // ------------
+                this.modifyTeam(usersIdsSelected);
+            }
+        }
+    }
+
+    /**
+     * Ajout d'une équipe
+     *
+     * @author Fabien Bellanger
+     * @param {number[]} usersIdsSelected Tableau d'ID des utilisateurs sélectionnés
+     */
+    private addTeam(usersIdsSelected: number[]): void
+    {
+        this.apiTeamService.addTeam({
+            name:     this.formGroup.get('name').value,
+            ownerId:  this.formGroup.get('ownerId').value,
+            usersIds: usersIdsSelected,
+        })
+            .then((response: any) =>
+            {
+                // Notification
+                // ------------
+                this.translateService.get(['add.team.success', 'success'])
+                    .subscribe((translationObject: Object) =>
+                    {
+                        this.snackBar.open(
+                            translationObject['add.team.success'],
+                            translationObject['success'],
+                            {
+                                duration: 3000,
+                            });
+                    });
+
+                // Redirection
+                // -----------
+                this.router.navigate(['/teams']);
+
+                // Jeton pour n'avoir qu'une soumission
+                // ------------------------------------
+                this.formSubmitted = false;
+            })
+            .catch((error: any) =>
+            {
+                // Notification
+                // ------------
+                this.translateService.get(['add.team.error', 'error'])
+                    .subscribe((translationObject: Object) =>
+                    {
+                        this.snackBar.open(
+                            translationObject['add.team.error'],
+                            translationObject['error'],
+                            {
+                                duration: 3000,
+                            });
+                    });
+
+                // Jeton pour n'avoir qu'une soumission
+                // ------------------------------------
+                this.formSubmitted = false;
+            });
+    }
+
+    /**
+     * Modification d'une équipe
+     *
+     * @author Fabien Bellanger
+     * @param {number[]} usersIdsSelected Tableau d'ID des utilisateurs sélectionnés
+     */
+    private modifyTeam(usersIdsSelected: number[]): void
+    {
+        this.apiTeamService.modifyTeam(this.teamId, {
+            name:     this.formGroup.get('name').value,
+            ownerId:  this.formGroup.get('ownerId').value,
+            usersIds: usersIdsSelected,
+        })
+            .then((task: any) =>
+            {
+                // Notification
+                // ------------
+                this.translateService.get(['modify.team.success', 'success'])
+                    .subscribe((translationObject: Object) =>
+                    {
+                        this.snackBar.open(
+                            translationObject['modify.team.success'],
+                            translationObject['success'],
+                            {
+                                duration: 3000,
+                            });
+                    });
+
+                // Redirection
+                // -----------
+                this.router.navigate(['/teams']);
+
+                // Jeton pour n'avoir qu'une soumission
+                // ------------------------------------
+                this.formSubmitted = false;
+            })
+            .catch((error: any) =>
+            {
+                // Notification
+                // ------------
+                this.translateService.get(['modify.team.error', 'error'])
+                    .subscribe((translationObject: Object) =>
+                    {
+                        this.snackBar.open(
+                            translationObject['modify.team.error'],
+                            translationObject['error'],
+                            {
+                                duration: 3000,
+                            });
+                    });
+
+                // Jeton pour n'avoir qu'une soumission
+                // ------------------------------------
+                this.formSubmitted = false;
+            });
+    }
+    
+    /**
+     * Sélection ou désélection d'un utilisateur
+     *
+     * @author Fabien Bellanger
+     * @param {any)     event
+     * @param {number}  index
+     * @param {number}  userId
+     */
+    private toggleUser(event: any, index: number, userId: number): void
+    {
+        const isApplicationPresent: boolean = (this.usersIds[index] !== undefined);
+
+        if (event.checked && !isApplicationPresent)
+        {
+            this.usersIds[index] = userId;
+        }
+        else if (!event.checked && isApplicationPresent)
+        {
+            delete this.usersIds[index];
+        }
     }
 }

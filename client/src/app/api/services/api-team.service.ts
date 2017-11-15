@@ -99,6 +99,87 @@ export class ApiTeamService
     }
     
     /**
+     * Création d'une équipe
+     *
+     * @author Fabien Bellanger
+     * @param {any[]}  data     Données
+     * @return {Promise}
+     */
+    public addTeam(data: any): Promise<any>
+    {
+        return new Promise((resolve: any, reject: any) =>
+        {
+            // 1. Récupération du token
+            // ------------------------
+            const token: string = this.storageService.get('session', 'token', null);
+
+            if (token != null)
+            {
+                // 2. Requête
+                // ----------
+                const headers: any = new Headers();
+                headers.append('Authorization', 'Bearer ' + token);
+                headers.append('Content-Type', 'application/x-www-form-urlencoded');
+                
+                this.httpService.post('/teams', {data: JSON.stringify(data)}, {headers: headers}, true, true)
+                    .then((response: any) =>
+                    {
+                        resolve(response);
+                    })
+                    .catch(() =>
+                    {
+                        reject();
+                    });
+            }
+            else
+            {
+                reject();
+            }
+        });
+    }
+    
+    /**
+     * Modification d'une équipe
+     *
+     * @author Fabien Bellanger
+     * @param {number} teamId   ID de l'équipe
+     * @param {any[]}  data     Données
+     * @return {Promise}
+     */
+    public modifyTeam(teamId: number, data: any): Promise<any>
+    {
+        return new Promise((resolve: any, reject: any) =>
+        {
+            // 1. Récupération du token
+            // ------------------------
+            const token: string = this.storageService.get('session', 'token', null);
+
+            if (token != null)
+            {
+                // 2. Requête
+                // ----------
+                const headers: any = new Headers();
+                headers.append('Authorization', 'Bearer ' + token);
+                headers.append('Content-Type', 'application/x-www-form-urlencoded');
+                
+                this.httpService.put('/teams/' + teamId, {data: JSON.stringify(data)}, {headers: headers}, true, true)
+                    .then((response: any) =>
+                    {
+                        resolve(response);
+                    })
+                    .catch(() =>
+                    {
+                        reject();
+                    });
+            }
+            else
+            {
+                reject();
+            }
+        });
+    }
+    
+    /**
      * Récupération des équipes
      *
      * @author Fabien Bellanger
