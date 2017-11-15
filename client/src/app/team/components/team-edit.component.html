@@ -35,10 +35,15 @@
 						<mat-form-field class="width-100">
 							<mat-select [placeholder]="'owner' | translate"
 										formControlName="ownerId" required>
-								<mat-option>{{ 'none' | translate }}</mat-option>
-								<mat-option *ngFor="let user of users" [value]="user.id">
-									{{ user.firstname + ' ' + user.lastname }}
-								</mat-option>
+                                <mat-option>{{ 'none' | translate }}</mat-option>
+                                <ng-template ngFor let-user [ngForOf]="users">
+                                    <mat-option *ngIf="teamId !== 0 || !user.deleted" [value]="user.id">
+                                        {{ user.firstname + ' ' + user.lastname }}
+                                        <span *ngIf="user.deleted" class="italic text-muted">
+                                            ({{ 'deleted.user' | translate }})
+                                        </span>
+                                    </mat-option>
+                                </ng-template>
 							</mat-select>
                             <mat-error *ngIf="formGroup.get('ownerId').hasError('required')">
                                 {{ 'required.owner' | translate }}
@@ -55,12 +60,15 @@
                         <div class="margin-bottom-20px">
                             <div class="col-xs-12 col-sm-6 col-md-4 no-padding"
                                 *ngFor="let user of users; let index = index">
-                                <div class="radio-checkbox">
+                                <div class="radio-checkbox" *ngIf="teamId !== 0 || !user.deleted">
                                     <mat-checkbox color="primary" [name]="'user_' + index" [id]="'user_' + index"
                                                  (change)="toggleUser($event, index, user.id)"
                                                  [ngModel]="usersIds[index]"
                                                  [ngModelOptions]="{standalone: true}">
                                         {{ user.firstname + ' ' + user.lastname }}
+                                        <span *ngIf="user.deleted" class="italic text-muted">
+                                            ({{ 'deleted.user' | translate }})
+                                        </span>
                                     </mat-checkbox>
                                 </div>
                             </div>

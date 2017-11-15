@@ -181,5 +181,6 @@
 	"add.team.error": "Erreur lors de l'ajout d'une équipe",
 	"add.team.success": "Ajout de l'équipe avec succès",
 	"modify.team.error": "Erreur lors de la modification d'une équipe",
-	"modify.team.success": "Modification de l'équipe avec succès"
+	"modify.team.success": "Modification de l'équipe avec succès",
+	"deleted.user": "Supprimé"
 }

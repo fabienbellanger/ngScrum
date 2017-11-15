@@ -328,7 +328,7 @@
         {
             $users = [];
 
-            $query   = 'SELECT id, lastname, firstname, email FROM users';
+            $query   = 'SELECT id, lastname, firstname, email, deleted_at FROM users';
             $results = DB::select($query);
             if ($results)
             {
@@ -338,6 +338,7 @@
                     $users[$index]['lastname']  = $line->lastname;
                     $users[$index]['firstname'] = $line->firstname;
                     $users[$index]['email']     = $line->email;
+                    $users[$index]['deleted']   = !is_null($line->deleted_at);
                 }
             }
 
