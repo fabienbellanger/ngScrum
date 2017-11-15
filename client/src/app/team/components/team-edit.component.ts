@@ -170,7 +170,7 @@ export class TeamEditComponent implements OnInit
         this.apiTeamService.addTeam({
             name:     this.formGroup.get('name').value,
             ownerId:  this.formGroup.get('ownerId').value,
-            usersIds: usersIdsSelected,
+            members:  usersIdsSelected,
         })
             .then((response: any) =>
             {
@@ -227,7 +227,7 @@ export class TeamEditComponent implements OnInit
         this.apiTeamService.modifyTeam(this.teamId, {
             name:     this.formGroup.get('name').value,
             ownerId:  this.formGroup.get('ownerId').value,
-            usersIds: usersIdsSelected,
+            members:  usersIdsSelected,
         })
             .then((task: any) =>
             {

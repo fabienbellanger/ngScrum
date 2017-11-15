@@ -32,6 +32,7 @@
                 <mat-list-item *ngFor="let userId of team.members">
                     <span *ngIf="usersIdName[userId] !== undefined">
                         <img matListAvatar [src]="userService.getGravatarUrl2(usersIdEmail[userId], 40)" alt="">
+                        &nbsp;
                         {{ usersIdName[userId] }}
                     </span>
                 </mat-list-item>

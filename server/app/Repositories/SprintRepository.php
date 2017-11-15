@@ -562,7 +562,7 @@
             {
                 return [
                     'code'    => 500,
-                    'message' => 'Internal error 1',
+                    'message' => 'Internal error',
                 ];
             }
 
@@ -570,7 +570,7 @@
             {
                 return [
                     'code'    => 500,
-                    'message' => 'Internal error 2',
+                    'message' => 'Internal error',
                 ];
             }
 

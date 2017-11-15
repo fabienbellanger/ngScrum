@@ -143,8 +143,8 @@
          */
         public static function getTeamEdit(int $teamId): array
         {
-            $teamId   = intval($teamId);
-            $team = [];
+            $teamId = intval($teamId);
+            $team   = [];
 
             // Récupération de l'équipe dans le cas d'une édition
             // --------------------------------------------------
@@ -182,6 +182,91 @@
                     'team'  => $team,
                     'users' => $users,
                 ]
+            ];
+        }
+
+        /**
+         * Suppression de tous les membres d'une équipe
+         * 
+         * @author Fabien Bellanger
+         * @param int $teamId ID de l'équipe
+         */
+        private static function deleteAllMembersOfTeam(int $teamId): void
+        {
+            DB::table('team_member')
+                ->where('team_id', $teamId)
+                ->delete();
+        }
+        
+        /**
+         * Création / modification d'une équipe
+         * 
+         * @author Fabien Bellanger
+         * @param int   $teamId ID de l'équipe
+         * @param array $data   Données à enregistrer
+         * @return array
+         */
+        public static function editTeam(int $teamId, array $data): array
+        {
+            $teamId    = intval($teamId);
+            $timezone  = UserRepository::getTimezone();
+            $now       = TZ::getUTCDatetime2($timezone, date('Y-m-d H:i:s'), 'Y-m-d H:i:s');
+
+            try
+            {
+                DB::transaction(function() use (&$teamId, $data, $now) {
+                    // 1. Création / Modification de la table team
+                    // -------------------------------------------
+                    $teamData = [
+                        'name'       => $data['name'],
+                        'owner_id'   => $data['ownerId'],
+                        'updated_at' => $now,
+                    ];
+                    if ($teamId == 0)
+                    {
+                        // Création
+                        // --------
+                        $teamData['created_at'] = $now;
+
+                        $teamId = DB::table('team')->insertGetId($teamData);
+                    }
+                    else
+                    {
+                        // Modification
+                        // ------------
+                        DB::table('team')
+                            ->where('id', $teamId)
+                            ->update($teamData);
+                    }
+
+                    // 2. Suppression de tous les membres
+                    // ----------------------------------
+                    self::deleteAllMembersOfTeam($teamId);
+                    
+                    // 3. Ajout des membres
+                    // --------------------
+                    $teamMemberData = [];
+                    $teamMemberItem = ['team_id' => $teamId, 'user_id' => 0];
+                    foreach ($data['members'] as $userId)
+                    {
+                        $teamMemberItem['user_id'] = $userId;
+        
+                        $teamMemberData[] = $teamMemberItem;
+                    }
+                    DB::table('team_member')->insert($teamMemberData);
+                });
+            }
+            catch (Exception $exception)
+            {
+                return [
+                    'code'    => 500,
+                    'message' => 'Internal error',
+                ];
+            }
+
+            return [
+                'code' => 200,
+                'data' => $teamId,
             ];
         }
     }

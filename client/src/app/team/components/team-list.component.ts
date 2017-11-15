@@ -94,7 +94,7 @@ export class TeamListComponent implements OnInit
     {
         for (const user of this.users)
         {
-            this.usersIdName[user.id]  = user.lastname + ' ' + user.firstname;
+            this.usersIdName[user.id]  = user.firstname + ' ' + user.lastname;
             this.usersIdEmail[user.id] = user.email;
         }
     }

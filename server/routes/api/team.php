@@ -16,4 +16,9 @@
 
         Route::get('/edit/{teamId?}', 'TeamController@getTeamEdit')
             ->where(['teamId' => '[0-9]+']);
+
+        Route::post('', 'TeamController@editTeam');
+        
+        Route::put('/{teamId}', 'TeamController@editTeam')
+            ->where(['teamId' => '[0-9]+']);
     });

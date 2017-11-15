@@ -6,6 +6,7 @@
     use Illuminate\Http\Request;
     use App\Repositories\TeamRepository;
     use App\Repositories\UserRepository;
+    use Illuminate\Support\Facades\Input;
 
     class TeamController extends Controller
     {
@@ -61,6 +62,42 @@
             if ($response['code'] == 404)
             {
                 return Response::notFound($response['message']);
+            }
+            else
+            {
+                return Response::json($response['data'], 200);
+            }
+        }
+
+        /**
+         * Création / modification d'une équipe
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @param int                      $teamId
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function editTeam(Request $request, int $teamId = 0): \Illuminate\Http\JsonResponse
+        {
+            $data = Input::all();
+
+            $data = json_decode($data['data'], true);
+            if (!$data || count($data) == 0)
+            {
+                return Response::internalError('No data');
+            }
+
+            if (!array_key_exists('name', $data) ||
+                !array_key_exists('ownerId', $data) ||
+                !array_key_exists('members', $data))
+            {
+                return Response::internalError('Missing data');
+            }
+            $response = TeamRepository::editTeam($teamId, $data);
+            
+            if ($response['code'] == 500)
+            {
+                return Response::internalError($response['message']);
             }
             else
             {
