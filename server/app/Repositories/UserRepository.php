@@ -124,10 +124,10 @@
             // Liste des équipes
             // -----------------
             $teams = DB::select('
-                SELECT id, name
+                SELECT DISTINCT id, name
                 FROM team
                     INNER JOIN team_member ON team_id=id
-                WHERE user_id = :id', ['id' => $id]);
+                WHERE user_id = :memberId OR owner_id = :ownerId', ['memberId' => $id, 'ownerId' => $id]);
 
             return $teams;
         }

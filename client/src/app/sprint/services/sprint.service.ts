@@ -343,7 +343,7 @@ export class SprintService
             ? Math.ceil(remainingDuration / decrementedDurationPerDay)
             : Infinity;
 
-        if (nbRemainingDays === Infinity)
+        if (nbRemainingDays === Infinity || isNaN(nbRemainingDays))
         {
             return null;
         }
