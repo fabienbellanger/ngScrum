@@ -165,10 +165,15 @@
                     SUM(task.remaining_duration)   AS remainingDuration
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
-                    INNER JOIN team_member ON team.id = team_member.team_id
-                    LEFT JOIN task ON sprint.id = task.sprint_id';
-            // $query .= ' WHERE (team_member.user_id = :userId OR team.owner_id = :ownerId) ';
-            $query .= ' WHERE team_member.user_id = :userId ';
+                    LEFT JOIN task ON sprint.id = task.sprint_id
+                WHERE 
+                    sprint.id IN (
+                        SELECT DISTINCT sprint.id
+                        FROM sprint
+                            INNER JOIN team ON team.id = sprint.team_id
+                            INNER JOIN team_member ON team.id = team_member.team_id
+                        WHERE (team_member.user_id = :userId OR team.owner_id = :ownerId)
+                    )';
             if ($filter == 'inProgress')
             {
                 $query .= ' AND sprint.finished_at IS NULL';
@@ -179,8 +184,7 @@
             }
             $query .= ' GROUP BY sprint.id ORDER BY sprint.started_at ASC';
 
-            // $results = DB::select($query, ['userId' => $userId, 'ownerId' => $userId]);
-            $results = DB::select($query, ['userId' => $userId]);
+            $results = DB::select($query, ['userId' => $userId, 'ownerId' => $userId]);
 
             // Traitement
             // ----------
@@ -235,11 +239,16 @@
                     SUM(task_user.worked_duration) AS workedDuration
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
-                    INNER JOIN team_member ON team.id = team_member.team_id
                     LEFT JOIN task ON sprint.id = task.sprint_id
-                    LEFT JOIN task_user ON task.id = task_user.task_id';
-            // $query .= ' WHERE (team_member.user_id = :userId OR team.owner_id = :ownerId) ';
-            $query .= ' WHERE team_member.user_id = :userId ';
+                    LEFT JOIN task_user ON task.id = task_user.task_id
+                WHERE 
+                    sprint.id IN (
+                        SELECT DISTINCT sprint.id
+                        FROM sprint
+                            INNER JOIN team ON team.id = sprint.team_id
+                            INNER JOIN team_member ON team.id = team_member.team_id
+                        WHERE (team_member.user_id = :userId OR team.owner_id = :ownerId)
+                    )';
             if ($filter == 'inProgress')
             {
                 $query .= ' AND sprint.finished_at IS NULL';
@@ -250,8 +259,7 @@
             }
             $query .= ' GROUP BY task.id';
 
-            // $results = DB::select($query, ['userId' => $userId, 'ownerId' => $userId]);
-            $results = DB::select($query, ['userId' => $userId]);
+            $results = DB::select($query, ['userId' => $userId, 'ownerId' => $userId]);
 
             // Traitement
             // ----------
@@ -308,11 +316,16 @@
                     COUNT(DISTINCT(task_user.date)) AS nbDates
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
-                    INNER JOIN team_member ON team.id = team_member.team_id
                     LEFT JOIN task ON sprint.id = task.sprint_id
-                    LEFT JOIN task_user ON task.id = task_user.task_id';
-            // $query .= ' WHERE (team_member.user_id = :userId OR team.owner_id = :ownerId) ';
-            $query .= ' WHERE team_member.user_id = :userId ';
+                    LEFT JOIN task_user ON task.id = task_user.task_id
+                WHERE 
+                    sprint.id IN (
+                        SELECT DISTINCT sprint.id
+                        FROM sprint
+                            INNER JOIN team ON team.id = sprint.team_id
+                            INNER JOIN team_member ON team.id = team_member.team_id
+                        WHERE (team_member.user_id = :userId OR team.owner_id = :ownerId)
+                    )';
             if ($filter == 'inProgress')
             {
                 $query .= ' AND sprint.finished_at IS NULL';
@@ -323,8 +336,7 @@
             }
             $query .= ' GROUP BY sprint.id';
 
-            // $results = DB::select($query, ['userId' => $userId, 'ownerId' => $userId]);
-            $results = DB::select($query, ['userId' => $userId]);
+            $results = DB::select($query, ['userId' => $userId, 'ownerId' => $userId]);
 
             // Traitement
             // ----------
