@@ -104,5 +104,19 @@
                 return Response::json($response['data'], 200);
             }
         }
+
+        /**
+         * Liste de toutes les équipes
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function getAllTeams(Request $request): \Illuminate\Http\JsonResponse
+        {
+            $response = TeamRepository::getAllTeams();
+            
+            return Response::json($response, 200);
+        }
     }
     

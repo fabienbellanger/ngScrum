@@ -10,6 +10,8 @@
     Route::group(['prefix' => 'teams'], function()
     {
         Route::get('', 'TeamController@getTeams');
+        
+        Route::get('/all', 'TeamController@getAllTeams');
 
         Route::delete('/{teamId}', 'TeamController@deleteTeam')
             ->where(['teamId' => '[0-9]+']);

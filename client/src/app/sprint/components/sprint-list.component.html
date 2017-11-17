@@ -20,8 +20,8 @@
 
     <div class="margin-bottom-20px">
         <mat-card class="SprintsList-Sprint"
-                 *ngFor="let sprint of sprints"
-                 (click)="redirectToTasksManagement(sprint)">
+                  *ngFor="let sprint of sprints"
+                  (click)="redirectToTasksManagement(sprint)">
             <mat-card-header class="SprintsList-Sprint-Header">
                 <mat-card-title color="primary" class="SprintsList-Sprint-Header-title">
                     <h4 class="primary-color">{{ sprint.name }}</h4>
