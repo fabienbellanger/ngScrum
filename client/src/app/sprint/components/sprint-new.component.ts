@@ -51,14 +51,17 @@ export class SprintNewComponent implements OnInit
         // FormControls
         // ------------
         this.sprintFormGroup = new FormGroup({
-            name:      new FormControl('', [
+            name:        new FormControl('', [
                 Validators.required,
                 Validators.maxLength(50),
             ]),
-            team:      new FormControl('', [
+            team:        new FormControl('', [
                 Validators.required,
             ]),
-            startedAt: new FormControl(new Date(), [
+            startedAt:   new FormControl(new Date(), [
+                Validators.required,
+            ]),
+            deliveredAt: new FormControl(new Date(), [
                 Validators.required,
             ]),
         });
@@ -78,9 +81,10 @@ export class SprintNewComponent implements OnInit
             this.formSubmitted = true;
 
             const data: any = {
-                name:      this.sprintFormGroup.get('name').value,
-                teamId:    this.sprintFormGroup.get('team').value,
-                startedAt: this.dateService.toSqlDate(this.sprintFormGroup.get('startedAt').value),
+                name:        this.sprintFormGroup.get('name').value,
+                teamId:      this.sprintFormGroup.get('team').value,
+                startedAt:   this.dateService.toSqlDate(this.sprintFormGroup.get('startedAt').value),
+                deliveredAt: this.dateService.toSqlDate(this.sprintFormGroup.get('deliveredAt').value),
             };
 
             this.apiSprintService.newSprint(data)

@@ -511,11 +511,6 @@ a.list-group-item {
                 background-color: $lightMediumColor;
             }
 
-            &-container:hover {
-                background-color: lighten($primayColor, 30%); //$mediumLightColor;
-                color:            $veryLightColor;
-            }
-
             &-avatar {
                 flex:       0 0 1;
                 min-width:  28px;

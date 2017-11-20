@@ -62,11 +62,14 @@ export class SprintParametersComponent implements OnInit
         // FormControls
         // ------------
         this.parametersFormGroup = new FormGroup({
-            name:      new FormControl('', [
+            name:        new FormControl('', [
                 Validators.required,
                 Validators.maxLength(50),
             ]),
-            startedAt: new FormControl('', [
+            startedAt:   new FormControl('', [
+                Validators.required,
+            ]),
+            deliveredAt: new FormControl('', [
                 Validators.required,
             ]),
         });
@@ -78,6 +81,7 @@ export class SprintParametersComponent implements OnInit
 
                 this.parametersFormGroup.get('name').setValue(this.sprint.name);
                 this.parametersFormGroup.get('startedAt').setValue(this.sprint.startedAt);
+                this.parametersFormGroup.get('deliveredAt').setValue(this.sprint.deliveredAt);
 
                 // Initialisation du tri des utilisateurs (présent ou non dans le sprint)
                 // ----------------------------------------------------------------------
@@ -101,9 +105,10 @@ export class SprintParametersComponent implements OnInit
     public saveParameters(): void
     {
         const data: any = {
-            'name':      this.parametersFormGroup.get('name').value,
-            'startedAt': this.dateService.toSqlDate(this.parametersFormGroup.get('startedAt').value),
-            'usersId':   this.usersInSprint.map(element => element.id),
+            'name':        this.parametersFormGroup.get('name').value,
+            'startedAt':   this.dateService.toSqlDate(this.parametersFormGroup.get('startedAt').value),
+            'deliveredAt': this.dateService.toSqlDate(this.parametersFormGroup.get('deliveredAt').value),
+            'usersId':     this.usersInSprint.map(element => element.id),
         };
 
         if (data.usersId.length === 0)

@@ -48,11 +48,24 @@
 					<p class="col-xs-12 col-sm-6 col-md-4">
 						<mat-form-field class="width-100">
 							<input matInput [matDatepicker]="picker" [placeholder]="'started.at' | translate"
-								   formControlName="startedAt"
-								   required>
+								   formControlName="startedAt" required>
 							<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 							<mat-datepicker #picker></mat-datepicker>
 							<mat-error *ngIf="sprintFormGroup.get('startedAt').hasError('required')">
+								{{ 'required.date' | translate }}
+							</mat-error>
+						</mat-form-field>
+					</p>
+				</div>
+				
+				<div class="row margin-top-20px">
+					<p class="col-xs-12 col-sm-6 col-md-4">
+						<mat-form-field class="width-100">
+							<input matInput [matDatepicker]="picker2" [placeholder]="'delivered.at' | translate"
+								   formControlName="deliveredAt" required>
+							<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+							<mat-datepicker #picker2></mat-datepicker>
+							<mat-error *ngIf="sprintFormGroup.get('deliveredAt').hasError('required')">
 								{{ 'required.date' | translate }}
 							</mat-error>
 						</mat-form-field>

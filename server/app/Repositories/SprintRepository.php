@@ -827,10 +827,11 @@
             // -------------------------
             $query = '
                 SELECT 
-                    sprint.name       AS sprintName,
-                    sprint.started_at AS startedAt,
-                    sprint.team_id    AS teamId,
-                    team.name         AS teamName
+                    sprint.name         AS sprintName,
+                    sprint.started_at   AS startedAt,
+                    sprint.delivered_at AS deliveredAt,
+                    sprint.team_id      AS teamId,
+                    team.name           AS teamName
                 FROM sprint
                     INNER JOIN team ON team.id = sprint.team_id
                 WHERE sprint.id = :sprintId';
@@ -843,10 +844,11 @@
                     'message' => 'No sprint found',
                 ];
             }
-            $sprint['id']        = $sprintId;
-            $sprint['name']      = $results[0]->sprintName;
-            $sprint['startedAt'] = $results[0]->startedAt;
-            $sprint['teamName']  = $results[0]->teamName;
+            $sprint['id']          = $sprintId;
+            $sprint['name']        = $results[0]->sprintName;
+            $sprint['startedAt']   = $results[0]->startedAt;
+            $sprint['deliveredAt'] = $results[0]->deliveredAt;
+            $sprint['teamName']    = $results[0]->teamName;
 
             // 2. Récupération des membres de l'équipe
             // ---------------------------------------
@@ -906,8 +908,9 @@
             // Mise à jour dans la table sprint
             // --------------------------------
             $sprintData = [
-                'name'       => $data['name'],
-                'started_at' => $data['startedAt'],
+                'name'         => $data['name'],
+                'started_at'   => $data['startedAt'],
+                'delivered_at' => $data['deliveredAt'],
             ];
             DB::table('sprint')
               ->where('id', $sprintId)
@@ -1235,12 +1238,13 @@
             $timezone  = UserRepository::getTimezone();
             $createdAt = TZ::getUTCDatetime2($timezone, date('Y-m-d H:i:s'), 'Y-m-d H:i:s');
             $sprintData = [
-                'name'        => $data['name'],
-                'team_id'     => $data['teamId'],
-                'created_at'  => $createdAt,
-                'updated_at'  => $createdAt,
-                'started_at'  => $data['startedAt'],
-                'finished_at' => null,
+                'name'         => $data['name'],
+                'team_id'      => $data['teamId'],
+                'created_at'   => $createdAt,
+                'updated_at'   => $createdAt,
+                'started_at'   => $data['startedAt'],
+                'delivered_at' => $data['deliveredAt'],
+                'finished_at'  => null,
             ];
             $sprintId = DB::table('sprint')->insertGetId($sprintData);
 

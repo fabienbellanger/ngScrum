@@ -370,7 +370,8 @@
 
             if (!array_key_exists('name', $data) ||
                 !array_key_exists('teamId', $data) ||
-                !array_key_exists('startedAt', $data))
+                !array_key_exists('startedAt', $data) ||
+                !array_key_exists('deliveredAt', $data))
             {
                 return Response::internalError('Missing data');
             }
