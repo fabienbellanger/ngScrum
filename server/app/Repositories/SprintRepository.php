@@ -160,6 +160,7 @@
                     team.name                      AS teamName,
                     sprint.created_at              AS sprintCreatedAt,
                     sprint.started_at              AS sprintStartedAt,
+                    sprint.delivered_at            AS sprintDeliveredAt,
                     sprint.finished_at             AS sprintFinishedAt,
                     SUM(task.initial_duration)     AS initialDuration,
                     SUM(task.remaining_duration)   AS remainingDuration
@@ -207,6 +208,7 @@
                         $sprints[$sprintId]['createdAt']         = TZ::getLocalDatetime2($timezone, $line->sprintCreatedAt, 'Y-m-d H:i:s');
                         $sprints[$sprintId]['finishedAt']        = TZ::getLocalDatetime2($timezone, $line->sprintFinishedAt, 'Y-m-d H:i:s');
                         $sprints[$sprintId]['startedAt']         = $line->sprintStartedAt;
+                        $sprints[$sprintId]['deliveredAt']       = $line->sprintDeliveredAt;
                         $sprints[$sprintId]['initialDuration']   = floatval($line->initialDuration);
                         $sprints[$sprintId]['remainingDuration'] = floatval($line->remainingDuration);
                         $sprints[$sprintId]['progressPercent']   = ($line->initialDuration != 0)
@@ -397,7 +399,7 @@
             // 1. Récupération du sprint
             // -------------------------
             $query   = '
-                SELECT sprint.name, sprint.created_at, sprint.updated_at, sprint.started_at, sprint.finished_at
+                SELECT sprint.name, sprint.created_at, sprint.updated_at, sprint.started_at, sprint.finished_at, sprint.delivered_at
                 FROM sprint
                 WHERE sprint.id = :sprintId';
             $results = DB::select($query, ['sprintId' => $sprintId]);
@@ -413,12 +415,13 @@
             // --------
             $timezone = UserRepository::getTimezone();
 
-            $sprint['id']         = $sprintId;
-            $sprint['name']       = $results[0]->name;
-            $sprint['createdAt']  = TZ::getLocalDatetime2($timezone, $results[0]->created_at, 'Y-m-d H:i:s');
-            $sprint['updatedAt']  = TZ::getLocalDatetime2($timezone, $results[0]->updated_at, 'Y-m-d H:i:s');
-            $sprint['startedAt']  = $results[0]->started_at;
-            $sprint['finishedAt'] = TZ::getLocalDatetime2($timezone, $results[0]->finished_at, 'Y-m-d H:i:s');
+            $sprint['id']          = $sprintId;
+            $sprint['name']        = $results[0]->name;
+            $sprint['createdAt']   = TZ::getLocalDatetime2($timezone, $results[0]->created_at, 'Y-m-d H:i:s');
+            $sprint['updatedAt']   = TZ::getLocalDatetime2($timezone, $results[0]->updated_at, 'Y-m-d H:i:s');
+            $sprint['startedAt']   = $results[0]->started_at;
+            $sprint['deliveredAt'] = $results[0]->delivered_at;
+            $sprint['finishedAt']  = TZ::getLocalDatetime2($timezone, $results[0]->finished_at, 'Y-m-d H:i:s');
 
             // 2. Récupération des tâches
             // --------------------------
@@ -432,6 +435,7 @@
                     task.remaining_duration     AS taskRemainingDuration,
                     task.user_id                AS taskUserId,
                     task.added_after            AS taskAddedAfter,
+                    task.delivered_at           AS taskdeliveredAt,
                     task_user.id                AS taskPartId,
                     task_user.user_id           AS taskPartUserId,
                     task_user.duration          AS taskPartDuration,
@@ -458,6 +462,7 @@
                     $tasks[$taskId]['remainingDuration'] = floatval($task->taskRemainingDuration);
                     $tasks[$taskId]['userId']            = $task->taskUserId;
                     $tasks[$taskId]['addedAfter']        = $task->taskAddedAfter;
+                    $tasks[$taskId]['deliveredAt']       = $task->taskdeliveredAt;
                     $tasks[$taskId]['list']              = [];
                 }
 
@@ -625,6 +630,7 @@
                 'initial_duration'   => floatval($data['duration']),
                 'remaining_duration' => floatval($data['duration']),
                 'added_after'        => intval($data['notPlanned']),
+                'delivered_at'       => $data['deliveredAt'],
                 'created_at'         => $createdAt,
                 'updated_at'         => $createdAt,
             ];
@@ -668,11 +674,12 @@
             $timezone  = UserRepository::getTimezone();
             $updatedAt = TZ::getUTCDatetime2($timezone, date('Y-m-d H:i:s'), 'Y-m-d H:i:s');
             $taskData  = [
-                'name'        => $data['name'],
-                'description' => ($data['description']) ? $data['description'] : null,
-                'type'        => intval($data['type']),
-                'added_after' => intval($data['notPlanned']),
-                'updated_at'  => $updatedAt,
+                'name'         => $data['name'],
+                'description'  => ($data['description']) ? $data['description'] : null,
+                'type'         => intval($data['type']),
+                'added_after'  => intval($data['notPlanned']),
+                'delivered_at' => $data['deliveredAt'],
+                'updated_at'   => $updatedAt,
             ];
             DB::table('task')
               ->where('id', $taskId)
@@ -789,6 +796,7 @@
                 'initialDuration'   => floatval($task->initial_duration),
                 'remainingDuration' => floatval($task->remaining_duration),
                 'addedAfter'        => intval($task->added_after),
+                'deliveredAt'       => $task->delivered_at,
                 'applications'      => [],
             ];
 
@@ -990,6 +998,7 @@
                     sprint.created_at,
                     sprint.updated_at,
                     sprint.started_at,
+                    sprint.delivered_at,
                     sprint.finished_at
                 FROM sprint
                 WHERE sprint.id = :sprintId';
@@ -1006,14 +1015,15 @@
             // --------
             $timezone = UserRepository::getTimezone();
             
-            $sprint['date']       = $date;
-            $sprint['id']         = $sprintId;
-            $sprint['name']       = $results[0]->name;
-            $sprint['teamId']     = $results[0]->team_id;
-            $sprint['createdAt']  = TZ::getLocalDatetime2($timezone, $results[0]->created_at, 'Y-m-d H:i:s');
-            $sprint['updatedAt']  = TZ::getLocalDatetime2($timezone, $results[0]->updated_at, 'Y-m-d H:i:s');
-            $sprint['startedAt']  = $results[0]->started_at;
-            $sprint['finishedAt'] = TZ::getLocalDatetime2($timezone, $results[0]->finished_at, 'Y-m-d H:i:s');
+            $sprint['date']        = $date;
+            $sprint['id']          = $sprintId;
+            $sprint['name']        = $results[0]->name;
+            $sprint['teamId']      = $results[0]->team_id;
+            $sprint['createdAt']   = TZ::getLocalDatetime2($timezone, $results[0]->created_at, 'Y-m-d H:i:s');
+            $sprint['updatedAt']   = TZ::getLocalDatetime2($timezone, $results[0]->updated_at, 'Y-m-d H:i:s');
+            $sprint['startedAt']   = $results[0]->started_at;
+            $sprint['deliveredAt'] = $results[0]->delivered_at;
+            $sprint['finishedAt']  = TZ::getLocalDatetime2($timezone, $results[0]->finished_at, 'Y-m-d H:i:s');
 
             // 2. Récupération des tâches
             // --------------------------

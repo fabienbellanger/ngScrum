@@ -32,6 +32,7 @@
                                 <th>{{ 'name' | translate }}</th>
                                 <th class="hidden-xs">{{ 'description' | translate }}</th>
                                 <th class="hidden-xs">{{ 'type' | translate }}</th>
+                                <th class="hidden-xs">{{ 'delivered.at' | translate }}</th>
                                 <th>{{ 'initial.duration' | translate }}</th>
                                 <th>{{ 'worked.duration' | translate }}</th>
                                 <th>{{ 'remaining.duration' | translate }}</th>
@@ -47,6 +48,9 @@
                                     <span *ngIf="task.type > 0">
                                         {{ 'task.type.' + taskTypes[task.type] | translate }}
                                     </span>
+                                </td>
+                                <td align="center" valign="middle" class="hidden-xs">
+                                    {{ task.deliveredAt | moment:'DD/MM/YYYY' }}
                                 </td>
                                 <td class="text-center" valign="middle">
                                     {{ task.initialDuration | duration:'hour' }}
@@ -76,6 +80,7 @@
                         <tfoot>
                             <tr>
                                 <th align="left" valign="middle">{{ 'total' | translate }}</th>
+                                <th class="hidden-xs"></th>
                                 <th class="hidden-xs"></th>
                                 <th class="hidden-xs"></th>
                                 <th class="text-center" valign="middle">

@@ -70,6 +70,10 @@
                         <div class="SprintsList-Sprint-label">{{ 'started.at' | translate }}</div>
                         <div class="SprintsList-Sprint-value">{{ sprint.startedAt | date:"dd/MM/yyyy" }}</div>
                     </div>
+                    <div class="row SprintsList-Sprint-info">
+                        <div class="SprintsList-Sprint-label">{{ 'delivered.at' | translate }}</div>
+                        <div class="SprintsList-Sprint-value">{{ sprint.deliveredAt | date:"dd/MM/yyyy" }}</div>
+                    </div>
                     <div class="row SprintsList-Sprint-info" *ngIf="!sprint.finishedAt">
                         <div class="SprintsList-Sprint-label">{{ 'estimated.end.date' | translate }}</div>
                         <div class="SprintsList-Sprint-value">

@@ -92,6 +92,20 @@
                         </mat-form-field>
                     </p>
                 </div>
+				
+				<div class="row">
+					<p class="col-xs-12 col-sm-6 col-md-4">
+						<mat-form-field class="width-100">
+							<input matInput [matDatepicker]="picker" [placeholder]="'delivered.at' | translate"
+								   formControlName="deliveredAt">
+							<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+							<mat-datepicker #picker></mat-datepicker>
+							<mat-error *ngIf="taskFormGroup.get('deliveredAt').hasError('required')">
+								{{ 'required.date' | translate }}
+							</mat-error>
+						</mat-form-field>
+					</p>
+				</div>
 
                 <div class="row">
                     <div class="col-xs-12">

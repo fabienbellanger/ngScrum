@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ApiSprintService } from '../../../api';
-import { StorageService, ToolboxService } from '../../../shared';
+import { StorageService, ToolboxService, DateService } from '../../../shared';
 import { SprintService } from '../../services/sprint.service';
 
 import { Task } from '../../../models';
@@ -45,6 +45,7 @@ export class SprintEditTaskComponent implements OnInit
      * @param {Router}              router
      * @param {TranslateService}    translateService
      * @param {ToolboxService}      toolboxService
+     * @param {DateService}         dateService
      */
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
@@ -53,7 +54,8 @@ export class SprintEditTaskComponent implements OnInit
                 private snackBar: MatSnackBar,
                 private router: Router,
                 private translateService: TranslateService,
-                private toolboxService: ToolboxService)
+                private toolboxService: ToolboxService,
+                private dateService: DateService)
     {
     }
 
@@ -98,19 +100,20 @@ export class SprintEditTaskComponent implements OnInit
         // FormControls
         // ------------
         this.taskFormGroup = new FormGroup({
-            name:     new FormControl('', [
+            name:        new FormControl('', [
                 Validators.required,
                 Validators.maxLength(100),
             ]),
-            duration: new FormControl('', [
+            duration:    new FormControl('', [
                 Validators.required,
                 Validators.min(0.5),
                 Validators.max(35),
             ]),
-            type:     new FormControl('', [
+            type:        new FormControl('', [
                 Validators.required,
                 Validators.min(0),
             ]),
+            deliveredAt: new FormControl(new Date(), []),
         });
 
         // Types de tâche
@@ -133,6 +136,7 @@ export class SprintEditTaskComponent implements OnInit
                     this.taskFormGroup.get('name').setValue(response.name);
                     this.taskFormGroup.get('duration').setValue(response.initialDuration);
                     this.taskFormGroup.get('type').setValue(response.type - 1);
+                    this.taskFormGroup.get('deliveredAt').setValue(response.deliveredAt);
                     this.description = response.description;
                     this.notPlanned  = response.addedAfter;
 
@@ -217,6 +221,7 @@ export class SprintEditTaskComponent implements OnInit
                 description:     this.description,
                 type:            +this.taskFormGroup.get('type').value + 1,
                 duration:        +this.taskFormGroup.get('duration').value,
+                deliveredAt:     this.dateService.toSqlDate(this.taskFormGroup.get('deliveredAt').value),
                 notPlanned:      +this.notPlanned,
                 applicationsIds: applicationsIdsSelected,
             })
@@ -284,6 +289,7 @@ export class SprintEditTaskComponent implements OnInit
                 description:     this.description,
                 type:            +this.taskFormGroup.get('type').value + 1,
                 duration:        +this.taskFormGroup.get('duration').value,
+                deliveredAt:     this.dateService.toSqlDate(this.taskFormGroup.get('deliveredAt').value),
                 notPlanned:      +this.notPlanned,
                 applicationsIds: applicationsIdsSelected,
             })

@@ -17,6 +17,7 @@ export class Sprint
      * @param {string}   createdAt
      * @param {string}   updatedAt
      * @param {string}   finishedAt
+     * @param {string}   deliveredAt
      * @param {Task[]}   tasks
      * @param {User[]}   users
      */
@@ -25,6 +26,7 @@ export class Sprint
                 public createdAt: string,
                 public updatedAt: string,
                 public finishedAt: string,
+                public deliveredAt: string,
                 public tasks: Task[],
                 public users: User[])
     {

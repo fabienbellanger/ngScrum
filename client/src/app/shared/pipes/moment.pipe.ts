@@ -30,8 +30,6 @@ export class MomentPipe implements PipeTransform
      */
     public transform(value: string, format: string): string
     {
-        let date: string = this.dateService.date(value, format);
-
-        return date;
+        return (value !== null) ? this.dateService.date(value, format) : '';
     }
 }
