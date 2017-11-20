@@ -69,9 +69,7 @@ export class SprintParametersComponent implements OnInit
             startedAt:   new FormControl('', [
                 Validators.required,
             ]),
-            deliveredAt: new FormControl('', [
-                Validators.required,
-            ]),
+            deliveredAt: new FormControl('', []),
         });
 
         this.apiSprintService.getSprintParameters(sprintId)

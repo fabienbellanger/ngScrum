@@ -113,7 +113,7 @@ export class SprintEditTaskComponent implements OnInit
                 Validators.required,
                 Validators.min(0),
             ]),
-            deliveredAt: new FormControl(new Date(), []),
+            deliveredAt: new FormControl('', []),
         });
 
         // Types de tâche

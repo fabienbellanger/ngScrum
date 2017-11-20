@@ -56,7 +56,7 @@
                     <p class="col-xs-12 col-sm-6 col-md-4">
                         <mat-form-field class="width-100">
                             <input matInput [matDatepicker]="picker2" [placeholder]="'delivered.at' | translate"
-                                   formControlName="deliveredAt" required>
+                                   formControlName="deliveredAt">
                             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                             <mat-datepicker #picker2></mat-datepicker>
                             <mat-error *ngIf="parametersFormGroup.get('deliveredAt').hasError('required')">

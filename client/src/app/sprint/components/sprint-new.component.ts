@@ -61,9 +61,7 @@ export class SprintNewComponent implements OnInit
             startedAt:   new FormControl(new Date(), [
                 Validators.required,
             ]),
-            deliveredAt: new FormControl(new Date(), [
-                Validators.required,
-            ]),
+            deliveredAt: new FormControl('', []),
         });
     }
 

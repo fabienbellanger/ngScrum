@@ -17,6 +17,7 @@ export class Task
      * @param {boolean}  addedAfter
      * @param {number}   userId
      * @param {string}   createdDate
+     * @param {string}   deliveredAt
      * @param {list}     any[]
      */
     constructor(public id: number,
@@ -28,6 +29,7 @@ export class Task
                 public addedAfter: boolean,
                 public userId: number,
                 public createdDate: string,
+                public deliveredAt: string,
                 public list: any[])
     {
     }
