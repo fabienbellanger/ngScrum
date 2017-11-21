@@ -1087,9 +1087,12 @@
                     users.worked_hours_per_day,
                     users.group_id
                 FROM users
-                    INNER JOIN task_user ON task_user.user_id = users.id
+                    LEFT JOIN task_user ON task_user.user_id = users.id
+                    LEFT JOIN task ON task_user.task_id = task.id
+                    LEFT JOIN team_member ON team_member.user_id = users.id
+                WHERE team_member.team_id = :teamId OR task.sprint_id = :sprintId
                 ORDER BY users.firstname ASC, users.lastname ASC';
-            $results = DB::select($query, ['teamId' => $sprint['teamId']]);
+            $results = DB::select($query, ['teamId' => $sprint['teamId'], 'sprintId' => $sprintId]);
             if ($results && count($results) > 0)
             {
                 foreach ($results as $user)
