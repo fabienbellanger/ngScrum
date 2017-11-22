@@ -121,7 +121,14 @@ export class DateService
      */
     public toDate(date: string): Date
     {
-        return moment(date).toDate();
+        if (date === '0000-00-00')
+        {
+            return null;
+        }
+        else
+        {
+            return moment(date).toDate();
+        }
     }
 
     /**

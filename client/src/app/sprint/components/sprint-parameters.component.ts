@@ -69,7 +69,7 @@ export class SprintParametersComponent implements OnInit
             startedAt:   new FormControl('', [
                 Validators.required,
             ]),
-            deliveredAt: new FormControl('', []),
+            deliveredAt: new FormControl(''),
         });
 
         this.apiSprintService.getSprintParameters(sprintId)
@@ -78,8 +78,12 @@ export class SprintParametersComponent implements OnInit
                 this.sprint = response;
 
                 this.parametersFormGroup.get('name').setValue(this.sprint.name);
-                this.parametersFormGroup.get('startedAt').setValue(this.sprint.startedAt);
-                this.parametersFormGroup.get('deliveredAt').setValue(this.sprint.deliveredAt);
+                setTimeout(() =>
+                {
+                    // Pour éviter l'erreur "ExpressionChangedAfterItHasBeenCheckedError"
+                    this.parametersFormGroup.get('startedAt').setValue(this.dateService.toDate(this.sprint.startedAt));
+                    this.parametersFormGroup.get('deliveredAt').setValue(this.dateService.toDate(this.sprint.deliveredAt));
+                }, 0);
 
                 // Initialisation du tri des utilisateurs (présent ou non dans le sprint)
                 // ----------------------------------------------------------------------

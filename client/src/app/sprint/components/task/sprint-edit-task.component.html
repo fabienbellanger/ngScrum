@@ -100,9 +100,6 @@
 								   formControlName="deliveredAt">
 							<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 							<mat-datepicker #picker></mat-datepicker>
-							<mat-error *ngIf="taskFormGroup.get('deliveredAt').hasError('required')">
-								{{ 'required.date' | translate }}
-							</mat-error>
 						</mat-form-field>
 					</p>
 				</div>

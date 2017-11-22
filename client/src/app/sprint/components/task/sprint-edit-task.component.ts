@@ -113,7 +113,7 @@ export class SprintEditTaskComponent implements OnInit
                 Validators.required,
                 Validators.min(0),
             ]),
-            deliveredAt: new FormControl('', []),
+            deliveredAt: new FormControl(''),
         });
 
         // Types de tâche
@@ -136,7 +136,11 @@ export class SprintEditTaskComponent implements OnInit
                     this.taskFormGroup.get('name').setValue(response.name);
                     this.taskFormGroup.get('duration').setValue(response.initialDuration);
                     this.taskFormGroup.get('type').setValue(response.type - 1);
-                    this.taskFormGroup.get('deliveredAt').setValue(response.deliveredAt);
+                    setTimeout(() =>
+                    {
+                        // Pour éviter l'erreur "ExpressionChangedAfterItHasBeenCheckedError"
+                        this.taskFormGroup.get('deliveredAt').setValue(this.dateService.toDate(response.deliveredAt));
+                    }, 0);
                     this.description = response.description;
                     this.notPlanned  = response.addedAfter;
 
