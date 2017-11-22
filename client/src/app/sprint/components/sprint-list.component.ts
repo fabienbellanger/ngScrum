@@ -102,7 +102,7 @@ export class SprintListComponent implements OnInit
      */
     public redirectToTasksManagement(sprint: any): void
     {
-        if (sprint.initialDuration !== null)
+        if (sprint.initialDuration !== null && sprint.finishedAt === null)
         {
             this.router.navigate(['/sprints', sprint.id, 'tasks-management-list']);
         }
