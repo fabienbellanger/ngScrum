@@ -260,6 +260,7 @@
                 $query .= ' AND sprint.finished_at IS NOT NULL';
             }
             $query .= ' GROUP BY task.id';
+            $query .= ' ORDER BY task.name';
 
             $results = DB::select($query, ['userId' => $userId, 'ownerId' => $userId]);
 
@@ -444,7 +445,7 @@
                 FROM task
                     LEFT JOIN task_user ON task_user.task_id = task.id
                 WHERE task.sprint_id = :sprintId
-                ORDER BY task.created_at ASC';
+                ORDER BY task.name ASC';
             $results = DB::select($query, ['sprintId' => $sprintId]);
             $tasks   = [];
             foreach ($results as $task)

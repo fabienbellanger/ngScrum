@@ -36,7 +36,7 @@
                                 <th>{{ 'initial.duration' | translate }}</th>
                                 <th>{{ 'worked.duration' | translate }}</th>
                                 <th>{{ 'remaining.duration' | translate }}</th>
-                                <th width="80px">{{ 'planned' | translate }}</th>
+                                <th width="80px" class="hidden-xs">{{ 'planned' | translate }}</th>
                                 <th width="150px">{{ 'actions' | translate }}</th>
                             </tr>
                         </thead>
@@ -61,7 +61,7 @@
                                 <td class="text-center" valign="middle">
                                     {{ task.remainingDuration | duration:'hour' }}
                                 </td>
-                                <td align="center" valign="middle">
+                                <td align="center" valign="middle" class="hidden-xs">
                                       <mat-icon *ngIf="!task.addedAfter" class="green-color">done</mat-icon>
                                       <mat-icon *ngIf="task.addedAfter" class="red-color">clear</mat-icon>
                                 </td>

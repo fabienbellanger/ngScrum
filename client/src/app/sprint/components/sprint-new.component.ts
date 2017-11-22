@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { ApiSprintService } from '../../api';
+import { ApiSprintService, ApiTeamService } from '../../api';
 import { UserService } from '../../auth';
 import { DateService } from '../../shared';
 
@@ -17,13 +17,16 @@ import { DateService } from '../../shared';
 export class SprintNewComponent implements OnInit
 {
     public sprintFormGroup: FormGroup;
-    public formSubmitted: boolean;
+    public formSubmitted:   boolean;
+    public loading:         boolean;
+    public teams:           any[] = [];
 
     /**
      * Constructeur
      *
      * @author Fabien Bellanger
      * @param {ApiSprintService}    apiSprintService
+     * @param {ApiTeamService}      apiTeamService
      * @param {Router}              router
      * @param {UserService}         userService
      * @param {DateService}         dateService
@@ -31,6 +34,7 @@ export class SprintNewComponent implements OnInit
      * @param {MatSnackBar}         snackBar
      */
     constructor(private apiSprintService: ApiSprintService,
+                private apiTeamService: ApiTeamService,
                 private router: Router,
                 public userService: UserService,
                 private dateService: DateService,
@@ -63,6 +67,33 @@ export class SprintNewComponent implements OnInit
             ]),
             deliveredAt: new FormControl('', []),
         });
+
+        // Récupération des équipes
+        // ------------------------
+        this.loading = true;
+        this.apiTeamService.getAllTeams()
+            .then((teams: any[]) =>
+            {
+                this.teams   = teams;
+                this.loading = false;
+            })
+            .catch(() =>
+            {
+                // Notification
+                // ------------
+                this.translateService.get(['no.team', 'error'])
+                .subscribe((translationObject: Object) =>
+                {
+                    this.snackBar.open(
+                        translationObject['no.team'],
+                        translationObject['error'],
+                        {
+                            duration: 3000,
+                        });
+                });
+                
+                this.loading = false;
+            });
     }
 
     /**

@@ -1,4 +1,5 @@
-<div class="margin-bottom-20px">
+<sa-loading *ngIf="loading"></sa-loading>
+<div *ngIf="!loading" class="margin-bottom-20px">
 	<h1>{{ 'new.sprint' | translate }}</h1>
 
 	<div class="row margin-bottom-20px">
@@ -36,15 +37,17 @@
 							<mat-select [placeholder]="'team' | translate"
 										formControlName="team" required>
 								<mat-option>{{ 'none' | translate }}</mat-option>
-								<mat-option *ngFor="let team of userService.user.teams" [value]="team.id">
-									{{ team.name }}
-								</mat-option>
+								<ng-template ngFor let-team [ngForOf]="teams">
+									<mat-option *ngIf="!team.deleted" [value]="team.id">
+										{{ team.name }}
+									</mat-option>
+								</ng-template>
 							</mat-select>
 						</mat-form-field>
 					</p>
 				</div>
 
-				<div class="row margin-top-20px">
+				<div class="row">
 					<p class="col-xs-12 col-sm-6 col-md-4">
 						<mat-form-field class="width-100">
 							<input matInput [matDatepicker]="picker" [placeholder]="'started.at' | translate"
@@ -58,7 +61,7 @@
 					</p>
 				</div>
 				
-				<div class="row margin-top-20px">
+				<div class="row">
 					<p class="col-xs-12 col-sm-6 col-md-4">
 						<mat-form-field class="width-100">
 							<input matInput [matDatepicker]="picker2" [placeholder]="'delivered.at' | translate"

@@ -218,4 +218,43 @@ export class ApiTeamService
             }
         });
     }
+    
+    /**
+     * Récupération de toutes les équipes
+     *
+     * @author Fabien Bellanger
+     * @return {Promise}
+     */
+    public getAllTeams(): any
+    {
+        return new Promise((resolve: any, reject: any) =>
+        {
+            // 1. Récupération du token
+            // ------------------------
+            const token: string = this.storageService.get('session', 'token', null);
+
+            if (token != null)
+            {
+                // 2. Requête
+                // ----------
+                const headers: any = new Headers();
+                headers.append('Authorization', 'Bearer ' + token);
+                headers.append('Content-Type', 'application/json');
+                
+                this.httpService.get('/teams/all', {headers: headers}, true, true)
+                    .then((data: any) =>
+                    {
+                        resolve(data);
+                    })
+                    .catch(() =>
+                    {
+                        reject();
+                    });
+            }
+            else
+            {
+                reject();
+            }
+        });
+    }
 }
