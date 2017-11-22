@@ -183,5 +183,9 @@
 	"modify.team.error": "Erreur lors de la modification d'une équipe",
 	"modify.team.success": "Modification de l'équipe avec succès",
 	"deleted.user": "Supprimé",
-	"delivered.at": "Livré pour le"
+	"delivered.at": "Livré pour le",
+	"finish": "Terminer",
+	"reopen": "Ré-ouvrir",
+	"update.sprint.success": "Succès lors de la mise à jour du sprint",
+	"update.sprint.error": "Erreur lors de la mise à jour du sprint"
 }

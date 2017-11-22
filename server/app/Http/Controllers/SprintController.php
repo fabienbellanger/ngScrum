@@ -444,4 +444,43 @@
                 return Response::json(null, 200);
             }
         }
+        
+        /**
+         * Terminaison d'un sprint
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @param int                      $id       ID de l'utilisateur
+         * @param int                      $sprintId ID du sprint
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function finishSprint(Request $request, int $id, int $sprintId): \Illuminate\Http\JsonResponse
+        {
+            $response = SprintRepository::finishOrReOpenSprint($id, $sprintId, 'finish');
+
+            return Response::json(null, 200);
+        }
+        
+        /**
+         * Ré-ouverture d'un sprint
+         *
+         * @author Fabien Bellanger
+         * @param \Illuminate\Http\Request $request
+         * @param int                      $id       ID de l'utilisateur
+         * @param int                      $sprintId ID du sprint
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function reOpenSprint(Request $request, int $id, int $sprintId): \Illuminate\Http\JsonResponse
+        {
+            $response = SprintRepository::finishOrReOpenSprint($id, $sprintId, 're-open');
+
+            if ($response['code'] == 404)
+            {
+                return Response::notFound($response['message']);
+            }
+            else
+            {
+                return Response::json($response['message'], 200);
+            }
+        }
     }

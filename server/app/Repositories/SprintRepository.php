@@ -1353,5 +1353,44 @@
                 'message' => 'TaskUser successful deleted',
             ];
         }
+
+        /**
+         * Terminaison / Ré-ouverture d'un sprint
+         *
+         * @author Fabien Bellanger
+         * @param int    $userId   ID de l'utilisateur
+         * @param int    $sprintId ID du sprint
+         * @param string $state    Etat {'finish', 're-open'}
+         * @return array
+         */
+        public static function finishOrReOpenSprint($userId, $sprintId, $state): array
+        {
+            // 1. Sprint valide ?
+            // ------------------
+            if (!self::isSprintValid($userId, $sprintId))
+            {
+                return [
+                    'code'    => 404,
+                    'message' => 'No sprint found',
+                ];
+            }
+
+            // 2. On met à jour finished_at
+            // ----------------------------
+            $finishedAt = null;
+            if ($state == 'finish')
+            {
+                $timezone   = UserRepository::getTimezone();
+                $finishedAt = TZ::getUTCDatetime2($timezone, date('Y-m-d H:i:s'), 'Y-m-d H:i:s');
+            }
+            DB::table('sprint')
+              ->where('id', $sprintId)
+              ->update(['finished_at' => $finishedAt]);
+
+            return [
+                'code'    => 200,
+                'message' => 'Sprint successful updated',
+            ];
+        }
     }
     

@@ -50,6 +50,16 @@
                                 <span>{{ 'parameters' | translate }}</span>
                             </button>
                             <button mat-menu-item *ngIf="sprint.finishedAt === null"
+                                    (click)="finishReOpenSprint(sprint, 'finish')">
+                                <mat-icon>done</mat-icon>
+                                <span>{{ 'finish' | translate }}</span>
+                            </button>
+                            <button mat-menu-item *ngIf="sprint.finishedAt !== null"
+                                    (click)="finishReOpenSprint(sprint, 're-open')">
+                                <mat-icon>undo</mat-icon>
+                                <span>{{ 'reopen' | translate }}</span>
+                            </button>
+                            <button mat-menu-item *ngIf="sprint.finishedAt === null"
                                     (click)="deleteSprint(sprint)">
                                 <mat-icon>delete</mat-icon>
                                 <span>{{ 'delete' | translate }}</span>

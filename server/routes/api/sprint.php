@@ -47,6 +47,16 @@
                          'id'       => '[0-9]+',
                          'sprintId' => '[0-9]+',
                      ]);
+        Route::put('/{sprintId}/finish', 'SprintController@finishSprint')
+            ->where([
+                        'id'       => '[0-9]+',
+                        'sprintId' => '[0-9]+',
+                    ]);
+        Route::put('/{sprintId}/re-open', 'SprintController@reOpenSprint')
+            ->where([
+                        'id'       => '[0-9]+',
+                        'sprintId' => '[0-9]+',
+                    ]);
 
         /*
         |----------------------------------------------------------------------

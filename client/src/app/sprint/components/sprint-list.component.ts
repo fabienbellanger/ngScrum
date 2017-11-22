@@ -109,6 +109,55 @@ export class SprintListComponent implements OnInit
     }
 
     /**
+     * Terminaison / Ré-ouverture d'un sprint
+     *
+     * @author Fabien Bellanger
+     * @param {any}    sprint Sprint
+     * @param {string} state  Etat {'finish', 're-open'}
+     */
+    public finishReOpenSprint(sprint: any, state: string): void
+    {
+        if (state === 'finish' || state === 're-open')
+        {
+            this.apiSprintService.finishOrReOpenSprint(sprint.id, state)
+                .then(() =>
+                {
+                    // Rechargement des données
+                    // ------------------------
+                    this.getSprints(this.state);
+                    
+                    // Notification
+                    // ------------
+                    this.translateService.get(['update.sprint.success', 'success'])
+                        .subscribe((translationObject: Object) =>
+                        {
+                            this.snackBar.open(
+                                translationObject['update.sprint.success'],
+                                translationObject['success'],
+                                {
+                                    duration: 3000,
+                                });
+                        });
+                })
+                .catch(() =>
+                {
+                    // Notification
+                    // ------------
+                    this.translateService.get(['update.sprint.error', 'error'])
+                        .subscribe((translationObject: Object) =>
+                        {
+                            this.snackBar.open(
+                                translationObject['update.sprint.error'],
+                                translationObject['error'],
+                                {
+                                    duration: 3000,
+                                });
+                        });
+                });
+        }
+    }
+
+    /**
      * Suppression d'un sprint
      *
      * @author Fabien Bellanger
