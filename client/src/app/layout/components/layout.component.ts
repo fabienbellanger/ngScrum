@@ -12,7 +12,10 @@ import { LayoutSidebarService } from '../services/layout-sidebar.service';
                 <router-outlet (activate)="changeRoute()"></router-outlet>
             </div>
         </section>
-		<sa-layout-footer></sa-layout-footer>`,
+        <sa-layout-footer></sa-layout-footer>
+        <div [ngClass]="{'layout-sidebar-fade-out': layoutSidebarService.state === 'open',
+                         'layout-sidebar-fade-in':  layoutSidebarService.state !== 'open'}"
+             (click)="toggleSidebar()"></div>`,
 })
 
 export class LayoutComponent
@@ -23,7 +26,7 @@ export class LayoutComponent
      * @author Fabien Bellanger
      * @param {LayoutSidebarService} layoutSidebarService
      */
-    constructor(private layoutSidebarService: LayoutSidebarService)
+    constructor(public layoutSidebarService: LayoutSidebarService)
     {
     }
 
@@ -36,5 +39,15 @@ export class LayoutComponent
     {
         // On referme la sidebar en mode mobile       
         this.layoutSidebarService.mobileClose();
+    }
+
+    /**
+     * Toggle de la sidebar
+     * 
+     * @author Fabien Bellanger
+     */
+    public toggleSidebar(): void
+    {
+        this.layoutSidebarService.toggle();
     }
 }

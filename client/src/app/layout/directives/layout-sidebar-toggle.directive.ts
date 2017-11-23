@@ -43,12 +43,12 @@ export class LayoutSidebarToggleDirective implements OnChanges
     }
 
     /**
-     *  Appeler à chaque changement des propriétés de l'input
+     * Appeler à chaque changement des propriétés de l'input
      *
      * @author Fabien Bellanger
      */
     public ngOnChanges(): void
     {
-        this.el.nativeElement.style.width   = (this.state === 'open') ? this.width + 'px' : '0px';
+        this.el.nativeElement.style.width = (this.state === 'open') ? this.width + 'px' : '0px';
     }
 }

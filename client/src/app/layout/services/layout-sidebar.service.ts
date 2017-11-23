@@ -64,7 +64,7 @@ export class LayoutSidebarService
      * 
      * @author Fabien Bellanger
      */
-    public toogle(): void
+    public toggle(): void
     {
         this.state = (this.state === 'open') ? 'close' : 'open';
     }
