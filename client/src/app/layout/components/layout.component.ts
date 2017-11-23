@@ -13,9 +13,8 @@ import { LayoutSidebarService } from '../services/layout-sidebar.service';
             </div>
         </section>
         <sa-layout-footer></sa-layout-footer>
-        <div [ngClass]="{'layout-sidebar-fade-out': layoutSidebarService.state === 'open',
-                         'layout-sidebar-fade-in':  layoutSidebarService.state !== 'open'}"
-             (click)="toggleSidebar()"></div>`,
+        <div [saSidebarBackdrop]="layoutSidebarService.state" (click)="toggleSidebar()"
+             class="layout-sidebar-backdrop"></div>`,
 })
 
 export class LayoutComponent
@@ -43,7 +42,7 @@ export class LayoutComponent
 
     /**
      * Toggle de la sidebar
-     * 
+     *
      * @author Fabien Bellanger
      */
     public toggleSidebar(): void

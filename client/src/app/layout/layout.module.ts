@@ -11,6 +11,7 @@ import { LayoutFooterComponent } from './components/layout-footer.component';
 import { LayoutComponent } from './components/layout.component';
 
 import { LayoutSidebarToggleDirective } from './directives/layout-sidebar-toggle.directive';
+import { LayoutSidebarBackdropDirective } from './directives/layout-sidebar-backdrop.directive';
 
 import { LayoutSidebarService } from './services/layout-sidebar.service';
 
@@ -27,6 +28,7 @@ import { LayoutSidebarService } from './services/layout-sidebar.service';
         LayoutFooterComponent,
         LayoutComponent,
         LayoutSidebarToggleDirective,
+        LayoutSidebarBackdropDirective,
     ],
     providers:    [
         LayoutSidebarService,
@@ -37,6 +39,7 @@ import { LayoutSidebarService } from './services/layout-sidebar.service';
         LayoutFooterComponent,
         LayoutComponent,
         LayoutSidebarToggleDirective,
+        LayoutSidebarBackdropDirective,
     ],
 })
 

@@ -14,3 +14,4 @@ export { LayoutSidebarService } from './services/layout-sidebar.service';
 // Directives
 // ----------
 export { LayoutSidebarToggleDirective } from './directives/layout-sidebar-toggle.directive';
+export { LayoutSidebarBackdropDirective } from './directives/layout-sidebar-backdrop.directive';
