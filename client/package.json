@@ -23,6 +23,7 @@
     "@angular/platform-browser": "^5.1.0",
     "@angular/platform-browser-dynamic": "^5.1.0",
     "@angular/router": "^5.1.0",
+    "@ngx-progressbar/core": "^3.0.1",
     "@ngx-translate/core": "^9.0.1",
     "@ngx-translate/http-loader": "^2.0.0",
     "bootstrap": "^3.3.7",
@@ -35,14 +36,13 @@
     "jquery": "^3.2.1",
     "moment": "^2.19.4",
     "ng2-charts": "^1.6.0",
-    "ng2-slim-loading-bar": "^4.0.0",
     "roboto-fontface": "^0.8.0",
     "rxjs": "^5.5.5",
     "ts-md5": "^1.2.2",
     "zone.js": "^0.8.18"
   },
   "devDependencies": {
-    "@angular/cli": "^1.5.3",
+    "@angular/cli": "^1.6.0",
     "@angular/compiler-cli": "^5.1.0",
     "@types/jasmine": "^2.8.1",
     "@types/node": "~8.0.58",
@@ -56,8 +56,8 @@
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.2.1",
-    "ts-node": "~3.3.0",
+    "ts-node": "~4.0.1",
     "tslint": "~5.8.0",
-    "typescript": "~2.4.2"
+    "typescript": "~2.5.3"
   }
 }

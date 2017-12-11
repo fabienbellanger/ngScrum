@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { NgProgress } from '@ngx-progressbar/core';
 
 /**
  * Http service
@@ -25,11 +25,11 @@ export class HttpService
      * @author Fabien Bellanger
      * @param {Http}                    http
      * @param {Router}                  router
-     * @param {SlimLoadingBarService}   slimLoadingBarService
+     * @param {NgProgress}              ngProgress
      */
     constructor(private http: Http,
                 private router: Router,
-                private slimLoadingBarService: SlimLoadingBarService)
+                private ngProgress: NgProgress)
     {
         this.baseUrl = environment.apiUrl;
     }
@@ -83,7 +83,7 @@ export class HttpService
         // Start loader
         if (loading)
         {
-            this.slimLoadingBarService.start();
+            this.ngProgress.start();
         }
 
         return new Promise((resolve: any, reject: any) =>
@@ -91,10 +91,10 @@ export class HttpService
             if (typeof url === 'string')
             {
                 // Options
-                options.withCredentials            = withCredentials;
-                let requestOptions: RequestOptions = new RequestOptions(options);
+                options.withCredentials              = withCredentials;
+                const requestOptions: RequestOptions = new RequestOptions(options);
 
-                let get: any = this.http.get((baseUrl ? this.baseUrl : '') + url, requestOptions);
+                const get: any = this.http.get((baseUrl ? this.baseUrl : '') + url, requestOptions);
 
                 get.map((res: Response) => res.json())
                    .subscribe(
@@ -102,7 +102,7 @@ export class HttpService
                        {
                            if (loading)
                            {
-                               this.slimLoadingBarService.complete();
+                               this.ngProgress.done();
                            }
 
                            return resolve(data);
@@ -111,7 +111,7 @@ export class HttpService
                        {
                            if (loading)
                            {
-                               this.slimLoadingBarService.complete();
+                               this.ngProgress.done();
                            }
 
                            // Gestion de l'erreur 401
@@ -125,7 +125,7 @@ export class HttpService
             {
                 if (loading)
                 {
-                    this.slimLoadingBarService.complete();
+                    this.ngProgress.done();
                 }
 
                 reject();
@@ -153,7 +153,7 @@ export class HttpService
         // Start loader
         if (loading)
         {
-            this.slimLoadingBarService.start();
+            this.ngProgress.start();
         }
 
         return new Promise((resolve: any, reject: any) =>
@@ -161,10 +161,10 @@ export class HttpService
             if (typeof url === 'string' && typeof body === 'object')
             {
                 // Options
-                options.withCredentials            = withCredentials;
-                let requestOptions: RequestOptions = new RequestOptions(options);
-                let bodyUrlEncoded: string         = this.urlEncode(body);
-                let post: any                      = this.http.post(this.baseUrl + url, bodyUrlEncoded, requestOptions);
+                options.withCredentials              = withCredentials;
+                const requestOptions: RequestOptions = new RequestOptions(options);
+                const bodyUrlEncoded: string         = this.urlEncode(body);
+                const post: any                      = this.http.post(this.baseUrl + url, bodyUrlEncoded, requestOptions);
 
                 post.map((res: Response) => res.json())
                     .subscribe(
@@ -172,7 +172,7 @@ export class HttpService
                         {
                             if (loading)
                             {
-                                this.slimLoadingBarService.complete();
+                                this.ngProgress.done();
                             }
 
                             return resolve(data);
@@ -181,7 +181,7 @@ export class HttpService
                         {
                             if (loading)
                             {
-                                this.slimLoadingBarService.complete();
+                                this.ngProgress.done();
                             }
 
                             // Gestion de l'erreur 401
@@ -195,7 +195,7 @@ export class HttpService
             {
                 if (loading)
                 {
-                    this.slimLoadingBarService.complete();
+                    this.ngProgress.done();
                 }
 
                 reject();
@@ -223,7 +223,7 @@ export class HttpService
         // Start loader
         if (loading)
         {
-            this.slimLoadingBarService.start();
+            this.ngProgress.start();
         }
 
         return new Promise((resolve: any, reject: any) =>
@@ -231,10 +231,10 @@ export class HttpService
             if (typeof url === 'string' && typeof body === 'object')
             {
                 // Options
-                options.withCredentials            = withCredentials;
-                let requestOptions: RequestOptions = new RequestOptions(options);
-                let bodyUrlEncoded: string         = this.urlEncode(body);
-                let put: any                       = this.http.put(this.baseUrl + url, bodyUrlEncoded, requestOptions);
+                options.withCredentials              = withCredentials;
+                const requestOptions: RequestOptions = new RequestOptions(options);
+                const bodyUrlEncoded: string         = this.urlEncode(body);
+                const put: any                       = this.http.put(this.baseUrl + url, bodyUrlEncoded, requestOptions);
 
                 put.map((res: Response) => res.json())
                    .subscribe(
@@ -242,7 +242,7 @@ export class HttpService
                        {
                            if (loading)
                            {
-                               this.slimLoadingBarService.complete();
+                               this.ngProgress.done();
                            }
 
                            return resolve(data);
@@ -251,7 +251,7 @@ export class HttpService
                        {
                            if (loading)
                            {
-                               this.slimLoadingBarService.complete();
+                               this.ngProgress.done();
                            }
 
                            // Gestion de l'erreur 401
@@ -265,7 +265,7 @@ export class HttpService
             {
                 if (loading)
                 {
-                    this.slimLoadingBarService.complete();
+                    this.ngProgress.done();
                 }
 
                 reject();
@@ -293,7 +293,7 @@ export class HttpService
         // Start loader
         if (loading)
         {
-            this.slimLoadingBarService.start();
+            this.ngProgress.start();
         }
 
         return new Promise((resolve: any, reject: any) =>
@@ -301,10 +301,10 @@ export class HttpService
             if (typeof url === 'string' && typeof body === 'object')
             {
                 // Options
-                options.withCredentials            = withCredentials;
-                let requestOptions: RequestOptions = new RequestOptions(options);
-                let bodyUrlEncoded: string         = this.urlEncode(body);
-                let patch: any                     = this.http.patch(this.baseUrl + url, bodyUrlEncoded, requestOptions);
+                options.withCredentials              = withCredentials;
+                const requestOptions: RequestOptions = new RequestOptions(options);
+                const bodyUrlEncoded: string         = this.urlEncode(body);
+                const patch: any                     = this.http.patch(this.baseUrl + url, bodyUrlEncoded, requestOptions);
 
                 patch.map((res: Response) => res.json())
                      .subscribe(
@@ -312,7 +312,7 @@ export class HttpService
                          {
                              if (loading)
                              {
-                                 this.slimLoadingBarService.complete();
+                                 this.ngProgress.done();
                              }
 
                              return resolve(data);
@@ -321,7 +321,7 @@ export class HttpService
                          {
                              if (loading)
                              {
-                                 this.slimLoadingBarService.complete();
+                                 this.ngProgress.done();
                              }
 
                              // Gestion de l'erreur 401
@@ -335,7 +335,7 @@ export class HttpService
             {
                 if (loading)
                 {
-                    this.slimLoadingBarService.complete();
+                    this.ngProgress.done();
                 }
 
                 reject();
@@ -358,7 +358,7 @@ export class HttpService
         // Start loader
         if (loading)
         {
-            this.slimLoadingBarService.start();
+            this.ngProgress.start();
         }
 
         return new Promise((resolve: any, reject: any) =>
@@ -366,9 +366,9 @@ export class HttpService
             if (typeof url === 'string')
             {
                 // Options
-                options.withCredentials            = withCredentials;
-                let requestOptions: RequestOptions = new RequestOptions(options);
-                let del: any                       = this.http.delete(this.baseUrl + url, requestOptions);
+                options.withCredentials              = withCredentials;
+                const requestOptions: RequestOptions = new RequestOptions(options);
+                const del: any                       = this.http.delete(this.baseUrl + url, requestOptions);
 
                 del.map((res: Response) => res.json())
                    .subscribe(
@@ -376,7 +376,7 @@ export class HttpService
                        {
                            if (loading)
                            {
-                               this.slimLoadingBarService.complete();
+                               this.ngProgress.done();
                            }
 
                            return resolve(data);
@@ -385,7 +385,7 @@ export class HttpService
                        {
                            if (loading)
                            {
-                               this.slimLoadingBarService.complete();
+                               this.ngProgress.done();
                            }
 
                            // Gestion de l'erreur 401
@@ -399,7 +399,7 @@ export class HttpService
             {
                 if (loading)
                 {
-                    this.slimLoadingBarService.complete();
+                    this.ngProgress.done();
                 }
 
                 reject();
@@ -424,9 +424,9 @@ export class HttpService
             if (typeof url === 'string')
             {
                 // Options
-                options.withCredentials            = withCredentials;
-                let requestOptions: RequestOptions = new RequestOptions(options);
-                let head: any                      = this.http.head(this.baseUrl + url, requestOptions);
+                options.withCredentials              = withCredentials;
+                const requestOptions: RequestOptions = new RequestOptions(options);
+                const head: any                      = this.http.head(this.baseUrl + url, requestOptions);
 
                 head.map((res: Response) => res.json())
                     .subscribe(

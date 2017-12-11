@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { NgProgressModule, NgProgress } from '@ngx-progressbar/core';
 import { ChartsModule } from 'ng2-charts';
 import { MaterialModule } from '../material';
 
@@ -46,7 +46,7 @@ export function HttpLoaderFactory(http: HttpClient)
                 deps:       [HttpClient],
             }
         }),
-        SlimLoadingBarModule.forRoot(),
+        NgProgressModule.forRoot(),
         ChartsModule,
         MaterialModule,
     ],
@@ -73,7 +73,7 @@ export function HttpLoaderFactory(http: HttpClient)
         ReactiveFormsModule,
         RouterModule,
         TranslateModule,
-        SlimLoadingBarModule,
+        NgProgressModule,
         ChartsModule,
         MaterialModule,
         MomentPipe,

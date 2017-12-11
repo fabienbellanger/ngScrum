@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
     selector: 'sa-app',
     template: `
-        <ng2-slim-loading-bar [color]="'#3F51B5'" [height]="'2px'"></ng2-slim-loading-bar>
+        <ng-progress [color]="'#3F51B5'" [spinner]="false"></ng-progress>
         <router-outlet></router-outlet>`,
 })
 
