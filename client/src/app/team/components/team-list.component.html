@@ -17,8 +17,8 @@
         <mat-expansion-panel [expanded]="step === index" (opened)="setStep(index)" hideToggle="true"
                              *ngFor="let team of teams; let index = index">
             <mat-expansion-panel-header>
-                <mat-panel-title class="primary-color bold">{{ team.name }}</mat-panel-title>
-                <mat-panel-description class="italic">
+                <mat-panel-title class="primary-color bold text-ellipsis">{{ team.name }}</mat-panel-title>
+                <mat-panel-description class="italic text-ellipsis">
                     <span *ngIf="team.members.length < 2">
                         {{ 'member' | translate:{'number': team.members.length} }}
                     </span>

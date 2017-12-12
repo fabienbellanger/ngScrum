@@ -58,6 +58,10 @@ input:-webkit-autofill {
     font-weight: 700 !important;
 }
 
+.text-ellipsis {
+    @include textEllipsis();
+}
+
 .primary-color {
     color: $primayColor !important;
 }
