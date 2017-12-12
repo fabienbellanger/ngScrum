@@ -39,11 +39,13 @@ export class LayoutSidebarBackdropDirective implements OnChanges
         {
             this.el.nativeElement.style.backgroundColor = 'rgba(50, 50, 50, 0.7)';
             this.el.nativeElement.style.zIndex          = '90';
+            this.el.nativeElement.style.visibility      = 'visible';
         }
         else
         {
             this.el.nativeElement.style.backgroundColor = 'rgba(50, 50, 50, 0)';
             this.el.nativeElement.style.zIndex          = '-1';
+            this.el.nativeElement.style.visibility      = 'hidden';
         }
     }
 }
