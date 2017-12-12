@@ -4,15 +4,18 @@
 
     <div class="row margin-bottom-20px">
         <div class="col-xs-12">
-            <button mat-raised-button type="button"
-                    routerLink="/sprints">
+            <button mat-raised-button type="button" routerLink="/sprints">
                 <mat-icon>keyboard_arrow_left</mat-icon>
                 <span class="hidden-xs">{{ 'sprints.list' | translate }}</span>
             </button>
             &nbsp;&nbsp;
-            <button mat-raised-button
-                    color="primary"
-                    type="button"
+            <button mat-raised-button type="button"
+                    (click)="tasksManagementList()">
+                <mat-icon>today</mat-icon>
+                <span class="hidden-xs">{{ 'tasks.management' | translate }}</span>
+            </button>
+            &nbsp;&nbsp;
+            <button mat-raised-button color="primary" type="button"
                     [routerLink]="['/sprints', sprintService.sprint.id, 'tasks', 'add']">
                     <mat-icon>add</mat-icon>
                 <span class="hidden-xs">{{ 'add.task' | translate }}</span>

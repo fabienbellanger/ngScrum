@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -35,13 +36,15 @@ export class SprintTasksManagementListComponent implements OnInit
      * @param {TranslateService}                translateService
      * @param {SprintTasksManagementService}    sprintTasksManagementService
      * @param {ToolboxService}                  toolboxService
+     * @param {Location}                        location
      */
     constructor(private apiSprintService: ApiSprintService,
                 private route: ActivatedRoute,
                 private router: Router,
                 private translateService: TranslateService,
                 private sprintTasksManagementService: SprintTasksManagementService,
-                private toolboxService: ToolboxService)
+                private toolboxService: ToolboxService,
+                private location: Location)
     {
     }
 
@@ -220,5 +223,15 @@ export class SprintTasksManagementListComponent implements OnInit
         {
             this.router.navigate(['/sprints', this.sprintId, 'tasks-management', date]);
         }
+    }
+
+    /**
+     * Liste des tâches
+     *
+     * @author Fabien Bellanger
+     */
+    public tasksList(): void
+    {
+        this.router.navigate(['/sprints', this.sprintId, 'tasks']);
     }
 }

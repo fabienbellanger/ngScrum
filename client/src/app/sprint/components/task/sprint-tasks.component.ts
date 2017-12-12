@@ -161,4 +161,14 @@ export class SprintTasksComponent implements OnInit
     {
         this.router.navigate(['/sprints', this.sprintId, 'tasks', 'edit', taskId]);
     }
+    
+    /**
+     * Liste des tâches management
+     *
+     * @author Fabien Bellanger
+     */
+    public tasksManagementList(): void
+    {
+        this.router.navigate(['/sprints', this.sprintId, 'tasks-management-list']);
+    }
 }

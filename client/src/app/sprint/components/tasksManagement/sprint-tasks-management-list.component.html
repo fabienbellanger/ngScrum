@@ -10,6 +10,12 @@
                 <span class="hidden-xs">{{ 'sprints.list' | translate }}</span>
             </button>
             &nbsp;&nbsp;
+            <button mat-raised-button type="button"
+                    (click)="tasksList()">
+                <mat-icon>list</mat-icon>
+                <span class="hidden-xs">{{ 'tasks.list' | translate }}</span>
+            </button>
+            &nbsp;&nbsp;
             <button mat-raised-button color="primary" type="button"
                     (click)="editDay()">
                 <mat-icon>add</mat-icon>
@@ -140,6 +146,12 @@
                     routerLink="/sprints">
                 <mat-icon>keyboard_arrow_left</mat-icon>
                 <span class="hidden-xs">{{ 'sprints.list' | translate }}</span>
+            </button>
+            &nbsp;&nbsp;
+            <button mat-raised-button type="button"
+                    (click)="tasksList()">
+                <mat-icon>list</mat-icon>
+                <span class="hidden-xs">{{ 'tasks.list' | translate }}</span>
             </button>
             &nbsp;&nbsp;
             <button mat-raised-button color="primary" type="button"

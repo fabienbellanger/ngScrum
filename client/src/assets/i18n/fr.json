@@ -187,5 +187,6 @@
 	"finish": "Terminer",
 	"reopen": "Ré-ouvrir",
 	"update.sprint.success": "Succès lors de la mise à jour du sprint",
-	"update.sprint.error": "Erreur lors de la mise à jour du sprint"
+	"update.sprint.error": "Erreur lors de la mise à jour du sprint",
+	"tasks.management": "Gestion des tâches"
 }
