@@ -26,6 +26,7 @@ services:
       - ./docker/php/hosts:/etc/hosts
     links:
       - mariadb
+      - maildev
     networks:
       - code-network
     entrypoint:
@@ -59,6 +60,15 @@ services:
     networks:
       - code-network
     restart: always
+
+  maildev:
+      container_name: maildev
+      image: djfarrelly/maildev
+      ports:
+          - "1080:80"
+          - "1025:25"
+      networks:
+          - code-network
 
   #nodejs:
   #  container_name: nodejs
