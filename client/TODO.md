@@ -16,3 +16,5 @@
 
 * Utiliser les icônes material
 * [BUG] Tableaux dépassent des md-card sur mobile
+* Idée interface d'administration :
+	* [Fuse](http://fuse-angular-material.withinpixels.com/apps/academy/courses)
