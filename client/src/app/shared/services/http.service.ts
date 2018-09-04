@@ -3,6 +3,7 @@ import { Http, Response, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { NgProgress } from '@ngx-progressbar/core';
+import 'rxjs/add/operator/map';
 
 /**
  * Http service
